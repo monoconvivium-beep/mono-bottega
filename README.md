@@ -34,6 +34,12 @@ git remote add origin https://github.com/TUO-UTENTE/mono-bottega.git
 git push -u origin main
 ```
 
+Oppure usa lo script incluso:
+
+```powershell
+.\publish-github-pages.ps1 -RepositoryUrl "https://github.com/TUO-UTENTE/mono-bottega.git"
+```
+
 ## Come provarlo
 
 Per vedere correttamente la scena 3D, apri il sito tramite un piccolo server
