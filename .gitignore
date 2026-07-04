@@ -1,0 +1,6 @@
+.agents/
+.codex/
+security-audit/
+server.log
+server.err
+*.tmp
