@@ -2,6 +2,7 @@ class MonoTableExperience {
   constructor(root) {
     this.root = root;
     this.pieces = [...root.querySelectorAll("[data-table-piece]")];
+    this.photoPieces = [...root.querySelectorAll("[data-photo-piece]")];
     this.steps = [...document.querySelectorAll("[data-table-step]")];
     this.status = document.querySelector("[data-table-status]");
     this.statusCount = document.querySelector("[data-table-count]");
@@ -66,7 +67,7 @@ class MonoTableExperience {
         id: "complete",
         title: "La tavola è completa.",
         copy: "Una bottega. Più momenti. La stessa idea di buono.",
-        pieces: ["bread", "oil", "gastronomy", "steam", "pastry", "aperitivo", "takeaway", "conviviality"]
+        pieces: ["bread", "oil", "gastronomy", "steam", "pastry", "aperitivo", "takeaway", "conviviality", "complete"]
       }
     ];
     this.narrativePieces = {
@@ -76,7 +77,7 @@ class MonoTableExperience {
       aperitivo: ["bread", "oil", "gastronomy", "steam", "pastry", "aperitivo"],
       takeaway: ["bread", "oil", "gastronomy", "steam", "pastry", "aperitivo", "takeaway"],
       conviviality: ["bread", "oil", "gastronomy", "steam", "pastry", "aperitivo", "takeaway", "conviviality"],
-      complete: ["bread", "oil", "gastronomy", "steam", "pastry", "aperitivo", "takeaway", "conviviality"]
+      complete: ["bread", "oil", "gastronomy", "steam", "pastry", "aperitivo", "takeaway", "conviviality", "complete"]
     };
   }
 
@@ -101,8 +102,12 @@ class MonoTableExperience {
   }
 
   applyPieces(visiblePieces) {
+    this.root.classList.toggle("is-photo-complete", visiblePieces.includes("complete"));
     this.pieces.forEach((piece) => {
       piece.classList.toggle("is-visible", visiblePieces.includes(piece.dataset.tablePiece));
+    });
+    this.photoPieces.forEach((piece) => {
+      piece.classList.toggle("is-visible", visiblePieces.includes(piece.dataset.photoPiece));
     });
   }
 

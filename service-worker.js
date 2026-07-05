@@ -1,4 +1,4 @@
-const CACHE_NAME = "mono-site-v7";
+const CACHE_NAME = "mono-site-v8";
 const ASSETS = [
   "./",
   "./index.html",
@@ -25,6 +25,7 @@ const ASSETS = [
   "./manifest.webmanifest",
   "./mono-loghissimo.svg",
   "./mono-convivium.svg",
+  "./assets/mono-table/mono-table-realistic.webp",
   "./icons/icon-192.svg",
   "./icons/icon-512.svg"
 ];
