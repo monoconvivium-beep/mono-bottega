@@ -16,7 +16,7 @@ const products = [
     category: "gastronomia",
     description: "Pasta fresca, ragù lento e besciamella morbida.",
     price: 12.5,
-    accent: "#B65A3C",
+    accent: "#B85C38",
     mark: "G",
     tags: ["oggi", "da rigenerare"]
   },
@@ -26,7 +26,7 @@ const products = [
     category: "gastronomia",
     description: "Melanzane, pomodoro, basilico e formaggi selezionati.",
     price: 10,
-    accent: "#843F31",
+    accent: "#B85C38",
     mark: "M",
     tags: ["stagionale", "banco"]
   },
@@ -36,7 +36,7 @@ const products = [
     category: "pasticceria",
     description: "Frolla artigianale con crema o confettura del giorno.",
     price: 18,
-    accent: "#B65A3C",
+    accent: "#E27A60",
     mark: "P",
     tags: ["stagionale", "da regalare"]
   },
@@ -56,7 +56,7 @@ const products = [
     category: "aperitivo",
     description: "Selezione salata MONO per due persone.",
     price: 22,
-    accent: "#5E6045",
+    accent: "#6E6A3C",
     mark: "A",
     tags: ["sera", "condividere"]
   },
@@ -66,7 +66,7 @@ const products = [
     category: "catering",
     description: "Base premium per regali, aziende e piccoli eventi.",
     price: 38,
-    accent: "#AFA89D",
+    accent: "#CBA75A",
     mark: "C",
     tags: ["catering", "da regalare"]
   }

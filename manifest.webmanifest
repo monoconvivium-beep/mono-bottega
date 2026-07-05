@@ -4,8 +4,8 @@
   "description": "Cucina contemporanea, ordini, vantaggi e progetto sociale per MONO Bottega Gastronomica.",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#FBF7EF",
-  "theme_color": "#171615",
+  "background_color": "#F4ECDD",
+  "theme_color": "#262321",
   "icons": [
     {
       "src": "icons/icon-192.svg",

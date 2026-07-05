@@ -3,38 +3,162 @@ class MonoTableExperience {
     this.root = root;
     this.pieces = [...root.querySelectorAll("[data-table-piece]")];
     this.steps = [...document.querySelectorAll("[data-table-step]")];
+    this.status = document.querySelector("[data-table-status]");
+    this.statusCount = document.querySelector("[data-table-count]");
+    this.statusTitle = document.querySelector("[data-table-title]");
+    this.statusCopy = document.querySelector("[data-table-copy]");
+    this.dots = document.querySelector("[data-table-dots]");
     this.reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    this.activeStep = "gesture";
-    this.stepPieces = {
-      gesture: ["gesture"],
-      gastronomy: ["gesture", "gastronomy"],
-      pastry: ["gesture", "gastronomy", "pastry"],
-      aperitivo: ["gesture", "gastronomy", "pastry", "aperitivo"],
-      takeaway: ["gesture", "gastronomy", "pastry", "aperitivo", "takeaway"],
-      conviviality: ["gesture", "gastronomy", "pastry", "aperitivo", "takeaway", "conviviality"],
-      complete: ["gesture", "gastronomy", "pastry", "aperitivo", "takeaway", "conviviality"]
+    this.sequenceIndex = 0;
+    this.autoTimer = null;
+    this.autoCompleted = false;
+    this.lastNarrativeStep = "clean";
+    this.sequence = [
+      {
+        id: "clean",
+        title: "La tavola si apre.",
+        copy: "Luce, lino, ceramica: MONO prepara il primo gesto.",
+        pieces: []
+      },
+      {
+        id: "bread",
+        title: "Arriva il pane.",
+        copy: "La materia semplice entra in scena, senza rumore.",
+        pieces: ["bread"]
+      },
+      {
+        id: "oil",
+        title: "Un filo d'olio.",
+        copy: "Il gesto diventa accoglienza.",
+        pieces: ["bread", "oil"]
+      },
+      {
+        id: "gastronomy",
+        title: "Il piatto caldo.",
+        copy: "La gastronomia porta la cucina quotidiana al centro.",
+        pieces: ["bread", "oil", "gastronomy"]
+      },
+      {
+        id: "steam",
+        title: "Cucina viva.",
+        copy: "Un respiro leggero, caldo, appena percepibile.",
+        pieces: ["bread", "oil", "gastronomy", "steam"]
+      },
+      {
+        id: "pastry",
+        title: "Il dolce firma.",
+        copy: "La pasticceria entra come memoria e precisione.",
+        pieces: ["bread", "oil", "gastronomy", "steam", "pastry"]
+      },
+      {
+        id: "aperitivo",
+        title: "Il bicchiere giusto.",
+        copy: "L'aperitivo mette ordine al tempo che resta.",
+        pieces: ["bread", "oil", "gastronomy", "steam", "pastry", "aperitivo"]
+      },
+      {
+        id: "takeaway",
+        title: "La cura si porta via.",
+        copy: "Box, gifting e quotidiano entrano nella stessa idea di buono.",
+        pieces: ["bread", "oil", "gastronomy", "steam", "pastry", "aperitivo", "takeaway"]
+      },
+      {
+        id: "complete",
+        title: "La tavola è completa.",
+        copy: "Una bottega. Più momenti. La stessa idea di buono.",
+        pieces: ["bread", "oil", "gastronomy", "steam", "pastry", "aperitivo", "takeaway", "conviviality"]
+      }
+    ];
+    this.narrativePieces = {
+      gesture: ["bread", "oil"],
+      gastronomy: ["bread", "oil", "gastronomy", "steam"],
+      pastry: ["bread", "oil", "gastronomy", "steam", "pastry"],
+      aperitivo: ["bread", "oil", "gastronomy", "steam", "pastry", "aperitivo"],
+      takeaway: ["bread", "oil", "gastronomy", "steam", "pastry", "aperitivo", "takeaway"],
+      conviviality: ["bread", "oil", "gastronomy", "steam", "pastry", "aperitivo", "takeaway", "conviviality"],
+      complete: ["bread", "oil", "gastronomy", "steam", "pastry", "aperitivo", "takeaway", "conviviality"]
     };
   }
 
   init() {
-    this.applyStep(this.activeStep);
+    this.createDots();
+    this.applySequence(0);
     this.setupObserver();
-    if (!this.reducedMotion) {
-      this.setupPointerLight();
+    if (this.reducedMotion) {
+      this.applySequence(this.sequence.length - 1);
+      return;
     }
+    this.startAutoSequence();
+    this.setupPointerLight();
   }
 
-  applyStep(step) {
-    this.activeStep = step;
-    const visiblePieces = this.stepPieces[step] || this.stepPieces.complete;
+  createDots() {
+    if (!this.dots) {
+      return;
+    }
+
+    this.dots.innerHTML = this.sequence.map((item, index) => `<span data-dot="${index}" aria-label="${item.title}"></span>`).join("");
+  }
+
+  applyPieces(visiblePieces) {
     this.pieces.forEach((piece) => {
       piece.classList.toggle("is-visible", visiblePieces.includes(piece.dataset.tablePiece));
     });
   }
 
+  applySequence(index) {
+    const nextIndex = Math.max(0, Math.min(index, this.sequence.length - 1));
+    const item = this.sequence[nextIndex];
+    this.sequenceIndex = nextIndex;
+    this.applyPieces(item.pieces);
+    this.updateStatus(item);
+  }
+
+  updateStatus(item) {
+    if (this.statusCount) {
+      this.statusCount.textContent = `${String(this.sequenceIndex + 1).padStart(2, "0")} / ${String(this.sequence.length).padStart(2, "0")}`;
+    }
+    if (this.statusTitle) {
+      this.statusTitle.textContent = item.title;
+    }
+    if (this.statusCopy) {
+      this.statusCopy.textContent = item.copy;
+    }
+    this.dots?.querySelectorAll("span").forEach((dot, index) => {
+      dot.classList.toggle("is-active", index <= this.sequenceIndex);
+    });
+  }
+
+  startAutoSequence() {
+    window.setTimeout(() => {
+      this.autoTimer = window.setInterval(() => {
+        if (this.sequenceIndex >= this.sequence.length - 1) {
+          window.clearInterval(this.autoTimer);
+          this.autoCompleted = true;
+          return;
+        }
+        this.applySequence(this.sequenceIndex + 1);
+      }, 1500);
+    }, 700);
+  }
+
+  applyNarrativeStep(step) {
+    this.lastNarrativeStep = step;
+    const pieces = this.narrativePieces[step];
+    if (!pieces) {
+      return;
+    }
+    this.applyPieces(pieces);
+    const sequenceIndex = this.sequence.findIndex((item) => item.id === step);
+    if (sequenceIndex >= 0) {
+      this.sequenceIndex = sequenceIndex;
+      this.updateStatus(this.sequence[sequenceIndex]);
+    }
+  }
+
   setupObserver() {
     if (!("IntersectionObserver" in window)) {
-      this.applyStep("complete");
+      this.applySequence(this.sequence.length - 1);
       return;
     }
 
@@ -44,11 +168,11 @@ class MonoTableExperience {
           .filter((entry) => entry.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
         if (visibleEntry?.target?.dataset?.tableStep) {
-          this.applyStep(visibleEntry.target.dataset.tableStep);
+          this.applyNarrativeStep(visibleEntry.target.dataset.tableStep);
         }
       },
       {
-        rootMargin: "-28% 0px -42% 0px",
+        rootMargin: "-26% 0px -42% 0px",
         threshold: [0.18, 0.38, 0.62]
       }
     );
@@ -65,7 +189,7 @@ class MonoTableExperience {
     window.addEventListener("pointermove", (event) => {
       const x = Math.round((event.clientX / window.innerWidth) * 100);
       const y = Math.round((event.clientY / window.innerHeight) * 100);
-      light.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(248, 239, 217, 0.72), transparent 36%)`;
+      light.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(239, 227, 198, 0.72), transparent 36%)`;
     });
   }
 }
