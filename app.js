@@ -97,6 +97,7 @@ function renderProducts() {
     .forEach((product) => {
       const card = document.createElement("article");
       card.className = "product-card";
+      card.style.setProperty("--product-color", product.accent);
       card.innerHTML = `
         <div class="product-visual" style="--product-color: ${product.accent}">
           <span>${product.mark}</span>

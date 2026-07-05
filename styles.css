@@ -165,8 +165,16 @@ img {
 
 .header-action,
 .button.primary {
-  background: var(--mono-ivory);
-  border-color: var(--mono-ivory);
+  background: linear-gradient(135deg, var(--mono-terracotta), var(--mono-coral));
+  border-color: var(--mono-coral);
+  box-shadow: 0 14px 34px rgba(226, 122, 96, 0.26);
+  color: var(--mono-ivory);
+}
+
+.header-action {
+  background: linear-gradient(135deg, var(--mono-champagne), var(--mono-butter));
+  border-color: var(--mono-champagne);
+  box-shadow: 0 12px 30px rgba(203, 167, 90, 0.24);
   color: var(--mono-anthracite);
 }
 
@@ -246,8 +254,8 @@ h3 {
 
 .table-hero::after {
   background:
-    linear-gradient(90deg, rgba(38, 35, 33, 0.78), rgba(38, 35, 33, 0.48) 48%, transparent 78%),
-    linear-gradient(0deg, rgba(38, 35, 33, 0.68), transparent 48%);
+    linear-gradient(90deg, rgba(38, 35, 33, 0.74), rgba(38, 35, 33, 0.36) 48%, rgba(38, 35, 33, 0.02) 82%),
+    linear-gradient(0deg, rgba(38, 35, 33, 0.48), transparent 50%);
   content: "";
   inset: 0;
   pointer-events: none;
@@ -284,7 +292,7 @@ h3 {
   background-position: center right;
   background-repeat: no-repeat;
   background-size: cover;
-  filter: saturate(0.94) contrast(1.02);
+  filter: saturate(1.18) contrast(1.08) brightness(1.06);
   inset: 0;
   opacity: 0;
   position: absolute;
@@ -293,7 +301,7 @@ h3 {
 }
 
 .table-photo-piece.is-visible {
-  opacity: 0.92;
+  opacity: 0.98;
   transform: scale(1);
 }
 
@@ -332,7 +340,7 @@ h3 {
 }
 
 .photo-complete.is-visible {
-  opacity: 0.96;
+  opacity: 1;
 }
 
 .mono-table-experience.is-photo-complete .table-photo-piece:not(.photo-complete) {
@@ -593,7 +601,7 @@ h3 {
 }
 
 .table-sequence-panel span {
-  color: var(--mono-champagne);
+  color: var(--mono-coral);
   font-size: 12px;
   font-weight: 800;
 }
@@ -617,7 +625,7 @@ h3 {
 }
 
 .table-sequence-dots span {
-  background: rgba(244, 236, 221, 0.3);
+  background: rgba(244, 236, 221, 0.36);
   border-radius: 999px;
   display: block;
   height: 5px;
@@ -626,7 +634,7 @@ h3 {
 }
 
 .table-sequence-dots span.is-active {
-  background: var(--mono-champagne);
+  background: linear-gradient(90deg, var(--mono-terracotta), var(--mono-coral), var(--mono-champagne));
   width: 28px;
 }
 
@@ -698,7 +706,7 @@ h3 {
 }
 
 .text-link {
-  color: var(--mono-burnt-terracotta);
+  color: var(--mono-coral);
   display: inline-flex;
   font-weight: 800;
   margin-top: 10px;
@@ -712,19 +720,19 @@ h3 {
 
 .material-panel {
   background:
-    linear-gradient(145deg, rgba(244, 236, 221, 0.86), rgba(239, 227, 198, 0.62)),
+    linear-gradient(145deg, rgba(244, 236, 221, 0.22), rgba(239, 227, 198, 0.08)),
     var(--mono-terracotta);
-  border: 1px solid rgba(38, 35, 33, 0.12);
+  border: 1px solid rgba(244, 236, 221, 0.24);
   border-radius: 8px;
   box-shadow: var(--shadow);
-  color: var(--ink);
+  color: var(--mono-ivory);
   display: grid;
   min-height: 320px;
   padding: 28px;
 }
 
 .material-panel span {
-  color: var(--mono-burnt-terracotta);
+  color: var(--mono-butter);
   font-weight: 800;
 }
 
@@ -737,21 +745,27 @@ h3 {
 
 .pastry-panel {
   background:
-    linear-gradient(145deg, rgba(244, 236, 221, 0.88), rgba(239, 227, 198, 0.5)),
-    var(--mono-terracotta);
+    linear-gradient(145deg, rgba(244, 236, 221, 0.2), rgba(239, 227, 198, 0.08)),
+    var(--mono-coral);
 }
 
 .olive-panel {
   background:
-    linear-gradient(145deg, rgba(244, 236, 221, 0.84), rgba(239, 227, 198, 0.46)),
+    linear-gradient(145deg, rgba(244, 236, 221, 0.2), rgba(239, 227, 198, 0.08)),
     var(--mono-olive);
 }
 
 .box-panel,
 .convivial-panel {
   background:
-    linear-gradient(145deg, rgba(244, 236, 221, 0.9), rgba(239, 227, 198, 0.58)),
+    linear-gradient(145deg, rgba(244, 236, 221, 0.26), rgba(239, 227, 198, 0.1)),
     var(--mono-champagne);
+  color: var(--mono-anthracite);
+}
+
+.box-panel span,
+.convivial-panel span {
+  color: var(--mono-burnt-terracotta);
 }
 
 .products-section {
@@ -766,7 +780,9 @@ h3 {
 }
 
 .filter.active {
-  background: var(--mono-anthracite);
+  background: linear-gradient(135deg, var(--mono-terracotta), var(--mono-coral));
+  border-color: var(--mono-coral);
+  box-shadow: 0 10px 24px rgba(184, 92, 56, 0.2);
   color: var(--mono-ivory);
 }
 
@@ -778,7 +794,8 @@ h3 {
 
 .product-card {
   background: var(--mono-cashmere);
-  border: 1px solid var(--line);
+  border: 1px solid rgba(38, 35, 33, 0.12);
+  border-top: 7px solid var(--product-color, var(--mono-terracotta));
   border-radius: 8px;
   display: grid;
   min-height: 390px;
@@ -789,7 +806,7 @@ h3 {
   align-items: end;
   aspect-ratio: 1.12;
   background:
-    linear-gradient(145deg, rgba(244, 236, 221, 0.76), transparent),
+    linear-gradient(145deg, rgba(244, 236, 221, 0.34), transparent),
     var(--product-color, var(--mono-terracotta));
   color: var(--mono-ivory);
   display: flex;
@@ -821,11 +838,12 @@ h3 {
 }
 
 .product-tags span {
-  background: rgba(38, 35, 33, 0.07);
+  background: var(--product-color, var(--mono-terracotta));
   border-radius: 999px;
   font-size: 12px;
   font-weight: 800;
   padding: 5px 8px;
+  color: var(--mono-ivory);
 }
 
 .product-meta {
@@ -923,17 +941,18 @@ h3 {
 
 .app-action {
   border: 1px solid rgba(244, 236, 221, 0.18);
-  border-left: 6px solid var(--accent);
+  border-left: 8px solid var(--accent);
   border-radius: 8px;
   color: var(--mono-ivory);
   display: grid;
   gap: 8px;
   padding: 22px;
   text-decoration: none;
+  box-shadow: inset 0 0 0 1px rgba(244, 236, 221, 0.02), 0 18px 44px rgba(38, 35, 33, 0.2);
 }
 
 .app-action span {
-  color: rgba(244, 236, 221, 0.5);
+  color: var(--accent);
   font-weight: 800;
 }
 
@@ -1130,8 +1149,9 @@ h3 {
 }
 
 .page-card {
-  background: rgba(239, 227, 198, 0.58);
+  background: linear-gradient(145deg, rgba(239, 227, 198, 0.68), rgba(244, 236, 221, 0.9));
   border: 1px solid var(--line);
+  border-top: 5px solid var(--mono-terracotta);
   border-radius: 8px;
   padding: 24px;
 }
