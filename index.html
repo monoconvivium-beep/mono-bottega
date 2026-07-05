@@ -6,68 +6,97 @@
     <meta name="theme-color" content="#262321">
     <meta
       name="description"
-      content="MONO Bottega Gastronomica: gastronomia, pasticceria e bistrot con ordini online, promozioni e programma fedelta."
+      content="MONO Bottega Gastronomica: esperienza digitale, prodotti, app ordini, tessera e progetto Monoconvivium."
     >
     <title>MONO Bottega Gastronomica</title>
     <link rel="manifest" href="manifest.webmanifest">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=20260705-wow">
   </head>
   <body>
     <header class="site-header">
       <a class="brand" href="#home" aria-label="MONO home">
         <img class="brand-logo" src="mono-loghissimo.svg" alt="MONO">
-        <span class="brand-subtitle">Bottega Gastronomica</span>
+        <span>Bottega Gastronomica</span>
       </a>
       <nav class="nav" aria-label="Navigazione principale">
         <a href="#prodotti">Prodotti</a>
-        <a href="#ordini">Ordini</a>
+        <a href="#ordina">Ordina</a>
         <a href="#fedelta">Fedelta</a>
         <a href="#monoconvivium">Monoconvivium</a>
       </nav>
-      <button class="icon-button" id="installButton" type="button" hidden>Installa app</button>
+      <a class="header-action" href="https://mono-app-jet.vercel.app/order">Apri app</a>
     </header>
 
     <main>
-      <section class="hero hero-3d" id="home" aria-label="Esperienza 3D MONO">
+      <section class="experience" id="home" aria-label="MONO esperienza 3D">
         <canvas id="monoScene" class="mono-scene" aria-hidden="true"></canvas>
-        <div class="scene-vignette" aria-hidden="true"></div>
-        <div class="hero-content">
-          <p class="eyebrow">Gastronomia, pasticceria, bistrot</p>
+        <div class="scene-shade" aria-hidden="true"></div>
+
+        <div class="hero-copy">
           <img class="hero-logo" src="mono-loghissimo.svg" alt="MONO">
-          <h1>MONO Convivium digitale.</h1>
-          <p>
-            Entra in una bottega online viva: prodotti, ordini, tessera e progetto
-            sociale si muovono nello stesso spazio.
+          <p class="eyebrow">Santa Rita, Torino</p>
+          <h1>MONO Bottega Gastronomica</h1>
+          <p class="hero-lead">
+            Gastronomia, pasticceria e bistrot entrano in uno spazio digitale
+            vivo: una tavola che racconta cosa puoi ordinare, assaggiare,
+            regalare e condividere.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="#prodotti">Esplora il menu</a>
-            <a class="button ghost" href="https://mono-app-jet.vercel.app/order">Apri app ordini</a>
+            <a class="button primary" href="https://mono-app-jet.vercel.app/order">Ordina dall'app</a>
+            <a class="button ghost light" href="#prodotti">Esplora MONO</a>
           </div>
         </div>
-        <div class="hero-panel scene-panel" aria-label="Mondi MONO interattivi">
-          <button class="scene-chip active" type="button" data-scene-target="gastronomia">
+
+        <div class="scene-controls" aria-label="Mondi MONO">
+          <button class="scene-control active" type="button" data-scene-target="gastronomia">
             <span>Gastronomia</span>
-            <strong>Terracotta</strong>
+            <strong>Piatti pronti, banco caldo, dispensa</strong>
           </button>
-          <button class="scene-chip" type="button" data-scene-target="pasticceria">
+          <button class="scene-control" type="button" data-scene-target="pasticceria">
             <span>Pasticceria</span>
-            <strong>Coral</strong>
+            <strong>Dolci, mono porzioni, regali</strong>
           </button>
-          <button class="scene-chip" type="button" data-scene-target="bistrot">
+          <button class="scene-control" type="button" data-scene-target="bistrot">
             <span>Bistrot</span>
-            <strong>Burnt Olive</strong>
+            <strong>Pranzo, aperitivo, convivialita</strong>
           </button>
-          <button class="scene-chip" type="button" data-scene-target="fedelta">
-            <span>Wallet e tessera</span>
-            <strong>Champagne</strong>
+          <button class="scene-control" type="button" data-scene-target="fedelta">
+            <span>Tessera MONO</span>
+            <strong>Punti, wallet, vantaggi</strong>
           </button>
+        </div>
+
+        <div class="scene-hotspots" aria-hidden="true">
+          <button class="scene-hotspot" type="button" data-hotspot="gastronomia">Gastronomia</button>
+          <button class="scene-hotspot" type="button" data-hotspot="pasticceria">Pasticceria</button>
+          <button class="scene-hotspot" type="button" data-hotspot="bistrot">Bistrot</button>
+          <button class="scene-hotspot" type="button" data-hotspot="fedelta">Tessera</button>
         </div>
       </section>
 
-      <section class="section" id="prodotti">
+      <section class="intro-band">
+        <p class="eyebrow">Il progetto</p>
+        <h2>Una bottega fisica, un ecosistema digitale.</h2>
+        <div class="intro-grid">
+          <p>
+            Il sito pubblico deve far percepire MONO prima ancora di spiegare
+            tutto: calore, precisione, prodotti buoni e una community che torna.
+          </p>
+          <p>
+            La parte operativa resta nell'app: ordini, wallet, tessera e
+            promozioni. Il sito diventa la porta d'ingresso memorabile.
+          </p>
+        </div>
+      </section>
+
+      <section class="section products-section" id="prodotti">
         <div class="section-heading">
-          <p class="eyebrow">Catalogo</p>
-          <h2>Prodotti in evidenza</h2>
+          <p class="eyebrow">Prodotti</p>
+          <h2>Tre mondi, una stessa tavola.</h2>
+          <p>
+            La selezione iniziale e pensata per mostrare la forza della bottega:
+            piatti gastronomici, dolci firmati e momenti bistrot.
+          </p>
         </div>
         <div class="filters" aria-label="Filtra prodotti">
           <button class="filter active" type="button" data-filter="tutti">Tutti</button>
@@ -78,120 +107,82 @@
         <div class="product-grid" id="productGrid"></div>
       </section>
 
-      <section class="section order-layout" id="ordini">
+      <section class="section app-section" id="ordina">
         <div>
-          <p class="eyebrow">Ordini online</p>
-          <h2>Carrello e pagamento</h2>
-          <p class="section-copy">
-            Questa versione gestisce catalogo, carrello, dati cliente e riepilogo.
-            Il sito resta gratuito e scenografico; per il flusso operativo puoi
-            mandare il cliente all'app MONO gia pubblicata.
+          <p class="eyebrow">App MONO</p>
+          <h2>Ordini, wallet e tessera non devono sembrare un modulo.</h2>
+          <p>
+            Il cliente scopre MONO qui, poi entra nell'app per ordinare,
+            pagare, accumulare punti e ricevere promozioni personali.
           </p>
-          <div class="quick-links" aria-label="Azioni app MONO">
-            <a class="quick-link terracotta" href="https://mono-app-jet.vercel.app/order">
-              <span>Ordina</span>
-              <strong>Apri app</strong>
-            </a>
-            <a class="quick-link champagne" href="https://mono-app-jet.vercel.app/wallet">
-              <span>Paga</span>
-              <strong>Wallet</strong>
-            </a>
-            <a class="quick-link olive" href="https://mono-app-jet.vercel.app/home">
-              <span>Tessera</span>
-              <strong>Punti</strong>
-            </a>
-          </div>
-          <form class="checkout" id="checkoutForm">
-            <label>
-              Nome e cognome
-              <input name="name" autocomplete="name" required placeholder="Es. Federica Rossi">
-            </label>
-            <label>
-              Email
-              <input type="email" name="email" autocomplete="email" required placeholder="nome@email.it">
-            </label>
-            <label>
-              Telefono
-              <input name="phone" autocomplete="tel" required placeholder="+39 ...">
-            </label>
-            <label>
-              Ritiro o consegna
-              <select name="delivery">
-                <option>Ritiro in bottega</option>
-                <option>Consegna locale</option>
-              </select>
-            </label>
-            <label>
-              Note ordine
-              <textarea name="notes" rows="3" placeholder="Allergie, orario preferito, richieste speciali"></textarea>
-            </label>
-            <button class="button primary" type="submit">Conferma ordine demo</button>
-          </form>
         </div>
-        <aside class="cart" aria-label="Carrello">
-          <h3>Il tuo ordine</h3>
-          <div id="cartItems" class="cart-items"></div>
-          <div class="cart-total">
-            <span>Totale</span>
-            <strong id="cartTotal">0,00 euro</strong>
-          </div>
-          <p class="cart-note" id="loyaltyPreview">Aggiungi prodotti per accumulare punti.</p>
-        </aside>
+        <div class="app-actions" aria-label="Azioni app MONO">
+          <a class="app-action order" href="https://mono-app-jet.vercel.app/order">
+            <span>01</span>
+            <strong>Ordina</strong>
+            <small>Menu, ritiro e preferenze.</small>
+          </a>
+          <a class="app-action wallet" href="https://mono-app-jet.vercel.app/wallet">
+            <span>02</span>
+            <strong>Wallet</strong>
+            <small>Ricarica e pagamenti.</small>
+          </a>
+          <a class="app-action loyalty-link" href="https://mono-app-jet.vercel.app/home">
+            <span>03</span>
+            <strong>Tessera</strong>
+            <small>Punti, timbri, premi.</small>
+          </a>
+        </div>
       </section>
 
       <section class="section loyalty" id="fedelta">
         <div>
-          <p class="eyebrow">Programma fedelta</p>
-          <h2>Punti MONO</h2>
+          <p class="eyebrow">Fedelta</p>
+          <h2>Una relazione che cresce a ogni visita.</h2>
           <p>
-            Ogni euro speso vale 1 punto. A 80 punti il cliente sblocca uno
-            sconto di 5 euro sul prossimo ordine.
+            Punti, timbri, wallet e promozioni rendono il ritorno in bottega
+            parte dell'esperienza, non solo uno sconto.
           </p>
-          <a class="button primary" href="https://mono-app-jet.vercel.app/home">Apri tessera digitale</a>
+          <div class="hero-actions">
+            <a class="button primary" href="https://mono-app-jet.vercel.app/home">Apri tessera digitale</a>
+            <button class="button ghost" id="notificationButton" type="button">Attiva promozioni</button>
+          </div>
         </div>
-        <div class="loyalty-card">
-          <span>Punti disponibili</span>
-          <strong id="pointsBalance">0</strong>
-          <small id="rewardStatus">Fai il primo ordine per iniziare.</small>
+        <div class="loyalty-visual">
+          <img src="mono-loghissimo.svg" alt="MONO">
+          <span>Tessera digitale</span>
+          <strong id="pointsBalance">80</strong>
+          <small id="rewardStatus">Premio pronto da sbloccare nell'app.</small>
         </div>
-        <button class="button ghost" id="notificationButton" type="button">Attiva promozioni</button>
       </section>
 
       <section class="section monoconvivium" id="monoconvivium">
         <div>
-          <p class="eyebrow">Progetto sociale</p>
+          <p class="eyebrow">Impatto sociale</p>
           <h2>Monoconvivium</h2>
           <p>
-            La parte sociale del progetto MONO avra una pagina dedicata con
-            presentazione visibile nel sito e download del documento.
+            La dimensione sociale di MONO deve avere una presenza visibile,
+            leggibile e autorevole: una pagina che racconta il progetto e rende
+            consultabile la presentazione.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="https://mono-app-jet.vercel.app/home">Apri tessera MONO</a>
-            <a class="button ghost" href="#home">Torna alla scena</a>
+            <a class="button primary" href="https://mono-app-jet.vercel.app/home">Entra nella community</a>
+            <a class="button ghost light" href="#home">Torna alla tavola</a>
           </div>
         </div>
         <div class="document-preview">
           <img src="mono-convivium.svg" alt="Monoconvivium">
-          <p>Qui integreremo la presentazione/PDF del progetto sociale.</p>
+          <p>Qui integreremo la presentazione del progetto sociale in pagina.</p>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
-      <div>
-        <strong>MONO Bottega Gastronomica</strong>
-        <p>Sito gratuito pronto per GitHub Pages, Netlify o Cloudflare Pages.</p>
-      </div>
-      <a href="mailto:info@monobottega.it">info@monobottega.it</a>
+      <strong>MONO Bottega Gastronomica</strong>
+      <a href="https://mono-app-jet.vercel.app/order">Ordina dall'app</a>
     </footer>
 
-    <dialog id="orderDialog">
-      <h3>Ordine ricevuto</h3>
-      <p id="orderMessage"></p>
-      <button class="button primary" id="closeDialog" type="button">Chiudi</button>
-    </dialog>
-
-    <script src="app.js"></script>
-    <script type="module" src="mono-3d.js"></script>
+    <script src="app.js?v=20260705-wow"></script>
+    <script type="module" src="mono-3d.js?v=20260705-wow"></script>
   </body>
 </html>
