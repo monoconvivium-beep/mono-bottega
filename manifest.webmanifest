@@ -1,11 +1,11 @@
 {
   "name": "MONO Bottega Gastronomica",
   "short_name": "MONO",
-  "description": "Catalogo, ordini e programma fedelta per MONO Bottega Gastronomica.",
+  "description": "Cucina contemporanea, ordini, vantaggi e progetto sociale per MONO Bottega Gastronomica.",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#F4ECDD",
-  "theme_color": "#262321",
+  "background_color": "#FBF7EF",
+  "theme_color": "#171615",
   "icons": [
     {
       "src": "icons/icon-192.svg",
