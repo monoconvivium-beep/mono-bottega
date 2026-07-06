@@ -3,36 +3,40 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Pasticceria MONO: monoporzioni, torte da credenza e piccoli gesti dolci.">
+    <meta name="theme-color" content="#262321">
+    <meta name="description" content="Pasticceria MONO: monoporzioni, torte da credenza e piccoli gesti dolci pensati con precisione.">
     <title>Pasticceria | MONO Bottega Gastronomica</title>
+    <link rel="manifest" href="../manifest.webmanifest">
     <link rel="icon" href="../icons/icon-192.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="../styles.css?v=20260705-pop-palette">
+    <link rel="stylesheet" href="../styles.css?v=20260706-flagship-v1">
   </head>
   <body>
-    <header class="site-header">
+    <a class="skip-link" href="#main">Vai al contenuto</a>
+    <header class="site-header" data-header>
       <a class="brand" href="../" aria-label="MONO home"><img class="brand-logo" src="../mono-loghissimo.svg" alt="MONO"><span>Bottega Gastronomica</span></a>
       <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="primaryNav">Menu</button>
       <nav class="nav" id="primaryNav" aria-label="Navigazione principale">
-        <a href="../la-bottega/">La Bottega</a><a href="../gastronomia/">Gastronomia</a><a href="./">Pasticceria</a><a href="../aperitivo/">Aperitivo</a><a href="../catering/">Catering</a><a href="../mono-convivium/">MONO Convivium</a><a href="../app/">App</a><a href="../contatti/">Contatti</a>
+        <a href="../#bottega">Cos'è MONO</a><a href="../#tavola">La Tavola</a><a href="../mono-convivium/">Convivium</a><a href="../app/">App</a><a href="../contatti/">Contatti</a>
       </nav>
-      <a class="header-action" href="../contatti/">Vieni in bottega</a>
+      <a class="header-action" href="../app/#download">Scarica app</a>
     </header>
-    <main>
+    <main id="main">
       <section class="page-hero">
         <p class="eyebrow">Pasticceria</p>
         <h1>Il dolce non chiude il pasto. Lo firma.</h1>
         <p>Monoporzioni, torte da credenza e piccoli gesti dolci pensati con precisione, equilibrio e memoria.</p>
       </section>
       <section class="page-section">
-        <h2>Dolcezza composta.</h2>
+        <p class="eyebrow">Da banco e da regalo</p>
+        <h2>Dolcezza composta, mai rumorosa.</h2>
         <div class="page-grid">
-          <article class="page-card"><h3>Monoporzioni</h3><p>Piccole architetture di gusto, leggibili e misurate.</p></article>
-          <article class="page-card"><h3>Torte</h3><p>Da credenza, da tavola, da regalare.</p></article>
-          <article class="page-card"><h3>Gifting</h3><p>Packaging e cura per trasformare un dolce in un gesto.</p></article>
+          <article class="page-card" data-reveal><span>Monoporzioni</span><h3>Piccoli gesti.</h3><p>Dolci pensati per pausa, tavola o regalo.</p></article>
+          <article class="page-card" data-reveal><span>Credenza</span><h3>Memoria quotidiana.</h3><p>Torte riconoscibili, leggere nel racconto e precise nel gusto.</p></article>
+          <article class="page-card" data-reveal><span>Gifting</span><h3>Packaging curato.</h3><p>Il regalo mantiene il linguaggio ordinato della bottega.</p></article>
         </div>
       </section>
     </main>
-    <footer class="site-footer"><strong>MONO Bottega Gastronomica</strong><nav aria-label="Navigazione footer"><a href="../">Home</a><a href="../contatti/">Contatti</a></nav></footer>
-    <script src="../app.js?v=20260705-pop-palette"></script>
+    <footer class="site-footer"><strong>MONO Bottega Gastronomica</strong><nav aria-label="Navigazione footer"><a href="../">Home</a><a href="../app/">App</a><a href="../contatti/">Contatti</a></nav></footer>
+    <script src="../app.js?v=20260706-flagship-v1"></script>
   </body>
 </html>

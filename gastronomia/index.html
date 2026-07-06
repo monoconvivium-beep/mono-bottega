@@ -3,36 +3,40 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Gastronomia contemporanea MONO: piatti da ristorante per la vita quotidiana.">
+    <meta name="theme-color" content="#262321">
+    <meta name="description" content="Gastronomia MONO: piatti da ristorante pensati per il pranzo, la cena e il quotidiano.">
     <title>Gastronomia | MONO Bottega Gastronomica</title>
+    <link rel="manifest" href="../manifest.webmanifest">
     <link rel="icon" href="../icons/icon-192.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="../styles.css?v=20260705-pop-palette">
+    <link rel="stylesheet" href="../styles.css?v=20260706-flagship-v1">
   </head>
   <body>
-    <header class="site-header">
+    <a class="skip-link" href="#main">Vai al contenuto</a>
+    <header class="site-header" data-header>
       <a class="brand" href="../" aria-label="MONO home"><img class="brand-logo" src="../mono-loghissimo.svg" alt="MONO"><span>Bottega Gastronomica</span></a>
       <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="primaryNav">Menu</button>
       <nav class="nav" id="primaryNav" aria-label="Navigazione principale">
-        <a href="../la-bottega/">La Bottega</a><a href="./">Gastronomia</a><a href="../pasticceria/">Pasticceria</a><a href="../aperitivo/">Aperitivo</a><a href="../catering/">Catering</a><a href="../mono-convivium/">MONO Convivium</a><a href="../app/">App</a><a href="../contatti/">Contatti</a>
+        <a href="../#bottega">Cos'è MONO</a><a href="../#tavola">La Tavola</a><a href="../mono-convivium/">Convivium</a><a href="../app/">App</a><a href="../contatti/">Contatti</a>
       </nav>
-      <a class="header-action" href="../app/">Ordina</a>
+      <a class="header-action" href="../app/#download">Scarica app</a>
     </header>
-    <main>
+    <main id="main">
       <section class="page-hero">
         <p class="eyebrow">Gastronomia</p>
         <h1>Gastronomia contemporanea, per tutti i giorni.</h1>
-        <p>Piatti da ristorante, pronti per il pranzo, la cena e quei momenti in cui vuoi mangiare bene senza complicarti la vita.</p>
+        <p>Piatti da ristorante, pronti per pranzo, cena e quei momenti in cui vuoi mangiare bene senza complicarti la vita.</p>
       </section>
       <section class="page-section">
-        <h2>Pronta, ma mai sbrigativa.</h2>
+        <p class="eyebrow">In bottega</p>
+        <h2>Qualità quotidiana, non effetto speciale.</h2>
         <div class="page-grid">
-          <article class="page-card"><h3>Oggi</h3><p>Preparazioni fresche e stagionali per il banco quotidiano.</p></article>
-          <article class="page-card"><h3>Da rigenerare</h3><p>Piatti pensati per arrivare a casa con la stessa cura.</p></article>
-          <article class="page-card"><h3>La tua tavola</h3><p>Struttura pronta per ordini e ritiro in bottega.</p></article>
+          <article class="page-card" data-reveal><span>Oggi</span><h3>Piatti caldi.</h3><p>Preparazioni pronte, pensate per mantenere identità e comfort.</p></article>
+          <article class="page-card" data-reveal><span>Casa</span><h3>Da rigenerare.</h3><p>Soluzioni semplici per portare MONO sulla tua tavola.</p></article>
+          <article class="page-card" data-reveal><span>App</span><h3>Ordina e ritira.</h3><p>La vendita passa dall'app, così il sito resta racconto e orientamento.</p></article>
         </div>
       </section>
     </main>
-    <footer class="site-footer"><strong>MONO Bottega Gastronomica</strong><nav aria-label="Navigazione footer"><a href="../">Home</a><a href="../app/">App</a></nav></footer>
-    <script src="../app.js?v=20260705-pop-palette"></script>
+    <footer class="site-footer"><strong>MONO Bottega Gastronomica</strong><nav aria-label="Navigazione footer"><a href="../">Home</a><a href="../app/">App</a><a href="../contatti/">Contatti</a></nav></footer>
+    <script src="../app.js?v=20260706-flagship-v1"></script>
   </body>
 </html>

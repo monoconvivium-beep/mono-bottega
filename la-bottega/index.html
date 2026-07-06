@@ -3,36 +3,43 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="La bottega MONO: cucina contemporanea, gesto quotidiano, ordine e calore a Torino.">
+    <meta name="theme-color" content="#262321">
+    <meta
+      name="description"
+      content="La Bottega MONO: cucina, banco, pasticceria, aperitivo e app in un unico ecosistema gastronomico contemporaneo."
+    >
     <title>La Bottega | MONO Bottega Gastronomica</title>
+    <link rel="manifest" href="../manifest.webmanifest">
     <link rel="icon" href="../icons/icon-192.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="../styles.css?v=20260705-pop-palette">
+    <link rel="stylesheet" href="../styles.css?v=20260706-flagship-v1">
   </head>
   <body>
-    <header class="site-header">
+    <a class="skip-link" href="#main">Vai al contenuto</a>
+    <header class="site-header" data-header>
       <a class="brand" href="../" aria-label="MONO home"><img class="brand-logo" src="../mono-loghissimo.svg" alt="MONO"><span>Bottega Gastronomica</span></a>
       <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="primaryNav">Menu</button>
       <nav class="nav" id="primaryNav" aria-label="Navigazione principale">
-        <a href="./">La Bottega</a><a href="../gastronomia/">Gastronomia</a><a href="../pasticceria/">Pasticceria</a><a href="../aperitivo/">Aperitivo</a><a href="../catering/">Catering</a><a href="../mono-convivium/">MONO Convivium</a><a href="../app/">App</a><a href="../contatti/">Contatti</a>
+        <a href="../#bottega">Cos'è MONO</a><a href="../#tavola">La Tavola</a><a href="../mono-convivium/">Convivium</a><a href="../app/">App</a><a href="../contatti/">Contatti</a>
       </nav>
-      <a class="header-action" href="../contatti/">Vieni in bottega</a>
+      <a class="header-action" href="../app/#download">Scarica app</a>
     </header>
-    <main>
+    <main id="main">
       <section class="page-hero">
         <p class="eyebrow">La Bottega</p>
-        <h1>Semplice. Buono. MONO.</h1>
-        <p>Una gastronomia italiana contemporanea: calda, ordinata, quotidiana, pronta per accogliere pranzo, cena, regali e piccoli ritorni.</p>
+        <h1>Una casa per più momenti.</h1>
+        <p>MONO tiene insieme cucina, banco, dolce, aperitivo e digitale con un'idea semplice: rendere più buono il quotidiano.</p>
       </section>
       <section class="page-section">
-        <h2>Una casa per piÃƒÆ’Ã‚Â¹ momenti.</h2>
+        <p class="eyebrow">Cosa significa</p>
+        <h2>Bottega gastronomica contemporanea.</h2>
         <div class="page-grid">
-          <article class="page-card"><h3>Banco</h3><p>Preparazioni leggibili, cura del ritmo e prodotti pronti a entrare nella giornata.</p></article>
-          <article class="page-card"><h3>Tavola</h3><p>Una presenza calda, italiana, contemporanea, senza rumore decorativo.</p></article>
-          <article class="page-card"><h3>Digitale</h3><p>App, vantaggi e ordini come estensione naturale della bottega.</p></article>
+          <article class="page-card" data-reveal><span>Cucina</span><h3>Produzione interna.</h3><p>Piatti caldi, preparazioni da banco e soluzioni da rigenerare.</p></article>
+          <article class="page-card" data-reveal><span>Banco</span><h3>Cura visibile.</h3><p>Ordine, materiali, porzioni e servizio pensati per scegliere senza fatica.</p></article>
+          <article class="page-card" data-reveal><span>Digitale</span><h3>L'app come estensione.</h3><p>Il sito racconta il progetto, l'app accompagna ordini, vantaggi e ritorno.</p></article>
         </div>
       </section>
     </main>
-    <footer class="site-footer"><strong>MONO Bottega Gastronomica</strong><nav aria-label="Navigazione footer"><a href="../">Home</a><a href="../contatti/">Contatti</a></nav></footer>
-    <script src="../app.js?v=20260705-pop-palette"></script>
+    <footer class="site-footer"><strong>MONO Bottega Gastronomica</strong><nav aria-label="Navigazione footer"><a href="../">Home</a><a href="../app/">App</a><a href="../contatti/">Contatti</a></nav></footer>
+    <script src="../app.js?v=20260706-flagship-v1"></script>
   </body>
 </html>

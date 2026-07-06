@@ -3,36 +3,40 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#262321">
     <meta name="description" content="Aperitivo MONO: piccoli piatti, bicchieri giusti e una tavola che invita a restare.">
     <title>Aperitivo | MONO Bottega Gastronomica</title>
+    <link rel="manifest" href="../manifest.webmanifest">
     <link rel="icon" href="../icons/icon-192.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="../styles.css?v=20260705-pop-palette">
+    <link rel="stylesheet" href="../styles.css?v=20260706-flagship-v1">
   </head>
   <body>
-    <header class="site-header">
+    <a class="skip-link" href="#main">Vai al contenuto</a>
+    <header class="site-header" data-header>
       <a class="brand" href="../" aria-label="MONO home"><img class="brand-logo" src="../mono-loghissimo.svg" alt="MONO"><span>Bottega Gastronomica</span></a>
       <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="primaryNav">Menu</button>
       <nav class="nav" id="primaryNav" aria-label="Navigazione principale">
-        <a href="../la-bottega/">La Bottega</a><a href="../gastronomia/">Gastronomia</a><a href="../pasticceria/">Pasticceria</a><a href="./">Aperitivo</a><a href="../catering/">Catering</a><a href="../mono-convivium/">MONO Convivium</a><a href="../app/">App</a><a href="../contatti/">Contatti</a>
+        <a href="../#bottega">Cos'è MONO</a><a href="../#tavola">La Tavola</a><a href="../mono-convivium/">Convivium</a><a href="../app/">App</a><a href="../contatti/">Contatti</a>
       </nav>
-      <a class="header-action" href="../contatti/">Vivi l'aperitivo</a>
+      <a class="header-action" href="../app/#download">Scarica app</a>
     </header>
-    <main>
+    <main id="main">
       <section class="page-hero">
         <p class="eyebrow">Aperitivo</p>
         <h1>L'aperitivo, messo in ordine.</h1>
         <p>Non abbondanza casuale, ma piccoli piatti, bicchieri giusti e una tavola che invita a restare.</p>
       </section>
       <section class="page-section">
-        <h2>La fascia serale di MONO.</h2>
+        <p class="eyebrow">Fascia serale</p>
+        <h2>Una sosta più lenta, senza perdere misura.</h2>
         <div class="page-grid">
-          <article class="page-card"><h3>Piccoli piatti</h3><p>Gastronomia in formato serale, precisa e conviviale.</p></article>
-          <article class="page-card"><h3>Bicchieri</h3><p>Scelte essenziali, giuste, senza scena inutile.</p></article>
-          <article class="page-card"><h3>Dehor</h3><p>Un invito a fermarsi, anche solo un po' di piÃƒÆ’Ã‚Â¹.</p></article>
+          <article class="page-card" data-reveal><span>Bicchiere</span><h3>Il ritmo giusto.</h3><p>Un invito a fermarsi, anche solo un po' di più.</p></article>
+          <article class="page-card" data-reveal><span>Salato</span><h3>Piccoli piatti.</h3><p>Gastronomia pensata per essere condivisa con eleganza.</p></article>
+          <article class="page-card" data-reveal><span>Dehor</span><h3>Calore urbano.</h3><p>Una pausa contemporanea, semplice e riconoscibile.</p></article>
         </div>
       </section>
     </main>
-    <footer class="site-footer"><strong>MONO Bottega Gastronomica</strong><nav aria-label="Navigazione footer"><a href="../">Home</a><a href="../contatti/">Contatti</a></nav></footer>
-    <script src="../app.js?v=20260705-pop-palette"></script>
+    <footer class="site-footer"><strong>MONO Bottega Gastronomica</strong><nav aria-label="Navigazione footer"><a href="../">Home</a><a href="../app/">App</a><a href="../contatti/">Contatti</a></nav></footer>
+    <script src="../app.js?v=20260706-flagship-v1"></script>
   </body>
 </html>

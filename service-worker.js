@@ -1,4 +1,4 @@
-const CACHE_NAME = "mono-site-v9";
+const CACHE_NAME = "mono-site-v10";
 const ASSETS = [
   "./",
   "./index.html",
@@ -25,7 +25,6 @@ const ASSETS = [
   "./manifest.webmanifest",
   "./mono-loghissimo.svg",
   "./mono-convivium.svg",
-  "./assets/mono-table/mono-table-realistic.webp",
   "./icons/icon-192.svg",
   "./icons/icon-512.svg"
 ];
@@ -49,5 +48,13 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request)));
+  event.respondWith(
+    fetch(event.request)
+      .then((response) => {
+        const clone = response.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+        return response;
+      })
+      .catch(() => caches.match(event.request))
+  );
 });

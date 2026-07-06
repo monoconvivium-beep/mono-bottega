@@ -3,134 +3,12 @@ const GOOGLE_PLAY_URL = "#";
 const APP_PROMPT_STORAGE_KEY = "mono-app-prompt-dismissed-at";
 const APP_PROMPT_COOLDOWN = 7 * 24 * 60 * 60 * 1000;
 
-const appLinks = {
-  order: "https://mono-app-jet.vercel.app/order",
-  wallet: "https://mono-app-jet.vercel.app/wallet",
-  home: "https://mono-app-jet.vercel.app/home"
-};
-
-const products = [
-  {
-    id: "lasagna",
-    name: "Lasagna della bottega",
-    category: "gastronomia",
-    description: "Pasta fresca, ragù lento e besciamella morbida.",
-    price: 12.5,
-    accent: "#B85C38",
-    mark: "G",
-    tags: ["oggi", "da rigenerare"]
-  },
-  {
-    id: "parmigiana",
-    name: "Parmigiana MONO",
-    category: "gastronomia",
-    description: "Melanzane, pomodoro, basilico e formaggi selezionati.",
-    price: 10,
-    accent: "#B85C38",
-    mark: "M",
-    tags: ["stagionale", "banco"]
-  },
-  {
-    id: "crostata",
-    name: "Crostata stagionale",
-    category: "pasticceria",
-    description: "Frolla artigianale con crema o confettura del giorno.",
-    price: 18,
-    accent: "#E27A60",
-    mark: "P",
-    tags: ["stagionale", "da regalare"]
-  },
-  {
-    id: "mono-dolce",
-    name: "Monoporzione dolce",
-    category: "pasticceria",
-    description: "Piccola pasticceria elegante per pausa, tavola o regalo.",
-    price: 5.5,
-    accent: "#CBA75A",
-    mark: "D",
-    tags: ["da regalare", "oggi"]
-  },
-  {
-    id: "aperitivo",
-    name: "Aperitivo gastronomico",
-    category: "aperitivo",
-    description: "Selezione salata MONO per due persone.",
-    price: 22,
-    accent: "#6E6A3C",
-    mark: "A",
-    tags: ["sera", "condividere"]
-  },
-  {
-    id: "catering-box",
-    name: "Box tavola grande",
-    category: "catering",
-    description: "Base premium per regali, aziende e piccoli eventi.",
-    price: 38,
-    accent: "#CBA75A",
-    mark: "C",
-    tags: ["catering", "da regalare"]
-  }
-];
-
-const productGrid = document.querySelector("#productGrid");
 const appPrompt = document.querySelector("[data-app-prompt]");
 const floatingAppButton = document.querySelector("[data-floating-app]");
 const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
 const primaryNav = document.querySelector("#primaryNav");
-let activeFilter = "tutti";
+const siteHeader = document.querySelector("[data-header]");
 let lastFocusedElement = null;
-
-const formatPrice = (amount) =>
-  new Intl.NumberFormat("it-IT", {
-    style: "currency",
-    currency: "EUR"
-  }).format(amount);
-
-function renderProducts() {
-  if (!productGrid) {
-    return;
-  }
-
-  productGrid.innerHTML = "";
-  products
-    .filter((product) => activeFilter === "tutti" || product.category === activeFilter)
-    .forEach((product) => {
-      const card = document.createElement("article");
-      card.className = "product-card";
-      card.style.setProperty("--product-color", product.accent);
-      card.innerHTML = `
-        <div class="product-visual" style="--product-color: ${product.accent}">
-          <span>${product.mark}</span>
-        </div>
-        <div class="product-body">
-          <div class="product-tags">
-            ${product.tags.map((tag) => `<span>${tag}</span>`).join("")}
-          </div>
-          <h3>${product.name}</h3>
-          <p>${product.description}</p>
-          <div class="product-meta">
-            <span class="price">${formatPrice(product.price)}</span>
-            <a href="${appLinks.order}">Ordina</a>
-          </div>
-        </div>
-      `;
-      productGrid.appendChild(card);
-    });
-}
-
-function setupFilters() {
-  document.querySelectorAll(".filter").forEach((button) => {
-    button.addEventListener("click", () => {
-      const current = document.querySelector(".filter.active");
-      if (current) {
-        current.classList.remove("active");
-      }
-      button.classList.add("active");
-      activeFilter = button.dataset.filter;
-      renderProducts();
-    });
-  });
-}
 
 function setupMobileMenu() {
   if (!mobileMenuToggle || !primaryNav) {
@@ -150,8 +28,38 @@ function setupMobileMenu() {
   });
 }
 
+function setupHeaderState() {
+  if (!siteHeader) {
+    return;
+  }
+
+  const updateHeader = () => {
+    siteHeader.classList.toggle("is-scrolled", window.scrollY > 24);
+  };
+
+  updateHeader();
+  window.addEventListener("scroll", updateHeader, { passive: true });
+}
+
+function safeGetStorage(key) {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function safeSetStorage(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    return;
+  }
+}
+
 function shouldShowAppPrompt() {
-  const storedValue = localStorage.getItem(APP_PROMPT_STORAGE_KEY);
+  const storedValue = safeGetStorage(APP_PROMPT_STORAGE_KEY);
+
   if (!storedValue) {
     return true;
   }
@@ -174,10 +82,12 @@ function closeAppPrompt() {
 
   appPrompt.hidden = true;
   document.body.classList.remove("is-locked");
-  localStorage.setItem(APP_PROMPT_STORAGE_KEY, String(Date.now()));
+  safeSetStorage(APP_PROMPT_STORAGE_KEY, String(Date.now()));
+
   if (floatingAppButton) {
     floatingAppButton.hidden = false;
   }
+
   lastFocusedElement?.focus?.();
 }
 
@@ -189,12 +99,16 @@ function openAppPrompt() {
   lastFocusedElement = document.activeElement;
   appPrompt.hidden = false;
   document.body.classList.add("is-locked");
-  floatingAppButton.hidden = true;
+
+  if (floatingAppButton) {
+    floatingAppButton.hidden = true;
+  }
+
   appPrompt.querySelector(".app-prompt-panel")?.focus();
 }
 
 function setupAppPrompt() {
-  if (!appPrompt || !floatingAppButton) {
+  if (!appPrompt) {
     return;
   }
 
@@ -207,7 +121,7 @@ function setupAppPrompt() {
     control.addEventListener("click", closeAppPrompt);
   });
 
-  floatingAppButton.addEventListener("click", openAppPrompt);
+  floatingAppButton?.addEventListener("click", openAppPrompt);
 
   document.addEventListener("keydown", (event) => {
     if (appPrompt.hidden) {
@@ -226,6 +140,7 @@ function setupAppPrompt() {
     const focusable = getFocusableElements();
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
+
     if (!first || !last) {
       return;
     }
@@ -241,9 +156,39 @@ function setupAppPrompt() {
 
   if (shouldShowAppPrompt()) {
     window.setTimeout(openAppPrompt, 1500);
-  } else {
+  } else if (floatingAppButton) {
     floatingAppButton.hidden = false;
   }
+}
+
+function setupReveals() {
+  const revealElements = [...document.querySelectorAll("[data-reveal]")];
+
+  if (!revealElements.length) {
+    return;
+  }
+
+  if (!("IntersectionObserver" in window)) {
+    revealElements.forEach((element) => element.classList.add("is-revealed"));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-revealed");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      rootMargin: "0px 0px -12% 0px",
+      threshold: 0.12
+    }
+  );
+
+  revealElements.forEach((element) => observer.observe(element));
 }
 
 if ("serviceWorker" in navigator) {
@@ -252,6 +197,6 @@ if ("serviceWorker" in navigator) {
 }
 
 setupMobileMenu();
-setupFilters();
+setupHeaderState();
+setupReveals();
 setupAppPrompt();
-renderProducts();

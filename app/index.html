@@ -3,31 +3,28 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#171615">
+    <meta name="theme-color" content="#262321">
     <meta
       name="description"
-      content="Scarica l'app MONO per ordini, vantaggi, caffÃƒÆ’Ã‚Â¨ sospeso, inviti e attenzioni quotidiane."
+      content="Scarica l'app MONO per ordini, vantaggi, caffè sospeso, inviti e attenzioni quotidiane."
     >
     <title>App MONO | La bottega, anche sul telefono</title>
     <link rel="manifest" href="../manifest.webmanifest">
     <link rel="icon" href="../icons/icon-192.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="../styles.css?v=20260705-pop-palette">
+    <link rel="stylesheet" href="../styles.css?v=20260706-flagship-v1">
   </head>
   <body>
     <a class="skip-link" href="#main">Vai al contenuto</a>
-    <header class="site-header">
+    <header class="site-header" data-header>
       <a class="brand" href="../" aria-label="MONO home">
         <img class="brand-logo" src="../mono-loghissimo.svg" alt="MONO">
         <span>Bottega Gastronomica</span>
       </a>
       <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="primaryNav">Menu</button>
       <nav class="nav" id="primaryNav" aria-label="Navigazione principale">
-        <a href="../la-bottega/">La Bottega</a>
-        <a href="../gastronomia/">Gastronomia</a>
-        <a href="../pasticceria/">Pasticceria</a>
-        <a href="../aperitivo/">Aperitivo</a>
-        <a href="../catering/">Catering</a>
-        <a href="../mono-convivium/">MONO Convivium</a>
+        <a href="../#bottega">Cos'è MONO</a>
+        <a href="../#tavola">La Tavola</a>
+        <a href="../mono-convivium/">Convivium</a>
         <a href="./">App</a>
         <a href="../contatti/">Contatti</a>
       </nav>
@@ -39,42 +36,53 @@
         <p class="eyebrow">App MONO</p>
         <h1>MONO, sempre con te.</h1>
         <p>
-          La bottega, anche sul telefono. Ordini, vantaggi, caffÃƒÆ’Ã‚Â¨ sospeso,
+          La bottega, anche sul telefono. Ordini, vantaggi, caffè sospeso,
           inviti e piccole attenzioni pensate per accompagnare il quotidiano.
         </p>
         <div class="hero-actions" id="download">
-          <a class="button primary" href="#">App Store</a>
-          <a class="button ghost light" href="#">Google Play</a>
+          <a class="button primary" data-app-store href="#">App Store</a>
+          <a class="button ghost" data-google-play href="#">Google Play</a>
         </div>
       </section>
 
       <section class="page-section">
-        <p class="eyebrow">Cosa fa</p>
-        <h2>Il tuo posto a tavola, anche digitale.</h2>
+        <p class="eyebrow">Non un doppione del sito</p>
+        <h2>Il sito racconta. L'app semplifica il gesto.</h2>
+        <p>
+          Qui trovi il racconto di MONO. Nell'app trovi il movimento quotidiano:
+          scegliere, ordinare, ritirare, ricevere attenzioni, tornare quando c'è
+          qualcosa di buono da sapere.
+        </p>
         <div class="page-grid">
-          <article class="page-card">
-            <h3>Ordina e ritira</h3>
-            <p>Menu, preferenze, orari e ritiro in bottega senza attrito.</p>
+          <article class="page-card" data-reveal>
+            <span>Ordini</span>
+            <h3>Ordina e ritira.</h3>
+            <p>Piatti, dolci, box e orari di ritiro in un flusso semplice.</p>
           </article>
-          <article class="page-card">
-            <h3>Vantaggi e loyalty</h3>
-            <p>Punti, timbri e attenzioni personali dentro una relazione chiara.</p>
+          <article class="page-card" data-reveal>
+            <span>Vantaggi</span>
+            <h3>Loyalty chiara.</h3>
+            <p>Punti, timbri e piccole attenzioni senza rumore commerciale.</p>
           </article>
-          <article class="page-card">
-            <h3>CaffÃƒÆ’Ã‚Â¨ sospeso</h3>
-            <p>Un gesto semplice, tracciabile, umano.</p>
+          <article class="page-card" data-reveal>
+            <span>Convivium</span>
+            <h3>Caffè sospeso.</h3>
+            <p>Un gesto semplice, tracciabile e coerente con il progetto sociale.</p>
           </article>
-          <article class="page-card">
-            <h3>Invita un amico</h3>
+          <article class="page-card" data-reveal>
+            <span>Inviti</span>
+            <h3>Invita un amico.</h3>
             <p>MONO cresce come una tavola: una persona alla volta.</p>
           </article>
-          <article class="page-card">
-            <h3>Notifiche intelligenti</h3>
-            <p>Promozioni e inviti utili, mai rumore commerciale.</p>
+          <article class="page-card" data-reveal>
+            <span>Notifiche</span>
+            <h3>Solo cose utili.</h3>
+            <p>Promozioni, novità e inviti quando hanno senso per te.</p>
           </article>
-          <article class="page-card">
-            <h3>Il tuo posto a tavola</h3>
-            <p>Ordini, wallet e fedeltÃƒÆ’Ã‚Â  in un unico ecosistema.</p>
+          <article class="page-card" data-reveal>
+            <span>Wallet</span>
+            <h3>Il tuo posto a tavola.</h3>
+            <p>Ordini, vantaggi e relazione con la bottega nello stesso spazio.</p>
           </article>
         </div>
       </section>
@@ -88,6 +96,6 @@
         <a href="../contatti/">Contatti</a>
       </nav>
     </footer>
-    <script src="../app.js?v=20260705-pop-palette"></script>
+    <script src="../app.js?v=20260706-flagship-v1"></script>
   </body>
 </html>

@@ -6,18 +6,18 @@
     <meta name="theme-color" content="#262321">
     <meta
       name="description"
-      content="MONO porta la cucina da ristorante nella vita di tutti i giorni: gastronomia, pasticceria, aperitivo, catering e progetto sociale a Torino."
+      content="MONO porta la cucina da ristorante nella vita di tutti i giorni: una bottega gastronomica contemporanea, un progetto sociale e un'app per ordinare con semplicità."
     >
     <meta property="og:title" content="MONO - Bottega Gastronomica">
     <meta
       property="og:description"
-      content="Cucina contemporanea, tradizionalmente moderna. Una bottega, piÃƒÆ’Ã‚Â¹ momenti, la stessa idea di buono."
+      content="Una bottega. Più momenti. La stessa idea di buono. Cucina contemporanea, tradizionalmente moderna."
     >
     <meta property="og:type" content="website">
     <title>MONO - Bottega Gastronomica | Cucina contemporanea, tradizionalmente moderna</title>
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" href="icons/icon-192.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="styles.css?v=20260705-pop-palette">
+    <link rel="stylesheet" href="styles.css?v=20260706-flagship-v1">
   </head>
   <body>
     <a class="skip-link" href="#main">Vai al contenuto</a>
@@ -31,295 +31,262 @@
         Menu
       </button>
       <nav class="nav" id="primaryNav" aria-label="Navigazione principale">
-        <a href="la-bottega/">La Bottega</a>
-        <a href="gastronomia/">Gastronomia</a>
-        <a href="pasticceria/">Pasticceria</a>
-        <a href="aperitivo/">Aperitivo</a>
-        <a href="catering/">Catering</a>
-        <a href="mono-convivium/">MONO Convivium</a>
+        <a href="#bottega">Cos'è MONO</a>
+        <a href="#tavola">La Tavola</a>
+        <a href="mono-convivium/">Convivium</a>
         <a href="app/">App</a>
         <a href="contatti/">Contatti</a>
       </nav>
-      <a class="header-action" href="contatti/">Vieni in bottega</a>
+      <a class="header-action" href="app/#download">Scarica app</a>
     </header>
 
     <main id="main">
-      <section class="table-hero" id="home" aria-labelledby="heroTitle">
-        <div class="mono-table-experience has-photo" data-mono-table>
-          <div class="table-stage" aria-hidden="true">
-            <div class="table-light"></div>
-            <div class="table-surface">
-              <span class="table-rim"></span>
-              <span class="table-linen"></span>
-              <span class="table-plate table-plate-main"></span>
-              <span class="table-plate table-plate-side"></span>
-              <span class="table-piece table-bread" data-table-piece="bread"></span>
-              <span class="table-piece table-oil" data-table-piece="oil"></span>
-              <span class="table-piece table-dish" data-table-piece="gastronomy"></span>
-              <span class="table-piece table-steam" data-table-piece="steam"></span>
-              <span class="table-piece table-pastry" data-table-piece="pastry"></span>
-              <span class="table-piece table-glass" data-table-piece="aperitivo"></span>
-              <span class="table-piece table-box" data-table-piece="takeaway"></span>
-              <span class="table-piece table-cover table-cover-one" data-table-piece="conviviality"></span>
-              <span class="table-piece table-cover table-cover-two" data-table-piece="conviviality"></span>
-            </div>
-          </div>
-          <div class="table-photo-reveal" aria-hidden="true">
-            <span class="table-photo-piece photo-bread" data-photo-piece="bread"></span>
-            <span class="table-photo-piece photo-oil" data-photo-piece="oil"></span>
-            <span class="table-photo-piece photo-gastronomy" data-photo-piece="gastronomy"></span>
-            <span class="table-photo-piece photo-steam" data-photo-piece="steam"></span>
-            <span class="table-photo-piece photo-pastry" data-photo-piece="pastry"></span>
-            <span class="table-photo-piece photo-aperitivo" data-photo-piece="aperitivo"></span>
-            <span class="table-photo-piece photo-takeaway" data-photo-piece="takeaway"></span>
-            <span class="table-photo-piece photo-complete" data-photo-piece="complete"></span>
-          </div>
-          <div class="table-fallback" aria-hidden="true">
-            <span>La tavola MONO</span>
-          </div>
-        </div>
+      <section class="flagship-hero" id="home" aria-labelledby="heroTitle">
+        <div class="ambient-orb orb-terracotta" aria-hidden="true"></div>
+        <div class="ambient-orb orb-olive" aria-hidden="true"></div>
 
-        <div class="hero-copy">
+        <div class="hero-copy" data-reveal>
           <img class="hero-logo" src="mono-loghissimo.svg" alt="MONO Bottega Gastronomica">
-          <p class="eyebrow">Santa Rita, Torino</p>
-          <h1 id="heroTitle">Cucina contemporanea, tradizionalmente moderna.</h1>
+          <p class="eyebrow">Digital flagship</p>
+          <h1 id="heroTitle">Una bottega. Più momenti. La stessa idea di buono.</h1>
           <p class="hero-lead">
-            MONO porta la cucina da ristorante nella vita di tutti i giorni:
-            ordinata, calda, buona, pronta a diventare casa.
+            MONO racconta la cucina da ristorante nella vita di tutti i giorni:
+            ordine, calore, qualità e memoria. Il sito ti fa entrare nel mondo,
+            l'app ti porta alla tavola.
           </p>
           <div class="hero-actions" aria-label="Azioni principali">
             <a class="button primary" href="#bottega">Scopri MONO</a>
-            <a class="button ghost light" href="#contatti">Vieni in bottega</a>
+            <a class="button ghost" href="app/#download">Scarica l'app</a>
+          </div>
+          <p class="hero-note">Cucina contemporanea, tradizionalmente moderna.</p>
+        </div>
+
+        <div class="hero-visual" data-reveal>
+          <div class="mono-table-experience table-large" data-mono-table data-auto-table>
+            <div class="table-light"></div>
+            <div class="table-scene" aria-hidden="true">
+              <span class="table-shadow"></span>
+              <div class="table-surface">
+                <span class="linen-runner"></span>
+                <span class="plate plate-main"></span>
+                <span class="plate plate-side"></span>
+                <span class="plate plate-dessert"></span>
+                <span class="table-piece bread-cluster" data-table-piece="bread"><i></i><i></i><i></i></span>
+                <span class="table-piece oil-bottle" data-table-piece="oil"><i></i></span>
+                <span class="table-piece gastronomy-dish" data-table-piece="gastronomy"><i></i><i></i><i></i></span>
+                <span class="table-piece steam-lines" data-table-piece="steam"><i></i><i></i><i></i></span>
+                <span class="table-piece pastry-piece" data-table-piece="pastry"><i></i></span>
+                <span class="table-piece aperitivo-glass" data-table-piece="aperitivo"><i></i></span>
+                <span class="table-piece takeaway-box" data-table-piece="takeaway"><i></i></span>
+                <span class="table-piece extra-cover cover-one" data-table-piece="conviviality"></span>
+                <span class="table-piece extra-cover cover-two" data-table-piece="conviviality"></span>
+                <span class="table-piece app-tile" data-table-piece="app"><i>App</i></span>
+              </div>
+            </div>
+            <div class="table-sequence-panel" data-table-status aria-live="polite">
+              <span data-table-count>01 / 09</span>
+              <strong data-table-title>La tavola si apre.</strong>
+              <small data-table-copy>Luce, lino e ceramica preparano il primo gesto.</small>
+              <div class="table-sequence-dots" data-table-dots aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="definition-section" id="bottega" data-reveal>
+        <div class="section-kicker">
+          <p class="eyebrow">Bottega gastronomica</p>
+          <h2>Non un ristorante in miniatura. Non un negozio di piatti pronti.</h2>
+        </div>
+        <div class="definition-grid">
+          <p>
+            MONO è una bottega gastronomica contemporanea: cucina interna,
+            banco curato, pasticceria, aperitivo, box e soluzioni per casa.
+            La promessa è semplice: mangiare meglio, con meno attrito.
+          </p>
+          <p>
+            Il sito non deve sostituire l'app. Deve spiegare perché MONO esiste,
+            cosa rende diverso il lavoro quotidiano e perché scaricare l'app
+            diventa il gesto naturale dopo aver capito il progetto.
+          </p>
+        </div>
+      </section>
+
+      <section class="storyline" id="tavola" aria-labelledby="tableStoryTitle">
+        <div class="story-sticky" data-reveal>
+          <div class="mono-table-experience table-compact" data-mono-table>
+            <div class="table-light"></div>
+            <div class="table-scene" aria-hidden="true">
+              <span class="table-shadow"></span>
+              <div class="table-surface">
+                <span class="linen-runner"></span>
+                <span class="plate plate-main"></span>
+                <span class="plate plate-side"></span>
+                <span class="plate plate-dessert"></span>
+                <span class="table-piece bread-cluster" data-table-piece="bread"><i></i><i></i><i></i></span>
+                <span class="table-piece oil-bottle" data-table-piece="oil"><i></i></span>
+                <span class="table-piece gastronomy-dish" data-table-piece="gastronomy"><i></i><i></i><i></i></span>
+                <span class="table-piece steam-lines" data-table-piece="steam"><i></i><i></i><i></i></span>
+                <span class="table-piece pastry-piece" data-table-piece="pastry"><i></i></span>
+                <span class="table-piece aperitivo-glass" data-table-piece="aperitivo"><i></i></span>
+                <span class="table-piece takeaway-box" data-table-piece="takeaway"><i></i></span>
+                <span class="table-piece extra-cover cover-one" data-table-piece="conviviality"></span>
+                <span class="table-piece extra-cover cover-two" data-table-piece="conviviality"></span>
+                <span class="table-piece app-tile" data-table-piece="app"><i>App</i></span>
+              </div>
+            </div>
+            <div class="table-sequence-panel" data-table-status aria-live="polite">
+              <span data-table-count>01 / 09</span>
+              <strong data-table-title>La tavola si apre.</strong>
+              <small data-table-copy>Luce, lino e ceramica preparano il primo gesto.</small>
+              <div class="table-sequence-dots" data-table-dots aria-hidden="true"></div>
+            </div>
           </div>
         </div>
 
-        <div class="table-sequence-panel" data-table-status aria-live="polite">
-          <span data-table-count>01 / 09</span>
-          <strong data-table-title>La tavola si apre.</strong>
-          <small data-table-copy>Luce, lino, ceramica: MONO prepara il primo gesto.</small>
-          <div class="table-sequence-dots" data-table-dots aria-hidden="true"></div>
-        </div>
-      </section>
+        <div class="story-panels">
+          <div class="section-kicker" data-table-step="clean" data-reveal>
+            <p class="eyebrow">La tavola che si compone</p>
+            <h2 id="tableStoryTitle">Il racconto nasce dagli oggetti, non dalle card.</h2>
+          </div>
 
-      <section class="narrative-step intro-band" id="bottega" data-table-step="gesture">
-        <div class="section-kicker">
-          <p class="eyebrow">Primo gesto</p>
-          <h2>Ogni cosa buona comincia da un gesto semplice.</h2>
-        </div>
-        <div class="intro-grid">
-          <p>
-            MONO nasce per riportare ordine, bellezza e qualitÃƒÆ’Ã‚Â  nel modo in cui
-            mangiamo ogni giorno. Pane, olio, luce: pochi segni, scelti bene.
-          </p>
-          <p>
-            Semplice. Buono. MONO. Una bottega italiana contemporanea, pensata
-            per il pranzo, la cena, un regalo e il tempo che torna a tavola.
-          </p>
-        </div>
-      </section>
-
-      <section class="narrative-step editorial-section" id="gastronomia" data-table-step="gastronomy">
-        <div class="editorial-copy">
-          <p class="eyebrow">Gastronomia</p>
-          <h2>Gastronomia contemporanea, per tutti i giorni.</h2>
-          <p>
-            Piatti da ristorante, pronti per il pranzo, la cena e quei momenti
-            in cui vuoi mangiare bene senza complicarti la vita.
-          </p>
-          <a class="text-link" href="#cosa-trovi">Scopri la gastronomia</a>
-        </div>
-        <div class="material-panel">
-          <span>Oggi in bottega</span>
-          <strong>Piatti caldi, banco gastronomico, preparazioni da rigenerare.</strong>
-        </div>
-      </section>
-
-      <section class="narrative-step editorial-section reverse" id="pasticceria" data-table-step="pastry">
-        <div class="editorial-copy">
-          <p class="eyebrow">Pasticceria</p>
-          <h2>Il dolce non chiude il pasto. Lo firma.</h2>
-          <p>
-            Monoporzioni, torte da credenza e piccoli gesti dolci pensati con
-            precisione, equilibrio e memoria.
-          </p>
-          <a class="text-link" href="#cosa-trovi">Scopri la pasticceria</a>
-        </div>
-        <div class="material-panel pastry-panel">
-          <span>Da regalare</span>
-          <strong>Dolci composti, packaging curato, stagionalitÃƒÆ’Ã‚Â  senza rumore.</strong>
-        </div>
-      </section>
-
-      <section class="narrative-step editorial-section" id="aperitivo" data-table-step="aperitivo">
-        <div class="editorial-copy">
-          <p class="eyebrow">Aperitivo</p>
-          <h2>L'aperitivo, messo in ordine.</h2>
-          <p>
-            Non abbondanza casuale, ma piccoli piatti, bicchieri giusti e una
-            tavola che invita a restare.
-          </p>
-          <a class="text-link" href="#contatti">Vivi l'aperitivo</a>
-        </div>
-        <div class="material-panel olive-panel">
-          <span>Fascia serale</span>
-          <strong>Una sosta piÃƒÆ’Ã‚Â¹ lenta, tra dehor, banco e convivio.</strong>
-        </div>
-      </section>
-
-      <section class="narrative-step editorial-section reverse" id="takeaway" data-table-step="takeaway">
-        <div class="editorial-copy">
-          <p class="eyebrow">Take-away</p>
-          <h2>Portare via non significa portare meno.</h2>
-          <p>
-            MONO arriva a casa con la stessa cura: piatti, box e preparazioni
-            pensate per rendere piÃƒÆ’Ã‚Â¹ buono il quotidiano.
-          </p>
-          <a class="text-link" href="#cosa-trovi">Guarda cosa trovi in bottega</a>
-        </div>
-        <div class="material-panel box-panel">
-          <span>La tua tavola</span>
-          <strong>Struttura pronta per ritiro in bottega, gift card e carrello futuro.</strong>
-        </div>
-      </section>
-
-      <section class="narrative-step editorial-section" id="catering" data-table-step="conviviality">
-        <div class="editorial-copy">
-          <p class="eyebrow">Catering e gifting</p>
-          <h2>Per una cena, un regalo, un tavolo piÃƒÆ’Ã‚Â¹ grande.</h2>
-          <p>
-            Box, dolci, catering e soluzioni su misura per occasioni private,
-            aziende ed eventi.
-          </p>
-          <a class="text-link" href="#contatti">Richiedi catering</a>
-        </div>
-        <div class="material-panel convivial-panel">
-          <span>PiÃƒÆ’Ã‚Â¹ coperti</span>
-          <strong>La bottega si allarga senza perdere misura.</strong>
-        </div>
-      </section>
-
-      <section class="section products-section" id="cosa-trovi" data-table-step="complete">
-        <div class="section-heading">
-          <p class="eyebrow">Cosa trovi</p>
-          <h2>Una bottega. PiÃƒÆ’Ã‚Â¹ momenti. La stessa idea di buono.</h2>
-          <p>
-            Le card sono giÃƒÆ’Ã‚Â  pensate per l'ecommerce futuro: categorie chiare,
-            tag editoriali, prezzo leggibile e CTA pronta per diventare acquisto.
-          </p>
-        </div>
-        <div class="filters" aria-label="Filtra prodotti">
-          <button class="filter active" type="button" data-filter="tutti">Tutti</button>
-          <button class="filter" type="button" data-filter="gastronomia">Gastronomia</button>
-          <button class="filter" type="button" data-filter="pasticceria">Pasticceria</button>
-          <button class="filter" type="button" data-filter="aperitivo">Aperitivo</button>
-          <button class="filter" type="button" data-filter="catering">Catering</button>
-        </div>
-        <div class="product-grid" id="productGrid"></div>
-      </section>
-
-      <section class="section method-section">
-        <div class="section-heading">
-          <p class="eyebrow">Metodo</p>
-          <h2>Dietro la semplicitÃƒÆ’Ã‚Â , metodo.</h2>
-        </div>
-        <div class="method-grid" aria-label="Metodo MONO">
-          <article>
-            <span>01</span>
-            <h3>Cucina interna</h3>
-            <p>Preparazioni quotidiane, procedure leggibili e qualitÃƒÆ’Ã‚Â  controllata.</p>
+          <article class="story-card" data-table-step="gesture" data-reveal>
+            <span class="story-number">01</span>
+            <p class="eyebrow">Pane e olio</p>
+            <h3>Ogni cosa buona comincia da un gesto semplice.</h3>
+            <p>Pane, olio, luce: materia riconoscibile, trattata con misura. È il modo MONO di dire accoglienza.</p>
           </article>
-          <article>
-            <span>02</span>
-            <h3>Materie prime</h3>
-            <p>Selezione precisa, stagionalitÃƒÆ’Ã‚Â  e pochi elementi che lavorano bene.</p>
+
+          <article class="story-card terracotta-card" data-table-step="gastronomy" data-reveal>
+            <span class="story-number">02</span>
+            <p class="eyebrow">Gastronomia</p>
+            <h3>Piatti da ristorante, pensati per il quotidiano.</h3>
+            <p>Preparazioni calde, banco gastronomico e piatti da rigenerare: qualità senza complicare la giornata.</p>
           </article>
-          <article>
-            <span>03</span>
-            <h3>Cura del banco</h3>
-            <p>Ordine operativo, servizio caldo e una lettura semplice dell'offerta.</p>
+
+          <article class="story-card coral-card" data-table-step="pastry" data-reveal>
+            <span class="story-number">03</span>
+            <p class="eyebrow">Pasticceria</p>
+            <h3>Il dolce non chiude il pasto. Lo firma.</h3>
+            <p>Monoporzioni, torte da credenza e piccoli gesti dolci: precisione, equilibrio e memoria.</p>
           </article>
-          <article>
-            <span>04</span>
-            <h3>Attenzione al cliente</h3>
-            <p>Inviti, promozioni, app e relazione senza rumore commerciale.</p>
+
+          <article class="story-card olive-card" data-table-step="aperitivo" data-reveal>
+            <span class="story-number">04</span>
+            <p class="eyebrow">Aperitivo</p>
+            <h3>L'aperitivo, messo in ordine.</h3>
+            <p>Non abbondanza casuale, ma piccoli piatti, bicchieri giusti e una tavola che invita a restare.</p>
+          </article>
+
+          <article class="story-card champagne-card" data-table-step="takeaway" data-reveal>
+            <span class="story-number">05</span>
+            <p class="eyebrow">Take-away e gifting</p>
+            <h3>Portare via non significa portare meno.</h3>
+            <p>Box, dolci, regali e soluzioni per casa mantengono la stessa cura del banco.</p>
+          </article>
+
+          <article class="story-card dark-card" data-table-step="app" data-reveal>
+            <span class="story-number">06</span>
+            <p class="eyebrow">Gateway digitale</p>
+            <h3>Quando hai capito MONO, l'app diventa il tuo posto a tavola.</h3>
+            <p>Ordini, vantaggi, caffè sospeso, inviti e attenzioni quotidiane: la vendita vive lì, non dentro mille pulsanti.</p>
+            <a class="button primary" href="app/#download">Scarica l'app</a>
           </article>
         </div>
       </section>
 
-      <section class="section convivium-preview" id="monoconvivium">
-        <div>
+      <section class="values-section" id="metodo">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">Dietro la semplicità, metodo</p>
+          <h2>Il bello non è decorazione. È organizzazione visibile.</h2>
+          <p>
+            MONO tiene insieme cucina, banco, servizio e progetto sociale con un
+            metodo chiaro: pochi elementi, ruoli leggibili, qualità controllata.
+          </p>
+        </div>
+        <div class="value-grid">
+          <article class="value-card" data-reveal>
+            <span>Ordine</span>
+            <h3>Procedure semplici.</h3>
+            <p>La bottega funziona perché ogni gesto è leggibile, ripetibile e umano.</p>
+          </article>
+          <article class="value-card" data-reveal>
+            <span>Cura</span>
+            <h3>Materia scelta bene.</h3>
+            <p>Pochi elementi, stagionalità e preparazioni quotidiane che non gridano.</p>
+          </article>
+          <article class="value-card" data-reveal>
+            <span>Memoria</span>
+            <h3>Tradizione senza nostalgia.</h3>
+            <p>Piatti riconoscibili, portati in un linguaggio contemporaneo e accessibile.</p>
+          </article>
+          <article class="value-card" data-reveal>
+            <span>Futuro</span>
+            <h3>Digitale con senso.</h3>
+            <p>L'app non è un gadget: è il modo più semplice per ordinare, tornare e partecipare.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="convivium-feature" id="convivium" data-table-step="conviviality">
+        <div class="convivium-copy" data-reveal>
           <p class="eyebrow">MONO Convivium</p>
           <h2>Il buono si riconosce anche da come si lavora insieme.</h2>
           <p>
-            MONO Convivium ÃƒÆ’Ã‚Â¨ il progetto sociale di MONO: inclusione, formazione
-            e lavoro dignitoso integrati nella vita quotidiana della bottega.
+            MONO Convivium è il progetto sociale integrato nella bottega:
+            inclusione, formazione e lavoro dignitoso non come appendice,
+            ma come sistema operativo dell'impresa.
           </p>
-          <a class="button primary" href="mono-convivium/">Scopri MONO Convivium</a>
+          <a class="button ghost" href="mono-convivium/">Scopri MONO Convivium</a>
         </div>
-        <div class="document-preview">
-          <img src="mono-convivium.svg" alt="Monoconvivium">
-          <p>Una pagina dedicata racconta visione, metodo e documento PDF.</p>
+        <div class="convivium-mark" data-reveal>
+          <img src="mono-convivium.svg" alt="MONO Convivium">
+          <p>Formazione, affiancamento, mansioni chiare, autonomia progressiva.</p>
         </div>
       </section>
 
-      <section class="section app-section" id="app">
-        <div>
-          <p class="eyebrow">App MONO</p>
-          <h2>La bottega, anche sul telefono.</h2>
+      <section class="app-gateway" id="app" data-table-step="app">
+        <div data-reveal>
+          <p class="eyebrow">La bottega, anche sul telefono</p>
+          <h2>Il sito racconta. L'app tiene il filo.</h2>
           <p>
-            Ordini, vantaggi, caffÃƒÆ’Ã‚Â¨ sospeso, inviti e piccole attenzioni pensate
-            per accompagnare il quotidiano.
+            Dopo il racconto viene il gesto: ordinare, ritirare, ricevere vantaggi,
+            partecipare al caffè sospeso, essere invitato quando c'è qualcosa
+            che vale la pena sapere.
           </p>
+          <div class="gateway-actions">
+            <a class="button primary" href="app/#download">Scarica l'app</a>
+            <a class="button ghost" href="contatti/">Vieni in bottega</a>
+          </div>
         </div>
-        <div class="app-actions" aria-label="Azioni app MONO">
-          <a class="app-action order" href="https://mono-app-jet.vercel.app/order">
-            <span>01</span>
-            <strong>Ordina e ritira</strong>
-            <small>Menu, orari, preferenze e ritiro in bottega.</small>
-          </a>
-          <a class="app-action wallet" href="https://mono-app-jet.vercel.app/wallet">
-            <span>02</span>
-            <strong>Wallet e vantaggi</strong>
-            <small>Punti, ricariche, promozioni e attenzioni personali.</small>
-          </a>
-          <a class="app-action loyalty-link" href="app/">
-            <span>03</span>
-            <strong>Il tuo posto a tavola</strong>
-            <small>Una pagina dedicata all'ecosistema digitale MONO.</small>
-          </a>
+        <div class="phone-card" data-reveal aria-hidden="true">
+          <span class="phone-pill">MONO</span>
+          <strong>Il tuo posto a tavola, anche digitale.</strong>
+          <small>Ordini · vantaggi · inviti · caffè sospeso</small>
         </div>
       </section>
 
-      <section class="section final-gateway" id="contatti" data-table-step="complete">
-        <div>
-          <p class="eyebrow">Tavola completa</p>
-          <h2>Una bottega. PiÃƒÆ’Ã‚Â¹ momenti. La stessa idea di buono.</h2>
-          <p>
-            Vieni da MONO, entra nell'app o chiedi una proposta per catering,
-            gifting e tavoli piÃƒÆ’Ã‚Â¹ grandi.
-          </p>
-        </div>
-        <div class="contact-actions" aria-label="Contatti MONO">
-          <a class="button primary" href="https://www.google.com/maps/search/?api=1&query=MONO%20Bottega%20Gastronomica%20Santa%20Rita%20Torino" target="_blank" rel="noopener">Apri mappa</a>
-          <a class="button ghost light" href="tel:+390000000000">Chiama</a>
-          <a class="button ghost light" href="https://wa.me/390000000000" target="_blank" rel="noopener">WhatsApp</a>
-          <a class="button ghost light" href="app/">Entra nel mondo MONO</a>
+      <section class="contact-strip" id="contatti" data-reveal>
+        <p class="eyebrow">Santa Rita, Torino</p>
+        <h2>Vieni in bottega, poi torna dall'app.</h2>
+        <div class="contact-actions">
+          <a class="button primary" href="contatti/">Contatti</a>
+          <a class="button ghost" href="https://wa.me/390000000000" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="button ghost" href="app/#download">Scarica l'app</a>
         </div>
       </section>
     </main>
 
-    <div class="app-prompt" data-app-prompt hidden role="dialog" aria-modal="true" aria-labelledby="appPromptTitle">
+    <div class="app-prompt" data-app-prompt role="dialog" aria-modal="true" aria-labelledby="appPromptTitle" hidden>
       <div class="app-prompt-backdrop" data-app-prompt-close></div>
       <section class="app-prompt-panel" tabindex="-1">
-        <button class="app-prompt-close" type="button" data-app-prompt-close aria-label="Chiudi invito app">ÃƒÆ’Ã¢â‚¬â€</button>
-        <div class="app-prompt-mark" aria-hidden="true">
-          <img src="icons/icon-192.svg" alt="">
-        </div>
-        <p class="eyebrow">La bottega, anche sul telefono.</p>
+        <button class="app-prompt-close" type="button" data-app-prompt-close aria-label="Chiudi invito app">×</button>
+        <p class="eyebrow">App MONO</p>
         <h2 id="appPromptTitle">Entra nel mondo MONO</h2>
+        <p class="app-prompt-subtitle">La bottega, anche sul telefono.</p>
         <p>
-          Ordini, vantaggi, caffÃƒÆ’Ã‚Â¨ sospeso, inviti e piccole attenzioni per
-          rendere piÃƒÆ’Ã‚Â¹ buono il quotidiano.
+          Ordini, vantaggi, caffè sospeso, inviti e piccole attenzioni per
+          rendere più buono il quotidiano.
         </p>
         <div class="store-actions" aria-label="Scarica app MONO">
           <a class="button primary" data-app-store href="#">App Store</a>
@@ -329,21 +296,22 @@
         <small>Il tuo posto a tavola, anche digitale.</small>
       </section>
     </div>
+
     <button class="floating-app-button" type="button" data-floating-app hidden title="App MONO" aria-label="Apri invito App MONO">
-      <img src="icons/icon-192.svg" alt="">
+      App
     </button>
 
     <footer class="site-footer">
       <strong>MONO Bottega Gastronomica</strong>
       <nav aria-label="Navigazione footer">
-        <a href="la-bottega/">La Bottega</a>
+        <a href="#bottega">Cos'è MONO</a>
         <a href="mono-convivium/">MONO Convivium</a>
         <a href="app/">App</a>
         <a href="contatti/">Contatti</a>
       </nav>
     </footer>
 
-    <script src="app.js?v=20260705-pop-palette"></script>
-    <script src="mono-3d.js?v=20260705-pop-palette"></script>
+    <script src="app.js?v=20260706-flagship-v1"></script>
+    <script src="mono-3d.js?v=20260706-flagship-v1"></script>
   </body>
 </html>
