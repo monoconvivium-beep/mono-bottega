@@ -2,6 +2,7 @@ class MonoTableExperience {
   constructor(root) {
     this.root = root;
     this.pieces = [...root.querySelectorAll("[data-table-piece]")];
+    this.frames = [...root.querySelectorAll("[data-table-frame]")];
     this.statusCount = root.querySelector("[data-table-count]");
     this.statusTitle = root.querySelector("[data-table-title]");
     this.statusCopy = root.querySelector("[data-table-copy]");
@@ -12,54 +13,63 @@ class MonoTableExperience {
     this.sequence = [
       {
         id: "clean",
+        frame: "clean",
         title: "La tavola si apre.",
         copy: "Luce, lino e ceramica preparano il primo gesto.",
         pieces: []
       },
       {
         id: "gesture",
+        frame: "gesture",
         title: "Pane e olio.",
         copy: "La materia semplice diventa accoglienza.",
         pieces: ["bread", "oil"]
       },
       {
         id: "gastronomy",
+        frame: "gastronomy",
         title: "Il piatto caldo.",
         copy: "La gastronomia porta il ristorante nel quotidiano.",
         pieces: ["bread", "oil", "gastronomy", "steam"]
       },
       {
         id: "pastry",
+        frame: "complete",
         title: "Il dolce firma.",
         copy: "La pasticceria entra come equilibrio e memoria.",
         pieces: ["bread", "oil", "gastronomy", "steam", "pastry"]
       },
       {
         id: "aperitivo",
+        frame: "complete",
         title: "Il bicchiere giusto.",
         copy: "L'aperitivo mette ordine al tempo che resta.",
         pieces: ["bread", "oil", "gastronomy", "steam", "pastry", "aperitivo"]
       },
       {
         id: "takeaway",
+        frame: "complete",
         title: "La cura si porta via.",
         copy: "Box, gifting e quotidiano restano nello stesso gesto.",
         pieces: ["bread", "oil", "gastronomy", "steam", "pastry", "aperitivo", "takeaway"]
       },
       {
         id: "conviviality",
+        frame: "complete",
         title: "La tavola si allarga.",
         copy: "Più coperti, più momenti, la stessa idea di buono.",
         pieces: ["bread", "oil", "gastronomy", "steam", "pastry", "aperitivo", "takeaway", "conviviality"]
       },
       {
         id: "app",
+        frame: "complete",
         title: "Il gateway digitale.",
         copy: "Quando il racconto è chiaro, l'app accompagna il gesto.",
         pieces: ["bread", "oil", "gastronomy", "steam", "pastry", "aperitivo", "takeaway", "conviviality", "app"]
       },
       {
         id: "complete",
+        frame: "complete",
         title: "MONO è completo.",
         copy: "Una bottega. Più momenti. La stessa idea di buono.",
         pieces: ["bread", "oil", "gastronomy", "steam", "pastry", "aperitivo", "takeaway", "conviviality", "app"]
@@ -96,8 +106,16 @@ class MonoTableExperience {
     const nextIndex = Math.max(0, Math.min(index, this.sequence.length - 1));
     const item = this.sequence[nextIndex];
     this.activeIndex = nextIndex;
+    this.applyFrame(item.frame);
     this.applyPieces(item.pieces);
     this.updateStatus(item);
+  }
+
+  applyFrame(activeFrame) {
+    this.frames.forEach((frame) => {
+      frame.classList.toggle("is-visible", frame.dataset.tableFrame === activeFrame);
+    });
+    this.root.dataset.activeFrame = activeFrame;
   }
 
   applyPieces(visiblePieces) {
@@ -143,8 +161,12 @@ class MonoTableExperience {
       const rect = this.root.getBoundingClientRect();
       const x = Math.round(((event.clientX - rect.left) / rect.width) * 100);
       const y = Math.round(((event.clientY - rect.top) / rect.height) * 100);
+      const parallaxX = ((x - 50) / 50).toFixed(2);
+      const parallaxY = ((y - 50) / 50).toFixed(2);
       this.root.style.setProperty("--light-x", `${x}%`);
       this.root.style.setProperty("--light-y", `${y}%`);
+      this.root.style.setProperty("--parallax-x", `${Number(parallaxX) * -8}px`);
+      this.root.style.setProperty("--parallax-y", `${Number(parallaxY) * -6}px`);
     });
   }
 }

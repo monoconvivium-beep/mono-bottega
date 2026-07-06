@@ -1,5 +1,5 @@
-const APP_STORE_URL = "#";
-const GOOGLE_PLAY_URL = "#";
+const APP_STORE_URL = "https://mono-app-jet.vercel.app/home";
+const GOOGLE_PLAY_URL = "https://mono-app-jet.vercel.app/wallet";
 const APP_PROMPT_STORAGE_KEY = "mono-app-prompt-dismissed-at";
 const APP_PROMPT_COOLDOWN = 7 * 24 * 60 * 60 * 1000;
 
