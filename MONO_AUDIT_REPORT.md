@@ -18,12 +18,14 @@ Data: 6 luglio 2026
   - `assets/mono-table/frame-02-bread-oil.webp`
   - `assets/mono-table/frame-03-gastronomy.webp`
   - `assets/mono-table/frame-04-complete.webp`
+- Aggiunto un master hero più scenografico per il nuovo reveal:
+  - `assets/mono-table/mono-table-master-wow.webp`
 - Aggiornata la logica `MonoTableExperience` per gestire frame progressivi, luce interattiva e micro-parallasse.
 - Rimossi i CSS obsoleti della tavola disegnata.
 - Corretti link morti e sostituiti con destinazioni reali verso app web MONO.
 - Riscritta la pagina Contatti eliminando placeholder e testo provvisorio.
-- Aggiornato cache-busting a `20260706-hyperreal-v1`.
-- Aggiornato service worker a `mono-site-v11`.
+- Aggiornato cache-busting a `20260707-wow-table-v1`.
+- Aggiornato service worker a `mono-site-v12`.
 
 ## Verifiche da eseguire
 
