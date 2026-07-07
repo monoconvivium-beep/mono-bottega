@@ -1,130 +1,113 @@
 # MONO Bottega Gastronomica
 
-Sito statico gratuito per MONO con catalogo prodotti, carrello, ordine demo,
-programma fedelta e notifiche promozionali locali.
+Digital flagship statica per MONO Bottega Gastronomica.
 
-## Piattaforma consigliata
+Il sito racconta MONO, costruisce desiderio e fiducia, presenta gastronomia,
+pasticceria, aperitivo, catering e MONO Convivium. L'app resta il motore
+operativo per ordini, wallet, punti, sconti, notifiche, inviti e ritorno cliente.
 
-La soluzione piu gratuita e semplice e GitHub Pages:
+## Sito Online
 
-- hosting gratuito per file HTML, CSS e JavaScript;
-- dominio incluso del tipo `nomeutente.github.io`;
-- possibilita di collegare un dominio acquistato in futuro;
-- nessun database obbligatorio per partire.
+- GitHub Pages: `https://monoconvivium-beep.github.io/mono-bottega/`
+- Versione cache-busting: `?v=20260707-flagship-final-v1`
+- Service worker: `mono-site-v16`
 
-Alternative valide: Netlify Free o Cloudflare Pages Free. Netlify e piu comodo
-se in futuro vuoi moduli, funzioni serverless e integrazioni no-code.
+## Esperienza Visuale
 
-## Pubblicazione gratuita su GitHub Pages
+La home usa `MONO Table Ritual`: una hero full-bleed iperrealistica con asset
+WebP, CSS 3D, parallax leggero, fumo, luce cinematografica e micro-reveal.
 
-1. Crea un repository GitHub, per esempio `mono-bottega`.
-2. Carica tutti i file di questa cartella nel repository.
-3. Vai su `Settings` > `Pages`.
-4. In `Build and deployment`, scegli `Deploy from a branch`.
-5. Seleziona branch `main` e cartella `/root`.
-6. Dopo pochi minuti il sito sara online all'indirizzo GitHub Pages indicato.
+Non sono installate librerie 3D pesanti. Three.js o `model-viewer` vanno valutati
+solo con GLB reali, compressi e caricati dopo LCP.
 
-Se vuoi usare il terminale:
+## Asset Principali
 
-```bash
-git add .
-git commit -m "Create MONO website"
-git branch -M main
-git remote add origin https://github.com/TUO-UTENTE/mono-bottega.git
-git push -u origin main
+- `assets/mono-table/mono-table-ritual-desktop.webp`
+- `assets/mono-table/mono-table-ritual-mobile.webp`
+- `assets/mono-table/mono-table-ritual-og.webp`
+- `assets/brand/` per il sistema logo operativo.
+- `assets/product-visuals/` per visual prodotto 3D-like leggeri.
+- `icons/` per icone PWA MONO.
+
+## Brand System
+
+Varianti logo operative:
+
+- `assets/brand/mono-logo-primary.svg`
+- `assets/brand/mono-logo-light.svg`
+- `assets/brand/mono-logo-mono.svg`
+- `assets/brand/mono-logo-champagne.svg`
+- `assets/brand/mono-convivium-primary.svg`
+- `assets/brand/mono-convivium-light.svg`
+
+Gli SVG originali in root restano come sorgente storica.
+
+## Tracking
+
+`app.js` invia eventi `mono_cta_click` a `dataLayer` e, se configurato,
+a GA4/GTM.
+
+Per attivare analytics reali, impostare in pagina prima di `app.js`:
+
+```html
+<script>
+  window.MONO_ANALYTICS_CONFIG = {
+    ga4MeasurementId: "G-XXXXXXX",
+    gtmContainerId: "GTM-XXXXXXX"
+  };
+</script>
 ```
 
-Oppure usa lo script incluso:
+Lasciare vuoti gli ID evita caricamenti esterni.
 
-```powershell
-.\publish-github-pages.ps1 -RepositoryUrl "https://github.com/TUO-UTENTE/mono-bottega.git"
-```
+## SEO Locale
 
-## Come provarlo
+Già presenti:
 
-Per vedere correttamente la scena 3D, apri il sito tramite un piccolo server
-locale dalla cartella progetto:
+- canonical;
+- Open Graph e Twitter Card;
+- schema `FoodEstablishment`;
+- `robots.txt`;
+- `sitemap.xml`.
+
+Da completare solo con dati reali:
+
+- indirizzo completo;
+- telefono;
+- orari;
+- link social;
+- Google Search Console;
+- Google Business Profile;
+- schema `openingHours`, `telephone`, `geo`, `sameAs`, `menu`.
+
+## Come Provarlo In Locale
+
+Aprire da piccolo server locale, non direttamente da file:
 
 ```bash
 python -m http.server 4173 --bind 127.0.0.1
 ```
 
-Poi apri `http://127.0.0.1:4173/`.
+Poi visitare `http://127.0.0.1:4173/`.
 
-Per testare installazione app e service worker e meglio pubblicarlo online
-oppure servirlo da locale, perche aprire direttamente `index.html` puo bloccare
-i moduli JavaScript esterni.
+## Pubblicazione
 
-## Flusso incluso
+Il repository è pubblicato su GitHub Pages dal branch principale.
 
-1. Il cliente guarda i prodotti per gastronomia, pasticceria e bistrot.
-2. Aggiunge prodotti al carrello.
-3. Inserisce dati, telefono e preferenza ritiro/consegna.
-4. Conferma un ordine demo.
-5. Il sistema salva punti fedelta nel browser del cliente.
-6. Il cliente puo attivare notifiche promozionali.
+Flusso operativo:
 
-## Esperienza 3D
-
-La home usa una scena Three.js gratuita caricata da CDN. La scena funziona come
-ingresso esperienziale al progetto MONO:
-
-- tavola/bancone interattivo;
-- mondi colore per gastronomia, pasticceria, bistrot e fedelta;
-- movimento al mouse;
-- click sugli elementi per entrare nelle sezioni o aprire l'app.
-
-Per una pubblicazione completamente autonoma si puo scaricare Three.js nel
-progetto e servirlo localmente, evitando CDN esterne.
-
-## Rapporto sito/app
-
-Il sito pubblico ha il compito di raccontare MONO e generare effetto wow.
-L'app esistente su Vercel resta il motore operativo:
-
-- ordini: `https://mono-app-jet.vercel.app/order`;
-- wallet: `https://mono-app-jet.vercel.app/wallet`;
-- tessera/fedelta: `https://mono-app-jet.vercel.app/home`.
-
-Questa separazione permette di pubblicare il sito gratuitamente su GitHub Pages
-senza rinunciare alle funzioni gia sviluppate nell'app.
-
-## Monoconvivium
-
-Nel sito va prevista una sezione dedicata al progetto sociale Monoconvivium.
-La presentazione/PDF dovra essere visibile direttamente nella pagina, tramite
-viewer incorporato, e disponibile anche come download.
-
-File sorgente indicato: `MONO_Convivium_presentazione.html`.
-
-## Pagamenti online
-
-Per restare a costo zero fisso, il pagamento reale non e ancora collegato.
-Quando serve incassare online, la via piu semplice e:
-
-- Stripe Payment Links per link di pagamento prodotto/carrello;
-- PayPal.me o PayPal Checkout;
-- Satispay Business, se adatto alla bottega.
-
-Questi servizi non richiedono sviluppo backend, ma applicano commissioni sulle
-transazioni.
-
-## Branding
-
-Il sito ora usa:
-
-- `mono-loghissimo.svg` per logo principale e hero;
-- `mono-convivium.svg` come elemento visuale nel riepilogo ordine.
+```bash
+git add .
+git commit -m "Build MONO flagship final polish"
+git push
+```
 
 ## Palette MONO
 
-- Cashmere: `#F4ECDD`;
-- Warm Butter: `#EFE3C6`;
-- Terracotta: `#B85C38`;
-- Coral: `#E27A60`;
-- Burnt Olive: `#6E6A3C`;
-- Champagne: `#CBA75A`;
-- Anthracite: `#262321`.
-
-Le icone PWA in `icons/` sono ancora provvisorie. Possiamo sostituirle con una
-versione quadrata derivata dal file `mono icon.pdf` o da un SVG dedicato.
+- Cashmere: `#F4ECDD`
+- Warm Butter: `#EFE3C6`
+- Terracotta: `#B85C38`
+- Coral: `#E27A60`
+- Burnt Olive: `#6E6A3C`
+- Champagne: `#CBA75A`
+- Anthracite: `#262321`

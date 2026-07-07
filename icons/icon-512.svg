@@ -1,4 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="MONO">
-  <rect width="512" height="512" fill="#262321"/>
-  <text x="256" y="290" fill="#F4ECDD" font-family="Georgia, serif" font-size="154" font-weight="700" text-anchor="middle">mono</text>
+  <defs>
+    <radialGradient id="bg" cx="34%" cy="22%" r="78%">
+      <stop offset="0" stop-color="#F4ECDD"/>
+      <stop offset="0.58" stop-color="#CBA75A"/>
+      <stop offset="1" stop-color="#262321"/>
+    </radialGradient>
+    <linearGradient id="rim" x1="40" x2="472" y1="50" y2="462">
+      <stop offset="0" stop-color="#FBF6EA"/>
+      <stop offset="0.52" stop-color="#CBA75A"/>
+      <stop offset="1" stop-color="#B85C38"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="118" fill="#262321"/>
+  <circle cx="256" cy="256" r="188" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="188" fill="none" stroke="url(#rim)" stroke-width="22"/>
+  <text x="256" y="268" fill="#262321" font-family="Georgia, 'Times New Roman', serif" font-size="122" font-weight="700" text-anchor="middle">mono</text>
+  <text x="256" y="326" fill="#262321" font-family="Arial, sans-serif" font-size="30" font-weight="800" letter-spacing="9" text-anchor="middle">BOTTEGA</text>
 </svg>

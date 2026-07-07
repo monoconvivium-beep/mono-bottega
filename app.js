@@ -3,6 +3,10 @@ const GOOGLE_PLAY_URL = "https://mono-app-jet.vercel.app/wallet";
 const APP_PROMPT_STORAGE_KEY = "mono-app-prompt-dismissed-at";
 const APP_PROMPT_COOLDOWN = 7 * 24 * 60 * 60 * 1000;
 const TRACKING_EVENT_NAME = "mono_cta_click";
+const ANALYTICS_CONFIG = {
+  ga4MeasurementId: "",
+  gtmContainerId: ""
+};
 
 const appPrompt = document.querySelector("[data-app-prompt]");
 const floatingAppButton = document.querySelector("[data-floating-app]");
@@ -201,20 +205,64 @@ function emitTrackingEvent(action, element) {
   const eventPayload = {
     event: TRACKING_EVENT_NAME,
     action,
-    label: element.textContent?.trim() || element.getAttribute("aria-label") || action,
-    href: element.getAttribute("href") || "",
-    path: window.location.pathname
+    event_category: "mono_cta",
+    link_text: element.textContent?.trim() || element.getAttribute("aria-label") || action,
+    link_url: element.getAttribute("href") || "",
+    page_path: window.location.pathname
   };
 
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push(eventPayload);
 
   if (typeof window.gtag === "function") {
-    window.gtag("event", TRACKING_EVENT_NAME, eventPayload);
+    window.gtag("event", action, eventPayload);
   }
 
   if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
     console.info("[MONO tracking]", eventPayload);
+  }
+}
+
+function loadScript(src) {
+  const existingScript = document.querySelector(`script[src="${src}"]`);
+
+  if (existingScript) {
+    return;
+  }
+
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = src;
+  document.head.append(script);
+}
+
+function setupAnalytics() {
+  const runtimeConfig = window.MONO_ANALYTICS_CONFIG || {};
+  const config = {
+    ...ANALYTICS_CONFIG,
+    ...runtimeConfig
+  };
+
+  window.dataLayer = window.dataLayer || [];
+
+  if (config.gtmContainerId) {
+    window.dataLayer.push({
+      event: "mono_gtm_ready",
+      gtm_container_id: config.gtmContainerId
+    });
+    loadScript(`https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(config.gtmContainerId)}`);
+  }
+
+  if (config.ga4MeasurementId) {
+    window.gtag = window.gtag || function gtag() {
+      window.dataLayer.push(arguments);
+    };
+
+    window.gtag("js", new Date());
+    window.gtag("config", config.ga4MeasurementId, {
+      send_page_view: true
+    });
+    loadScript(`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(config.ga4MeasurementId)}`);
   }
 }
 
@@ -231,6 +279,31 @@ function setupTracking() {
     }
 
     emitTrackingEvent(trackedElement.dataset.track, trackedElement);
+  });
+}
+
+function setupVisualTilt() {
+  const canAnimate = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!canAnimate) {
+    return;
+  }
+
+  const visuals = [...document.querySelectorAll(".product-card-visual, .page-hero-visual")];
+
+  visuals.forEach((visual) => {
+    visual.addEventListener("pointermove", (event) => {
+      const rect = visual.getBoundingClientRect();
+      const x = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
+      const y = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
+      visual.style.setProperty("--visual-tilt-x", `${(-x * 5).toFixed(2)}deg`);
+      visual.style.setProperty("--visual-tilt-y", `${(y * 4).toFixed(2)}deg`);
+    });
+
+    visual.addEventListener("pointerleave", () => {
+      visual.style.removeProperty("--visual-tilt-x");
+      visual.style.removeProperty("--visual-tilt-y");
+    });
   });
 }
 
@@ -272,5 +345,7 @@ if ("serviceWorker" in navigator) {
 setupMobileMenu();
 setupHeaderState();
 setupReveals();
+setupAnalytics();
 setupAppPrompt();
 setupTracking();
+setupVisualTilt();

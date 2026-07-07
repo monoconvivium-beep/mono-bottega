@@ -54,14 +54,14 @@ class MonoTableExperience {
       },
       {
         id: "app",
-        title: "La tavola e pronta.",
+        title: "La tavola è pronta.",
         copy: "Ora il racconto lascia spazio al gesto: ordina, torna, partecipa.",
         pieces: ["service", "grissini", "oil", "bread", "butter", "wine", "dessert", "complete"]
       },
       {
         id: "complete",
-        title: "MONO e completo.",
-        copy: "Una bottega. Piu momenti. La stessa idea di buono.",
+        title: "MONO è completo.",
+        copy: "Una bottega. Più momenti. La stessa idea di buono.",
         pieces: ["service", "grissini", "oil", "bread", "butter", "wine", "dessert", "complete"]
       }
     ];

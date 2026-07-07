@@ -319,7 +319,6 @@ h3 {
 .hero-logo {
   background: transparent;
   background-color: transparent !important;
-  filter: brightness(0) invert(1);
   height: auto;
   margin-bottom: 34px;
   max-height: 126px;
@@ -617,6 +616,28 @@ h3 {
   letter-spacing: 0.02em;
   margin-top: 8px;
   text-decoration: none;
+}
+
+.product-card-visual {
+  --visual-lift: 0px;
+  --visual-scale: 1;
+  --visual-tilt-x: 0deg;
+  --visual-tilt-y: 0deg;
+  aspect-ratio: 3 / 2;
+  border: 1px solid rgba(203, 167, 90, 0.24);
+  border-radius: 26px;
+  box-shadow: 0 28px 70px rgba(38, 35, 33, 0.14);
+  margin: -18px -18px 24px;
+  object-fit: cover;
+  transform: perspective(900px) translateY(var(--visual-lift)) rotateX(var(--visual-tilt-y)) rotateY(var(--visual-tilt-x)) scale(var(--visual-scale));
+  transition: transform 420ms cubic-bezier(0.2, 0.9, 0.18, 1), box-shadow 420ms ease;
+  width: calc(100% + 36px);
+}
+
+.page-card:hover .product-card-visual {
+  --visual-lift: -6px;
+  --visual-scale: 1.015;
+  box-shadow: 0 34px 86px rgba(38, 35, 33, 0.2);
 }
 
 .value-grid,
@@ -954,6 +975,12 @@ h3 {
   padding-top: 150px;
 }
 
+.page-hero.with-visual {
+  display: grid;
+  gap: clamp(24px, 4vw, 54px);
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.62fr);
+}
+
 .page-hero h1 {
   max-width: 1050px;
 }
@@ -961,6 +988,39 @@ h3 {
 .page-hero p {
   color: rgba(255, 249, 238, 0.78);
   max-width: 780px;
+}
+
+.page-hero.with-visual .eyebrow,
+.page-hero.with-visual h1,
+.page-hero.with-visual p,
+.page-hero.with-visual .hero-actions {
+  grid-column: 1;
+}
+
+.page-hero-visual {
+  --visual-lift: 0px;
+  --visual-scale: 1;
+  --visual-tilt-x: -5deg;
+  --visual-tilt-y: 2deg;
+  align-self: center;
+  border: 1px solid rgba(203, 167, 90, 0.28);
+  border-radius: 34px;
+  box-shadow: 0 38px 96px rgba(0, 0, 0, 0.32);
+  grid-column: 2;
+  grid-row: 1 / span 4;
+  justify-self: end;
+  max-height: 410px;
+  object-fit: cover;
+  transform: perspective(1000px) translateY(var(--visual-lift)) rotateX(var(--visual-tilt-y)) rotateY(var(--visual-tilt-x)) scale(var(--visual-scale));
+  transform-origin: center;
+  transition: transform 420ms cubic-bezier(0.2, 0.9, 0.18, 1), box-shadow 420ms ease;
+  width: min(100%, 520px);
+}
+
+.page-hero-visual:hover {
+  --visual-lift: -4px;
+  --visual-scale: 1.012;
+  box-shadow: 0 46px 112px rgba(0, 0, 0, 0.38);
 }
 
 .page-section {
@@ -1278,8 +1338,25 @@ h3 {
   .definition-section,
   .storyline,
   .convivium-feature,
-  .app-gateway {
+  .app-gateway,
+  .page-hero.with-visual {
     grid-template-columns: 1fr;
+  }
+
+  .page-hero.with-visual .eyebrow,
+  .page-hero.with-visual h1,
+  .page-hero.with-visual p,
+  .page-hero.with-visual .hero-actions,
+  .page-hero-visual {
+    grid-column: 1;
+  }
+
+  .page-hero-visual {
+    grid-row: auto;
+    justify-self: start;
+    max-height: 360px;
+    transform: none;
+    width: min(100%, 560px);
   }
 
   .story-sticky {
@@ -1346,7 +1423,6 @@ h3 {
   }
 
   .hero-logo {
-    filter: brightness(0) invert(1);
     margin-bottom: 24px;
     width: 160px;
   }

@@ -6,20 +6,20 @@
     <meta name="theme-color" content="#262321">
     <meta
       name="description"
-      content="MONO e una bottega gastronomica contemporanea a Torino: tavola rituale, cucina, pasticceria, aperitivo, progetto sociale e app per ordini, wallet e vantaggi."
+      content="MONO è una bottega gastronomica contemporanea a Torino: tavola rituale, cucina, pasticceria, aperitivo, progetto sociale e app per ordini, wallet e vantaggi."
     >
     <link rel="canonical" href="https://monoconvivium-beep.github.io/mono-bottega/">
     <meta property="og:title" content="MONO - Bottega Gastronomica">
     <meta property="og:url" content="https://monoconvivium-beep.github.io/mono-bottega/">
     <meta
       property="og:description"
-      content="Una digital flagship gastronomica: la tavola prende luce, il sito racconta MONO, l'app porta a ordini, wallet e fedelta."
+      content="Una digital flagship gastronomica: la tavola prende luce, il sito racconta MONO, l'app porta a ordini, wallet e fedeltà."
     >
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://monoconvivium-beep.github.io/mono-bottega/assets/mono-table/mono-table-ritual-og.webp">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="MONO - Bottega Gastronomica">
-    <meta name="twitter:description" content="Cucina contemporanea, tradizionalmente moderna. Una bottega, piu momenti, la stessa idea di buono.">
+    <meta name="twitter:description" content="Cucina contemporanea, tradizionalmente moderna. Una bottega, più momenti, la stessa idea di buono.">
     <meta name="twitter:image" content="https://monoconvivium-beep.github.io/mono-bottega/assets/mono-table/mono-table-ritual-og.webp">
     <title>MONO - Bottega Gastronomica | Cucina contemporanea, tradizionalmente moderna</title>
     <link rel="manifest" href="manifest.webmanifest">
@@ -27,7 +27,7 @@
     <link rel="preload" as="image" href="assets/mono-table/mono-table-ritual-desktop.webp" media="(min-width: 701px)" fetchpriority="high">
     <link rel="preload" as="image" href="assets/mono-table/mono-table-ritual-mobile.webp" media="(max-width: 700px)" fetchpriority="high">
     <script>document.documentElement.classList.add("has-js");</script>
-    <link rel="stylesheet" href="styles.css?v=20260707-table-ritual-v1">
+    <link rel="stylesheet" href="styles.css?v=20260707-flagship-final-v1">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -36,7 +36,26 @@
         "description": "Bottega gastronomica contemporanea con cucina, pasticceria, aperitivo, catering, progetto sociale e app per ordini e vantaggi.",
         "url": "https://monoconvivium-beep.github.io/mono-bottega/",
         "image": "https://monoconvivium-beep.github.io/mono-bottega/assets/mono-table/mono-table-ritual-og.webp",
+        "priceRange": "€€",
         "servesCuisine": ["Gastronomia contemporanea", "Pasticceria", "Aperitivo"],
+        "hasMenu": "https://monoconvivium-beep.github.io/mono-bottega/gastronomia/",
+        "department": [
+          {
+            "@type": "FoodEstablishment",
+            "name": "MONO Gastronomia",
+            "url": "https://monoconvivium-beep.github.io/mono-bottega/gastronomia/"
+          },
+          {
+            "@type": "Bakery",
+            "name": "MONO Pasticceria",
+            "url": "https://monoconvivium-beep.github.io/mono-bottega/pasticceria/"
+          },
+          {
+            "@type": "BarOrPub",
+            "name": "MONO Aperitivo",
+            "url": "https://monoconvivium-beep.github.io/mono-bottega/aperitivo/"
+          }
+        ],
         "areaServed": {
           "@type": "City",
           "name": "Torino"
@@ -55,7 +74,7 @@
 
     <header class="site-header" data-header>
       <a class="brand" href="./" aria-label="MONO home">
-        <img class="brand-logo" src="mono-loghissimo.svg" alt="MONO">
+        <img class="brand-logo" src="assets/brand/mono-logo-primary.svg" alt="MONO">
         <span>Bottega Gastronomica</span>
       </a>
       <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="primaryNav">
@@ -116,7 +135,7 @@
         </div>
 
         <div class="hero-copy" data-reveal>
-          <img class="hero-logo" src="mono-loghissimo.svg" alt="MONO Bottega Gastronomica">
+          <img class="hero-logo" src="assets/brand/mono-logo-light.svg" alt="MONO Bottega Gastronomica">
           <p class="eyebrow">MONO Table Ritual / Digital flagship</p>
           <h1 id="heroTitle">MONO Bottega Gastronomica.</h1>
           <p class="hero-lead">
@@ -164,18 +183,21 @@
         </div>
         <div class="page-grid">
           <article class="page-card" data-reveal>
+            <img class="product-card-visual" src="assets/product-visuals/gastronomia.svg" alt="" loading="lazy">
             <span>Gastronomia</span>
             <h3>Piatti quotidiani, fatti seriamente.</h3>
             <p>Cucina pronta, stagionalità e comfort da portare a casa senza perdere qualità.</p>
             <a href="gastronomia/">Scopri gastronomia</a>
           </article>
           <article class="page-card" data-reveal>
+            <img class="product-card-visual" src="assets/product-visuals/pasticceria.svg" alt="" loading="lazy">
             <span>Pasticceria</span>
             <h3>Il dolce come firma.</h3>
             <p>Piccoli rituali, dessert e prodotti da regalo con un tono curato, mai rumoroso.</p>
             <a href="pasticceria/">Scopri pasticceria</a>
           </article>
           <article class="page-card" data-reveal>
+            <img class="product-card-visual" src="assets/product-visuals/aperitivo.svg" alt="" loading="lazy">
             <span>Bistrot</span>
             <h3>Aperitivo, pausa, ritorno.</h3>
             <p>Un modo più lento di fermarsi: vino, pane, olio, assaggi e tavola condivisa.</p>
@@ -323,7 +345,7 @@
           <a class="button ghost" data-track="convivium_feature_open" href="mono-convivium/">Scopri MONO Convivium</a>
         </div>
         <div class="convivium-mark" data-reveal>
-          <img src="mono-convivium.svg" alt="MONO Convivium">
+          <img src="assets/brand/mono-convivium-primary.svg" alt="MONO Convivium">
           <p>Formazione, affiancamento, mansioni chiare, autonomia progressiva.</p>
         </div>
       </section>
@@ -410,7 +432,7 @@
       </nav>
     </footer>
 
-    <script src="app.js?v=20260707-table-ritual-v1"></script>
-    <script src="mono-3d.js?v=20260707-table-ritual-v1"></script>
+    <script src="app.js?v=20260707-flagship-final-v1"></script>
+    <script src="mono-3d.js?v=20260707-flagship-final-v1"></script>
   </body>
 </html>

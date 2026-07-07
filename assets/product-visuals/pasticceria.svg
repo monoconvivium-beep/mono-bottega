@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" role="img" aria-labelledby="title desc">
+  <title id="title">MONO Pasticceria 3D</title>
+  <desc id="desc">Visual editoriale 3D MONO per pasticceria e dessert.</desc>
+  <defs>
+    <radialGradient id="light" cx="34%" cy="18%" r="72%">
+      <stop offset="0" stop-color="#fff9ee" stop-opacity=".98"/>
+      <stop offset=".42" stop-color="#efe3c6" stop-opacity=".82"/>
+      <stop offset="1" stop-color="#262321" stop-opacity=".16"/>
+    </radialGradient>
+    <linearGradient id="plate" x1="12%" x2="88%" y1="0" y2="100%">
+      <stop offset="0" stop-color="#fffaf0"/>
+      <stop offset=".52" stop-color="#efe3c6"/>
+      <stop offset="1" stop-color="#cba75a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" x2="1">
+      <stop offset="0" stop-color="#e27a60"/>
+      <stop offset="1" stop-color="#cba75a"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="30" stdDeviation="28" flood-color="#262321" flood-opacity=".24"/>
+    </filter>
+    <filter id="steam" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+  </defs>
+  <rect width="960" height="640" rx="56" fill="#f4ecdd"/>
+  <rect width="960" height="640" rx="56" fill="url(#light)"/>
+  <path d="M90 444C248 356 456 329 710 354c88 9 142 43 160 82 20 45-18 86-107 104-178 35-441 28-602-14-89-23-110-59-71-82Z" fill="#262321" opacity=".11"/>
+  <ellipse cx="480" cy="378" rx="286" ry="122" fill="url(#plate)" filter="url(#softShadow)"/>
+  <ellipse cx="480" cy="362" rx="238" ry="92" fill="#fff9ee" opacity=".9"/>
+  <path d="M402 286h178c44 0 80 36 80 80v16c0 31-25 56-56 56H378c-31 0-56-25-56-56v-16c0-44 36-80 80-80Z" fill="url(#accent)" filter="url(#softShadow)"/>
+  <path d="M356 318c76 22 187 22 270 0" stroke="#fff9ee" stroke-width="28" stroke-linecap="round" opacity=".94"/>
+  <circle cx="552" cy="278" r="28" fill="#cba75a"/>
+  <circle cx="593" cy="294" r="18" fill="#fbf6ea"/>
+  <g filter="url(#steam)" opacity=".5">
+    <path d="M305 300c-48-76 44-86 4-158" stroke="#fff9ee" stroke-width="34" fill="none" stroke-linecap="round"/>
+    <path d="M470 286c-34-70 48-88 18-162" stroke="#fff9ee" stroke-width="28" fill="none" stroke-linecap="round"/>
+    <path d="M612 300c-52-68 38-96 2-166" stroke="#fff9ee" stroke-width="26" fill="none" stroke-linecap="round"/>
+  </g>
+  <text x="80" y="96" fill="#262321" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="900" letter-spacing="6">MONO</text>
+  <text x="80" y="132" fill="#e27a60" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="900" letter-spacing="4">PASTICCERIA</text>
+</svg>

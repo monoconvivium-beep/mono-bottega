@@ -4,7 +4,7 @@ Data: 7 luglio 2026
 
 ## Direzione creativa
 
-MONO deve sembrare una digital flagship gastronomica, non un sito vetrina. La hero diventa un rituale editoriale: tavola full-bleed, luce calda, materia vera, profondita CSS e copy sovrapposto. Il sito racconta desiderio, fiducia e posizionamento; l'app resta il luogo operativo per ordini, wallet, punti, sconti, inviti e ritorno cliente.
+MONO deve sembrare una digital flagship gastronomica, non un sito vetrina. La hero diventa un rituale editoriale: tavola full-bleed, luce calda, materia vera, profondità CSS e copy sovrapposto. Il sito racconta desiderio, fiducia e posizionamento; l'app resta il luogo operativo per ordini, wallet, punti, sconti, inviti e ritorno cliente.
 
 ## Audit visivo
 
@@ -27,7 +27,11 @@ MONO deve sembrare una digital flagship gastronomica, non un sito vetrina. La he
 - `styles.css` gestisce hero full-bleed, overlay, clip mask, parallax, fumo e responsive mobile.
 - `mono-3d.js` gestisce sequenza, pointer light, reset pointer e scroll-depth.
 - `app.js` invia eventi `mono_cta_click` a `dataLayer` e `gtag` quando presente.
-- `service-worker.js` aggiorna cache a `mono-site-v14`.
+- `service-worker.js` aggiorna cache a `mono-site-v16`.
+- `assets/brand/mono-logo-light.svg` corregge la resa logo hero senza filtro tutto bianco.
+- `assets/brand/mono-convivium-primary.svg` riallinea Convivium alla palette MONO.
+- Le pagine interne sono state bonificate da sequenze UTF-8 interpretate male negli accenti italiani.
+- `assets/product-visuals/` introduce visual editoriali 3D-like per famiglie prodotto.
 
 ## SEO e local
 
@@ -57,5 +61,5 @@ Eventi predisposti:
 - Desktop 1440px: H1 leggibile, CTA non sovrapposte, tavola non troppo scura.
 - Mobile 390px: crop hero centrato, testo non invade piatto, pannello sequenza nascosto.
 - Performance: asset hero sotto 250 KB, nessuna libreria 3D caricata.
-- Accessibilita: reduced motion rispettato, CTA raggiungibili, menu mobile funzionante.
-- Pubblicazione: commit, push, deploy GitHub Pages, verifica live con cache-busting `?v=20260707-table-ritual-v1`.
+- Accessibilità: reduced motion rispettato, CTA raggiungibili, menu mobile funzionante.
+- Pubblicazione: commit, push, deploy GitHub Pages, verifica live con cache-busting `?v=20260707-flagship-final-v1`.
