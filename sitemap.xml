@@ -2,38 +2,47 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://monoconvivium-beep.github.io/mono-bottega/</loc>
+    <lastmod>2026-07-07</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://monoconvivium-beep.github.io/mono-bottega/la-bottega/</loc>
+    <lastmod>2026-07-07</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://monoconvivium-beep.github.io/mono-bottega/gastronomia/</loc>
+    <lastmod>2026-07-07</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://monoconvivium-beep.github.io/mono-bottega/pasticceria/</loc>
+    <lastmod>2026-07-07</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://monoconvivium-beep.github.io/mono-bottega/aperitivo/</loc>
+    <lastmod>2026-07-07</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://monoconvivium-beep.github.io/mono-bottega/catering/</loc>
+    <lastmod>2026-07-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://monoconvivium-beep.github.io/mono-bottega/mono-convivium/</loc>
+    <lastmod>2026-07-07</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://monoconvivium-beep.github.io/mono-bottega/app/</loc>
+    <lastmod>2026-07-07</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://monoconvivium-beep.github.io/mono-bottega/contatti/</loc>
+    <lastmod>2026-07-07</lastmod>
     <priority>0.7</priority>
   </url>
 </urlset>

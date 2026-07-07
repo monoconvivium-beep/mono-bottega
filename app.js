@@ -2,6 +2,7 @@ const APP_STORE_URL = "https://mono-app-jet.vercel.app/home";
 const GOOGLE_PLAY_URL = "https://mono-app-jet.vercel.app/wallet";
 const APP_PROMPT_STORAGE_KEY = "mono-app-prompt-dismissed-at";
 const APP_PROMPT_COOLDOWN = 7 * 24 * 60 * 60 * 1000;
+const TRACKING_EVENT_NAME = "mono_cta_click";
 
 const appPrompt = document.querySelector("[data-app-prompt]");
 const floatingAppButton = document.querySelector("[data-floating-app]");
@@ -196,6 +197,43 @@ function setupAppPrompt() {
   setupDeferredAppPrompt();
 }
 
+function emitTrackingEvent(action, element) {
+  const eventPayload = {
+    event: TRACKING_EVENT_NAME,
+    action,
+    label: element.textContent?.trim() || element.getAttribute("aria-label") || action,
+    href: element.getAttribute("href") || "",
+    path: window.location.pathname
+  };
+
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push(eventPayload);
+
+  if (typeof window.gtag === "function") {
+    window.gtag("event", TRACKING_EVENT_NAME, eventPayload);
+  }
+
+  if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+    console.info("[MONO tracking]", eventPayload);
+  }
+}
+
+function setupTracking() {
+  document.addEventListener("click", (event) => {
+    if (!(event.target instanceof Element)) {
+      return;
+    }
+
+    const trackedElement = event.target.closest("[data-track]");
+
+    if (!trackedElement) {
+      return;
+    }
+
+    emitTrackingEvent(trackedElement.dataset.track, trackedElement);
+  });
+}
+
 function setupReveals() {
   const revealElements = [...document.querySelectorAll("[data-reveal]")];
 
@@ -235,3 +273,4 @@ setupMobileMenu();
 setupHeaderState();
 setupReveals();
 setupAppPrompt();
+setupTracking();

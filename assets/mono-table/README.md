@@ -1,11 +1,13 @@
 # MONO table assets
 
-Asset attivi per la scena cinematic 3D:
+Asset attivi per la scena MONO Table Ritual:
 
-- `mono-table-cinematic-3d.webp` — master desktop della tavola iperrealistica.
-- `mono-table-cinematic-mobile.webp` — crop leggero per mobile.
-- `mono-og-image.webp` — immagine social/Open Graph.
+- `mono-table-ritual-desktop.webp` - hero desktop full-bleed 1920x1080.
+- `mono-table-ritual-mobile.webp` - crop mobile verticale 960x1280.
+- `mono-table-ritual-og.webp` - immagine social/Open Graph 1200x630.
+- `mono-table-ritual-blur.webp` - placeholder leggero per eventuale LQIP.
 
-La profondità nasce da livelli CSS mascherati sul master visual: piatti oro,
-grissini, olio, pane madre, burro, vino e dolce. I modelli GLB professionali
-possono arrivare in un secondo momento mantenendo la stessa sequenza narrativa.
+La profondita nasce da livelli CSS mascherati sul master visual: piatto oro,
+grissini, olio, pane madre, burro, vino, dolce, fumo e luce. La scelta resta
+mobile-first e senza librerie pesanti; un GLB professionale puo arrivare solo
+quando esistono modelli reali ottimizzati.

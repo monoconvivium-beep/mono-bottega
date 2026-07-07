@@ -195,7 +195,7 @@ img {
   font-weight: 900;
   gap: 8px;
   justify-content: center;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   min-height: 48px;
   padding: 12px 19px;
   text-decoration: none;
@@ -234,24 +234,24 @@ h2,
 h3 {
   font-family: "Libre Baskerville", Georgia, "Times New Roman", serif;
   font-weight: 700;
-  letter-spacing: -0.045em;
+  letter-spacing: 0;
 }
 
 h1 {
-  font-size: clamp(52px, 8vw, 104px);
+  font-size: clamp(52px, 6rem, 104px);
   line-height: 0.88;
   margin-bottom: 26px;
   max-width: 980px;
 }
 
 h2 {
-  font-size: clamp(38px, 5vw, 76px);
+  font-size: clamp(38px, 4.25rem, 76px);
   line-height: 0.94;
   margin-bottom: 22px;
 }
 
 h3 {
-  font-size: clamp(26px, 3vw, 42px);
+  font-size: clamp(26px, 2.5rem, 42px);
   line-height: 1;
   margin-bottom: 14px;
 }
@@ -266,75 +266,72 @@ h3 {
 }
 
 .flagship-hero {
-  align-items: center;
+  align-items: end;
+  background: #15120f;
+  color: var(--mono-cream);
   display: grid;
-  gap: clamp(26px, 4vw, 62px);
-  grid-template-columns: minmax(0, 0.92fr) minmax(420px, 1.08fr);
-  min-height: 100vh;
+  min-height: clamp(720px, 92svh, 940px);
   overflow: hidden;
-  padding: 134px clamp(22px, 5vw, 76px) 86px;
+  padding: 134px clamp(22px, 6vw, 96px) 76px;
   position: relative;
 }
 
 .flagship-hero::before {
   background:
-    linear-gradient(90deg, rgba(255, 249, 238, 0.7), transparent 50%),
-    radial-gradient(circle at 67% 34%, rgba(226, 122, 96, 0.22), transparent 34%),
-    radial-gradient(circle at 78% 70%, rgba(110, 106, 60, 0.22), transparent 28%);
+    linear-gradient(90deg, rgba(11, 9, 7, 0.84), rgba(11, 9, 7, 0.48) 36%, rgba(11, 9, 7, 0.08) 68%),
+    linear-gradient(180deg, rgba(11, 9, 7, 0.72), transparent 34%, rgba(11, 9, 7, 0.42)),
+    radial-gradient(circle at var(--hero-light-x, 64%) var(--hero-light-y, 42%), rgba(203, 167, 90, 0.2), transparent 28%);
   content: "";
   inset: 0;
   pointer-events: none;
   position: absolute;
+  z-index: 3;
 }
 
-.ambient-orb {
-  border-radius: 999px;
-  filter: blur(8px);
-  opacity: 0.58;
+.flagship-hero::after {
+  background:
+    linear-gradient(120deg, rgba(255, 249, 238, 0.1), transparent 24%, rgba(203, 167, 90, 0.1) 46%, transparent 66%),
+    radial-gradient(ellipse at 34% 74%, rgba(184, 92, 56, 0.24), transparent 30%);
+  content: "";
+  inset: 0;
+  mix-blend-mode: screen;
+  opacity: 0.78;
   pointer-events: none;
   position: absolute;
-}
-
-.orb-terracotta {
-  background: var(--mono-coral);
-  height: 210px;
-  right: 7vw;
-  top: 16vh;
-  width: 210px;
-}
-
-.orb-olive {
-  background: var(--mono-olive);
-  bottom: 12vh;
-  height: 150px;
-  right: 34vw;
-  width: 150px;
+  z-index: 4;
 }
 
 .hero-copy,
 .hero-visual {
   position: relative;
-  z-index: 1;
 }
 
 .hero-copy {
-  max-width: 740px;
+  max-width: 760px;
+  text-shadow: 0 20px 54px rgba(0, 0, 0, 0.5);
+  z-index: 8;
+}
+
+.flagship-hero .eyebrow {
+  color: var(--mono-champagne);
 }
 
 .hero-logo {
   background: transparent;
   background-color: transparent !important;
+  filter: brightness(0) invert(1);
   height: auto;
   margin-bottom: 34px;
   max-height: 126px;
   object-fit: contain;
+  opacity: 0.92;
   padding: 0;
   width: min(280px, 72vw);
 }
 
 .hero-lead {
-  color: rgba(38, 35, 33, 0.78);
-  font-size: clamp(18px, 2.2vw, 24px);
+  color: rgba(255, 249, 238, 0.8);
+  font-size: clamp(18px, 1.35rem, 24px);
   line-height: 1.45;
   margin-bottom: 30px;
   max-width: 700px;
@@ -351,14 +348,40 @@ h3 {
 
 .hero-note {
   border-left: 4px solid var(--mono-champagne);
-  color: rgba(38, 35, 33, 0.68);
+  color: rgba(255, 249, 238, 0.72);
   font-weight: 800;
   margin: 24px 0 0;
   padding-left: 14px;
 }
 
 .hero-visual {
-  min-width: 0;
+  inset: 0;
+  position: absolute;
+  z-index: 1;
+}
+
+.flagship-hero .mono-table-experience {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  height: 100%;
+  min-height: 100%;
+}
+
+.flagship-hero .table-sequence-panel {
+  bottom: 28px;
+  left: auto;
+  right: clamp(18px, 4vw, 54px);
+}
+
+.flagship-hero .button.ghost {
+  background: rgba(255, 249, 238, 0.12);
+  border-color: rgba(255, 249, 238, 0.38);
+  color: var(--mono-cream);
+}
+
+.flagship-hero h1 {
+  max-width: 880px;
 }
 
 .mono-table-experience {
@@ -417,7 +440,7 @@ h3 {
 .table-sequence-panel strong {
   font-family: "Libre Baskerville", Georgia, serif;
   font-size: 23px;
-  letter-spacing: -0.03em;
+  letter-spacing: 0;
 }
 
 .table-sequence-panel small {
@@ -475,7 +498,7 @@ h3 {
   columns: 2;
   column-gap: 44px;
   color: rgba(255, 249, 238, 0.78);
-  font-size: clamp(18px, 2.2vw, 23px);
+  font-size: clamp(18px, 1.3rem, 23px);
   line-height: 1.45;
 }
 
@@ -640,7 +663,7 @@ h3 {
 .convivium-copy p:not(.eyebrow),
 .app-gateway p {
   color: rgba(255, 249, 238, 0.78);
-  font-size: clamp(18px, 2vw, 23px);
+  font-size: clamp(18px, 1.3rem, 23px);
 }
 
 .convivium-feature .button.ghost,
@@ -764,7 +787,7 @@ h3 {
 .phone-card strong {
   font-family: "Libre Baskerville", Georgia, serif;
   font-size: 34px;
-  letter-spacing: -0.04em;
+  letter-spacing: 0;
   line-height: 1;
 }
 
@@ -911,13 +934,13 @@ h3 {
   z-index: 80;
 }
 
-[data-reveal] {
+.has-js [data-reveal] {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 700ms ease, transform 760ms cubic-bezier(0.2, 0.9, 0.18, 1);
 }
 
-[data-reveal].is-revealed {
+.has-js [data-reveal].is-revealed {
   opacity: 1;
   transform: translateY(0);
 }
@@ -984,7 +1007,7 @@ h3 {
 
 
 .table-cinematic {
-  --table-image: url("assets/mono-table/mono-table-cinematic-3d.webp");
+  --table-image: url("assets/mono-table/mono-table-ritual-desktop.webp");
   --parallax-back-x: 0px;
   --parallax-back-y: 0px;
   --parallax-mid-x: 0px;
@@ -996,8 +1019,8 @@ h3 {
   --tilt-x: 0deg;
   --tilt-y: 0deg;
   background:
-    radial-gradient(circle at var(--light-x, 64%) var(--light-y, 28%), rgba(203, 167, 90, 0.28), transparent 30%),
-    linear-gradient(145deg, rgba(255, 249, 238, 0.92), rgba(244, 236, 221, 0.58));
+    radial-gradient(circle at var(--light-x, 64%) var(--light-y, 28%), rgba(203, 167, 90, 0.26), transparent 28%),
+    linear-gradient(145deg, rgba(22, 18, 14, 0.96), rgba(69, 47, 31, 0.72));
   isolation: isolate;
   min-height: 650px;
   perspective: 1100px;
@@ -1005,8 +1028,8 @@ h3 {
 
 .table-cinematic::before {
   background:
-    linear-gradient(105deg, rgba(255, 249, 238, 0.42), transparent 34%, rgba(203, 167, 90, 0.2)),
-    radial-gradient(circle at 82% 24%, rgba(226, 122, 96, 0.22), transparent 26%);
+    linear-gradient(105deg, rgba(255, 249, 238, 0.18), transparent 34%, rgba(203, 167, 90, 0.26)),
+    radial-gradient(circle at 82% 24%, rgba(226, 122, 96, 0.16), transparent 24%);
   opacity: 1;
   z-index: 6;
 }
@@ -1044,11 +1067,11 @@ h3 {
 }
 
 .table-master-photo {
-  filter: saturate(0.86) contrast(1.08) brightness(0.35) blur(8px);
+  filter: saturate(0.94) contrast(1.05) brightness(0.58) blur(3px);
   object-fit: cover;
   object-position: center center;
-  opacity: 0.72;
-  transform: scale(1.08);
+  opacity: 0.92;
+  transform: scale(calc(1.045 + var(--scroll-depth, 0) * 0.015));
   transition: filter 900ms ease, transform 1500ms cubic-bezier(0.2, 0.9, 0.18, 1), opacity 900ms ease;
 }
 
@@ -1056,7 +1079,7 @@ h3 {
   background-image: var(--table-image);
   background-position: center center;
   background-size: cover;
-  filter: saturate(1.22) contrast(1.12) brightness(1.08) blur(8px);
+  filter: saturate(1.18) contrast(1.08) brightness(1.08) blur(7px);
   opacity: 0;
   transform: translate3d(var(--enter-x, 0), var(--enter-y, 0), 0) scale(0.96);
   transition:
@@ -1089,58 +1112,58 @@ h3 {
 
 .table-layer-full {
   clip-path: inset(0 0 0 0 round 28px);
-  filter: saturate(1.18) contrast(1.09) brightness(1.02);
+  filter: saturate(1.1) contrast(1.06) brightness(1.02);
   opacity: 0;
   transform: scale(1.02);
   z-index: 2;
 }
 
 .table-layer-full.is-visible {
-  opacity: 0.72;
+  opacity: 0.64;
   transform: scale(1);
 }
 
 .table-layer-service {
   --enter-y: 34px;
-  clip-path: ellipse(28% 23% at 52% 78%);
+  clip-path: ellipse(32% 25% at 51% 74%);
 }
 
 .table-layer-grissini {
   --enter-x: -24px;
   --enter-y: -28px;
-  clip-path: ellipse(11% 33% at 27% 27%);
+  clip-path: ellipse(13% 34% at 68% 34%);
 }
 
 .table-layer-oil-bottle {
   --enter-x: -34px;
-  clip-path: ellipse(14% 30% at 11% 42%);
+  clip-path: ellipse(14% 28% at 16% 44%);
 }
 
 .table-layer-oil-saucer {
   --enter-y: 24px;
-  clip-path: ellipse(17% 11% at 25% 62%);
+  clip-path: ellipse(14% 10% at 12% 68%);
 }
 
 .table-layer-bread {
   --enter-y: -18px;
-  clip-path: ellipse(27% 24% at 48% 46%);
+  clip-path: ellipse(22% 19% at 31% 48%);
 }
 
 .table-layer-butter {
   --enter-x: -20px;
   --enter-y: 26px;
-  clip-path: ellipse(12% 12% at 12% 75%);
+  clip-path: ellipse(13% 10% at 48% 56%);
 }
 
 .table-layer-wine {
   --enter-x: 26px;
   --enter-y: -18px;
-  clip-path: ellipse(14% 40% at 70% 43%);
+  clip-path: ellipse(14% 38% at 85% 42%);
 }
 
 .table-layer-dessert {
   --enter-x: 32px;
-  clip-path: ellipse(13% 17% at 88% 59%);
+  clip-path: ellipse(12% 14% at 93% 58%);
 }
 
 .smoke-curtain,
@@ -1210,7 +1233,7 @@ h3 {
   border: 1px solid rgba(255, 249, 238, 0.18);
   border-radius: 999px;
   color: rgba(255, 249, 238, 0.76);
-  display: flex;
+  display: none;
   gap: 10px;
   left: 24px;
   padding: 8px 12px;
@@ -1310,17 +1333,30 @@ h3 {
 
   .flagship-hero {
     gap: 24px;
-    padding-bottom: 54px;
+    align-items: end;
+    min-height: 94svh;
+    padding-bottom: 44px;
     padding-top: 112px;
   }
 
-  .hero-visual {
-    order: -1;
+  .flagship-hero::before {
+    background:
+      linear-gradient(180deg, rgba(11, 9, 7, 0.64), rgba(11, 9, 7, 0.24) 34%, rgba(11, 9, 7, 0.78)),
+      linear-gradient(90deg, rgba(11, 9, 7, 0.78), rgba(11, 9, 7, 0.18));
   }
 
   .hero-logo {
+    filter: brightness(0) invert(1);
     margin-bottom: 24px;
     width: 160px;
+  }
+
+  .hero-lead {
+    max-width: 560px;
+  }
+
+  .flagship-hero .table-sequence-panel {
+    display: none;
   }
 
   .mono-table-experience {
@@ -1329,7 +1365,7 @@ h3 {
   }
 
   .table-cinematic {
-    --table-image: url("assets/mono-table/mono-table-cinematic-mobile.webp");
+    --table-image: url("assets/mono-table/mono-table-ritual-mobile.webp");
     min-height: 540px;
   }
 
@@ -1408,6 +1444,25 @@ h3 {
     padding-right: 18px;
   }
 
+  .flagship-hero {
+    min-height: 92svh;
+    padding-bottom: 36px;
+  }
+
+  .flagship-hero h1 {
+    font-size: 44px;
+    line-height: 0.98;
+  }
+
+  .flagship-hero .hero-logo {
+    display: none;
+  }
+
+  .hero-lead {
+    font-size: 19px;
+    line-height: 1.38;
+  }
+
   .hero-actions,
   .gateway-actions,
   .contact-actions,
@@ -1452,7 +1507,7 @@ h3 {
     transition-duration: 0.01ms !important;
   }
 
-  [data-reveal] {
+  .has-js [data-reveal] {
     opacity: 1;
     transform: none;
   }

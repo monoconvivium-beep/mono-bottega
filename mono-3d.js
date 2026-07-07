@@ -12,14 +12,14 @@ class MonoTableExperience {
     this.sequence = [
       {
         id: "clean",
-        title: "Il servizio prende luce.",
-        copy: "Tovaglia cashmere, porcellana classica, bordo oro: la scena si accende piano.",
+        title: "Il rituale prende luce.",
+        copy: "Tovaglia cashmere, porcellana oro, pane vivo e riflessi champagne.",
         pieces: ["service"]
       },
       {
         id: "grissini",
-        title: "I grissini emergono dal fumo.",
-        copy: "Verticali, dorati, quasi scultorei: il primo segno dà profondità alla tavola.",
+        title: "I grissini danno altezza.",
+        copy: "Verticali, dorati, quasi scultorei: la tavola comincia a respirare.",
         pieces: ["service", "grissini"]
       },
       {
@@ -54,14 +54,14 @@ class MonoTableExperience {
       },
       {
         id: "app",
-        title: "La tavola è pronta.",
+        title: "La tavola e pronta.",
         copy: "Ora il racconto lascia spazio al gesto: ordina, torna, partecipa.",
         pieces: ["service", "grissini", "oil", "bread", "butter", "wine", "dessert", "complete"]
       },
       {
         id: "complete",
-        title: "MONO è completo.",
-        copy: "Una bottega. Più momenti. La stessa idea di buono.",
+        title: "MONO e completo.",
+        copy: "Una bottega. Piu momenti. La stessa idea di buono.",
         pieces: ["service", "grissini", "oil", "bread", "butter", "wine", "dessert", "complete"]
       }
     ];
@@ -140,6 +140,21 @@ class MonoTableExperience {
   }
 
   setupPointerLight() {
+    const resetPointer = () => {
+      this.root.style.setProperty("--light-x", "62%");
+      this.root.style.setProperty("--light-y", "30%");
+      this.root.style.setProperty("--tilt-x", "0deg");
+      this.root.style.setProperty("--tilt-y", "0deg");
+      this.root.style.setProperty("--parallax-back-x", "0px");
+      this.root.style.setProperty("--parallax-back-y", "0px");
+      this.root.style.setProperty("--parallax-mid-x", "0px");
+      this.root.style.setProperty("--parallax-mid-y", "0px");
+      this.root.style.setProperty("--parallax-front-x", "0px");
+      this.root.style.setProperty("--parallax-front-y", "0px");
+      this.root.style.setProperty("--parallax-near-x", "0px");
+      this.root.style.setProperty("--parallax-near-y", "0px");
+    };
+
     this.root.addEventListener("pointermove", (event) => {
       const rect = this.root.getBoundingClientRect();
       const x = Math.round(((event.clientX - rect.left) / rect.width) * 100);
@@ -161,6 +176,8 @@ class MonoTableExperience {
       this.root.style.setProperty("--parallax-near-x", `${horizontal * -18}px`);
       this.root.style.setProperty("--parallax-near-y", `${vertical * -12}px`);
     });
+
+    this.root.addEventListener("pointerleave", resetPointer);
   }
 }
 
@@ -206,3 +223,36 @@ function setupTableStoryObserver() {
 }
 
 setupTableStoryObserver();
+
+function setupHeroScrollDepth() {
+  const hero = document.querySelector("[data-mono-hero]");
+
+  if (!hero || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    return;
+  }
+
+  let ticking = false;
+
+  const update = () => {
+    const rect = hero.getBoundingClientRect();
+    const progress = Math.min(1, Math.max(0, Math.abs(rect.top) / Math.max(1, rect.height)));
+    hero.style.setProperty("--scroll-depth", progress.toFixed(3));
+    hero.style.setProperty("--hero-light-x", `${Math.round(60 + progress * 12)}%`);
+    hero.style.setProperty("--hero-light-y", `${Math.round(36 + progress * 8)}%`);
+    ticking = false;
+  };
+
+  const requestUpdate = () => {
+    if (ticking) {
+      return;
+    }
+
+    ticking = true;
+    window.requestAnimationFrame(update);
+  };
+
+  update();
+  window.addEventListener("scroll", requestUpdate, { passive: true });
+}
+
+setupHeroScrollDepth();

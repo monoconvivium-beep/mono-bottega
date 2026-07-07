@@ -6,26 +6,28 @@
     <meta name="theme-color" content="#262321">
     <meta
       name="description"
-      content="MONO è una bottega gastronomica contemporanea a Torino: cucina, pasticceria, aperitivo, progetto sociale e app per ordinare, tornare e ricevere vantaggi."
+      content="MONO e una bottega gastronomica contemporanea a Torino: tavola rituale, cucina, pasticceria, aperitivo, progetto sociale e app per ordini, wallet e vantaggi."
     >
     <link rel="canonical" href="https://monoconvivium-beep.github.io/mono-bottega/">
     <meta property="og:title" content="MONO - Bottega Gastronomica">
     <meta property="og:url" content="https://monoconvivium-beep.github.io/mono-bottega/">
     <meta
       property="og:description"
-      content="Una bottega contemporanea: la tavola si compone, il sito racconta, l'app porta a ordini, wallet e fedeltà."
+      content="Una digital flagship gastronomica: la tavola prende luce, il sito racconta MONO, l'app porta a ordini, wallet e fedelta."
     >
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://monoconvivium-beep.github.io/mono-bottega/assets/mono-table/mono-og-image.webp">
+    <meta property="og:image" content="https://monoconvivium-beep.github.io/mono-bottega/assets/mono-table/mono-table-ritual-og.webp">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="MONO - Bottega Gastronomica">
-    <meta name="twitter:description" content="Cucina contemporanea, tradizionalmente moderna. Una bottega, più momenti, la stessa idea di buono.">
-    <meta name="twitter:image" content="https://monoconvivium-beep.github.io/mono-bottega/assets/mono-table/mono-og-image.webp">
+    <meta name="twitter:description" content="Cucina contemporanea, tradizionalmente moderna. Una bottega, piu momenti, la stessa idea di buono.">
+    <meta name="twitter:image" content="https://monoconvivium-beep.github.io/mono-bottega/assets/mono-table/mono-table-ritual-og.webp">
     <title>MONO - Bottega Gastronomica | Cucina contemporanea, tradizionalmente moderna</title>
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" href="icons/icon-192.svg" type="image/svg+xml">
-    <link rel="preload" as="image" href="assets/mono-table/mono-table-cinematic-3d.webp" fetchpriority="high">
-    <link rel="stylesheet" href="styles.css?v=20260707-cinematic-3d-v1">
+    <link rel="preload" as="image" href="assets/mono-table/mono-table-ritual-desktop.webp" media="(min-width: 701px)" fetchpriority="high">
+    <link rel="preload" as="image" href="assets/mono-table/mono-table-ritual-mobile.webp" media="(max-width: 700px)" fetchpriority="high">
+    <script>document.documentElement.classList.add("has-js");</script>
+    <link rel="stylesheet" href="styles.css?v=20260707-table-ritual-v1">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -33,7 +35,7 @@
         "name": "MONO Bottega Gastronomica",
         "description": "Bottega gastronomica contemporanea con cucina, pasticceria, aperitivo, catering, progetto sociale e app per ordini e vantaggi.",
         "url": "https://monoconvivium-beep.github.io/mono-bottega/",
-        "image": "https://monoconvivium-beep.github.io/mono-bottega/assets/mono-table/mono-og-image.webp",
+        "image": "https://monoconvivium-beep.github.io/mono-bottega/assets/mono-table/mono-table-ritual-og.webp",
         "servesCuisine": ["Gastronomia contemporanea", "Pasticceria", "Aperitivo"],
         "areaServed": {
           "@type": "City",
@@ -66,37 +68,18 @@
         <a href="app/">App</a>
         <a href="contatti/">Contatti</a>
       </nav>
-      <a class="header-action" href="app/#download">Scarica app</a>
+      <a class="header-action" data-track="header_app" href="app/#download">Scarica app</a>
     </header>
 
     <main id="main">
-      <section class="flagship-hero" id="home" aria-labelledby="heroTitle">
-        <div class="ambient-orb orb-terracotta" aria-hidden="true"></div>
-        <div class="ambient-orb orb-olive" aria-hidden="true"></div>
-
-        <div class="hero-copy" data-reveal>
-          <img class="hero-logo" src="mono-loghissimo.svg" alt="MONO Bottega Gastronomica">
-          <p class="eyebrow">Digital flagship / Bottega reale</p>
-          <h1 id="heroTitle">La tavola si accende. MONO prende posto.</h1>
-          <p class="hero-lead">
-            Una bottega gastronomica contemporanea: cucina, pasticceria,
-            aperitivo, catering e progetto sociale. Il sito apre il mondo,
-            l'app trasforma il desiderio in ordine, wallet e ritorno.
-          </p>
-          <div class="hero-actions" aria-label="Azioni principali">
-            <a class="button primary" href="#bottega">Entra nel progetto</a>
-            <a class="button ghost" href="app/#download">Scarica l'app</a>
-          </div>
-          <p class="hero-note">Cucina contemporanea, tradizionalmente moderna.</p>
-        </div>
-
+      <section class="flagship-hero" id="home" aria-labelledby="heroTitle" data-mono-hero>
         <div class="hero-visual" data-reveal>
           <div class="mono-table-experience table-large table-cinematic" data-mono-table data-auto-table>
             <div class="table-light"></div>
             <div class="table-reveal-stack mise-en-scene" aria-hidden="true">
               <picture class="table-master-picture">
-                <source media="(max-width: 700px)" srcset="assets/mono-table/mono-table-cinematic-mobile.webp">
-                <img class="table-master-photo" src="assets/mono-table/mono-table-cinematic-3d.webp" alt="" fetchpriority="high">
+                <source media="(max-width: 700px)" srcset="assets/mono-table/mono-table-ritual-mobile.webp">
+                <img class="table-master-photo" src="assets/mono-table/mono-table-ritual-desktop.webp" alt="" fetchpriority="high">
               </picture>
               <span class="smoke-curtain smoke-left"></span>
               <span class="smoke-curtain smoke-center"></span>
@@ -115,8 +98,8 @@
               <span class="cinema-vignette"></span>
             </div>
             <div class="table-depth-strip" aria-hidden="true">
-              <span>piatti oro</span>
-              <span>oro</span>
+              <span>rituale</span>
+              <span>luce</span>
               <span>grissini</span>
               <span>olio</span>
               <span>pane madre</span>
@@ -125,11 +108,27 @@
             </div>
             <div class="table-sequence-panel" data-table-status aria-live="polite">
               <span data-table-count>01 / 09</span>
-              <strong data-table-title>Il servizio prende luce.</strong>
-              <small data-table-copy>Tovaglia cashmere, porcellana classica, bordo oro: la scena si accende piano.</small>
+              <strong data-table-title>Il rituale prende luce.</strong>
+              <small data-table-copy>Tovaglia cashmere, porcellana oro, pane vivo e riflessi champagne.</small>
               <div class="table-sequence-dots" data-table-dots aria-hidden="true"></div>
             </div>
           </div>
+        </div>
+
+        <div class="hero-copy" data-reveal>
+          <img class="hero-logo" src="mono-loghissimo.svg" alt="MONO Bottega Gastronomica">
+          <p class="eyebrow">MONO Table Ritual / Digital flagship</p>
+          <h1 id="heroTitle">MONO Bottega Gastronomica.</h1>
+          <p class="hero-lead">
+            Una tavola contemporanea che mette insieme gastronomia, pasticceria,
+            bistrot e progetto sociale. Il sito crea desiderio e fiducia;
+            l'app trasforma quel desiderio in ordini, wallet, inviti e ritorno.
+          </p>
+          <div class="hero-actions" aria-label="Azioni principali">
+            <a class="button primary" data-track="hero_enter_project" href="#bottega">Entra nel progetto</a>
+            <a class="button ghost" data-track="hero_open_app" href="app/#download">Apri l'app MONO</a>
+          </div>
+          <p class="hero-note">Cucina contemporanea, tradizionalmente moderna.</p>
         </div>
       </section>
 
@@ -191,8 +190,8 @@
             <div class="table-light"></div>
             <div class="table-reveal-stack mise-en-scene" aria-hidden="true">
               <picture class="table-master-picture">
-                <source media="(max-width: 700px)" srcset="assets/mono-table/mono-table-cinematic-mobile.webp">
-                <img class="table-master-photo" src="assets/mono-table/mono-table-cinematic-3d.webp" alt="" loading="lazy">
+                <source media="(max-width: 700px)" srcset="assets/mono-table/mono-table-ritual-mobile.webp">
+                <img class="table-master-photo" src="assets/mono-table/mono-table-ritual-desktop.webp" alt="" loading="lazy">
               </picture>
               <span class="smoke-curtain smoke-left"></span>
               <span class="smoke-curtain smoke-center"></span>
@@ -274,7 +273,7 @@
             <p class="eyebrow">Dolce</p>
             <h3>Il dolce chiude l'apparizione.</h3>
             <p>Lucido, preciso, scenografico: la mise en place è completa e il mondo MONO può iniziare.</p>
-            <a class="button primary" href="app/#download">Scarica l'app</a>
+            <a class="button primary" data-track="table_story_app" href="app/#download">Scarica l'app</a>
           </article>
         </div>
       </section>
@@ -321,7 +320,7 @@
             inclusione, formazione e lavoro dignitoso non come appendice,
             ma come sistema operativo dell'impresa.
           </p>
-          <a class="button ghost" href="mono-convivium/">Scopri MONO Convivium</a>
+          <a class="button ghost" data-track="convivium_feature_open" href="mono-convivium/">Scopri MONO Convivium</a>
         </div>
         <div class="convivium-mark" data-reveal>
           <img src="mono-convivium.svg" alt="MONO Convivium">
@@ -356,8 +355,8 @@
             </article>
           </div>
           <div class="gateway-actions">
-            <a class="button primary" href="app/#download">Scarica l'app</a>
-            <a class="button ghost" href="contatti/">Vieni in bottega</a>
+            <a class="button primary" data-track="app_gateway_download" href="app/#download">Scarica l'app</a>
+            <a class="button ghost" data-track="app_gateway_contacts" href="contatti/">Vieni in bottega</a>
           </div>
         </div>
         <div class="phone-card" data-reveal aria-hidden="true">
@@ -371,8 +370,8 @@
         <p class="eyebrow">Santa Rita, Torino</p>
         <h2>Vieni in bottega, poi torna dall'app.</h2>
         <div class="contact-actions">
-          <a class="button primary" href="contatti/">Contatti</a>
-          <a class="button ghost" href="app/#download">Scarica l'app</a>
+          <a class="button primary" data-track="contact_strip_contacts" href="contatti/">Contatti</a>
+          <a class="button ghost" data-track="contact_strip_app" href="app/#download">Scarica l'app</a>
         </div>
       </section>
     </main>
@@ -389,8 +388,8 @@
           tutto quello che serve dopo che il sito ti ha fatto venire fame.
         </p>
         <div class="store-actions" aria-label="Scarica app MONO">
-          <a class="button primary" data-app-store href="https://mono-app-jet.vercel.app/home">Apri app MONO</a>
-          <a class="button ghost" data-google-play href="https://mono-app-jet.vercel.app/wallet">Vedi vantaggi</a>
+          <a class="button primary" data-app-store data-track="prompt_open_app" href="https://mono-app-jet.vercel.app/home">Apri app MONO</a>
+          <a class="button ghost" data-google-play data-track="prompt_wallet" href="https://mono-app-jet.vercel.app/wallet">Vedi vantaggi</a>
         </div>
         <button class="text-button" type="button" data-app-prompt-close>Non ora</button>
         <small>Il tuo posto a tavola, anche digitale.</small>
@@ -411,7 +410,7 @@
       </nav>
     </footer>
 
-    <script src="app.js?v=20260707-cinematic-3d-v1"></script>
-    <script src="mono-3d.js?v=20260707-cinematic-3d-v1"></script>
+    <script src="app.js?v=20260707-table-ritual-v1"></script>
+    <script src="mono-3d.js?v=20260707-table-ritual-v1"></script>
   </body>
 </html>

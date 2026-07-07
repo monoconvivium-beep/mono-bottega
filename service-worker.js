@@ -1,4 +1,4 @@
-const CACHE_NAME = "mono-site-v13";
+const CACHE_NAME = "mono-site-v14";
 const ASSETS = [
   "./",
   "./index.html",
@@ -27,9 +27,10 @@ const ASSETS = [
   "./sitemap.xml",
   "./mono-loghissimo.svg",
   "./mono-convivium.svg",
-  "./assets/mono-table/mono-table-cinematic-3d.webp",
-  "./assets/mono-table/mono-table-cinematic-mobile.webp",
-  "./assets/mono-table/mono-og-image.webp",
+  "./assets/mono-table/mono-table-ritual-desktop.webp",
+  "./assets/mono-table/mono-table-ritual-mobile.webp",
+  "./assets/mono-table/mono-table-ritual-og.webp",
+  "./assets/mono-table/mono-table-ritual-blur.webp",
   "./icons/icon-192.svg",
   "./icons/icon-512.svg"
 ];

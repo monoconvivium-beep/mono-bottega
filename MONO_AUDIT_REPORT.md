@@ -1,37 +1,35 @@
-# MONO - Audit intervento cinematic 3D
+# MONO - Audit intervento MONO Table Ritual
 
 Data: 7 luglio 2026
 
 ## Problemi rilevati
 
-- La tavola precedente era più credibile della prima versione, ma restava un reveal fotografico troppo piatto.
-- Il sito aveva CTA app ripetute e qualche sezione interna troppo sintetica per sostenere un posizionamento premium.
-- Mancavano canonical, sitemap, robots e immagine social condivisibile.
-- Il service worker teneva in cache asset vecchi non più coerenti con la nuova direzione.
-- Il pop-up app appariva troppo presto rispetto al racconto.
+- La hero precedente era credibile, ma ancora percepita come visual incorniciato invece che come flagship immersiva.
+- La tavola aveva profondita simulata, ma il primo viewport non era ancora abbastanza scenografico per un posizionamento premium.
+- I riferimenti Open Graph e service worker puntavano ancora agli asset cinematic precedenti.
+- Mancava un tracciamento CTA strutturato per app, wallet, contatti e Convivium.
 
 ## Correzioni applicate
 
-- Creata una nuova scena hero iperrealistica e cinematografica:
-  - `assets/mono-table/mono-table-cinematic-3d.webp`
-  - `assets/mono-table/mono-table-cinematic-mobile.webp`
-  - `assets/mono-table/mono-og-image.webp`
-- Ricostruito il reveal della tavola come esperienza a livelli: piatti oro, grissini, olio, pane madre, burro, vino, dolce e fumo con parallax.
-- Aggiornata la logica `MonoTableExperience` con profondità differenziate, luce interattiva e sequenza narrativa più teatrale.
-- Aggiunta una sezione prodotti in home centrata su gastronomia, pasticceria e bistrot.
-- Rafforzata la sezione app con motivi concreti: ordini, wallet/fedeltà, inviti/promozioni.
-- Ritardato il prompt app: ora entra quando il cliente arriva alla sezione app, non appena apre il sito.
-- Aggiunti canonical, Open Graph, Twitter Card e schema `FoodEstablishment`.
-- Aggiornato cache-busting a `20260707-cinematic-3d-v1`.
-- Aggiornato service worker a `mono-site-v13`.
+- Generata una nuova immagine hero iperrealistica MONO Table Ritual:
+  - `assets/mono-table/mono-table-ritual-desktop.webp`
+  - `assets/mono-table/mono-table-ritual-mobile.webp`
+  - `assets/mono-table/mono-table-ritual-og.webp`
+  - `assets/mono-table/mono-table-ritual-blur.webp`
+- Trasformata la hero in esperienza full-bleed con testo sovrapposto, luce cinematografica e fallback statico.
+- Riallineati i layer CSS della tavola su piatto oro, grissini, olio, pane madre, burro, vino, dolce, fumo e luce.
+- Aggiornato `mono-3d.js` con micro-reveal, pointer light, reset su pointerleave e scroll-depth.
+- Aggiunti eventi tracking `mono_cta_click` pronti per `dataLayer` e GA4/gtag.
+- Aggiornato cache-busting a `20260707-table-ritual-v1`.
+- Aggiornato service worker a `mono-site-v14`.
 
 ## Verifiche da eseguire
 
-- Desktop: impatto hero, sequenza tavola, parallax e leggibilità CTA.
-- Mobile: crop della tavola, peso del pannello narrativo e fluidità scroll.
-- SEO: presenza di `robots.txt`, `sitemap.xml`, canonical e immagine OG.
-- CTA app: verifica link `Apri app MONO`, wallet e download.
+- Desktop: impatto hero full-bleed, leggibilita H1, CTA e sequenza tavola.
+- Mobile: crop verticale, posizione testo, assenza sovrapposizioni e fluidita scroll.
+- SEO: canonical, Open Graph, Twitter Card, schema `FoodEstablishment`, `robots.txt`, `sitemap.xml`.
+- CTA app: verifica eventi su header, hero, app gateway, prompt wallet, contatti e Convivium.
 
 ## Nota tecnica
 
-La nuova esperienza evita librerie pesanti e modelli 3D improvvisati: usa un master visual iperrealistico, livelli mascherati, profondità CSS, fumo e luce interattiva. È un approccio premium e mobile-first; un futuro step può sostituire i livelli con asset GLB professionali quando saranno disponibili modelli veri.
+La nuova esperienza resta senza librerie pesanti: usa WebP ottimizzati, CSS 3D, clip mask, luce interattiva e reveal progressivo. Three.js o `model-viewer` vanno introdotti solo quando esistono GLB reali, compressi e coerenti con MONO.
