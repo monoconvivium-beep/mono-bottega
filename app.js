@@ -107,6 +107,45 @@ function openAppPrompt() {
   appPrompt.querySelector(".app-prompt-panel")?.focus();
 }
 
+function revealFloatingAppButton() {
+  if (floatingAppButton && appPrompt?.hidden !== false) {
+    floatingAppButton.hidden = false;
+  }
+}
+
+function setupDeferredAppPrompt() {
+  if (!shouldShowAppPrompt()) {
+    window.setTimeout(revealFloatingAppButton, 1200);
+    return;
+  }
+
+  const appSection = document.querySelector(".app-gateway, #download");
+
+  if (!appSection || !("IntersectionObserver" in window)) {
+    window.setTimeout(revealFloatingAppButton, 1800);
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const isVisible = entries.some((entry) => entry.isIntersecting);
+
+      if (!isVisible) {
+        return;
+      }
+
+      observer.disconnect();
+      window.setTimeout(openAppPrompt, 500);
+    },
+    {
+      rootMargin: "0px 0px -20% 0px",
+      threshold: 0.35
+    }
+  );
+
+  observer.observe(appSection);
+}
+
 function setupAppPrompt() {
   if (!appPrompt) {
     return;
@@ -154,11 +193,7 @@ function setupAppPrompt() {
     }
   });
 
-  if (shouldShowAppPrompt()) {
-    window.setTimeout(openAppPrompt, 1500);
-  } else if (floatingAppButton) {
-    floatingAppButton.hidden = false;
-  }
+  setupDeferredAppPrompt();
 }
 
 function setupReveals() {

@@ -109,6 +109,7 @@ img {
 
 .brand-logo {
   background: transparent;
+  background-color: transparent !important;
   border-radius: 0;
   display: block;
   height: 36px;
@@ -322,6 +323,7 @@ h3 {
 
 .hero-logo {
   background: transparent;
+  background-color: transparent !important;
   height: auto;
   margin-bottom: 34px;
   max-height: 126px;
@@ -579,6 +581,21 @@ h3 {
   padding-top: clamp(70px, 9vw, 120px);
 }
 
+.product-system {
+  padding: 92px clamp(22px, 5vw, 72px);
+  position: relative;
+}
+
+.product-system .page-card a {
+  color: var(--mono-terracotta);
+  display: inline-flex;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  margin-top: 8px;
+  text-decoration: none;
+}
+
 .value-grid,
 .page-grid {
   display: grid;
@@ -644,6 +661,7 @@ h3 {
 
 .convivium-mark img {
   background: transparent;
+  background-color: transparent !important;
   margin: 0 auto 22px;
   max-height: 260px;
   object-fit: contain;
@@ -667,6 +685,38 @@ h3 {
   grid-template-columns: minmax(0, 1fr) minmax(260px, 0.55fr);
   padding-bottom: clamp(80px, 10vw, 140px);
   padding-top: clamp(80px, 10vw, 140px);
+}
+
+.app-reason-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 28px 0;
+}
+
+.app-reason-grid article {
+  background: rgba(255, 249, 238, 0.09);
+  border: 1px solid rgba(255, 249, 238, 0.16);
+  border-radius: 22px;
+  display: grid;
+  gap: 8px;
+  padding: 18px;
+}
+
+.app-reason-grid span {
+  color: var(--mono-champagne);
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+}
+
+.app-reason-grid strong {
+  font-size: 17px;
+}
+
+.app-reason-grid small {
+  color: rgba(255, 249, 238, 0.72);
+  line-height: 1.45;
 }
 
 .phone-card {
@@ -934,25 +984,37 @@ h3 {
 
 
 .table-cinematic {
+  --table-image: url("assets/mono-table/mono-table-cinematic-3d.webp");
+  --parallax-back-x: 0px;
+  --parallax-back-y: 0px;
+  --parallax-mid-x: 0px;
+  --parallax-mid-y: 0px;
+  --parallax-front-x: 0px;
+  --parallax-front-y: 0px;
+  --parallax-near-x: 0px;
+  --parallax-near-y: 0px;
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
   background:
-    radial-gradient(circle at var(--light-x, 64%) var(--light-y, 28%), rgba(203, 167, 90, 0.24), transparent 30%),
-    linear-gradient(145deg, rgba(255, 249, 238, 0.92), rgba(244, 236, 221, 0.66));
+    radial-gradient(circle at var(--light-x, 64%) var(--light-y, 28%), rgba(203, 167, 90, 0.28), transparent 30%),
+    linear-gradient(145deg, rgba(255, 249, 238, 0.92), rgba(244, 236, 221, 0.58));
   isolation: isolate;
   min-height: 650px;
+  perspective: 1100px;
 }
 
 .table-cinematic::before {
   background:
-    linear-gradient(105deg, rgba(255, 249, 238, 0.36), transparent 38%, rgba(203, 167, 90, 0.16)),
-    radial-gradient(circle at 80% 24%, rgba(226, 122, 96, 0.18), transparent 24%);
+    linear-gradient(105deg, rgba(255, 249, 238, 0.42), transparent 34%, rgba(203, 167, 90, 0.2)),
+    radial-gradient(circle at 82% 24%, rgba(226, 122, 96, 0.22), transparent 26%);
   opacity: 1;
   z-index: 6;
 }
 
 .table-cinematic .table-light {
   background:
-    radial-gradient(circle at var(--light-x, 62%) var(--light-y, 30%), rgba(255, 249, 238, 0.72), transparent 25%),
-    linear-gradient(100deg, rgba(203, 167, 90, 0.12), transparent 46%, rgba(184, 92, 56, 0.16));
+    radial-gradient(circle at var(--light-x, 62%) var(--light-y, 30%), rgba(255, 249, 238, 0.78), transparent 24%),
+    linear-gradient(100deg, rgba(203, 167, 90, 0.18), transparent 45%, rgba(184, 92, 56, 0.2));
   mix-blend-mode: screen;
   z-index: 7;
 }
@@ -962,79 +1024,123 @@ h3 {
   inset: 0;
   overflow: hidden;
   position: absolute;
-  transform: translateZ(0);
+  transform: rotateX(var(--tilt-y)) rotateY(var(--tilt-x)) translateZ(0);
+  transform-style: preserve-3d;
+  transition: transform 900ms cubic-bezier(0.2, 0.9, 0.18, 1);
   z-index: 1;
 }
 
+.table-master-picture,
 .table-master-photo,
-.reveal-zone {
-  background-image: url("assets/mono-table/mono-table-master-wow.webp");
-  background-position: center center;
-  background-size: cover;
+.table-layer {
   height: 100%;
   inset: 0;
   position: absolute;
   width: 100%;
 }
 
-.table-master-photo {
-  filter: saturate(0.92) contrast(1.05) brightness(0.58) blur(1.8px);
-  object-fit: cover;
-  object-position: center center;
-  opacity: 0.92;
-  transform: scale(1.045) translate3d(var(--parallax-x, 0), var(--parallax-y, 0), 0);
-  transition: filter 900ms ease, transform 1500ms cubic-bezier(0.2, 0.9, 0.18, 1), opacity 900ms ease;
+.table-master-picture {
   z-index: 1;
 }
 
-.reveal-zone {
-  filter: saturate(1.16) contrast(1.1) brightness(1.05);
+.table-master-photo {
+  filter: saturate(0.86) contrast(1.08) brightness(0.35) blur(8px);
+  object-fit: cover;
+  object-position: center center;
+  opacity: 0.72;
+  transform: scale(1.08);
+  transition: filter 900ms ease, transform 1500ms cubic-bezier(0.2, 0.9, 0.18, 1), opacity 900ms ease;
+}
+
+.table-layer {
+  background-image: var(--table-image);
+  background-position: center center;
+  background-size: cover;
+  filter: saturate(1.22) contrast(1.12) brightness(1.08) blur(8px);
   opacity: 0;
-  transform: scale(1.04) translate3d(var(--parallax-x, 0), var(--parallax-y, 0), 0);
+  transform: translate3d(var(--enter-x, 0), var(--enter-y, 0), 0) scale(0.96);
   transition:
-    opacity 850ms ease,
-    transform 1200ms cubic-bezier(0.2, 0.9, 0.18, 1),
-    filter 900ms ease;
+    opacity 880ms ease,
+    transform 1300ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 950ms ease;
   z-index: 3;
 }
 
-.reveal-zone.is-visible {
+.table-layer.is-visible {
+  filter: saturate(1.2) contrast(1.12) brightness(1.04) blur(0);
   opacity: 1;
-  transform: scale(1.01) translate3d(var(--parallax-x, 0), var(--parallax-y, 0), 0);
 }
 
-.reveal-full {
+.depth-back.is-visible {
+  transform: translate3d(var(--parallax-back-x), var(--parallax-back-y), 0) scale(1);
+}
+
+.depth-mid.is-visible {
+  transform: translate3d(var(--parallax-mid-x), var(--parallax-mid-y), 0) scale(1.006);
+}
+
+.depth-front.is-visible {
+  transform: translate3d(var(--parallax-front-x), var(--parallax-front-y), 0) scale(1.012);
+}
+
+.depth-near.is-visible {
+  transform: translate3d(var(--parallax-near-x), var(--parallax-near-y), 0) scale(1.018);
+}
+
+.table-layer-full {
   clip-path: inset(0 0 0 0 round 28px);
-  filter: saturate(1.15) contrast(1.08) brightness(1.02);
+  filter: saturate(1.18) contrast(1.09) brightness(1.02);
+  opacity: 0;
+  transform: scale(1.02);
   z-index: 2;
 }
 
-.reveal-service {
-  clip-path: ellipse(32% 28% at 52% 72%);
+.table-layer-full.is-visible {
+  opacity: 0.72;
+  transform: scale(1);
 }
 
-.reveal-grissini {
-  clip-path: ellipse(13% 32% at 8% 34%);
+.table-layer-service {
+  --enter-y: 34px;
+  clip-path: ellipse(28% 23% at 52% 78%);
 }
 
-.reveal-oil {
-  clip-path: ellipse(15% 31% at 25% 47%);
+.table-layer-grissini {
+  --enter-x: -24px;
+  --enter-y: -28px;
+  clip-path: ellipse(11% 33% at 27% 27%);
 }
 
-.reveal-bread {
-  clip-path: ellipse(24% 26% at 39% 47%);
+.table-layer-oil-bottle {
+  --enter-x: -34px;
+  clip-path: ellipse(14% 30% at 11% 42%);
 }
 
-.reveal-butter {
-  clip-path: ellipse(15% 13% at 11% 82%);
+.table-layer-oil-saucer {
+  --enter-y: 24px;
+  clip-path: ellipse(17% 11% at 25% 62%);
 }
 
-.reveal-wine {
-  clip-path: ellipse(15% 36% at 63% 43%);
+.table-layer-bread {
+  --enter-y: -18px;
+  clip-path: ellipse(27% 24% at 48% 46%);
 }
 
-.reveal-dessert {
-  clip-path: ellipse(19% 22% at 82% 56%);
+.table-layer-butter {
+  --enter-x: -20px;
+  --enter-y: 26px;
+  clip-path: ellipse(12% 12% at 12% 75%);
+}
+
+.table-layer-wine {
+  --enter-x: 26px;
+  --enter-y: -18px;
+  clip-path: ellipse(14% 40% at 70% 43%);
+}
+
+.table-layer-dessert {
+  --enter-x: 32px;
+  clip-path: ellipse(13% 17% at 88% 59%);
 }
 
 .smoke-curtain,
@@ -1223,6 +1329,7 @@ h3 {
   }
 
   .table-cinematic {
+    --table-image: url("assets/mono-table/mono-table-cinematic-mobile.webp");
     min-height: 540px;
   }
 
@@ -1245,7 +1352,8 @@ h3 {
   }
 
   .value-grid,
-  .page-grid {
+  .page-grid,
+  .app-reason-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1290,6 +1398,7 @@ h3 {
   .storyline,
   .definition-section,
   .values-section,
+  .product-system,
   .convivium-feature,
   .app-gateway,
   .contact-strip,

@@ -1,18 +1,11 @@
 # MONO table assets
 
-Cartella pronta per sostituire la tavola CSS provvisoria con asset reali.
+Asset attivi per la scena cinematic 3D:
 
-Nomi consigliati:
-- `table-base`
-- `bread`
-- `olive-oil`
-- `gastronomy-dish`
-- `steam`
-- `pastry`
-- `aperitivo`
-- `takeaway-box`
-- `gift`
-- `conviviality`
+- `mono-table-cinematic-3d.webp` — master desktop della tavola iperrealistica.
+- `mono-table-cinematic-mobile.webp` — crop leggero per mobile.
+- `mono-og-image.webp` — immagine social/Open Graph.
 
-Usare asset leggeri e ottimizzati. I modelli GLB professionali possono arrivare
-dopo, mantenendo la stessa sequenza narrativa del componente `MonoTableExperience`.
+La profondità nasce da livelli CSS mascherati sul master visual: piatti oro,
+grissini, olio, pane madre, burro, vino e dolce. I modelli GLB professionali
+possono arrivare in un secondo momento mantenendo la stessa sequenza narrativa.

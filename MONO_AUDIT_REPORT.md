@@ -1,39 +1,37 @@
-# MONO - Audit intervento hyperreal
+# MONO - Audit intervento cinematic 3D
 
-Data: 6 luglio 2026
+Data: 7 luglio 2026
 
 ## Problemi rilevati
 
-- La tavola precedente era una CSS illustration: non abbastanza realistica, non coerente con una richiesta avanguardistica.
-- Il primo impatto mobile mostrava troppo poco prodotto e troppa interfaccia, con la tavola poco credibile.
-- Erano presenti CTA provvisorie verso `#`, etichette App Store / Google Play non ancora collegate a store reali e un riferimento WhatsApp fittizio.
-- La pagina Contatti conteneva testo provvisorio tipo "Da completare", non adatto a una pubblicazione pubblica.
-- Il sito era troppo vicino alla logica dell'app: troppe funzioni operative e poco racconto del mondo MONO.
-- Il CSS conteneva ancora blocchi inutilizzati della tavola disegnata, potenziale fonte di confusione tecnica.
+- La tavola precedente era più credibile della prima versione, ma restava un reveal fotografico troppo piatto.
+- Il sito aveva CTA app ripetute e qualche sezione interna troppo sintetica per sostenere un posizionamento premium.
+- Mancavano canonical, sitemap, robots e immagine social condivisibile.
+- Il service worker teneva in cache asset vecchi non più coerenti con la nuova direzione.
+- Il pop-up app appariva troppo presto rispetto al racconto.
 
 ## Correzioni applicate
 
-- Sostituita la tavola illustrata con una sequenza di frame WebP iperrealistici:
-  - `assets/mono-table/frame-01-empty.webp`
-  - `assets/mono-table/frame-02-bread-oil.webp`
-  - `assets/mono-table/frame-03-gastronomy.webp`
-  - `assets/mono-table/frame-04-complete.webp`
-- Aggiunto un master hero più scenografico per il nuovo reveal:
-  - `assets/mono-table/mono-table-master-wow.webp`
-- Aggiornata la logica `MonoTableExperience` per gestire frame progressivi, luce interattiva e micro-parallasse.
-- Rimossi i CSS obsoleti della tavola disegnata.
-- Corretti link morti e sostituiti con destinazioni reali verso app web MONO.
-- Riscritta la pagina Contatti eliminando placeholder e testo provvisorio.
-- Aggiornato cache-busting a `20260707-wow-table-v1`.
-- Aggiornato service worker a `mono-site-v12`.
+- Creata una nuova scena hero iperrealistica e cinematografica:
+  - `assets/mono-table/mono-table-cinematic-3d.webp`
+  - `assets/mono-table/mono-table-cinematic-mobile.webp`
+  - `assets/mono-table/mono-og-image.webp`
+- Ricostruito il reveal della tavola come esperienza a livelli: piatti oro, grissini, olio, pane madre, burro, vino, dolce e fumo con parallax.
+- Aggiornata la logica `MonoTableExperience` con profondità differenziate, luce interattiva e sequenza narrativa più teatrale.
+- Aggiunta una sezione prodotti in home centrata su gastronomia, pasticceria e bistrot.
+- Rafforzata la sezione app con motivi concreti: ordini, wallet/fedeltà, inviti/promozioni.
+- Ritardato il prompt app: ora entra quando il cliente arriva alla sezione app, non appena apre il sito.
+- Aggiunti canonical, Open Graph, Twitter Card e schema `FoodEstablishment`.
+- Aggiornato cache-busting a `20260707-cinematic-3d-v1`.
+- Aggiornato service worker a `mono-site-v13`.
 
 ## Verifiche da eseguire
 
-- Desktop: controllare impatto hero, leggibilità testo e transizione frame.
-- Mobile: controllare crop tavola, peso visivo del pannello e fluidità scroll.
-- CTA app: verificare che `Apri app MONO` e `Vedi vantaggi` aprano correttamente l'app web.
-- Pagine principali: Home, App, MONO Convivium, Contatti.
+- Desktop: impatto hero, sequenza tavola, parallax e leggibilità CTA.
+- Mobile: crop della tavola, peso del pannello narrativo e fluidità scroll.
+- SEO: presenza di `robots.txt`, `sitemap.xml`, canonical e immagine OG.
+- CTA app: verifica link `Apri app MONO`, wallet e download.
 
-## Limite ancora presente
+## Nota tecnica
 
-La sequenza è iperrealistica tramite frame 3D/render fotografici, non tramite modelli GLB real-time. È una scelta deliberata per ottenere qualità visiva immediata, performance mobile e nessuna libreria pesante. Un futuro step può sostituire i frame con asset 3D professionali WebGL/GLB.
+La nuova esperienza evita librerie pesanti e modelli 3D improvvisati: usa un master visual iperrealistico, livelli mascherati, profondità CSS, fumo e luce interattiva. È un approccio premium e mobile-first; un futuro step può sostituire i livelli con asset GLB professionali quando saranno disponibili modelli veri.

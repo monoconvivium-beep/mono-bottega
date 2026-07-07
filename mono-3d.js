@@ -12,26 +12,26 @@ class MonoTableExperience {
     this.sequence = [
       {
         id: "clean",
-        title: "Il servizio appare.",
-        copy: "Tovaglia bianca, porcellana classica e bordo oro: la scena trattiene il respiro.",
+        title: "Il servizio prende luce.",
+        copy: "Tovaglia cashmere, porcellana classica, bordo oro: la scena si accende piano.",
         pieces: ["service"]
       },
       {
         id: "grissini",
-        title: "Arrivano i grissini.",
-        copy: "Verticali, dorati, croccanti: il primo segno si svela nel fumo.",
+        title: "I grissini emergono dal fumo.",
+        copy: "Verticali, dorati, quasi scultorei: il primo segno dà profondità alla tavola.",
         pieces: ["service", "grissini"]
       },
       {
         id: "oil",
-        title: "L'olio prende luce.",
-        copy: "Bottiglia, riflessi oro e un piattino per inzuppare il pane.",
+        title: "L'olio diventa oro liquido.",
+        copy: "Bottiglia, riflessi champagne e piattino per il pane: un gesto semplice diventa rito.",
         pieces: ["service", "grissini", "oil"]
       },
       {
         id: "bread",
-        title: "Pane madre, aperto.",
-        copy: "Crosta viva, mollica irregolare, gesto semplice e scenografico.",
+        title: "Il pane madre si apre.",
+        copy: "Crosta viva e mollica irregolare: materia vera, luce teatrale, memoria quotidiana.",
         pieces: ["service", "grissini", "oil", "bread"]
       },
       {
@@ -43,19 +43,19 @@ class MonoTableExperience {
       {
         id: "wine",
         title: "Il vino entra in scena.",
-        copy: "Rosso, vetro sottile, ombra profonda: la tavola diventa rito.",
+        copy: "Rosso, vetro sottile, ombra profonda: la tavola diventa convivio.",
         pieces: ["service", "grissini", "oil", "bread", "butter", "wine"]
       },
       {
         id: "dessert",
         title: "Il dolce firma.",
-        copy: "Una presenza lucida, precisa, quasi teatrale.",
+        copy: "Una presenza precisa, elegante, finale: la bottega non urla, seduce.",
         pieces: ["service", "grissini", "oil", "bread", "butter", "wine", "dessert"]
       },
       {
         id: "app",
         title: "La tavola è pronta.",
-        copy: "Ora il racconto lascia spazio al gesto: entra nel mondo MONO.",
+        copy: "Ora il racconto lascia spazio al gesto: ordina, torna, partecipa.",
         pieces: ["service", "grissini", "oil", "bread", "butter", "wine", "dessert", "complete"]
       },
       {
@@ -146,10 +146,20 @@ class MonoTableExperience {
       const y = Math.round(((event.clientY - rect.top) / rect.height) * 100);
       const parallaxX = ((x - 50) / 50).toFixed(2);
       const parallaxY = ((y - 50) / 50).toFixed(2);
+      const horizontal = Number(parallaxX);
+      const vertical = Number(parallaxY);
       this.root.style.setProperty("--light-x", `${x}%`);
       this.root.style.setProperty("--light-y", `${y}%`);
-      this.root.style.setProperty("--parallax-x", `${Number(parallaxX) * -8}px`);
-      this.root.style.setProperty("--parallax-y", `${Number(parallaxY) * -6}px`);
+      this.root.style.setProperty("--tilt-x", `${horizontal * 2.8}deg`);
+      this.root.style.setProperty("--tilt-y", `${vertical * -2.2}deg`);
+      this.root.style.setProperty("--parallax-back-x", `${horizontal * -4}px`);
+      this.root.style.setProperty("--parallax-back-y", `${vertical * -3}px`);
+      this.root.style.setProperty("--parallax-mid-x", `${horizontal * -8}px`);
+      this.root.style.setProperty("--parallax-mid-y", `${vertical * -6}px`);
+      this.root.style.setProperty("--parallax-front-x", `${horizontal * -13}px`);
+      this.root.style.setProperty("--parallax-front-y", `${vertical * -9}px`);
+      this.root.style.setProperty("--parallax-near-x", `${horizontal * -18}px`);
+      this.root.style.setProperty("--parallax-near-y", `${vertical * -12}px`);
     });
   }
 }

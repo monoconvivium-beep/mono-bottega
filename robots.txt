@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://monoconvivium-beep.github.io/mono-bottega/sitemap.xml
