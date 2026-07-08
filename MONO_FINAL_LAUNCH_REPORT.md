@@ -1,22 +1,24 @@
-# MONO - Final flagship launch report
+# MONO - Clean launch report
 
-Data: 7 luglio 2026
+Data: 8 luglio 2026
 
 ## Fatto
 
-- Sistema logo normalizzato in `assets/brand/` con varianti primary, light, mono, champagne e Convivium.
-- Header, hero e Convivium usano varianti brand corrette senza filtri CSS che alterano i colori.
-- Icone PWA aggiornate con sigillo MONO coerente con palette premium.
-- Visual prodotto editoriali 3D-like in `assets/product-visuals/` per gastronomia, pasticceria, aperitivo e catering.
-- Homepage e pagine prodotto integrano visual leggeri con hover/tilt 3D interattivo.
-- Tracking CTA reso GA4/GTM-ready con eventi `mono_cta_click`, `dataLayer` e caricamento script solo con ID reali.
-- SEO tecnico rafforzato con schema `FoodEstablishment`, `priceRange`, `hasMenu` e reparti.
-- Cache-busting aggiornato a `20260707-flagship-final-v1`.
-- Service worker aggiornato a `mono-site-v16`.
+- Home semplificata con hero fotografica, copy breve e CTA chiare.
+- Rimossa la narrazione lunga sulla tavola e ogni descrizione scenografica non utile al cliente.
+- Rimossi popup app, bottone flottante e codice collegato.
+- Rimossi dalle pagine visibili i disegni SVG dei prodotti che risultavano deboli.
+- Pagine gastronomia, pasticceria, aperitivo, catering, app, contatti e Convivium riscritte in modo più diretto.
+- Mobile alleggerito con meno altezza hero, meno elementi e layout più leggibile.
+- Tracking CTA mantenuto con eventi `mono_cta_click`, `dataLayer` e predisposizione GA4/GTM.
+- Cache-busting aggiornato a `20260708-clean-v1`.
+- Service worker aggiornato a `mono-site-v17`.
 
 ## Non Inventato
 
-Non sono stati pubblicati dati non verificati per indirizzo completo, telefono, orari, link social ufficiali, ID Search Console, ID GA4/GTM o Google Business Profile.
+Non sono stati pubblicati dati non verificati per indirizzo completo, telefono,
+orari, link social ufficiali, ID Search Console, ID GA4/GTM o Google Business
+Profile.
 
 ## Per Chiudere Il 100%
 
@@ -29,8 +31,10 @@ Servono dal cliente:
 5. dominio personalizzato;
 6. ID Google Search Console;
 7. ID GA4 o container GTM;
-8. eventuali foto reali prodotto o approvazione definitiva dei visual 3D generativi.
+8. foto reali prodotto e bottega.
 
-## Nota 3D
+## Nota Visuale
 
-È stato scelto un 3D interattivo CSS/SVG leggero, coerente con performance e mobile-first. Un vero GLB con Three.js o `model-viewer` resta consigliato solo dopo produzione di modelli reali compressi.
+La direzione attuale non punta più sul racconto della scena, ma su un'immagine
+forte e su testi utili. Eventuali visual 3D futuri vanno approvati prima e
+devono sembrare prodotto reale, non illustrazione decorativa.

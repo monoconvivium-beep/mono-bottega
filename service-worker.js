@@ -1,4 +1,4 @@
-const CACHE_NAME = "mono-site-v16";
+const CACHE_NAME = "mono-site-v17";
 const ASSETS = [
   "./",
   "./index.html",
@@ -21,7 +21,6 @@ const ASSETS = [
   "./pdf/mono-convivium.pdf",
   "./styles.css",
   "./app.js",
-  "./mono-3d.js",
   "./manifest.webmanifest",
   "./robots.txt",
   "./sitemap.xml",
@@ -35,10 +34,6 @@ const ASSETS = [
   "./assets/brand/mono-convivium-light.svg",
   "./assets/brand/mono-loghissimo-light.svg",
   "./assets/brand/mono-convivium-warm.svg",
-  "./assets/product-visuals/gastronomia.svg",
-  "./assets/product-visuals/pasticceria.svg",
-  "./assets/product-visuals/aperitivo.svg",
-  "./assets/product-visuals/catering.svg",
   "./assets/mono-table/mono-table-ritual-desktop.webp",
   "./assets/mono-table/mono-table-ritual-mobile.webp",
   "./assets/mono-table/mono-table-ritual-og.webp",

@@ -1,21 +1,22 @@
 # MONO Bottega Gastronomica
 
-Digital flagship statica per MONO Bottega Gastronomica.
+Sito statico per MONO Bottega Gastronomica.
 
-Il sito racconta MONO, costruisce desiderio e fiducia, presenta gastronomia,
-pasticceria, aperitivo, catering e MONO Convivium. L'app resta il motore
-operativo per ordini, wallet, punti, sconti, notifiche, inviti e ritorno cliente.
+Il sito deve orientare il cliente con chiarezza: gastronomia, pasticceria,
+aperitivo, catering, MONO Convivium e app. L'app resta il motore operativo per
+ordini, wallet, punti, sconti, notifiche, inviti e ritorno cliente.
 
 ## Sito Online
 
 - GitHub Pages: `https://monoconvivium-beep.github.io/mono-bottega/`
-- Versione cache-busting: `?v=20260707-flagship-final-v1`
-- Service worker: `mono-site-v16`
+- Versione cache-busting: `?v=20260708-clean-v1`
+- Service worker: `mono-site-v17`
 
 ## Esperienza Visuale
 
-La home usa `MONO Table Ritual`: una hero full-bleed iperrealistica con asset
-WebP, CSS 3D, parallax leggero, fumo, luce cinematografica e micro-reveal.
+La home usa una hero full-bleed fotografica con asset WebP, luce calda e testo
+ridotto al minimo. La priorità è leggibilità, velocità e mobile: immagine forte,
+messaggio semplice, CTA evidenti.
 
 Non sono installate librerie 3D pesanti. Three.js o `model-viewer` vanno valutati
 solo con GLB reali, compressi e caricati dopo LCP.
@@ -26,7 +27,6 @@ solo con GLB reali, compressi e caricati dopo LCP.
 - `assets/mono-table/mono-table-ritual-mobile.webp`
 - `assets/mono-table/mono-table-ritual-og.webp`
 - `assets/brand/` per il sistema logo operativo.
-- `assets/product-visuals/` per visual prodotto 3D-like leggeri.
 - `icons/` per icone PWA MONO.
 
 ## Brand System
@@ -44,8 +44,8 @@ Gli SVG originali in root restano come sorgente storica.
 
 ## Tracking
 
-`app.js` invia eventi `mono_cta_click` a `dataLayer` e, se configurato,
-a GA4/GTM.
+`app.js` invia eventi `mono_cta_click` a `dataLayer` e, se configurato, a
+GA4/GTM. Non carica script esterni finché gli ID restano vuoti.
 
 Per attivare analytics reali, impostare in pagina prima di `app.js`:
 
@@ -57,8 +57,6 @@ Per attivare analytics reali, impostare in pagina prima di `app.js`:
   };
 </script>
 ```
-
-Lasciare vuoti gli ID evita caricamenti esterni.
 
 ## SEO Locale
 
@@ -98,7 +96,7 @@ Flusso operativo:
 
 ```bash
 git add .
-git commit -m "Build MONO flagship final polish"
+git commit -m "Simplify MONO site experience"
 git push
 ```
 

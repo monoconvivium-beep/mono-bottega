@@ -1,65 +1,33 @@
-# MONO Table Ritual - Report operativo
+# MONO - Report reset less is more
 
-Data: 7 luglio 2026
+Data: 8 luglio 2026
 
-## Direzione creativa
+## Direzione
 
-MONO deve sembrare una digital flagship gastronomica, non un sito vetrina. La hero diventa un rituale editoriale: tavola full-bleed, luce calda, materia vera, profondità CSS e copy sovrapposto. Il sito racconta desiderio, fiducia e posizionamento; l'app resta il luogo operativo per ordini, wallet, punti, sconti, inviti e ritorno cliente.
+Il sito deve informare e convincere, non spiegare la scenografia. La home usa
+un'immagine forte, ma il racconto torna su ciò che interessa al cliente:
+gastronomia, pasticceria, aperitivo, app, contatti e progetto sociale.
 
-## Audit visivo
+## Cosa è stato rimosso
 
-- Punto forte: nuovo asset iperrealistico con piatto centrale, pane, olio, vino, grissini, dolce, lino e riflessi oro.
-- Punto forte: crop mobile dedicato con piatto e pane leggibili, senza dipendere dal desktop.
-- Correzione fatta: hero da card visuale a scena full-bleed con overlay narrativo.
-- Correzione fatta: rimosso effetto "debug" delle etichette visive sulla tavola.
-- Rischio residuo: il logo SVG va ancora verificato su device reale se compare fondo bianco.
+- Sequenza narrativa lunga sulla tavola.
+- Copy tecnico/artistico non utile al cliente finale.
+- Popup app ritardato.
+- Bottone flottante app.
+- Visual prodotto disegnati nelle card e nelle pagine interne.
+- Cache di asset non più visibili.
 
-## Asset prodotti
+## Cosa resta
 
-- `assets/mono-table/mono-table-ritual-desktop.webp` - 1920x1080, circa 225 KB.
-- `assets/mono-table/mono-table-ritual-mobile.webp` - 960x1280, circa 93 KB.
-- `assets/mono-table/mono-table-ritual-og.webp` - 1200x630, circa 116 KB.
-- `assets/mono-table/mono-table-ritual-blur.webp` - micro placeholder.
+- Hero full-bleed con asset desktop/mobile.
+- Testo breve e leggibile.
+- CTA principali verso prodotti e app.
+- Pagine interne con contenuti più diretti.
+- Tracking CTA pronto per GA4/GTM.
+- SEO tecnico base già presente.
 
-## Modifiche tecniche
+## Prossima fase
 
-- `index.html` usa il nuovo OG image, preload desktop/mobile e hero `MONO Table Ritual`.
-- `styles.css` gestisce hero full-bleed, overlay, clip mask, parallax, fumo e responsive mobile.
-- `mono-3d.js` gestisce sequenza, pointer light, reset pointer e scroll-depth.
-- `app.js` invia eventi `mono_cta_click` a `dataLayer` e `gtag` quando presente.
-- `service-worker.js` aggiorna cache a `mono-site-v16`.
-- `assets/brand/mono-logo-light.svg` corregge la resa logo hero senza filtro tutto bianco.
-- `assets/brand/mono-convivium-primary.svg` riallinea Convivium alla palette MONO.
-- Le pagine interne sono state bonificate da sequenze UTF-8 interpretate male negli accenti italiani.
-- `assets/product-visuals/` introduce visual editoriali 3D-like per famiglie prodotto.
-
-## SEO e local
-
-- Prossimo dato necessario: indirizzo completo, telefono, orari e link social ufficiali.
-- Dopo il dominio custom: aggiungere Google Search Console e inviare `sitemap.xml`.
-- Dopo apertura/scheda: completare Google Business Profile con foto reali, categorie, prodotti e post.
-- Estendere schema con `telephone`, `openingHours`, `geo`, `sameAs`, `menu` quando disponibili.
-
-## Tracking CTA
-
-Eventi predisposti:
-
-- `header_app`
-- `hero_enter_project`
-- `hero_open_app`
-- `table_story_app`
-- `convivium_feature_open`
-- `app_gateway_download`
-- `app_gateway_contacts`
-- `contact_strip_contacts`
-- `contact_strip_app`
-- `prompt_open_app`
-- `prompt_wallet`
-
-## Checklist QA
-
-- Desktop 1440px: H1 leggibile, CTA non sovrapposte, tavola non troppo scura.
-- Mobile 390px: crop hero centrato, testo non invade piatto, pannello sequenza nascosto.
-- Performance: asset hero sotto 250 KB, nessuna libreria 3D caricata.
-- Accessibilità: reduced motion rispettato, CTA raggiungibili, menu mobile funzionante.
-- Pubblicazione: commit, push, deploy GitHub Pages, verifica live con cache-busting `?v=20260707-flagship-final-v1`.
+Produrre foto reali o visual 3D approvati, ma solo se aumentano fiducia e
+desiderio. Ogni nuovo elemento deve superare una regola semplice: aiuta il
+cliente a capire e scegliere?

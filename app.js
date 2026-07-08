@@ -1,19 +1,14 @@
 const APP_STORE_URL = "https://mono-app-jet.vercel.app/home";
 const GOOGLE_PLAY_URL = "https://mono-app-jet.vercel.app/wallet";
-const APP_PROMPT_STORAGE_KEY = "mono-app-prompt-dismissed-at";
-const APP_PROMPT_COOLDOWN = 7 * 24 * 60 * 60 * 1000;
 const TRACKING_EVENT_NAME = "mono_cta_click";
 const ANALYTICS_CONFIG = {
   ga4MeasurementId: "",
   gtmContainerId: ""
 };
 
-const appPrompt = document.querySelector("[data-app-prompt]");
-const floatingAppButton = document.querySelector("[data-floating-app]");
 const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
 const primaryNav = document.querySelector("#primaryNav");
 const siteHeader = document.querySelector("[data-header]");
-let lastFocusedElement = null;
 
 function setupMobileMenu() {
   if (!mobileMenuToggle || !primaryNav) {
@@ -46,159 +41,11 @@ function setupHeaderState() {
   window.addEventListener("scroll", updateHeader, { passive: true });
 }
 
-function safeGetStorage(key) {
-  try {
-    return localStorage.getItem(key);
-  } catch {
-    return null;
-  }
-}
-
-function safeSetStorage(key, value) {
-  try {
-    localStorage.setItem(key, value);
-  } catch {
-    return;
-  }
-}
-
-function shouldShowAppPrompt() {
-  const storedValue = safeGetStorage(APP_PROMPT_STORAGE_KEY);
-
-  if (!storedValue) {
-    return true;
-  }
-
-  return Date.now() - Number(storedValue) > APP_PROMPT_COOLDOWN;
-}
-
-function getFocusableElements() {
-  if (!appPrompt) {
-    return [];
-  }
-
-  return [...appPrompt.querySelectorAll("a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])")];
-}
-
-function closeAppPrompt() {
-  if (!appPrompt) {
-    return;
-  }
-
-  appPrompt.hidden = true;
-  document.body.classList.remove("is-locked");
-  safeSetStorage(APP_PROMPT_STORAGE_KEY, String(Date.now()));
-
-  if (floatingAppButton) {
-    floatingAppButton.hidden = false;
-  }
-
-  lastFocusedElement?.focus?.();
-}
-
-function openAppPrompt() {
-  if (!appPrompt) {
-    return;
-  }
-
-  lastFocusedElement = document.activeElement;
-  appPrompt.hidden = false;
-  document.body.classList.add("is-locked");
-
-  if (floatingAppButton) {
-    floatingAppButton.hidden = true;
-  }
-
-  appPrompt.querySelector(".app-prompt-panel")?.focus();
-}
-
-function revealFloatingAppButton() {
-  if (floatingAppButton && appPrompt?.hidden !== false) {
-    floatingAppButton.hidden = false;
-  }
-}
-
-function setupDeferredAppPrompt() {
-  if (!shouldShowAppPrompt()) {
-    window.setTimeout(revealFloatingAppButton, 1200);
-    return;
-  }
-
-  const appSection = document.querySelector(".app-gateway, #download");
-
-  if (!appSection || !("IntersectionObserver" in window)) {
-    window.setTimeout(revealFloatingAppButton, 1800);
-    return;
-  }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const isVisible = entries.some((entry) => entry.isIntersecting);
-
-      if (!isVisible) {
-        return;
-      }
-
-      observer.disconnect();
-      window.setTimeout(openAppPrompt, 500);
-    },
-    {
-      rootMargin: "0px 0px -20% 0px",
-      threshold: 0.35
-    }
-  );
-
-  observer.observe(appSection);
-}
-
-function setupAppPrompt() {
-  if (!appPrompt) {
-    return;
-  }
-
+function setupAppLinks() {
   const appStoreLink = document.querySelector("[data-app-store]");
   const googlePlayLink = document.querySelector("[data-google-play]");
   appStoreLink?.setAttribute("href", APP_STORE_URL);
   googlePlayLink?.setAttribute("href", GOOGLE_PLAY_URL);
-
-  appPrompt.querySelectorAll("[data-app-prompt-close]").forEach((control) => {
-    control.addEventListener("click", closeAppPrompt);
-  });
-
-  floatingAppButton?.addEventListener("click", openAppPrompt);
-
-  document.addEventListener("keydown", (event) => {
-    if (appPrompt.hidden) {
-      return;
-    }
-
-    if (event.key === "Escape") {
-      closeAppPrompt();
-      return;
-    }
-
-    if (event.key !== "Tab") {
-      return;
-    }
-
-    const focusable = getFocusableElements();
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-
-    if (!first || !last) {
-      return;
-    }
-
-    if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first.focus();
-    }
-  });
-
-  setupDeferredAppPrompt();
 }
 
 function emitTrackingEvent(action, element) {
@@ -282,31 +129,6 @@ function setupTracking() {
   });
 }
 
-function setupVisualTilt() {
-  const canAnimate = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  if (!canAnimate) {
-    return;
-  }
-
-  const visuals = [...document.querySelectorAll(".product-card-visual, .page-hero-visual")];
-
-  visuals.forEach((visual) => {
-    visual.addEventListener("pointermove", (event) => {
-      const rect = visual.getBoundingClientRect();
-      const x = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
-      const y = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
-      visual.style.setProperty("--visual-tilt-x", `${(-x * 5).toFixed(2)}deg`);
-      visual.style.setProperty("--visual-tilt-y", `${(y * 4).toFixed(2)}deg`);
-    });
-
-    visual.addEventListener("pointerleave", () => {
-      visual.style.removeProperty("--visual-tilt-x");
-      visual.style.removeProperty("--visual-tilt-y");
-    });
-  });
-}
-
 function setupReveals() {
   const revealElements = [...document.querySelectorAll("[data-reveal]")];
 
@@ -346,6 +168,5 @@ setupMobileMenu();
 setupHeaderState();
 setupReveals();
 setupAnalytics();
-setupAppPrompt();
+setupAppLinks();
 setupTracking();
-setupVisualTilt();
