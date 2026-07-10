@@ -1,4 +1,4 @@
-const CACHE_NAME = "mono-site-v23";
+const CACHE_NAME = "mono-site-v24";
 const ASSETS = [
   "./",
   "./index.html",
@@ -12,8 +12,12 @@ const ASSETS = [
   "./aperitivo/index.html",
   "./catering/",
   "./catering/index.html",
+  "./eventi/",
+  "./eventi/index.html",
   "./app/",
   "./app/index.html",
+  "./lavora-con-noi/",
+  "./lavora-con-noi/index.html",
   "./contatti/",
   "./contatti/index.html",
   "./mono-convivium/",

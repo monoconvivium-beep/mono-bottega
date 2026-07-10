@@ -16,8 +16,9 @@ Data: 8 luglio 2026
 - Mobile alleggerito con meno altezza hero, meno elementi e layout più leggibile.
 - Tracking CTA mantenuto con eventi `mono_cta_click`, `dataLayer` e predisposizione GA4/GTM.
 - Dominio ufficiale preparato su `https://monobottega.it/`.
-- Cache-busting aggiornato a `20260711-palette-v1`.
-- Service worker aggiornato a `mono-site-v23`.
+- Cache-busting aggiornato a `20260711-nav-v1`.
+- Service worker aggiornato a `mono-site-v24`.
+- Aggiunte pagine Eventi e Lavora con noi, con mail separate per bottega e Convivium.
 
 ## Non Inventato
 
