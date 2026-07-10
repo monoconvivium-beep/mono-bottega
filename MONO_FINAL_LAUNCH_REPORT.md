@@ -1,4 +1,4 @@
-# MONO - Clean launch report
+﻿# MONO - Clean launch report
 
 Data: 8 luglio 2026
 
@@ -16,8 +16,8 @@ Data: 8 luglio 2026
 - Mobile alleggerito con meno altezza hero, meno elementi e layout più leggibile.
 - Tracking CTA mantenuto con eventi `mono_cta_click`, `dataLayer` e predisposizione GA4/GTM.
 - Dominio ufficiale preparato su `https://monobottega.it/`.
-- Cache-busting aggiornato a `20260710-domain-v1`.
-- Service worker aggiornato a `mono-site-v22`.
+- Cache-busting aggiornato a `20260711-palette-v1`.
+- Service worker aggiornato a `mono-site-v23`.
 
 ## Non Inventato
 

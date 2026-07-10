@@ -1,4 +1,4 @@
-# MONO Bottega Gastronomica
+﻿# MONO Bottega Gastronomica
 
 Sito statico per MONO Bottega Gastronomica.
 
@@ -10,8 +10,8 @@ ordini, wallet, punti, sconti, notifiche, inviti e ritorno cliente.
 
 - Dominio ufficiale: `https://monobottega.it/`
 - GitHub Pages tecnico: `https://monoconvivium-beep.github.io/mono-bottega/`
-- Versione cache-busting: `?v=20260710-domain-v1`
-- Service worker: `mono-site-v22`
+- Versione cache-busting: `?v=20260711-palette-v1`
+- Service worker: `mono-site-v23`
 
 ## Esperienza Visuale
 
