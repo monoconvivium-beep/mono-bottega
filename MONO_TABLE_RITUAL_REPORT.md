@@ -5,7 +5,7 @@ Data: 8 luglio 2026
 ## Direzione
 
 Il sito deve informare e convincere, non spiegare la scenografia. La home usa
-un'immagine forte, ma il racconto torna su ciò che interessa al cliente:
+un video forte ma minimale, e il racconto torna su ciò che interessa al cliente:
 gastronomia, pasticceria, aperitivo, app, contatti e progetto sociale.
 
 ## Cosa è stato rimosso
@@ -16,10 +16,11 @@ gastronomia, pasticceria, aperitivo, app, contatti e progetto sociale.
 - Bottone flottante app.
 - Visual prodotto disegnati nelle card e nelle pagine interne.
 - Cache di asset non più visibili.
+- Logo generato dentro video: il logo resta sovrapposto dal sito.
 
 ## Cosa resta
 
-- Hero full-bleed con asset desktop/mobile.
+- Hero full-bleed con video cucina/fuoco e poster fallback.
 - Testo breve e leggibile.
 - CTA principali verso prodotti e app.
 - Pagine interne con contenuti più diretti.

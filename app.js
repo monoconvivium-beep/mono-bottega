@@ -41,6 +41,27 @@ function setupHeaderState() {
   window.addEventListener("scroll", updateHeader, { passive: true });
 }
 
+function setupHeroVideo() {
+  const heroVideo = document.querySelector("[data-hero-video]");
+
+  if (!(heroVideo instanceof HTMLVideoElement)) {
+    return;
+  }
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (prefersReducedMotion) {
+    heroVideo.pause();
+    heroVideo.removeAttribute("autoplay");
+    return;
+  }
+
+  heroVideo.muted = true;
+  heroVideo.play().catch(() => {
+    heroVideo.controls = false;
+  });
+}
+
 function setupAppLinks() {
   const appStoreLink = document.querySelector("[data-app-store]");
   const googlePlayLink = document.querySelector("[data-google-play]");
@@ -166,6 +187,7 @@ if ("serviceWorker" in navigator) {
 
 setupMobileMenu();
 setupHeaderState();
+setupHeroVideo();
 setupReveals();
 setupAnalytics();
 setupAppLinks();

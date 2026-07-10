@@ -12,13 +12,13 @@ Data: 8 luglio 2026
 
 ## Correzioni applicate
 
-- Hero mantenuta come immagine forte, ma senza descrizioni narrative superflue.
+- Hero trasformata in video minimal con cucina scura, fuoco, rame e fumo, senza descrizioni narrative superflue.
 - Testi riscritti con tono più semplice: cosa vendiamo, perché fidarsi, dove agire.
 - Navigazione riportata su sezioni utili: bottega, prodotti, Convivium, app, contatti.
 - Pagine interne pulite e rese più commerciali.
 - Rimosso codice popup e stile collegato.
-- Service worker alleggerito e aggiornato a `mono-site-v17`.
-- Cache-busting aggiornato a `20260708-clean-v1`.
+- Service worker aggiornato a `mono-site-v18`.
+- Cache-busting aggiornato a `20260710-kitchen-fire-v1`.
 
 ## Verifiche da eseguire
 

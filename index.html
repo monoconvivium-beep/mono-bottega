@@ -24,10 +24,9 @@
     <title>MONO - Bottega Gastronomica | Cucina contemporanea, tradizionalmente moderna</title>
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" href="icons/icon-192.svg" type="image/svg+xml">
-    <link rel="preload" as="image" href="assets/mono-table/mono-table-ritual-desktop.webp" media="(min-width: 701px)" fetchpriority="high">
-    <link rel="preload" as="image" href="assets/mono-table/mono-table-ritual-mobile.webp" media="(max-width: 700px)" fetchpriority="high">
+    <link rel="preload" as="image" href="assets/hero/mono-kitchen-fire-poster.jpg" fetchpriority="high">
     <script>document.documentElement.classList.add("has-js");</script>
-    <link rel="stylesheet" href="styles.css?v=20260708-clean-v1">
+    <link rel="stylesheet" href="styles.css?v=20260710-kitchen-fire-v1">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -93,30 +92,32 @@
     <main id="main">
       <section class="flagship-hero" id="home" aria-labelledby="heroTitle" data-mono-hero>
         <div class="hero-visual" data-reveal>
-          <div class="mono-table-experience table-large table-cinematic table-static">
-            <div class="table-light"></div>
-            <div class="table-reveal-stack mise-en-scene" aria-hidden="true">
-              <picture class="table-master-picture">
-                <source media="(max-width: 700px)" srcset="assets/mono-table/mono-table-ritual-mobile.webp">
-                <img class="table-master-photo" src="assets/mono-table/mono-table-ritual-desktop.webp" alt="" fetchpriority="high">
-              </picture>
-              <span class="smoke-curtain smoke-left"></span>
-              <span class="smoke-curtain smoke-center"></span>
-              <span class="smoke-curtain smoke-right"></span>
-              <span class="cinema-glow glow-terracotta"></span>
-              <span class="cinema-glow glow-champagne"></span>
-              <span class="cinema-vignette"></span>
-            </div>
+          <div class="kitchen-video-experience" aria-hidden="true">
+            <video
+              class="hero-video"
+              data-hero-video
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="auto"
+              poster="assets/hero/mono-kitchen-fire-poster.jpg"
+            >
+              <source src="assets/hero/mono-kitchen-fire-desktop.mp4" type="video/mp4">
+            </video>
+            <span class="kitchen-fire-glow"></span>
+            <span class="kitchen-smoke-veil"></span>
+            <span class="kitchen-vignette"></span>
           </div>
         </div>
 
         <div class="hero-copy" data-reveal>
           <img class="hero-logo" src="assets/brand/mono-logo-light.svg" alt="MONO Bottega Gastronomica">
           <p class="eyebrow">Bottega gastronomica contemporanea</p>
-          <h1 id="heroTitle">Cucina pronta, dolci firmati, aperitivo.</h1>
+          <h1 id="heroTitle">Fuoco, cucina, bottega.</h1>
           <p class="hero-lead">
-            MONO è la bottega per mangiare bene senza complicarsi: scegli in
-            negozio, ordina dall'app, ritira e torna quando vuoi.
+            Gastronomia contemporanea, dolci firmati e aperitivi curati:
+            scegli in bottega, ordina dall'app, ritira e torna quando vuoi.
           </p>
           <div class="hero-actions" aria-label="Azioni principali">
             <a class="button primary" data-track="hero_enter_project" href="#prodotti">Vedi cosa trovi</a>
@@ -249,6 +250,6 @@
       </nav>
     </footer>
 
-    <script src="app.js?v=20260708-clean-v1"></script>
+    <script src="app.js?v=20260710-kitchen-fire-v1"></script>
   </body>
 </html>

@@ -5,7 +5,7 @@
 - Repo locale: `C:\Users\feder\Documents\New project`
 - Repo GitHub: `https://github.com/monoconvivium-beep/mono-bottega`
 - Sito online: `https://monoconvivium-beep.github.io/mono-bottega/`
-- Versione cache-busting: `https://monoconvivium-beep.github.io/mono-bottega/?v=20260708-clean-v1`
+- Versione cache-busting: `https://monoconvivium-beep.github.io/mono-bottega/?v=20260710-kitchen-fire-v1`
 
 ## Stato attuale
 
@@ -21,13 +21,15 @@ parte dell'impresa, non una sezione laterale.
 
 ## Ultima evoluzione
 
+- Sostituita la vecchia hero statica con una hero video minimal: cucina scura, fuoco, pentola in rame e fumo.
+- Il logo non è generato nel video: resta sovrapposto dal sito con SVG reale.
 - Rimossa la narrazione lunga sulla tavola.
 - Rimossi popup e bottone flottante dell'app.
 - Rimossi visual prodotto SVG dalle pagine visibili.
 - Riscritti testi home e pagine interne in tono più chiaro, poetico ma commerciale.
 - Semplificata l'esperienza mobile.
-- Aggiornato cache-busting a `20260708-clean-v1`.
-- Aggiornato service worker a `mono-site-v17`.
+- Aggiornato cache-busting a `20260710-kitchen-fire-v1`.
+- Aggiornato service worker a `mono-site-v18`.
 
 ## Asset attivi
 
@@ -38,12 +40,17 @@ Cartella: `assets/mono-table/`
 - `mono-table-ritual-og.webp` - immagine social/Open Graph.
 - `mono-table-ritual-blur.webp` - placeholder leggero.
 
+Cartella: `assets/hero/`
+
+- `mono-kitchen-fire-desktop.mp4` - hero video 16:9.
+- `mono-kitchen-fire-poster.jpg` - poster/fallback hero.
+
 ## File principali
 
 - `index.html` - homepage, hero, prodotti, Convivium, app, CTA e schema SEO.
 - `styles.css` - visual system, hero full-bleed, responsive e layout.
 - `app.js` - menu, reveal, tracking CTA, link app e GA4/GTM-ready.
-- `service-worker.js` - cache `mono-site-v17`.
+- `service-worker.js` - cache `mono-site-v18`.
 - `README.md` - istruzioni operative aggiornate.
 
 ## SEO e tracking
@@ -79,7 +86,7 @@ Da completare quando i dati reali sono disponibili:
 ## Prossimi step consigliati
 
 1. Verificare live da telefono e PC:
-   `https://monoconvivium-beep.github.io/mono-bottega/?v=20260708-clean-v1`
+   `https://monoconvivium-beep.github.io/mono-bottega/?v=20260710-kitchen-fire-v1`
 2. Controllare crop mobile, leggibilità hero, menu e CTA.
 3. Verificare colori logo su telefono e PC.
 4. Inserire dati reali local SEO: indirizzo, telefono, orari.

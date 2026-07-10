@@ -1,4 +1,4 @@
-const CACHE_NAME = "mono-site-v17";
+const CACHE_NAME = "mono-site-v18";
 const ASSETS = [
   "./",
   "./index.html",
@@ -34,6 +34,8 @@ const ASSETS = [
   "./assets/brand/mono-convivium-light.svg",
   "./assets/brand/mono-loghissimo-light.svg",
   "./assets/brand/mono-convivium-warm.svg",
+  "./assets/hero/mono-kitchen-fire-desktop.mp4",
+  "./assets/hero/mono-kitchen-fire-poster.jpg",
   "./assets/mono-table/mono-table-ritual-desktop.webp",
   "./assets/mono-table/mono-table-ritual-mobile.webp",
   "./assets/mono-table/mono-table-ritual-og.webp",
@@ -58,6 +60,11 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") {
+    return;
+  }
+
+  if (event.request.headers.has("range")) {
+    event.respondWith(fetch(event.request));
     return;
   }
 

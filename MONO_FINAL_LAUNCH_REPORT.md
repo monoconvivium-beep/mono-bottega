@@ -4,15 +4,15 @@ Data: 8 luglio 2026
 
 ## Fatto
 
-- Home semplificata con hero fotografica, copy breve e CTA chiare.
+- Home semplificata con hero video minimal: cucina scura, fuoco, pentola in rame, fumo, copy breve e CTA chiare.
 - Rimossa la narrazione lunga sulla tavola e ogni descrizione scenografica non utile al cliente.
 - Rimossi popup app, bottone flottante e codice collegato.
 - Rimossi dalle pagine visibili i disegni SVG dei prodotti che risultavano deboli.
 - Pagine gastronomia, pasticceria, aperitivo, catering, app, contatti e Convivium riscritte in modo più diretto.
 - Mobile alleggerito con meno altezza hero, meno elementi e layout più leggibile.
 - Tracking CTA mantenuto con eventi `mono_cta_click`, `dataLayer` e predisposizione GA4/GTM.
-- Cache-busting aggiornato a `20260708-clean-v1`.
-- Service worker aggiornato a `mono-site-v17`.
+- Cache-busting aggiornato a `20260710-kitchen-fire-v1`.
+- Service worker aggiornato a `mono-site-v18`.
 
 ## Non Inventato
 
@@ -35,6 +35,6 @@ Servono dal cliente:
 
 ## Nota Visuale
 
-La direzione attuale non punta più sul racconto della scena, ma su un'immagine
-forte e su testi utili. Eventuali visual 3D futuri vanno approvati prima e
-devono sembrare prodotto reale, non illustrazione decorativa.
+La direzione attuale non punta più sul racconto della scena, ma su un gesto
+visivo forte e su testi utili. Il logo resta sempre SVG reale sovrapposto dal
+sito, mai generato dentro il video.
