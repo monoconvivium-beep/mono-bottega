@@ -9,8 +9,8 @@ ordini, wallet, punti, sconti, notifiche, inviti e ritorno cliente.
 ## Sito Online
 
 - GitHub Pages: `https://monoconvivium-beep.github.io/mono-bottega/`
-- Versione cache-busting: `?v=20260710-copy-v1`
-- Service worker: `mono-site-v20`
+- Versione cache-busting: `?v=20260710-local-v1`
+- Service worker: `mono-site-v21`
 
 ## Esperienza Visuale
 
@@ -24,6 +24,14 @@ su touch e con `prefers-reduced-motion`.
 I testi sono stati riallineati a una voce più MONO: concreta, calda, sintetica,
 con un equilibrio tra desiderio e informazioni utili.
 
+## Dati Locali
+
+- Indirizzo: `Via Barletta 72D, Torino`
+- Orari: martedì-sabato `10:30-14:30` e `18:00-22:30`; domenica `9:00-14:00`; lunedì chiuso.
+- Info e preventivi: `monobottega@gmail.com`
+- MONO Convivium: `monoconvivium@gmail.com`
+- Telefono: da inserire appena disponibile.
+
 Non sono installate librerie 3D pesanti. Three.js o `model-viewer` vanno valutati
 solo con GLB reali, compressi e caricati dopo LCP.
 
@@ -31,6 +39,7 @@ solo con GLB reali, compressi e caricati dopo LCP.
 
 - `assets/hero/mono-kitchen-fire-desktop.mp4`
 - `assets/hero/mono-kitchen-fire-poster.jpg`
+- `assets/hero/mono-kitchen-fire-og.jpg`
 - `assets/mono-table/mono-table-ritual-desktop.webp`
 - `assets/mono-table/mono-table-ritual-mobile.webp`
 - `assets/mono-table/mono-table-ritual-og.webp`

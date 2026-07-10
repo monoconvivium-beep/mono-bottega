@@ -16,17 +16,17 @@
       content="Cucina di banco, dolci firmati, aperitivi curati e app MONO per ordinare, tornare e ricevere vantaggi."
     >
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://monoconvivium-beep.github.io/mono-bottega/assets/mono-table/mono-table-ritual-og.webp">
+    <meta property="og:image" content="https://monoconvivium-beep.github.io/mono-bottega/assets/hero/mono-kitchen-fire-og.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="MONO - Bottega Gastronomica">
     <meta name="twitter:description" content="Cucina di banco, dolci firmati, aperitivi curati. Una bottega, più momenti, la stessa idea di buono.">
-    <meta name="twitter:image" content="https://monoconvivium-beep.github.io/mono-bottega/assets/mono-table/mono-table-ritual-og.webp">
+    <meta name="twitter:image" content="https://monoconvivium-beep.github.io/mono-bottega/assets/hero/mono-kitchen-fire-og.jpg">
     <title>MONO - Bottega Gastronomica | Cucina di banco, dolci e aperitivo</title>
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" href="icons/icon-192.svg" type="image/svg+xml">
     <link rel="preload" as="image" href="assets/hero/mono-kitchen-fire-poster.jpg" fetchpriority="high">
     <script>document.documentElement.classList.add("has-js");</script>
-    <link rel="stylesheet" href="styles.css?v=20260710-copy-v1">
+    <link rel="stylesheet" href="styles.css?v=20260710-local-v1">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -34,7 +34,7 @@
         "name": "MONO Bottega Gastronomica",
         "description": "Bottega gastronomica contemporanea con cucina di banco, pasticceria, aperitivo, catering, progetto sociale e app per ordini e vantaggi.",
         "url": "https://monoconvivium-beep.github.io/mono-bottega/",
-        "image": "https://monoconvivium-beep.github.io/mono-bottega/assets/mono-table/mono-table-ritual-og.webp",
+        "image": "https://monoconvivium-beep.github.io/mono-bottega/assets/hero/mono-kitchen-fire-og.jpg",
         "priceRange": "€€",
         "servesCuisine": ["Gastronomia contemporanea", "Pasticceria", "Aperitivo"],
         "hasMenu": "https://monoconvivium-beep.github.io/mono-bottega/gastronomia/",
@@ -61,10 +61,50 @@
         },
         "address": {
           "@type": "PostalAddress",
+          "streetAddress": "Via Barletta 72D",
           "addressLocality": "Torino",
           "addressRegion": "Piemonte",
           "addressCountry": "IT"
-        }
+        },
+        "email": "monobottega@gmail.com",
+        "hasMap": "https://www.google.com/maps/search/?api=1&query=Via%20Barletta%2072D%2C%20Torino",
+        "openingHours": [
+          "Tu-Sa 10:30-14:30",
+          "Tu-Sa 18:00-22:30",
+          "Su 09:00-14:00"
+        ],
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "10:30",
+            "closes": "14:30"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "18:00",
+            "closes": "22:30"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Sunday",
+            "opens": "09:00",
+            "closes": "14:00"
+          }
+        ],
+        "contactPoint": [
+          {
+            "@type": "ContactPoint",
+            "contactType": "Informazioni e preventivi",
+            "email": "monobottega@gmail.com"
+          },
+          {
+            "@type": "ContactPoint",
+            "contactType": "MONO Convivium",
+            "email": "monoconvivium@gmail.com"
+          }
+        ]
       }
     </script>
   </head>
@@ -229,6 +269,43 @@
         </div>
       </section>
 
+      <section class="local-info-section" id="dove-siamo" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Dove siamo</p>
+          <h2>MONO prende casa in Via Barletta 72D.</h2>
+          <p>
+            Siamo a Torino, nel quartiere Santa Rita. Qui trovi indirizzo,
+            orari, contatti e candidature: poche informazioni, subito utili.
+          </p>
+        </div>
+        <div class="local-info-grid">
+          <article class="local-info-card">
+            <span>Indirizzo</span>
+            <h3>Via Barletta 72D, Torino.</h3>
+            <p>Apri Google Maps e raggiungi la bottega con il percorso più semplice.</p>
+            <a data-track="local_open_maps" href="https://www.google.com/maps/search/?api=1&query=Via%20Barletta%2072D%2C%20Torino" target="_blank" rel="noopener">Apri Google Maps</a>
+          </article>
+          <article class="local-info-card">
+            <span>Orari</span>
+            <h3>Martedì-sabato.</h3>
+            <p>10:30-14:30 · 18:00-22:30<br>Domenica 9:00-14:00<br>Lunedì chiuso.</p>
+            <a data-track="local_view_contacts" href="contatti/">Dettagli contatti</a>
+          </article>
+          <article class="local-info-card">
+            <span>Contattaci</span>
+            <h3>Preventivi e informazioni.</h3>
+            <p>Per catering, gifting e richieste generali scrivi alla bottega.</p>
+            <a data-track="local_email_bottega" href="mailto:monobottega@gmail.com?subject=Richiesta%20MONO%20Bottega">monobottega@gmail.com</a>
+          </article>
+          <article class="local-info-card">
+            <span>Lavora con noi</span>
+            <h3>Cucina, banco, accoglienza.</h3>
+            <p>Se vuoi candidarti, manda una breve presentazione e il tuo CV.</p>
+            <a data-track="local_jobs_email" href="mailto:monobottega@gmail.com?subject=Candidatura%20MONO%20Bottega">Invia candidatura</a>
+          </article>
+        </div>
+      </section>
+
       <section class="contact-strip" id="contatti" data-reveal>
         <p class="eyebrow">Santa Rita, Torino</p>
         <h2>La bottega ti aspetta.</h2>
@@ -249,6 +326,6 @@
       </nav>
     </footer>
 
-    <script src="app.js?v=20260710-copy-v1"></script>
+    <script src="app.js?v=20260710-local-v1"></script>
   </body>
 </html>

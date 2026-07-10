@@ -5,7 +5,7 @@
 - Repo locale: `C:\Users\feder\Documents\New project`
 - Repo GitHub: `https://github.com/monoconvivium-beep/mono-bottega`
 - Sito online: `https://monoconvivium-beep.github.io/mono-bottega/`
-- Versione cache-busting: `https://monoconvivium-beep.github.io/mono-bottega/?v=20260710-copy-v1`
+- Versione cache-busting: `https://monoconvivium-beep.github.io/mono-bottega/?v=20260710-local-v1`
 
 ## Stato attuale
 
@@ -25,13 +25,15 @@ parte dell'impresa, non una sezione laterale.
 - Il logo non è generato nel video: resta sovrapposto dal sito con SVG reale.
 - Aggiunta luce calda al cursore su desktop, disattivata su touch e reduced motion.
 - Migliorati i testi di home, prodotti, app, contatti, bottega e Convivium con tono più caldo, premium e commerciale.
+- Inseriti dati locali: Via Barletta 72D, orari, email, mappa Google e candidature.
+- Sostituita l'immagine Open Graph con il frame hero video in `assets/hero/mono-kitchen-fire-og.jpg`.
 - Rimossa la narrazione lunga sulla tavola.
 - Rimossi popup e bottone flottante dell'app.
 - Rimossi visual prodotto SVG dalle pagine visibili.
 - Riscritti testi home e pagine interne in tono più chiaro, poetico ma commerciale.
 - Semplificata l'esperienza mobile.
-- Aggiornato cache-busting a `20260710-copy-v1`.
-- Aggiornato service worker a `mono-site-v20`.
+- Aggiornato cache-busting a `20260710-local-v1`.
+- Aggiornato service worker a `mono-site-v21`.
 
 ## Asset attivi
 
@@ -46,13 +48,14 @@ Cartella: `assets/hero/`
 
 - `mono-kitchen-fire-desktop.mp4` - hero video 16:9.
 - `mono-kitchen-fire-poster.jpg` - poster/fallback hero.
+- `mono-kitchen-fire-og.jpg` - immagine social/Open Graph.
 
 ## File principali
 
 - `index.html` - homepage, hero, prodotti, Convivium, app, CTA e schema SEO.
 - `styles.css` - visual system, hero full-bleed, responsive e layout.
 - `app.js` - menu, reveal, tracking CTA, link app e GA4/GTM-ready.
-- `service-worker.js` - cache `mono-site-v20`.
+- `service-worker.js` - cache `mono-site-v21`.
 - `README.md` - istruzioni operative aggiornate.
 
 ## SEO e tracking
@@ -88,7 +91,7 @@ Da completare quando i dati reali sono disponibili:
 ## Prossimi step consigliati
 
 1. Verificare live da telefono e PC:
-   `https://monoconvivium-beep.github.io/mono-bottega/?v=20260710-copy-v1`
+   `https://monoconvivium-beep.github.io/mono-bottega/?v=20260710-local-v1`
 2. Controllare crop mobile, leggibilità hero, menu e CTA.
 3. Verificare colori logo su telefono e PC.
 4. Inserire dati reali local SEO: indirizzo, telefono, orari.
