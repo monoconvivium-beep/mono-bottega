@@ -9,14 +9,17 @@ ordini, wallet, punti, sconti, notifiche, inviti e ritorno cliente.
 ## Sito Online
 
 - GitHub Pages: `https://monoconvivium-beep.github.io/mono-bottega/`
-- Versione cache-busting: `?v=20260710-kitchen-fire-v1`
-- Service worker: `mono-site-v18`
+- Versione cache-busting: `?v=20260710-cursor-light-v1`
+- Service worker: `mono-site-v19`
 
 ## Esperienza Visuale
 
 La home usa una hero video full-bleed: cucina scura, fuoco, pentola in rame,
 fumo e logo MONO reale sovrapposto dal sito. La priorità è leggibilità,
 velocità e mobile: video forte, messaggio semplice, CTA evidenti.
+
+Su desktop è attiva una luce calda che segue il cursore. L'effetto è disattivato
+su touch e con `prefers-reduced-motion`.
 
 Non sono installate librerie 3D pesanti. Three.js o `model-viewer` vanno valutati
 solo con GLB reali, compressi e caricati dopo LCP.

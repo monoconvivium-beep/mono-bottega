@@ -21,6 +21,7 @@ gastronomia, pasticceria, aperitivo, app, contatti e progetto sociale.
 ## Cosa resta
 
 - Hero full-bleed con video cucina/fuoco e poster fallback.
+- Luce calda al cursore su desktop per micro-effetto premium.
 - Testo breve e leggibile.
 - CTA principali verso prodotti e app.
 - Pagine interne con contenuti più diretti.

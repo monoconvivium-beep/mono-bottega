@@ -5,14 +5,15 @@ Data: 8 luglio 2026
 ## Fatto
 
 - Home semplificata con hero video minimal: cucina scura, fuoco, pentola in rame, fumo, copy breve e CTA chiare.
+- Aggiunta luce interattiva al cursore per dare profondità alla scena su desktop.
 - Rimossa la narrazione lunga sulla tavola e ogni descrizione scenografica non utile al cliente.
 - Rimossi popup app, bottone flottante e codice collegato.
 - Rimossi dalle pagine visibili i disegni SVG dei prodotti che risultavano deboli.
 - Pagine gastronomia, pasticceria, aperitivo, catering, app, contatti e Convivium riscritte in modo più diretto.
 - Mobile alleggerito con meno altezza hero, meno elementi e layout più leggibile.
 - Tracking CTA mantenuto con eventi `mono_cta_click`, `dataLayer` e predisposizione GA4/GTM.
-- Cache-busting aggiornato a `20260710-kitchen-fire-v1`.
-- Service worker aggiornato a `mono-site-v18`.
+- Cache-busting aggiornato a `20260710-cursor-light-v1`.
+- Service worker aggiornato a `mono-site-v19`.
 
 ## Non Inventato
 

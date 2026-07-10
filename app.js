@@ -9,6 +9,7 @@ const ANALYTICS_CONFIG = {
 const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
 const primaryNav = document.querySelector("#primaryNav");
 const siteHeader = document.querySelector("[data-header]");
+const rootElement = document.documentElement;
 
 function setupMobileMenu() {
   if (!mobileMenuToggle || !primaryNav) {
@@ -59,6 +60,41 @@ function setupHeroVideo() {
   heroVideo.muted = true;
   heroVideo.play().catch(() => {
     heroVideo.controls = false;
+  });
+}
+
+function setupCursorLight() {
+  const canUseCursorLight = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!canUseCursorLight || prefersReducedMotion) {
+    return;
+  }
+
+  let animationFrame = null;
+  let cursorX = window.innerWidth / 2;
+  let cursorY = window.innerHeight / 2;
+
+  rootElement.classList.add("has-cursor-light");
+
+  const updateLight = () => {
+    rootElement.style.setProperty("--cursor-light-x", `${cursorX}px`);
+    rootElement.style.setProperty("--cursor-light-y", `${cursorY}px`);
+    animationFrame = null;
+  };
+
+  window.addEventListener("pointermove", (event) => {
+    cursorX = event.clientX;
+    cursorY = event.clientY;
+    rootElement.classList.add("is-cursor-active");
+
+    if (!animationFrame) {
+      animationFrame = window.requestAnimationFrame(updateLight);
+    }
+  }, { passive: true });
+
+  document.addEventListener("pointerleave", () => {
+    rootElement.classList.remove("is-cursor-active");
   });
 }
 
@@ -188,6 +224,7 @@ if ("serviceWorker" in navigator) {
 setupMobileMenu();
 setupHeaderState();
 setupHeroVideo();
+setupCursorLight();
 setupReveals();
 setupAnalytics();
 setupAppLinks();

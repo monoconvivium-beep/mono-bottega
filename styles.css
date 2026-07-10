@@ -18,6 +18,8 @@
   --shadow: 0 32px 90px rgba(38, 35, 33, 0.2);
   --radius-large: 34px;
   --radius-medium: 22px;
+  --cursor-light-x: 50vw;
+  --cursor-light-y: 50vh;
 }
 
 * {
@@ -39,6 +41,25 @@ body {
   line-height: 1.5;
   min-height: 100vh;
   overflow-x: hidden;
+}
+
+.has-cursor-light body::before {
+  background:
+    radial-gradient(circle at var(--cursor-light-x) var(--cursor-light-y), rgba(244, 236, 221, 0.22), transparent 0 120px),
+    radial-gradient(circle at var(--cursor-light-x) var(--cursor-light-y), rgba(203, 167, 90, 0.16), transparent 0 230px),
+    radial-gradient(circle at var(--cursor-light-x) var(--cursor-light-y), rgba(226, 122, 96, 0.08), transparent 0 360px);
+  content: "";
+  inset: 0;
+  mix-blend-mode: screen;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  transition: opacity 220ms ease;
+  z-index: 58;
+}
+
+.has-cursor-light.is-cursor-active body::before {
+  opacity: 1;
 }
 
 a {

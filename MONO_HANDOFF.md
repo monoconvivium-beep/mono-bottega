@@ -5,7 +5,7 @@
 - Repo locale: `C:\Users\feder\Documents\New project`
 - Repo GitHub: `https://github.com/monoconvivium-beep/mono-bottega`
 - Sito online: `https://monoconvivium-beep.github.io/mono-bottega/`
-- Versione cache-busting: `https://monoconvivium-beep.github.io/mono-bottega/?v=20260710-kitchen-fire-v1`
+- Versione cache-busting: `https://monoconvivium-beep.github.io/mono-bottega/?v=20260710-cursor-light-v1`
 
 ## Stato attuale
 
@@ -23,13 +23,14 @@ parte dell'impresa, non una sezione laterale.
 
 - Sostituita la vecchia hero statica con una hero video minimal: cucina scura, fuoco, pentola in rame e fumo.
 - Il logo non è generato nel video: resta sovrapposto dal sito con SVG reale.
+- Aggiunta luce calda al cursore su desktop, disattivata su touch e reduced motion.
 - Rimossa la narrazione lunga sulla tavola.
 - Rimossi popup e bottone flottante dell'app.
 - Rimossi visual prodotto SVG dalle pagine visibili.
 - Riscritti testi home e pagine interne in tono più chiaro, poetico ma commerciale.
 - Semplificata l'esperienza mobile.
-- Aggiornato cache-busting a `20260710-kitchen-fire-v1`.
-- Aggiornato service worker a `mono-site-v18`.
+- Aggiornato cache-busting a `20260710-cursor-light-v1`.
+- Aggiornato service worker a `mono-site-v19`.
 
 ## Asset attivi
 
@@ -50,7 +51,7 @@ Cartella: `assets/hero/`
 - `index.html` - homepage, hero, prodotti, Convivium, app, CTA e schema SEO.
 - `styles.css` - visual system, hero full-bleed, responsive e layout.
 - `app.js` - menu, reveal, tracking CTA, link app e GA4/GTM-ready.
-- `service-worker.js` - cache `mono-site-v18`.
+- `service-worker.js` - cache `mono-site-v19`.
 - `README.md` - istruzioni operative aggiornate.
 
 ## SEO e tracking
@@ -86,7 +87,7 @@ Da completare quando i dati reali sono disponibili:
 ## Prossimi step consigliati
 
 1. Verificare live da telefono e PC:
-   `https://monoconvivium-beep.github.io/mono-bottega/?v=20260710-kitchen-fire-v1`
+   `https://monoconvivium-beep.github.io/mono-bottega/?v=20260710-cursor-light-v1`
 2. Controllare crop mobile, leggibilità hero, menu e CTA.
 3. Verificare colori logo su telefono e PC.
 4. Inserire dati reali local SEO: indirizzo, telefono, orari.
