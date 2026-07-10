@@ -14,12 +14,13 @@ Data: 8 luglio 2026
 
 - Hero trasformata in video minimal con cucina scura, fuoco, rame e fumo, senza descrizioni narrative superflue.
 - Aggiunta luce al cursore solo desktop, con rispetto di touch e reduced motion.
+- Testi riscritti per essere meno generici: più cucina, più bottega, più ritorno cliente.
 - Testi riscritti con tono più semplice: cosa vendiamo, perché fidarsi, dove agire.
 - Navigazione riportata su sezioni utili: bottega, prodotti, Convivium, app, contatti.
 - Pagine interne pulite e rese più commerciali.
 - Rimosso codice popup e stile collegato.
-- Service worker aggiornato a `mono-site-v19`.
-- Cache-busting aggiornato a `20260710-cursor-light-v1`.
+- Service worker aggiornato a `mono-site-v20`.
+- Cache-busting aggiornato a `20260710-copy-v1`.
 
 ## Verifiche da eseguire
 

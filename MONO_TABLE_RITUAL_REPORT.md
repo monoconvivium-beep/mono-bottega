@@ -22,6 +22,7 @@ gastronomia, pasticceria, aperitivo, app, contatti e progetto sociale.
 
 - Hero full-bleed con video cucina/fuoco e poster fallback.
 - Luce calda al cursore su desktop per micro-effetto premium.
+- Copy più sintetico e identitario su home, prodotti, app, contatti e Convivium.
 - Testo breve e leggibile.
 - CTA principali verso prodotti e app.
 - Pagine interne con contenuti più diretti.

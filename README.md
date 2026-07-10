@@ -9,8 +9,8 @@ ordini, wallet, punti, sconti, notifiche, inviti e ritorno cliente.
 ## Sito Online
 
 - GitHub Pages: `https://monoconvivium-beep.github.io/mono-bottega/`
-- Versione cache-busting: `?v=20260710-cursor-light-v1`
-- Service worker: `mono-site-v19`
+- Versione cache-busting: `?v=20260710-copy-v1`
+- Service worker: `mono-site-v20`
 
 ## Esperienza Visuale
 
@@ -20,6 +20,9 @@ velocità e mobile: video forte, messaggio semplice, CTA evidenti.
 
 Su desktop è attiva una luce calda che segue il cursore. L'effetto è disattivato
 su touch e con `prefers-reduced-motion`.
+
+I testi sono stati riallineati a una voce più MONO: concreta, calda, sintetica,
+con un equilibrio tra desiderio e informazioni utili.
 
 Non sono installate librerie 3D pesanti. Three.js o `model-viewer` vanno valutati
 solo con GLB reali, compressi e caricati dopo LCP.
