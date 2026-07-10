@@ -4,8 +4,9 @@
 
 - Repo locale: `C:\Users\feder\Documents\New project`
 - Repo GitHub: `https://github.com/monoconvivium-beep/mono-bottega`
-- Sito online: `https://monoconvivium-beep.github.io/mono-bottega/`
-- Versione cache-busting: `https://monoconvivium-beep.github.io/mono-bottega/?v=20260710-local-v1`
+- Sito online: `https://monobottega.it/`
+- GitHub Pages tecnico: `https://monoconvivium-beep.github.io/mono-bottega/`
+- Versione cache-busting: `https://monobottega.it/?v=20260710-domain-v1`
 
 ## Stato attuale
 
@@ -32,8 +33,9 @@ parte dell'impresa, non una sezione laterale.
 - Rimossi visual prodotto SVG dalle pagine visibili.
 - Riscritti testi home e pagine interne in tono più chiaro, poetico ma commerciale.
 - Semplificata l'esperienza mobile.
-- Aggiornato cache-busting a `20260710-local-v1`.
-- Aggiornato service worker a `mono-site-v21`.
+- Aggiornato dominio ufficiale a `monobottega.it` con file `CNAME`.
+- Aggiornato cache-busting a `20260710-domain-v1`.
+- Aggiornato service worker a `mono-site-v22`.
 
 ## Asset attivi
 
@@ -55,7 +57,7 @@ Cartella: `assets/hero/`
 - `index.html` - homepage, hero, prodotti, Convivium, app, CTA e schema SEO.
 - `styles.css` - visual system, hero full-bleed, responsive e layout.
 - `app.js` - menu, reveal, tracking CTA, link app e GA4/GTM-ready.
-- `service-worker.js` - cache `mono-site-v21`.
+- `service-worker.js` - cache `mono-site-v22`.
 - `README.md` - istruzioni operative aggiornate.
 
 ## SEO e tracking
@@ -73,11 +75,10 @@ Già presenti:
 
 Da completare quando i dati reali sono disponibili:
 
-- dominio custom;
 - Google Search Console;
 - Google Business Profile;
-- indirizzo completo, telefono, orari;
-- schema `openingHours`, `telephone`, `geo`, `sameAs`, `menu`;
+- telefono pubblico;
+- schema `telephone`, `geo`, `sameAs`, `menu`;
 - foto reali prodotto/bottega.
 
 ## Regole di lavoro
@@ -90,10 +91,10 @@ Da completare quando i dati reali sono disponibili:
 
 ## Prossimi step consigliati
 
-1. Verificare live da telefono e PC:
-   `https://monoconvivium-beep.github.io/mono-bottega/?v=20260710-local-v1`
-2. Controllare crop mobile, leggibilità hero, menu e CTA.
-3. Verificare colori logo su telefono e PC.
-4. Inserire dati reali local SEO: indirizzo, telefono, orari.
-5. Collegare dominio custom, Search Console e Business Profile.
-6. Collegare GA4/Tag Manager agli eventi `mono_cta_click`.
+1. Inserire i record DNS del dominio presso il registrar.
+2. Verificare live da telefono e PC:
+   `https://monobottega.it/?v=20260710-domain-v1`
+3. Controllare crop mobile, leggibilità hero, menu e CTA.
+4. Verificare colori logo su telefono e PC.
+5. Inserire telefono pubblico appena disponibile.
+6. Collegare Search Console, Business Profile e GA4/Tag Manager.

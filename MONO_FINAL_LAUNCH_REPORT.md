@@ -15,8 +15,9 @@ Data: 8 luglio 2026
 - Pagine gastronomia, pasticceria, aperitivo, catering, app, contatti e Convivium riscritte in modo più diretto.
 - Mobile alleggerito con meno altezza hero, meno elementi e layout più leggibile.
 - Tracking CTA mantenuto con eventi `mono_cta_click`, `dataLayer` e predisposizione GA4/GTM.
-- Cache-busting aggiornato a `20260710-local-v1`.
-- Service worker aggiornato a `mono-site-v21`.
+- Dominio ufficiale preparato su `https://monobottega.it/`.
+- Cache-busting aggiornato a `20260710-domain-v1`.
+- Service worker aggiornato a `mono-site-v22`.
 
 ## Non Inventato
 
@@ -32,7 +33,7 @@ Servono dal cliente:
 2. telefono pubblico;
 3. orari ufficiali;
 4. link Instagram/Facebook/Google Maps;
-5. dominio personalizzato;
+5. propagazione DNS del dominio personalizzato;
 6. ID Google Search Console;
 7. ID GA4 o container GTM;
 8. foto reali prodotto e bottega.

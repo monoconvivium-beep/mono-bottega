@@ -20,8 +20,9 @@ Data: 8 luglio 2026
 - Navigazione riportata su sezioni utili: bottega, prodotti, Convivium, app, contatti.
 - Pagine interne pulite e rese più commerciali.
 - Rimosso codice popup e stile collegato.
-- Service worker aggiornato a `mono-site-v21`.
-- Cache-busting aggiornato a `20260710-local-v1`.
+- Dominio ufficiale preparato su `https://monobottega.it/`.
+- Service worker aggiornato a `mono-site-v22`.
+- Cache-busting aggiornato a `20260710-domain-v1`.
 
 ## Verifiche da eseguire
 
