@@ -10,6 +10,7 @@ Data: 8 luglio 2026
 - Aggiunta griglia operativa con indirizzo, orari, email, Google Maps e candidature.
 - Aggiornati schema locale, FAQ schema e immagine Open Graph al frame della hero video.
 - Rafforzati titoli, meta description e copy visibile per ricerche locali: `gastronomia Torino`, `bottega gastronomica Torino`, `Santa Rita`, `Via Barletta 72D`.
+- Migliorata esperienza mobile della hero: il video resta leggibile e il testo non copre più la pentola.
 - Rimossa la narrazione lunga sulla tavola e ogni descrizione scenografica non utile al cliente.
 - Rimossi popup app, bottone flottante e codice collegato.
 - Rimossi dalle pagine visibili i disegni SVG dei prodotti che risultavano deboli.
@@ -17,8 +18,8 @@ Data: 8 luglio 2026
 - Mobile alleggerito con meno altezza hero, meno elementi e layout più leggibile.
 - Tracking CTA mantenuto con eventi `mono_cta_click`, `dataLayer` e predisposizione GA4/GTM.
 - Dominio ufficiale preparato su `https://monobottega.it/`.
-- Cache-busting aggiornato a `20260711-seo-local-v1`.
-- Service worker aggiornato a `mono-site-v28`.
+- Cache-busting aggiornato a `20260711-mobile-hero-v1`.
+- Service worker aggiornato a `mono-site-v29`.
 - Aggiunte pagine Eventi e Lavora con noi, con mail separate per bottega e Convivium.
 
 ## Non Inventato
