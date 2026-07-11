@@ -10,8 +10,8 @@ ordini, wallet, punti, sconti, notifiche, inviti e ritorno cliente.
 
 - Dominio ufficiale: `https://monobottega.it/`
 - GitHub Pages tecnico: `https://monoconvivium-beep.github.io/mono-bottega/`
-- Versione cache-busting: `?v=20260711-nav-v1`
-- Service worker: `mono-site-v24`
+- Versione cache-busting: `?v=20260711-sensory-v1`
+- Service worker: `mono-site-v25`
 
 ## Esperienza Visuale
 

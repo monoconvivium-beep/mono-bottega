@@ -6,7 +6,7 @@
 - Repo GitHub: `https://github.com/monoconvivium-beep/mono-bottega`
 - Sito online: `https://monobottega.it/`
 - GitHub Pages tecnico: `https://monoconvivium-beep.github.io/mono-bottega/`
-- Versione cache-busting: `https://monobottega.it/?v=20260711-nav-v1`
+- Versione cache-busting: `https://monobottega.it/?v=20260711-sensory-v1`
 
 ## Stato attuale
 
@@ -34,8 +34,8 @@ parte dell'impresa, non una sezione laterale.
 - Riscritti testi home e pagine interne in tono più chiaro, poetico ma commerciale.
 - Semplificata l'esperienza mobile.
 - Aggiornato dominio ufficiale a `monobottega.it` con file `CNAME`.
-- Aggiornato cache-busting a `20260711-nav-v1`.
-- Aggiornato service worker a `mono-site-v24`.
+- Aggiornato cache-busting a `20260711-sensory-v1`.
+- Aggiornato service worker a `mono-site-v25`.
 - Aggiunte le pagine `eventi/` e `lavora-con-noi/`.
 - Incorporato il PDF MONO Convivium direttamente nella pagina Convivium.
 
@@ -59,7 +59,7 @@ Cartella: `assets/hero/`
 - `index.html` - homepage, hero, prodotti, Convivium, app, CTA e schema SEO.
 - `styles.css` - visual system, hero full-bleed, responsive e layout.
 - `app.js` - menu, reveal, tracking CTA, link app e GA4/GTM-ready.
-- `service-worker.js` - cache `mono-site-v24`.
+- `service-worker.js` - cache `mono-site-v25`.
 - `README.md` - istruzioni operative aggiornate.
 
 ## SEO e tracking
@@ -95,7 +95,7 @@ Da completare quando i dati reali sono disponibili:
 
 1. Inserire i record DNS del dominio presso il registrar.
 2. Verificare live da telefono e PC:
-   `https://monobottega.it/?v=20260711-nav-v1`
+   `https://monobottega.it/?v=20260711-sensory-v1`
 3. Controllare crop mobile, leggibilità hero, menu e CTA.
 4. Verificare colori logo su telefono e PC.
 5. Inserire telefono pubblico appena disponibile.
