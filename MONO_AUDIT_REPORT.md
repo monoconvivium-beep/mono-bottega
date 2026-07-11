@@ -21,8 +21,8 @@ Data: 8 luglio 2026
 - Pagine interne pulite e rese più commerciali.
 - Rimosso codice popup e stile collegato.
 - Dominio ufficiale preparato su `https://monobottega.it/`.
-- Service worker aggiornato a `mono-site-v26`.
-- Cache-busting aggiornato a `20260711-video-color-v1`.
+- Service worker aggiornato a `mono-site-v27`.
+- Cache-busting aggiornato a `20260711-copy-app-v1`.
 
 ## Verifiche da eseguire
 

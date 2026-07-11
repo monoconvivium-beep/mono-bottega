@@ -99,10 +99,13 @@ function setupCursorLight() {
 }
 
 function setupAppLinks() {
-  const appStoreLink = document.querySelector("[data-app-store]");
-  const googlePlayLink = document.querySelector("[data-google-play]");
-  appStoreLink?.setAttribute("href", APP_STORE_URL);
-  googlePlayLink?.setAttribute("href", GOOGLE_PLAY_URL);
+  document.querySelectorAll("[data-app-store]").forEach((link) => {
+    link.setAttribute("href", APP_STORE_URL);
+  });
+
+  document.querySelectorAll("[data-google-play]").forEach((link) => {
+    link.setAttribute("href", GOOGLE_PLAY_URL);
+  });
 }
 
 function emitTrackingEvent(action, element) {
@@ -176,13 +179,16 @@ function setupTracking() {
       return;
     }
 
-    const trackedElement = event.target.closest("[data-track]");
+    const trackedElement = event.target.closest("[data-track], [data-app-store], [data-google-play]");
 
     if (!trackedElement) {
       return;
     }
 
-    emitTrackingEvent(trackedElement.dataset.track, trackedElement);
+    const action = trackedElement.dataset.track
+      || (trackedElement.hasAttribute("data-google-play") ? "open_app_wallet" : "open_app_home");
+
+    emitTrackingEvent(action, trackedElement);
   });
 }
 
