@@ -8,7 +8,8 @@ Data: 8 luglio 2026
 - Aggiunta luce interattiva al cursore per dare profondità alla scena su desktop.
 - Riscritti i testi principali con voce più concreta, desiderabile e commerciale.
 - Aggiunta griglia operativa con indirizzo, orari, email, Google Maps e candidature.
-- Aggiornati schema locale e immagine Open Graph al frame della hero video.
+- Aggiornati schema locale, FAQ schema e immagine Open Graph al frame della hero video.
+- Rafforzati titoli, meta description e copy visibile per ricerche locali: `gastronomia Torino`, `bottega gastronomica Torino`, `Santa Rita`, `Via Barletta 72D`.
 - Rimossa la narrazione lunga sulla tavola e ogni descrizione scenografica non utile al cliente.
 - Rimossi popup app, bottone flottante e codice collegato.
 - Rimossi dalle pagine visibili i disegni SVG dei prodotti che risultavano deboli.
@@ -16,28 +17,26 @@ Data: 8 luglio 2026
 - Mobile alleggerito con meno altezza hero, meno elementi e layout più leggibile.
 - Tracking CTA mantenuto con eventi `mono_cta_click`, `dataLayer` e predisposizione GA4/GTM.
 - Dominio ufficiale preparato su `https://monobottega.it/`.
-- Cache-busting aggiornato a `20260711-copy-app-v1`.
-- Service worker aggiornato a `mono-site-v27`.
+- Cache-busting aggiornato a `20260711-seo-local-v1`.
+- Service worker aggiornato a `mono-site-v28`.
 - Aggiunte pagine Eventi e Lavora con noi, con mail separate per bottega e Convivium.
 
 ## Non Inventato
 
-Non sono stati pubblicati dati non verificati per indirizzo completo, telefono,
-orari, link social ufficiali, ID Search Console, ID GA4/GTM o Google Business
-Profile.
+Non sono stati pubblicati dati non verificati per telefono, link social
+ufficiali, ID Search Console, ID GA4/GTM, coordinate geo o Google Business Profile.
 
 ## Per Chiudere Il 100%
 
 Servono dal cliente:
 
-1. indirizzo completo della bottega;
-2. telefono pubblico;
-3. orari ufficiali;
-4. link Instagram/Facebook/Google Maps;
-5. propagazione DNS del dominio personalizzato;
-6. ID Google Search Console;
-7. ID GA4 o container GTM;
-8. foto reali prodotto e bottega.
+1. telefono pubblico;
+2. link Instagram/Facebook ufficiali;
+3. verifica e sitemap in Google Search Console;
+4. apertura e verifica Google Business Profile;
+5. ID GA4 o container GTM;
+6. foto reali prodotto e bottega;
+7. coordinate geografiche ufficiali per schema `geo`.
 
 ## Nota Visuale
 

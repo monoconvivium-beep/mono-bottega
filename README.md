@@ -10,8 +10,8 @@ ordini, wallet, punti, sconti, notifiche, inviti e ritorno cliente.
 
 - Dominio ufficiale: `https://monobottega.it/`
 - GitHub Pages tecnico: `https://monoconvivium-beep.github.io/mono-bottega/`
-- Versione cache-busting: `?v=20260711-copy-app-v1`
-- Service worker: `mono-site-v27`
+- Versione cache-busting: `?v=20260711-seo-local-v1`
+- Service worker: `mono-site-v28`
 
 ## Esperienza Visuale
 
@@ -82,19 +82,19 @@ Già presenti:
 
 - canonical;
 - Open Graph e Twitter Card;
-- schema `FoodEstablishment`;
+- schema `FoodEstablishment` + `LocalBusiness`;
+- FAQ schema in homepage;
+- sezione locale visibile per `gastronomia Torino`, `bottega gastronomica Torino`, `Santa Rita` e `Via Barletta 72D`;
 - `robots.txt`;
 - `sitemap.xml`.
 
 Da completare solo con dati reali:
 
-- indirizzo completo;
 - telefono;
-- orari;
 - link social;
 - Google Search Console;
 - Google Business Profile;
-- schema `openingHours`, `telephone`, `geo`, `sameAs`, `menu`.
+- schema `telephone`, `geo` e `sameAs`.
 
 ## Come Provarlo In Locale
 

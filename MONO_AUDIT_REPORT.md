@@ -21,14 +21,16 @@ Data: 8 luglio 2026
 - Pagine interne pulite e rese più commerciali.
 - Rimosso codice popup e stile collegato.
 - Dominio ufficiale preparato su `https://monobottega.it/`.
-- Service worker aggiornato a `mono-site-v27`.
-- Cache-busting aggiornato a `20260711-copy-app-v1`.
+- Service worker aggiornato a `mono-site-v28`.
+- Cache-busting aggiornato a `20260711-seo-local-v1`.
+- SEO locale rafforzato con titoli e meta dedicati a Torino, Santa Rita, Via Barletta 72D e query gastronomiche.
+- Aggiunti schema `LocalBusiness`, FAQ schema e sezione FAQ/local search visibile in homepage.
 
 ## Verifiche da eseguire
 
 - Desktop: leggibilità hero, CTA, menu e sezioni prodotto.
 - Mobile: crop immagine, menu, lunghezza testi e assenza di confusione visiva.
-- SEO: canonical, Open Graph, Twitter Card, schema `FoodEstablishment`, `robots.txt`, `sitemap.xml`.
+- SEO: canonical, Open Graph, Twitter Card, schema `FoodEstablishment` + `LocalBusiness`, FAQ schema, `robots.txt`, `sitemap.xml`.
 - CTA app: verifica eventi su header, hero, app gateway, contatti e Convivium.
 
 ## Nota tecnica

@@ -683,6 +683,38 @@ h3 {
   margin-top: 34px;
 }
 
+.local-answer-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin-top: 34px;
+}
+
+.local-search-section h2,
+.local-faq-section h2 {
+  max-width: 1020px;
+}
+
+.local-search-section .page-card h3,
+.local-faq-section .page-card h3 {
+  font-size: clamp(24px, 2vw, 30px);
+}
+
+.local-search-section .page-card p,
+.local-faq-section .page-card p {
+  font-size: 16px;
+}
+
+.local-search-section .page-card a {
+  color: var(--mono-terracotta-dark);
+  display: inline-flex;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  margin-top: 8px;
+  text-decoration: none;
+}
+
 .page-card span {
   color: var(--mono-terracotta);
   display: inline-block;

@@ -6,38 +6,45 @@
     <meta name="theme-color" content="#B85C38">
     <meta
       name="description"
-      content="MONO Bottega Gastronomica a Torino: cucina di banco, pasticceria, aperitivo, eventi, app con vantaggi e MONO Convivium, il progetto sociale."
+      content="MONO Bottega Gastronomica (Monobottega) a Torino Santa Rita: gastronomia, pasticceria, aperitivo, app, Convivium. Via Barletta 72D."
     >
     <link rel="canonical" href="https://monobottega.it/">
-    <meta property="og:title" content="MONO - Bottega Gastronomica">
+    <meta property="og:title" content="MONO Bottega Gastronomica Torino | Santa Rita">
     <meta property="og:url" content="https://monobottega.it/">
     <meta
       property="og:description"
-      content="Una bottega gastronomica calda e contemporanea: prodotti curati, app per ordinare e tornare, Convivium per formazione e lavoro dignitoso."
+      content="Gastronomia contemporanea a Torino Santa Rita: cucina di banco, dolci, aperitivo, app MONO e Convivium per formazione e lavoro dignitoso."
     >
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://monobottega.it/assets/hero/mono-kitchen-fire-og.jpg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="MONO - Bottega Gastronomica">
-    <meta name="twitter:description" content="Gastronomia, dolci, aperitivo e app MONO. Una bottega, più momenti, la stessa idea di buono.">
+    <meta name="twitter:title" content="MONO Bottega Gastronomica Torino">
+    <meta name="twitter:description" content="Gastronomia, dolci, aperitivo e app MONO a Torino Santa Rita. Una bottega, più momenti, la stessa idea di buono.">
     <meta name="twitter:image" content="https://monobottega.it/assets/hero/mono-kitchen-fire-og.jpg">
-    <title>MONO - Bottega Gastronomica | Cucina di banco, dolci e aperitivo</title>
+    <title>MONO Bottega Gastronomica Torino | Gastronomia Santa Rita</title>
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" href="icons/icon-192.svg" type="image/svg+xml">
     <link rel="preload" as="image" href="assets/hero/mono-kitchen-fire-poster.jpg" fetchpriority="high">
     <script>document.documentElement.classList.add("has-js");</script>
-    <link rel="stylesheet" href="styles.css?v=20260711-copy-app-v1">
+    <link rel="stylesheet" href="styles.css?v=20260711-seo-local-v1">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "FoodEstablishment",
+        "@type": ["FoodEstablishment", "LocalBusiness"],
+        "@id": "https://monobottega.it/#foodestablishment",
         "name": "MONO Bottega Gastronomica",
-        "description": "Bottega gastronomica contemporanea con cucina di banco, pasticceria, aperitivo, eventi, progetto sociale e app per ordini, wallet e vantaggi.",
+        "alternateName": ["Monobottega", "Mono Bottega", "MONO Gastronomia Torino", "Bottega gastronomica Santa Rita"],
+        "description": "Bottega gastronomica contemporanea a Torino, zona Santa Rita, con cucina di banco, pasticceria, aperitivo, eventi, progetto sociale e app per ordini, wallet e vantaggi.",
         "url": "https://monobottega.it/",
+        "mainEntityOfPage": "https://monobottega.it/",
+        "slogan": "Cucina fatta da persone. Vantaggi che ti fanno tornare.",
+        "keywords": "bottega gastronomica Torino, gastronomia Torino, gastronomia Santa Rita, pasticceria Torino, aperitivo Santa Rita, Via Barletta 72D",
         "image": "https://monobottega.it/assets/hero/mono-kitchen-fire-og.jpg",
+        "logo": "https://monobottega.it/assets/brand/mono-logo-primary.svg",
         "priceRange": "€€",
         "servesCuisine": ["Gastronomia contemporanea", "Pasticceria", "Aperitivo"],
         "hasMenu": "https://monobottega.it/gastronomia/",
+        "menu": "https://monobottega.it/gastronomia/",
         "department": [
           {
             "@type": "FoodEstablishment",
@@ -55,10 +62,16 @@
             "url": "https://monobottega.it/aperitivo/"
           }
         ],
-        "areaServed": {
-          "@type": "City",
-          "name": "Torino"
-        },
+        "areaServed": [
+          {
+            "@type": "City",
+            "name": "Torino"
+          },
+          {
+            "@type": "Place",
+            "name": "Santa Rita"
+          }
+        ],
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "Via Barletta 72D",
@@ -103,6 +116,50 @@
             "@type": "ContactPoint",
             "contactType": "MONO Convivium",
             "email": "monoconvivium@gmail.com"
+          }
+        ],
+        "potentialAction": {
+          "@type": "OrderAction",
+          "target": "https://mono-app-jet.vercel.app/home"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Dove si trova MONO Bottega Gastronomica?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "MONO Bottega Gastronomica si trova in Via Barletta 72D, Torino, zona Santa Rita."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Che cosa posso trovare da MONO?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Da MONO trovi gastronomia contemporanea, cucina di banco, pasticceria, aperitivo, eventi, catering e gifting."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "A cosa serve l'app MONO?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "L'app MONO serve per ordini, ritiro, wallet, punti, sconti, inviti, notifiche utili e ritorno cliente."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Che cos'è MONO Convivium?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "MONO Convivium è il progetto sociale di MONO: formazione, inclusione e lavoro dignitoso dentro una bottega reale."
+            }
           }
         ]
       }
@@ -155,10 +212,10 @@
 
         <div class="hero-copy" data-reveal>
           <img class="hero-logo" src="assets/brand/mono-logo-light.svg" alt="MONO Bottega Gastronomica">
-          <p class="eyebrow">Bottega gastronomica viva · Torino</p>
+          <p class="eyebrow">Bottega gastronomica viva · Torino Santa Rita</p>
           <h1 id="heroTitle">Cucina fatta da persone. Vantaggi che ti fanno tornare.</h1>
           <p class="hero-lead">
-            MONO è cucina di banco, pasticceria, aperitivo e app: scegli quello che ti fa voglia,
+            MONO è gastronomia a Torino Santa Rita, pasticceria, aperitivo e app: scegli quello che ti fa voglia,
             ordini in modo semplice, raccogli punti e rientri in una bottega che ricorda chi torna.
           </p>
           <div class="hero-actions" aria-label="Azioni principali">
@@ -308,6 +365,70 @@
         </div>
       </section>
 
+      <section class="page-section alt local-search-section" id="gastronomia-torino" data-reveal>
+        <p class="eyebrow">Gastronomia Torino · Santa Rita</p>
+        <h2>Se cerchi una bottega gastronomica a Torino, MONO è in Via Barletta 72D.</h2>
+        <p>
+          Che tu ci cerchi come MONO, Mono Bottega o Monobottega, il punto resta
+          lo stesso: nel quartiere Santa Rita uniamo cucina di banco, dolci,
+          aperitivo e app in un'esperienza semplice da capire e facile da usare:
+          passi in bottega, oppure inizi dall'app e torni quando c'è qualcosa di buono per te.
+        </p>
+        <div class="local-answer-grid">
+          <article class="page-card" data-reveal>
+            <span>Ricerca locale</span>
+            <h3>Gastronomia Torino.</h3>
+            <p>Piatti pronti, preparazioni da portare a casa e cucina contemporanea con cura da bottega.</p>
+            <a href="gastronomia/">Scopri gastronomia</a>
+          </article>
+          <article class="page-card" data-reveal>
+            <span>Quartiere</span>
+            <h3>Bottega Santa Rita.</h3>
+            <p>Via Barletta 72D: indirizzo, orari, mappa e contatti sempre a portata di mano.</p>
+            <a href="contatti/">Vai ai contatti</a>
+          </article>
+          <article class="page-card" data-reveal>
+            <span>App MONO</span>
+            <h3>Ordini e vantaggi.</h3>
+            <p>Il sito racconta MONO. L'app gestisce ordini, wallet, punti, sconti e inviti.</p>
+            <a data-track="seo_local_app" data-app-store href="https://mono-app-jet.vercel.app/home">Apri app</a>
+          </article>
+          <article class="page-card" data-reveal>
+            <span>Convivium</span>
+            <h3>La parte umana.</h3>
+            <p>Formazione, inclusione e lavoro dignitoso: il progetto sociale resta dentro la bottega.</p>
+            <a href="mono-convivium/">Scopri Convivium</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="page-section local-faq-section" id="domande-frequenti" data-reveal>
+        <p class="eyebrow">Domande rapide</p>
+        <h2>MONO in chiaro, prima ancora di cercarci su Google.</h2>
+        <div class="local-answer-grid">
+          <article class="page-card" data-reveal>
+            <span>Dove</span>
+            <h3>Dove si trova MONO?</h3>
+            <p>In Via Barletta 72D, Torino, zona Santa Rita. Dalla pagina contatti puoi aprire Google Maps.</p>
+          </article>
+          <article class="page-card" data-reveal>
+            <span>Cosa</span>
+            <h3>Che cosa trovo?</h3>
+            <p>Gastronomia, pasticceria, aperitivo, eventi, catering, gifting e una app per rendere tutto più semplice.</p>
+          </article>
+          <article class="page-card" data-reveal>
+            <span>App</span>
+            <h3>Posso ordinare dall'app?</h3>
+            <p>Sì: l'app MONO è pensata per ordini, ritiro, wallet, punti, sconti, inviti e notifiche utili.</p>
+          </article>
+          <article class="page-card" data-reveal>
+            <span>Sociale</span>
+            <h3>Cos'è MONO Convivium?</h3>
+            <p>È il progetto sociale: inclusione, formazione e lavoro dignitoso dentro una bottega reale.</p>
+          </article>
+        </div>
+      </section>
+
       <section class="contact-strip" id="contatti" data-reveal>
         <p class="eyebrow">Santa Rita, Torino</p>
         <h2>Passa in bottega. Poi resta vicino con l'app.</h2>
@@ -330,6 +451,6 @@
       </nav>
     </footer>
 
-    <script src="app.js?v=20260711-copy-app-v1"></script>
+    <script src="app.js?v=20260711-seo-local-v1"></script>
   </body>
 </html>

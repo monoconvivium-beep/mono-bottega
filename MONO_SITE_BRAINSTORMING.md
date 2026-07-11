@@ -14,6 +14,7 @@ MONO Convivium resta centrale: non una pagina laterale, ma il cuore umano del pr
 - Pagina MONO Convivium rafforzata su inclusione, formazione e lavoro dignitoso.
 - Pagine prodotto con inviti più chiari all'app e ai vantaggi.
 - Tracking CTA app migliorato: tutti i link `data-app-store` e `data-google-play` vengono aggiornati e tracciati.
+- SEO locale rafforzato su homepage e pagine interne: titoli, meta, sezione `Gastronomia Torino`, FAQ visibili e schema strutturato.
 
 ## Brainstorming per il prossimo step
 
@@ -48,6 +49,8 @@ MONO Convivium resta centrale: non una pagina laterale, ma il cuore umano del pr
 - Aprire Google Business Profile appena possibile.
 - Inserire telefono appena disponibile.
 - Aggiornare sitemap quando arrivano nuove pagine o dominio app.
+- Chiedere indicizzazione della homepage e delle pagine `gastronomia`, `contatti`, `app` dopo la pubblicazione.
+- Raccogliere recensioni vere su Google appena il profilo è verificato.
 
 ## Scelte da decidere insieme
 
