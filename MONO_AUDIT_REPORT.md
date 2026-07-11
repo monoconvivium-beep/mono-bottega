@@ -21,11 +21,12 @@ Data: 8 luglio 2026
 - Pagine interne pulite e rese più commerciali.
 - Rimosso codice popup e stile collegato.
 - Dominio ufficiale preparato su `https://monobottega.it/`.
-- Service worker aggiornato a `mono-site-v29`.
-- Cache-busting aggiornato a `20260711-mobile-hero-v1`.
+- Service worker aggiornato a `mono-site-v33`.
+- Cache-busting aggiornato a `20260712-convivium-fluid-v1`.
 - SEO locale rafforzato con titoli e meta dedicati a Torino, Santa Rita, Via Barletta 72D e query gastronomiche.
 - Aggiunti schema `LocalBusiness`, FAQ schema e sezione FAQ/local search visibile in homepage.
 - Hero mobile rifinita per lasciare il video visibile prima del testo.
+- Pagina MONO Convivium convertita in esperienza web fluida: testo, layout, immagini e loghi della presentazione sono integrati direttamente nella pagina.
 
 ## Verifiche da eseguire
 

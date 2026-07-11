@@ -6,7 +6,7 @@
 - Repo GitHub: `https://github.com/monoconvivium-beep/mono-bottega`
 - Sito online: `https://monobottega.it/`
 - GitHub Pages tecnico: `https://monoconvivium-beep.github.io/mono-bottega/`
-- Versione cache-busting: `https://monobottega.it/?v=20260711-mobile-hero-v1`
+- Versione cache-busting: `https://monobottega.it/?v=20260712-convivium-fluid-v1`
 
 ## Stato attuale
 
@@ -37,10 +37,12 @@ parte dell'impresa, non una sezione laterale.
 - Rafforzato SEO locale per `gastronomia Torino`, `bottega gastronomica Torino`, `Santa Rita`, `Via Barletta 72D`.
 - Aggiunto schema `LocalBusiness`, FAQ schema e sezione FAQ visibile in homepage.
 - Migliorata hero mobile: video/pentola protagonista sopra, testo in card compatta sotto.
-- Aggiornato cache-busting a `20260711-mobile-hero-v1`.
-- Aggiornato service worker a `mono-site-v29`.
+- Integrata la presentazione MONO Convivium direttamente come pagina fluida in `/mono-convivium/`, senza iframe e senza CTA PDF.
+- Mantenuto `pdf/mono-convivium.pdf` solo come archivio tecnico, non come esperienza primaria.
+- Aggiornato cache-busting a `20260712-convivium-fluid-v1`.
+- Aggiornato service worker a `mono-site-v33`.
 - Aggiunte le pagine `eventi/` e `lavora-con-noi/`.
-- Incorporato il PDF MONO Convivium direttamente nella pagina Convivium.
+- La pagina Convivium ora mostra testo, impaginazione, immagini e loghi della presentazione in modo nativo e scorrevole.
 
 ## Asset attivi
 
@@ -62,7 +64,7 @@ Cartella: `assets/hero/`
 - `index.html` - homepage, hero, prodotti, Convivium, app, CTA e schema SEO.
 - `styles.css` - visual system, hero full-bleed, responsive e layout.
 - `app.js` - menu, reveal, tracking CTA, link app e GA4/GTM-ready.
-- `service-worker.js` - cache `mono-site-v29`.
+- `service-worker.js` - cache `mono-site-v33`.
 - `README.md` - istruzioni operative aggiornate.
 
 ## SEO e tracking
@@ -98,7 +100,7 @@ Da completare quando i dati reali sono disponibili:
 
 1. Inserire i record DNS del dominio presso il registrar.
 2. Verificare live da telefono e PC:
-   `https://monobottega.it/?v=20260711-mobile-hero-v1`
+   `https://monobottega.it/?v=20260712-convivium-fluid-v1`
 3. Controllare crop mobile, leggibilità hero, menu e CTA.
 4. Verificare colori logo su telefono e PC.
 5. Inserire telefono pubblico appena disponibile.

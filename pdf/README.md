@@ -1,7 +1,7 @@
 # PDF MONO Convivium
 
-Caricare qui il documento definitivo con nome:
+Documento attivo:
 
 `mono-convivium.pdf`
 
-La pagina `/mono-convivium/` punta già a `/pdf/mono-convivium.pdf`.
+La pagina `/mono-convivium/` integra la presentazione in modo fluido dentro il sito. Questo PDF resta solo come archivio tecnico interno.

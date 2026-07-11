@@ -1,4 +1,4 @@
-const CACHE_NAME = "mono-site-v29";
+const CACHE_NAME = "mono-site-v33";
 const ASSETS = [
   "./",
   "./index.html",
@@ -22,7 +22,6 @@ const ASSETS = [
   "./contatti/index.html",
   "./mono-convivium/",
   "./mono-convivium/index.html",
-  "./pdf/mono-convivium.pdf",
   "./styles.css",
   "./app.js",
   "./manifest.webmanifest",
