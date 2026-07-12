@@ -1,4 +1,4 @@
-const CACHE_NAME = "mono-site-v35";
+const CACHE_NAME = "mono-site-v36";
 const ASSETS = [
   "./",
   "./index.html",
@@ -46,7 +46,8 @@ const ASSETS = [
   "./assets/mono-table/mono-table-ritual-og.webp",
   "./assets/mono-table/mono-table-ritual-blur.webp",
   "./icons/icon-192.svg",
-  "./icons/icon-512.svg"
+  "./icons/icon-512.svg",
+  "./icons/mono-favicon.svg"
 ];
 
 self.addEventListener("install", (event) => {
