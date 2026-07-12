@@ -258,6 +258,17 @@ function setupReveals() {
     return;
   }
 
+  // Cascade: reveals that share a grid stagger in sequence for a filmic feel.
+  const staggerParents = ".page-grid, .local-answer-grid, .app-reason-grid";
+  revealElements.forEach((element) => {
+    const group = element.parentElement;
+
+    if (group instanceof Element && group.matches(staggerParents)) {
+      const revealSiblings = [...group.children].filter((child) => child.hasAttribute("data-reveal"));
+      element.style.setProperty("--reveal-order", String(Math.max(0, revealSiblings.indexOf(element))));
+    }
+  });
+
   if (!("IntersectionObserver" in window)) {
     revealElements.forEach((element) => element.classList.add("is-revealed"));
     return;
@@ -281,6 +292,44 @@ function setupReveals() {
   revealElements.forEach((element) => observer.observe(element));
 }
 
+function setupHeroParallax() {
+  const hero = document.querySelector("[data-mono-hero]");
+
+  if (!hero || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    return;
+  }
+
+  // Parallax only where the desktop hero layout applies; mobile hero is restacked.
+  if (!window.matchMedia("(min-width: 821px)").matches) {
+    return;
+  }
+
+  let ticking = false;
+
+  const update = () => {
+    const rect = hero.getBoundingClientRect();
+    const height = rect.height || 1;
+    const progress = Math.min(1, Math.max(0, -rect.top / height));
+    hero.style.setProperty("--hero-scroll", progress.toFixed(3));
+    hero.style.setProperty("--hero-light-x", `${(64 + progress * 10).toFixed(1)}%`);
+    hero.style.setProperty("--hero-light-y", `${(42 + progress * 12).toFixed(1)}%`);
+    ticking = false;
+  };
+
+  const requestUpdate = () => {
+    if (ticking) {
+      return;
+    }
+
+    ticking = true;
+    window.requestAnimationFrame(update);
+  };
+
+  update();
+  window.addEventListener("scroll", requestUpdate, { passive: true });
+  window.addEventListener("resize", requestUpdate, { passive: true });
+}
+
 if ("serviceWorker" in navigator) {
   const scriptUrl = new URL(document.currentScript?.src || "app.js", window.location.href);
   navigator.serviceWorker.register(new URL("service-worker.js", scriptUrl));
@@ -290,6 +339,7 @@ setupMobileMenu();
 setupHeaderState();
 setupHeroVideo();
 setupCursorLight();
+setupHeroParallax();
 setupReveals();
 setupAnalytics();
 setupAppLinks();
