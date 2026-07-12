@@ -1,5 +1,7 @@
-const APP_STORE_URL = "https://mono-app-jet.vercel.app/home";
-const GOOGLE_PLAY_URL = "https://mono-app-jet.vercel.app/wallet";
+const APP_STORE_URL = "https://app.monobottega.it";
+const GOOGLE_PLAY_URL = "https://app.monobottega.it";
+const NEWSLETTER_EMAIL = "monobottega@gmail.com";
+const NEWSLETTER_ENDPOINT = window.MONO_NEWSLETTER_ENDPOINT || "";
 const TRACKING_EVENT_NAME = "mono_cta_click";
 const ANALYTICS_CONFIG = {
   ga4MeasurementId: "",
@@ -101,10 +103,67 @@ function setupCursorLight() {
 function setupAppLinks() {
   document.querySelectorAll("[data-app-store]").forEach((link) => {
     link.setAttribute("href", APP_STORE_URL);
+    link.setAttribute("target", "_blank");
+    link.setAttribute("rel", "noopener");
   });
 
   document.querySelectorAll("[data-google-play]").forEach((link) => {
     link.setAttribute("href", GOOGLE_PLAY_URL);
+    link.setAttribute("target", "_blank");
+    link.setAttribute("rel", "noopener");
+  });
+}
+
+function setupNewsletterForms() {
+  document.querySelectorAll("[data-newsletter-form]").forEach((form) => {
+    const emailInput = form.querySelector('input[type="email"]');
+    const status = form.querySelector("[data-newsletter-status]");
+
+    if (!(form instanceof HTMLFormElement) || !(emailInput instanceof HTMLInputElement)) {
+      return;
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (!emailInput.checkValidity()) {
+        emailInput.reportValidity();
+        return;
+      }
+
+      const email = emailInput.value.trim();
+      const createdAt = new Date().toISOString();
+      const payload = { email, created_at: createdAt };
+
+      try {
+        if (NEWSLETTER_ENDPOINT) {
+          const response = await fetch(NEWSLETTER_ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+
+          if (!response.ok) {
+            throw new Error("Newsletter endpoint error");
+          }
+        } else {
+          localStorage.setItem("mono_newsletter_last_signup", JSON.stringify(payload));
+          const subject = encodeURIComponent("Avvisami all'apertura MONO");
+          const body = encodeURIComponent(`Email: ${email}\nOrigine: ${window.location.href}\nData: ${createdAt}`);
+          window.location.href = `mailto:${NEWSLETTER_EMAIL}?subject=${subject}&body=${body}`;
+        }
+
+        if (status) {
+          status.textContent = "Ci siamo. Ti scriviamo noi. — MONO";
+        }
+
+        form.reset();
+      } catch (error) {
+        if (status) {
+          status.textContent = "Non siamo riusciti a salvare l'email. Scrivici a monobottega@gmail.com.";
+        }
+      }
+    });
   });
 }
 
@@ -234,4 +293,5 @@ setupCursorLight();
 setupReveals();
 setupAnalytics();
 setupAppLinks();
+setupNewsletterForms();
 setupTracking();

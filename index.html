@@ -26,41 +26,22 @@
     <link rel="icon" href="icons/icon-192.svg" type="image/svg+xml">
     <link rel="preload" as="image" href="assets/hero/mono-kitchen-fire-poster.jpg" fetchpriority="high">
     <script>document.documentElement.classList.add("has-js");</script>
-    <link rel="stylesheet" href="styles.css?v=20260712-convivium-fluid-v1">
+    <link rel="stylesheet" href="styles.css?v=20260712-opening-app-v1">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": ["FoodEstablishment", "LocalBusiness"],
+        "@type": ["Restaurant", "FoodEstablishment"],
         "@id": "https://monobottega.it/#foodestablishment",
         "name": "MONO Bottega Gastronomica",
-        "alternateName": ["Monobottega", "Mono Bottega", "MONO Gastronomia Torino", "Bottega gastronomica Santa Rita"],
-        "description": "Bottega gastronomica contemporanea a Torino, zona Santa Rita, con cucina di banco, pasticceria, aperitivo, eventi, progetto sociale e app per ordini, wallet e vantaggi.",
+        "alternateName": ["Monobottega", "Mono Bottega", "Bottega gastronomica Santa Rita"],
+        "description": "Bottega gastronomica contemporanea a Torino, zona Santa Rita, con cucina di banco, pasticceria, aperitivo, progetto sociale e app per ordini, wallet e vantaggi.",
         "url": "https://monobottega.it/",
         "mainEntityOfPage": "https://monobottega.it/",
         "slogan": "La cucina di ristorante, nella vita di tutti i giorni.",
-        "keywords": "bottega gastronomica Torino, gastronomia Torino, gastronomia Santa Rita, pasticceria Torino, aperitivo Santa Rita, Via Barletta 72D",
         "image": "https://monobottega.it/assets/hero/mono-kitchen-fire-og.jpg",
         "logo": "https://monobottega.it/assets/brand/mono-logo-primary.svg",
         "servesCuisine": ["Gastronomia contemporanea", "Pasticceria", "Aperitivo"],
-        "hasMenu": "https://monobottega.it/gastronomia/",
-        "menu": "https://monobottega.it/gastronomia/",
-        "department": [
-          {
-            "@type": "FoodEstablishment",
-            "name": "MONO Gastronomia",
-            "url": "https://monobottega.it/gastronomia/"
-          },
-          {
-            "@type": "Bakery",
-            "name": "MONO Pasticceria",
-            "url": "https://monobottega.it/pasticceria/"
-          },
-          {
-            "@type": "BarOrPub",
-            "name": "MONO Aperitivo",
-            "url": "https://monobottega.it/aperitivo/"
-          }
-        ],
+        "priceRange": "€€",
         "areaServed": [
           {
             "@type": "City",
@@ -76,7 +57,13 @@
           "streetAddress": "Via Barletta 72D",
           "addressLocality": "Torino",
           "addressRegion": "Piemonte",
+          "postalCode": "10134",
           "addressCountry": "IT"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 45.0510,
+          "longitude": 7.6629
         },
         "email": "monobottega@gmail.com",
         "hasMap": "https://www.google.com/maps/search/?api=1&query=Via%20Barletta%2072D%2C%20Torino",
@@ -94,7 +81,7 @@
         ],
         "potentialAction": {
           "@type": "OrderAction",
-          "target": "https://mono-app-jet.vercel.app/home"
+          "target": "https://app.monobottega.it"
         }
       }
     </script>
@@ -103,6 +90,14 @@
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Quando apre MONO?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "L'apertura è prevista per settembre 2026 in Via Barletta 72D, Santa Rita. Lascia la tua email qui sul sito per essere avvisato il giorno dell'apertura."
+            }
+          },
           {
             "@type": "Question",
             "name": "Che cos'è MONO?",
@@ -124,7 +119,7 @@
             "name": "Che cosa posso trovare da MONO?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Da MONO trovi gastronomia contemporanea, piatti pronti, preparazioni da rigenerare, pasticceria, aperitivo, eventi, catering e gifting."
+              "text": "Da MONO trovi gastronomia contemporanea, piatti pronti da scaldare, pasticceria, aperitivo, eventi, catering e gifting."
             }
           },
           {
@@ -195,117 +190,128 @@
 
         <div class="hero-copy" data-reveal>
           <img class="hero-logo" src="assets/brand/mono-logo-light.svg" alt="MONO Bottega Gastronomica">
-          <p class="eyebrow">Bottega gastronomica contemporanea · Torino, Santa Rita</p>
+          <p class="eyebrow">Cucina contemporanea, tradizionalmente moderna · Torino, Santa Rita</p>
           <h1 id="heroTitle">
-            <span class="hero-title-desktop">La cucina di ristorante, nella vita di tutti i giorni.</span>
-            <span class="hero-title-mobile">Il fuoco della bottega. La semplicità di casa.</span>
+            <span class="hero-title-desktop">La cucina quotidiana, rifatta come si deve.</span>
+            <span class="hero-title-mobile">Semplice. Buono. MONO.</span>
           </h1>
           <p class="hero-lead">
             <span class="hero-lead-desktop">
-              MONO prende i sapori che conosci, li cucina con tecnica e li rende semplici da scegliere,
-              portare a casa e condividere. Gastronomia, pasticceria e aperitivo, con una sola regola:
-              fare bene le cose buone.
+              Gastronomia, dolci e aperitivo a Santa Rita: poche cose, fatte bene,
+              pensate per tornare. Il sito ti racconta MONO; l'app ti porta al banco,
+              agli ordini e ai vantaggi.
             </span>
             <span class="hero-lead-mobile">
-              Gastronomia, dolci e aperitivo a Santa Rita: poche cose, fatte bene,
-              da scoprire in bottega.
+              Gastronomia, dolci e aperitivo a Santa Rita: poche cose, fatte bene, pensate per tornare.
             </span>
           </p>
           <div class="hero-actions" aria-label="Azioni principali">
-            <a class="button primary" data-track="hero_products" href="#prodotti">Scopri i prodotti</a>
-            <a class="button ghost" data-track="hero_what_is_mono" href="#bottega">Cos'è MONO</a>
+            <a class="button primary" data-track="hero_products" href="https://app.monobottega.it" target="_blank" rel="noopener">Scopri i prodotti</a>
+            <a class="button ghost" data-track="hero_app_open" data-app-store href="https://app.monobottega.it" target="_blank" rel="noopener">Apri app MONO</a>
           </div>
-          <p class="hero-note">Prossima apertura · Via Barletta 72D, Torino.</p>
+          <p class="hero-note">Apertura prevista: settembre 2026 · Via Barletta 72D, Santa Rita, Torino.</p>
+          <form class="opening-signup opening-signup-hero" action="mailto:monobottega@gmail.com" method="post" enctype="text/plain" data-newsletter-form>
+            <div>
+              <span>STIAMO PER APRIRE</span>
+              <strong>Sii tra i primi a entrare in bottega.</strong>
+              <small>Lascia la tua email: ti avvisiamo il giorno dell'apertura e per le prime novità del banco. Niente spam, solo quando serve.</small>
+            </div>
+            <label class="sr-only" for="heroSignupEmail">La tua email</label>
+            <div class="signup-form-row">
+              <input id="heroSignupEmail" name="email" type="email" autocomplete="email" placeholder="La tua email" required>
+              <button class="button primary" type="submit">Avvisami all'apertura</button>
+            </div>
+            <p class="signup-status" data-newsletter-status role="status" aria-live="polite"></p>
+          </form>
         </div>
       </section>
 
       <section class="product-system" id="prodotti" data-reveal>
         <div class="section-heading">
           <p class="eyebrow">Quello che trovi da MONO</p>
-          <h2>Poche cose. Fatte per tornare.</h2>
+          <h2>Poche linee. Molta memoria.</h2>
           <p>
-            Il banco cambia con le stagioni, ma non cambia la promessa:
-            cucina autentica, prodotti riconoscibili e preparazioni pensate
-            per arrivare bene fino alla tua tavola.
+            Il banco non è un elenco infinito. È una selezione ordinata di cose buone:
+            piatti pronti, dolci, aperitivo e firme di casa pensati per essere capiti
+            subito, scelti con piacere e ricordati dopo.
           </p>
-          <p>Non vogliamo avere tutto. Vogliamo fare bene ciò che merita di esserci.</p>
+          <p>Ogni prodotto deve rassicurare, distinguersi e farsi venire voglia di tornare.</p>
         </div>
         <div class="page-grid">
           <article class="page-card" data-reveal>
             <span>Gastronomia</span>
             <h3>La cucina quotidiana, rifatta come si deve.</h3>
-            <p>Piatti caldi e freddi, classici italiani e piemontesi, sughi, contorni e preparazioni da rigenerare.</p>
-            <a href="gastronomia/">Scopri la gastronomia</a>
+            <p>Classici italiani e piemontesi, piatti caldi e freddi, preparazioni pronte da scaldare con istruzioni chiare.</p>
+            <a href="https://app.monobottega.it" target="_blank" rel="noopener">Scopri la gastronomia</a>
           </article>
           <article class="page-card" data-reveal>
             <span>Firme MONO</span>
             <h3>Le cose per cui torni apposta.</h3>
-            <p>Specialità riconoscibili, generose e costruite per diventare abitudini. La selezione cambia con il banco.</p>
-            <a href="gastronomia/">Scopri le firme MONO</a>
+            <p>Prodotti che fanno MONO: riconoscibili, generosi, facili da raccontare e da desiderare di nuovo.</p>
+            <a href="https://app.monobottega.it" target="_blank" rel="noopener">Scopri le firme MONO</a>
           </article>
           <article class="page-card" data-reveal>
             <span>Pasticceria</span>
-            <h3>Il dolce non chiude. Firma.</h3>
-            <p>Monoporzioni, torte, creme e piccoli regali gastronomici: puliti nel gusto, curati nella forma.</p>
-            <a href="pasticceria/">Scopri la pasticceria</a>
+            <h3>Il dolce non è un dopo. È una firma.</h3>
+            <p>Monoporzioni, torte e piccoli regali gastronomici: misura precisa, gusto pulito, forma curata.</p>
+            <a href="https://app.monobottega.it" target="_blank" rel="noopener">Scopri la pasticceria</a>
           </article>
           <article class="page-card" data-reveal>
             <span>Aperitivo</span>
             <h3>Il momento in cui la bottega rallenta.</h3>
-            <p>Vino, cocktail, analcolici, pane, olio e piccoli piatti: poche cose scelte bene, tempo giusto per restare.</p>
-            <a href="aperitivo/">Scopri l'aperitivo</a>
+            <p>Vino, cocktail, analcolici, pane, olio e piccoli piatti: una pausa calda, ordinata, senza buffet confuso.</p>
+            <a href="https://app.monobottega.it" target="_blank" rel="noopener">Scopri l'aperitivo</a>
           </article>
         </div>
+        <p class="product-app-note">Il banco completo, con foto e prezzi, vive nell'app MONO. Il sito ti racconta, l'app te lo fa scegliere.</p>
       </section>
 
       <section class="definition-section" id="bottega" data-reveal>
         <div class="section-kicker">
           <p class="eyebrow">Cucina contemporanea. Tradizionalmente moderna.</p>
-          <h2>Non un ristorante. Non una gastronomia qualunque.</h2>
+          <h2>Non un ristorante. Non una gastronomia anonima.</h2>
         </div>
         <div class="definition-grid">
           <p>
-            MONO è una bottega gastronomica contemporanea nata per portare la cura
-            della cucina professionale dentro la vita reale: piatti pronti,
-            preparazioni da rigenerare, dolci, aperitivi e prodotti da portare a casa.
+            MONO unisce cucina artigianale, identità di brand e visione imprenditoriale.
+            Non nasce per complicare la tradizione, ma per renderla più chiara,
+            più curata e più riconoscibile.
           </p>
           <p>
-            Prendiamo la memoria della cucina italiana e piemontese, la lavoriamo
-            con metodo e le diamo una forma attuale: più chiara da scegliere,
-            più semplice da vivere, più facile da ricordare.
+            Il banco è il centro della scena: prodotto, racconto, relazione e vendita
+            si incontrano nello stesso gesto. Il packaging continua il racconto a casa.
+            L'app rende più semplice ordinare, accumulare vantaggi e tornare.
           </p>
           <p>
-            Nessun lusso ostentato. Nessuna complicazione inutile. Solo ingredienti
-            scelti bene, tecnica, porzioni leggibili, prezzi chiari e un'esperienza
-            che continua anche dopo essere usciti dalla bottega.
+            La promessa è concreta: mangiare bene, scegliere in fretta, sentirsi
+            trattati con cura. Un lusso quotidiano che non spaventa.
           </p>
         </div>
       </section>
 
       <section class="page-section alt value-section" data-reveal>
         <p class="eyebrow">La differenza MONO</p>
-        <h2>Tutto ciò che serve. Niente di ciò che non serve.</h2>
+        <h2>Chiaro al banco. Semplice a casa.</h2>
         <p>
-          MONO supera la confusione della gastronomia tradizionale senza perdere
-          il suo calore. La qualità si sente nel piatto. La differenza si vede
-          in tutto il resto.
+          MONO supera la confusione della gastronomia tradizionale senza perdere calore:
+          offerta leggibile, prezzo chiaro, porzioni calibrate e una cura che continua
+          dopo l'acquisto.
         </p>
         <div class="local-answer-grid">
-          <article class="page-card" data-reveal><span>01</span><h3>Porzioni chiare.</h3><p>Capisci subito cosa stai scegliendo, per quante persone e per quale momento.</p></article>
-          <article class="page-card" data-reveal><span>02</span><h3>Prezzi leggibili.</h3><p>Niente sorprese inutili: il valore deve essere comprensibile prima del banco.</p></article>
-          <article class="page-card" data-reveal><span>03</span><h3>Rigenerazione semplice.</h3><p>Alcune preparazioni sono pensate per arrivare bene fino alla tua tavola.</p></article>
-          <article class="page-card" data-reveal><span>04</span><h3>Packaging intelligente.</h3><p>Protegge il prodotto, spiega come viverlo e continua il racconto anche a casa.</p></article>
+          <article class="page-card" data-reveal><span>01</span><h3>Banco leggibile.</h3><p>Poche linee forti, categorie chiare e prodotti che si capiscono prima ancora di assaggiarli.</p></article>
+          <article class="page-card" data-reveal><span>02</span><h3>Prezzo chiaro.</h3><p>Porzioni pensate, valore leggibile e meno incertezza davanti al banco.</p></article>
+          <article class="page-card" data-reveal><span>03</span><h3>Pronti in pochi minuti.</h3><p>Alcune preparazioni arrivano a casa pronte da scaldare: stessa qualità del banco, in pochi minuti.</p></article>
+          <article class="page-card" data-reveal><span>04</span><h3>Packaging che parla.</h3><p>Contiene, spiega, rassicura e porta MONO fuori dalla bottega.</p></article>
         </div>
       </section>
 
       <section class="convivium-feature" id="convivium">
         <div class="convivium-copy" data-reveal>
           <p class="eyebrow">MONO Convivium</p>
-          <h2>Il buono non finisce nel piatto.</h2>
+          <h2>La parte più umana del progetto.</h2>
           <p>
-            MONO Convivium unisce impresa, formazione e comunità dentro un contesto
-            di lavoro autentico. Non è beneficenza decorativa: sono ruoli reali,
-            affiancamento, standard professionali e crescita progressiva.
+            MONO Convivium unisce impresa, formazione e comunità dentro un contesto di lavoro autentico:
+            ruoli reali, affiancamento vero, standard professionali e crescita progressiva.
           </p>
           <a class="button ghost" data-track="convivium_feature_open" href="mono-convivium/">Leggi il progetto completo</a>
         </div>
@@ -318,38 +324,45 @@
       <section class="app-gateway" id="app">
         <div data-reveal>
           <p class="eyebrow">App MONO</p>
-          <h2>Tutto ciò che rende più semplice tornare da MONO.</h2>
+          <h2>Il banco, gli ordini e i vantaggi. Tutto in un tap.</h2>
           <p>
-            Il sito racconta MONO. L'app fa succedere le cose: ordini, scegli il ritiro,
-            raccogli punti, accedi ai vantaggi e resti aggiornato sulle novità della bottega.
+            Il sito ti fa capire MONO. L'app ti fa viverlo meglio: ordini, ritiro,
+            wallet, punti, sconti, inviti e notifiche utili. Meno rumore, più relazione.
           </p>
           <div class="app-reason-grid" aria-label="Perché scaricare l'app MONO">
             <article>
               <span>01</span>
-              <strong>Ordina e ritira</strong>
-              <small>Quando il servizio è attivo, scegli prodotti e orario con meno attesa.</small>
+              <strong>Ordini e ritiro</strong>
+              <small>Scegli prodotti e orario quando il servizio è attivo.</small>
             </article>
             <article>
               <span>02</span>
-              <strong>Wallet e punti</strong>
-              <small>Vantaggi, punti, sconti e caffè sospeso nello stesso spazio.</small>
+              <strong>Punti e vantaggi</strong>
+              <small>Wallet, sconti e piccole attenzioni nello stesso spazio.</small>
             </article>
             <article>
               <span>03</span>
-              <strong>Inviti utili</strong>
-              <small>Novità, promozioni e inviti solo quando hanno davvero senso.</small>
+              <strong>Inviti che hanno senso</strong>
+              <small>Novità e promozioni quando c'è davvero qualcosa per te.</small>
             </article>
           </div>
           <div class="gateway-actions">
-            <a class="button primary" data-track="app_gateway_download" data-app-store href="https://mono-app-jet.vercel.app/home">Apri app MONO</a>
-            <a class="button ghost" data-track="app_gateway_info" href="app/">Scopri come funziona</a>
+            <div class="app-download-wrap">
+              <a class="button primary" data-track="app_gateway_download" data-app-store href="https://app.monobottega.it" target="_blank" rel="noopener">Scarica l'app MONO</a>
+              <small>Un tap: si apre MONO, poi "Aggiungi a schermata Home" e ce l'hai sul telefono.</small>
+            </div>
+            <a class="button ghost" data-track="app_gateway_info" href="https://app.monobottega.it" target="_blank" rel="noopener">Scopri come funziona</a>
+          </div>
+          <div class="app-qr" aria-label="QR code app MONO">
+            <img src="assets/app/mono-app-qr.svg" alt="QR code per aprire l'app MONO">
+            <span>Inquadra e scarica MONO sul telefono.</span>
           </div>
         </div>
-        <div class="phone-card" data-reveal aria-hidden="true">
+        <a class="phone-card" data-reveal data-track="app_phone_card" href="https://app.monobottega.it" target="_blank" rel="noopener" aria-label="Apri l'app MONO">
           <span class="phone-pill">MONO</span>
           <strong>Ordina. Paga. Torna.</strong>
           <small>Wallet · vantaggi · caffè sospeso</small>
-        </div>
+        </a>
       </section>
 
       <section class="local-info-section" id="dove-siamo" data-reveal>
@@ -370,7 +383,7 @@
           </article>
           <article class="local-info-card">
             <span>Orari</span>
-            <h3>Orari previsti.</h3>
+            <h3>Orari previsti (dall'apertura).</h3>
             <p>Martedì-sabato 10:30-14:30 e 18:00-22:30.<br>Domenica 9:00-14:00. Lunedì chiuso.</p>
             <a data-track="local_view_contacts" href="contatti/">Dettagli contatti</a>
           </article>
@@ -389,46 +402,15 @@
         </div>
       </section>
 
-      <section class="page-section alt local-search-section" id="gastronomia-torino" data-reveal>
-        <p class="eyebrow">Gastronomia Torino · Santa Rita</p>
-        <h2>Una bottega di quartiere, con un'idea grande.</h2>
-        <p>
-          Se cerchi una gastronomia a Torino, una bottega a Santa Rita o un posto
-          dove prendere qualcosa di buono senza formalità, MONO vuole diventare
-          questo: cucina quotidiana rifatta come si deve, vicino a casa.
-        </p>
-        <div class="local-answer-grid">
-          <article class="page-card" data-reveal>
-            <span>Ricerca locale</span>
-            <h3>Gastronomia Torino.</h3>
-            <p>Piatti pronti, preparazioni da portare a casa e cucina contemporanea con cura da bottega.</p>
-            <a href="gastronomia/">Scopri gastronomia</a>
-          </article>
-          <article class="page-card" data-reveal>
-            <span>Quartiere</span>
-            <h3>Bottega Santa Rita.</h3>
-            <p>Via Barletta 72D: indirizzo, orari, mappa e contatti sempre a portata di mano.</p>
-            <a href="contatti/">Vai ai contatti</a>
-          </article>
-          <article class="page-card" data-reveal>
-            <span>App MONO</span>
-            <h3>Ordini e vantaggi.</h3>
-            <p>Il sito racconta MONO. L'app gestisce ordini, wallet, punti, sconti e inviti.</p>
-            <a data-track="seo_local_app" href="app/">Scopri app</a>
-          </article>
-          <article class="page-card" data-reveal>
-            <span>Convivium</span>
-            <h3>La parte umana.</h3>
-            <p>Formazione, inclusione e lavoro dignitoso: il progetto sociale resta dentro la bottega.</p>
-            <a href="mono-convivium/">Scopri Convivium</a>
-          </article>
-        </div>
-      </section>
-
       <section class="page-section local-faq-section" id="domande-frequenti" data-reveal>
         <p class="eyebrow">Domande rapide</p>
         <h2>MONO in chiaro.</h2>
         <div class="local-answer-grid">
+          <article class="page-card" data-reveal>
+            <span>APERTURA</span>
+            <h3>Quando aprite?</h3>
+            <p>L'apertura è prevista per settembre 2026 in Via Barletta 72D, Santa Rita. Lascia la tua email qui sul sito per essere avvisato il giorno dell'apertura.</p>
+          </article>
           <article class="page-card" data-reveal>
             <span>Cos'è</span>
             <h3>Che cos'è MONO?</h3>
@@ -457,8 +439,24 @@
         <h2>Semplice. Buono. MONO.</h2>
         <div class="contact-actions">
           <a class="button primary" data-track="contact_strip_maps" href="https://www.google.com/maps/search/?api=1&query=Via%20Barletta%2072D%2C%20Torino" target="_blank" rel="noopener">Apri Google Maps</a>
-          <a class="button ghost" data-track="contact_strip_app" href="app/">Scopri app MONO</a>
+          <a class="button ghost" data-track="contact_strip_app" href="https://app.monobottega.it" target="_blank" rel="noopener">Scopri app MONO</a>
         </div>
+      </section>
+
+      <section class="opening-signup-section" data-reveal>
+        <form class="opening-signup opening-signup-footer" action="mailto:monobottega@gmail.com" method="post" enctype="text/plain" data-newsletter-form>
+          <div>
+            <span>STIAMO PER APRIRE</span>
+            <strong>Sii tra i primi a entrare in bottega.</strong>
+            <small>Lascia la tua email: ti avvisiamo il giorno dell'apertura e per le prime novità del banco. Niente spam, solo quando serve.</small>
+          </div>
+          <label class="sr-only" for="footerSignupEmail">La tua email</label>
+          <div class="signup-form-row">
+            <input id="footerSignupEmail" name="email" type="email" autocomplete="email" placeholder="La tua email" required>
+            <button class="button primary" type="submit">Avvisami all'apertura</button>
+          </div>
+          <p class="signup-status" data-newsletter-status role="status" aria-live="polite"></p>
+        </form>
       </section>
     </main>
 
@@ -478,6 +476,6 @@
       </nav>
     </footer>
 
-    <script src="app.js?v=20260712-convivium-fluid-v1"></script>
+    <script src="app.js?v=20260712-opening-app-v1"></script>
   </body>
 </html>
