@@ -26,7 +26,7 @@
     <link rel="icon" href="icons/mono-favicon.svg?v=20260712-plate-icon-v1" type="image/svg+xml">
     <link rel="preload" as="image" href="assets/hero/mono-kitchen-fire-poster.jpg" fetchpriority="high">
     <script>document.documentElement.classList.add("has-js");</script>
-    <link rel="stylesheet" href="styles.css?v=20260712-cinematic-v2">
+    <link rel="stylesheet" href="styles.css?v=20260712-cinematic-v3">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -167,59 +167,62 @@
     </header>
 
     <main id="main">
-      <section class="flagship-hero" id="home" aria-labelledby="heroTitle" data-mono-hero>
-        <div class="hero-visual" data-reveal>
-          <div class="kitchen-video-experience" aria-hidden="true">
-            <video
-              class="hero-video"
-              data-hero-video
-              autoplay
-              muted
-              loop
-              playsinline
-              preload="auto"
-              poster="assets/hero/mono-kitchen-fire-poster.jpg"
-            >
-              <source src="assets/hero/mono-kitchen-fire-desktop.mp4" type="video/mp4">
-            </video>
-            <span class="kitchen-fire-glow"></span>
-            <span class="kitchen-smoke-veil"></span>
-            <span class="kitchen-vignette"></span>
-          </div>
-        </div>
+      <section class="cinema-hero" id="home" data-cinema-hero data-stage="1" aria-labelledby="heroTitle">
+        <div class="cinema-track" data-cinema-track>
+          <div class="cinema-sticky">
+            <div class="cinema-stage" aria-hidden="true">
+              <div class="cinema-video cinema-video--fire" data-video="fire">
+                <video muted loop playsinline preload="auto" poster="assets/hero/mono-kitchen-fire-poster.jpg">
+                  <source src="assets/hero/mono-kitchen-fire-desktop.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="cinema-video cinema-video--pasta" data-video="pasta">
+                <video muted playsinline preload="none" data-src="assets/hero/mono-agnolotti-desktop.mp4"></video>
+              </div>
+              <span class="cinema-bridge"></span>
+              <span class="cinema-scrim"></span>
+            </div>
 
-        <div class="hero-copy" data-reveal>
-          <img class="hero-logo" src="assets/brand/mono-logo-light.svg" alt="MONO Bottega Gastronomica">
-          <p class="eyebrow">Cucina contemporanea, tradizionalmente moderna · Torino, Santa Rita</p>
-          <h1 id="heroTitle">Il fuoco domato dagli chef. <span class="hero-title-soft">La semplicità di casa.</span></h1>
-          <p class="hero-lead">
-            <span class="hero-lead-desktop">
-              Gastronomia, dolci e aperitivo a Santa Rita: poche cose, fatte bene,
-              pensate per tornare. Il sito ti racconta MONO; l'app ti porta al banco,
-              agli ordini e ai vantaggi.
-            </span>
-            <span class="hero-lead-mobile">
-              Gastronomia, dolci e aperitivo a Santa Rita: poche cose, fatte bene, pensate per tornare.
-            </span>
-          </p>
-          <div class="hero-actions" aria-label="Azioni principali">
-            <a class="button primary" data-track="hero_products" href="https://app.monobottega.it" target="_blank" rel="noopener">Scopri i prodotti</a>
-            <a class="button ghost" data-track="hero_app_open" data-app-store href="https://app.monobottega.it" target="_blank" rel="noopener">Apri app MONO</a>
+            <div class="cinema-copy">
+              <!-- Chapter 1 — fire -->
+              <div class="cinema-group sg-1">
+                <p class="cinema-eyebrow">Cucina contemporanea · Torino, Santa Rita</p>
+                <p class="cinema-big">Il fuoco domato dagli chef.</p>
+                <p class="cinema-sub">Tecnica. Tempo. Misura.</p>
+              </div>
+
+              <!-- Chapter 2 — agnolotti cut -->
+              <div class="cinema-group sg-2">
+                <p class="cinema-big">La semplicità di casa.</p>
+                <p class="cinema-sub">La tradizione che si rinnova.</p>
+              </div>
+
+              <!-- Final chapter — finished product -->
+              <div class="cinema-group sg-3">
+                <h1 id="heroTitle" class="cinema-claim">Il fuoco domato dagli chef.<br><span class="soft">La semplicità di casa.</span></h1>
+                <p class="cinema-eyebrow">Cucina contemporanea. Tradizionalmente moderna.</p>
+                <p class="cinema-lead">Gastronomia, dolci e aperitivo a Santa Rita: poche cose, fatte bene, pensate per tornare.</p>
+                <div class="cinema-actions">
+                  <a class="button primary" data-track="hero_products" href="https://app.monobottega.it" target="_blank" rel="noopener">Scopri i prodotti</a>
+                  <a class="button ghost" data-track="hero_location" href="#dove-siamo">Vieni a trovarci</a>
+                </div>
+                <p class="cinema-note">Apertura prevista: settembre 2026 · Via Barletta 72D, Santa Rita, Torino.</p>
+                <form class="cinema-signup" data-newsletter-form>
+                  <strong>Sii tra i primi a entrare in bottega.</strong>
+                  <small>Lascia la tua email: ti avvisiamo il giorno dell'apertura e per le prime novità del banco. Niente spam, solo quando serve.</small>
+                  <label class="sr-only" for="heroSignupEmail">La tua email</label>
+                  <div class="cinema-signup-row">
+                    <input id="heroSignupEmail" name="email" type="email" autocomplete="email" placeholder="La tua email" required>
+                    <button class="button primary" type="submit">Avvisami all'apertura</button>
+                  </div>
+                  <p class="cinema-signup-status" data-newsletter-status role="status" aria-live="polite"></p>
+                </form>
+              </div>
+            </div>
+
+            <span class="cinema-progress" aria-hidden="true"></span>
+            <button class="cinema-pause" type="button" data-cinema-pause aria-label="Metti in pausa l'animazione">⏸ Pausa</button>
           </div>
-          <p class="hero-note">Apertura prevista: settembre 2026 · Via Barletta 72D, Santa Rita, Torino.</p>
-          <form class="opening-signup opening-signup-hero" action="mailto:monobottega@gmail.com" method="post" enctype="text/plain" data-newsletter-form>
-            <div>
-              <span>STIAMO PER APRIRE</span>
-              <strong>Sii tra i primi a entrare in bottega.</strong>
-              <small>Lascia la tua email: ti avvisiamo il giorno dell'apertura e per le prime novità del banco. Niente spam, solo quando serve.</small>
-            </div>
-            <label class="sr-only" for="heroSignupEmail">La tua email</label>
-            <div class="signup-form-row">
-              <input id="heroSignupEmail" name="email" type="email" autocomplete="email" placeholder="La tua email" required>
-              <button class="button primary" type="submit">Avvisami all'apertura</button>
-            </div>
-            <p class="signup-status" data-newsletter-status role="status" aria-live="polite"></p>
-          </form>
         </div>
       </section>
 
@@ -473,6 +476,6 @@
       </nav>
     </footer>
 
-    <script src="app.js?v=20260712-cinematic-v1"></script>
+    <script src="app.js?v=20260712-cinematic-v3"></script>
   </body>
 </html>
