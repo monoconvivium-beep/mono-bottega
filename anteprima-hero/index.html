@@ -49,25 +49,37 @@
       }
       .cinema-video--fire {
         filter: saturate(1.5) contrast(1.08) brightness(1.12);
-        opacity: calc(1 - var(--fade, 0));
+        opacity: 1;
+        transition: opacity 1000ms ease;
       }
       .cinema-video--pasta {
         filter: saturate(1.16) contrast(1.04) brightness(1.06);
         opacity: 0;
+        transition: opacity 1000ms ease;
       }
-      .cinema-hero.pasta-ready .cinema-video--pasta { opacity: var(--fade, 0); }
+      /* Both fades are gated on pasta-ready so there is never a black gap */
+      .cinema-hero.is-transitioned.pasta-ready .cinema-video--fire { opacity: 0; }
+      .cinema-hero.is-transitioned.pasta-ready .cinema-video--pasta { opacity: 1; }
 
-      /* particle bloom that bridges steam -> flour in the transition band */
+      /* white flour bloom that bridges the fire steam into the agnolotti film */
       .cinema-bridge {
         position: absolute;
         inset: 0;
         z-index: 2;
         pointer-events: none;
-        opacity: calc(1 - (2 * var(--fade, 0) - 1) * (2 * var(--fade, 0) - 1));
+        opacity: 0;
         background:
-          radial-gradient(ellipse at 50% 42%, rgba(244, 236, 221, 0.5), transparent 42%),
-          radial-gradient(ellipse at 42% 58%, rgba(255, 249, 238, 0.28), transparent 40%);
+          radial-gradient(ellipse at 50% 44%, rgba(244, 236, 221, 0.55), transparent 44%),
+          radial-gradient(ellipse at 44% 58%, rgba(255, 249, 238, 0.32), transparent 42%);
         mix-blend-mode: screen;
+      }
+      .cinema-hero.is-transitioned.pasta-ready .cinema-bridge {
+        animation: cinema-bridge-bloom 1500ms ease forwards;
+      }
+      @keyframes cinema-bridge-bloom {
+        0% { opacity: 0; }
+        36% { opacity: 1; }
+        100% { opacity: 0; }
       }
 
       /* restrained local backdrop for text contrast (not a heavy full overlay) */
@@ -263,7 +275,7 @@
                 </video>
               </div>
               <div class="cinema-video cinema-video--pasta" data-video="pasta">
-                <video muted loop playsinline preload="none" data-src="../assets/hero/mono-agnolotti-desktop.mp4"></video>
+                <video muted playsinline preload="none" data-src="../assets/hero/mono-agnolotti-desktop.mp4"></video>
               </div>
               <span class="cinema-bridge"></span>
               <span class="cinema-scrim"></span>
@@ -272,20 +284,20 @@
             <div class="cinema-copy">
               <img class="hero-logo" src="../assets/brand/mono-logo-light.svg" alt="MONO Bottega Gastronomica">
 
-              <!-- Chapter 1 -->
+              <!-- Chapter 1 — fire -->
               <div class="cinema-group sg-1">
                 <p class="cinema-eyebrow">Cucina contemporanea · Torino, Santa Rita</p>
                 <p class="cinema-big">Il fuoco domato dagli chef.</p>
                 <p class="cinema-sub">Tecnica. Tempo. Misura.</p>
               </div>
 
-              <!-- Chapter 2 -->
+              <!-- Chapter 2 — agnolotti cut -->
               <div class="cinema-group sg-2">
                 <p class="cinema-big">La semplicità di casa.</p>
                 <p class="cinema-sub">La tradizione che si rinnova.</p>
               </div>
 
-              <!-- Final chapter -->
+              <!-- Final chapter — finished product -->
               <div class="cinema-group sg-3">
                 <h1 class="cinema-claim">Il fuoco domato dagli chef.<br><span class="soft">La semplicità di casa.</span></h1>
                 <p class="cinema-eyebrow">Cucina contemporanea. Tradizionalmente moderna.</p>
@@ -332,125 +344,119 @@
         var reduceMq = window.matchMedia("(prefers-reduced-motion: reduce)");
         var mobileMq = window.matchMedia("(max-width: 820px)");
 
+        // Agnolotti film timeline: 0-1s flour cloud | ~2-5s cut | 6s finished zoom
+        var TRIGGER = 0.34;          // desktop scroll fraction that starts the film
+        var MOBILE_FIRE_HOLD = 2200; // ms of fire before the film auto-starts on mobile
+        var STAGE2_AT = 1.4;         // s: flour done -> "La semplicità di casa."
+        var STAGE3_AT = 5.0;         // s: finished product -> full claim + CTAs
+
         var pastaLoadStarted = false;
         var pastaReady = false;
+        var transitioned = false;
         var active = false;
         var paused = false;
         var ticking = false;
-        var mobileSeqRunning = false;
-        var mobileStart = 0;
-        var mobileRaf = null;
-        var MOBILE_DURATION = 11000; // ms for the auto sequence
+        var mobileTimer = null;
 
-        function safePlay(video) {
-          if (!video) { return; }
-          video.muted = true;
-          var p = video.play();
-          if (p && typeof p.catch === "function") { p.catch(function () {}); }
-        }
-        function safePause(video) { if (video) { try { video.pause(); } catch (e) {} } }
+        function safePlay(v) { if (!v) { return; } v.muted = true; var p = v.play(); if (p && typeof p.catch === "function") { p.catch(function () {}); } }
+        function safePause(v) { if (v) { try { v.pause(); } catch (e) {} } }
+        function setStage(s) { if (hero.getAttribute("data-stage") !== s) { hero.setAttribute("data-stage", s); } }
 
         function loadPasta() {
           if (pastaLoadStarted) { return; }
           pastaLoadStarted = true;
           var src = pastaVideo.getAttribute("data-src");
-          if (src && !pastaVideo.src) {
-            pastaVideo.src = src;
-            try { pastaVideo.load(); } catch (e) {}
-          }
+          if (src && !pastaVideo.src) { pastaVideo.src = src; try { pastaVideo.load(); } catch (e) {} }
         }
         pastaVideo.addEventListener("loadeddata", function () {
           pastaReady = true;
           hero.classList.add("pasta-ready");
         });
 
-        function stageFor(p) {
-          if (p < 0.38) { return "1"; }
-          if (p < 0.55) { return "t"; }
-          if (p < 0.88) { return "2"; }
-          return "3";
+        // Narrative follows the FILM's own time once the transition has fired.
+        function filmStage() {
+          var ct = pastaVideo.currentTime || 0;
+          if (ct < STAGE2_AT) { return "t"; }   // flour bridge, no text
+          if (ct < STAGE3_AT) { return "2"; }   // cutting the agnolotti
+          return "3";                            // finished product + claim
+        }
+        pastaVideo.addEventListener("timeupdate", function () {
+          if (transitioned && !paused) { setStage(filmStage()); }
+        });
+
+        function triggerTransition() {
+          if (transitioned) { return; }
+          loadPasta();
+          transitioned = true;
+          // restart the flour bloom cleanly if re-entered
+          hero.classList.remove("is-transitioned");
+          void hero.offsetWidth;
+          hero.classList.add("is-transitioned");
+          try { pastaVideo.currentTime = 0; } catch (e) {}
+          safePause(fireVideo);
+          if (!paused) { safePlay(pastaVideo); }
+          setStage("t");
+        }
+        function untrigger() {
+          if (!transitioned) { return; }
+          transitioned = false;
+          hero.classList.remove("is-transitioned");
+          safePause(pastaVideo);
+          try { pastaVideo.currentTime = 0; } catch (e) {}
+          setStage("1");
+          if (!paused && active) { safePlay(fireVideo); }
         }
 
-        function apply(p) {
-          p = Math.max(0, Math.min(1, p));
-          hero.style.setProperty("--progress", p.toFixed(4));
-
-          // preload the second film shortly before its transition band
-          if (p > 0.26) { loadPasta(); }
-
-          // crossfade only once the pasta frame is decoded (no black flash)
-          var fade = Math.max(0, Math.min(1, (p - 0.38) / (0.55 - 0.38)));
-          hero.style.setProperty("--fade", (pastaReady ? fade : 0).toFixed(4));
-
-          var stage = stageFor(p);
-          if (hero.getAttribute("data-stage") !== stage) {
-            hero.setAttribute("data-stage", stage);
-          }
-
-          // native playback: fire before the mid-point, pasta after
-          if (!paused) {
-            if (p < 0.5) { safePlay(fireVideo); if (pastaReady) { safePause(pastaVideo); } }
-            else { safePause(fireVideo); if (pastaReady) { safePlay(pastaVideo); } }
-          }
-        }
-
-        // ---- Desktop: scroll-driven ----
+        // ---- Desktop: scroll drives only the trigger; the film auto-narrates ----
         function computeProgress() {
           var rect = track.getBoundingClientRect();
           var total = track.offsetHeight - window.innerHeight;
           if (total <= 0) { return rect.top <= 0 ? 1 : 0; }
           return -rect.top / total;
         }
+        function apply(p) {
+          p = Math.max(0, Math.min(1, p));
+          hero.style.setProperty("--progress", p.toFixed(4));
+          if (p > 0.22) { loadPasta(); }
+          if (p >= TRIGGER) { triggerTransition(); } else { untrigger(); }
+        }
         function onScroll() {
-          if (ticking || !active || paused) { return; }
+          if (ticking || !active || paused || mobileMq.matches) { return; }
           ticking = true;
-          window.requestAnimationFrame(function () {
-            apply(computeProgress());
-            ticking = false;
-          });
+          window.requestAnimationFrame(function () { apply(computeProgress()); ticking = false; });
         }
 
-        // ---- Mobile: timed auto sequence ----
-        function mobileTick(now) {
-          if (!mobileSeqRunning) { return; }
-          var elapsed = now - mobileStart;
-          var p = elapsed / MOBILE_DURATION;
-          if (p >= 1) { p = 1; }
-          apply(p);
-          if (p < 1) { mobileRaf = window.requestAnimationFrame(mobileTick); }
-          else { mobileSeqRunning = false; }
-        }
-        function startMobileSequence() {
-          if (mobileSeqRunning || hero.getAttribute("data-stage") === "3") { return; }
+        // ---- Mobile: fire briefly, then auto-start the film ----
+        function startMobile() {
+          if (paused) { return; }
+          safePlay(fireVideo);
           loadPasta();
-          mobileSeqRunning = true;
-          mobileStart = performance.now();
-          mobileRaf = window.requestAnimationFrame(mobileTick);
+          if (mobileTimer) { clearTimeout(mobileTimer); }
+          mobileTimer = window.setTimeout(function () { triggerTransition(); }, MOBILE_FIRE_HOLD);
         }
 
-        // ---- Reduced motion: static final state ----
-        function applyReducedMotion() {
-          hero.setAttribute("data-stage", "3");
-          hero.style.setProperty("--fade", "0"); // keep fire poster as the still backdrop
+        // ---- Reduced motion: static final state, no playback ----
+        function applyReduced() {
+          setStage("3");
           safePause(fireVideo);
           safePause(pastaVideo);
         }
 
-        // ---- Pause / resume control ----
+        // ---- Pause / resume ----
         function setPaused(next) {
           paused = next;
           if (paused) {
             safePause(fireVideo);
             safePause(pastaVideo);
-            if (mobileRaf) { window.cancelAnimationFrame(mobileRaf); }
-            mobileSeqRunning = false;
+            if (mobileTimer) { clearTimeout(mobileTimer); mobileTimer = null; }
             pauseBtn.textContent = "▶ Riprendi";
             pauseBtn.setAttribute("aria-label", "Riprendi l'animazione");
           } else {
             pauseBtn.textContent = "⏸ Pausa";
             pauseBtn.setAttribute("aria-label", "Metti in pausa l'animazione");
-            if (mobileMq.matches) { startMobileSequence(); }
-            else { onScroll(); }
+            if (transitioned) { safePlay(pastaVideo); }
+            else if (mobileMq.matches) { startMobile(); }
+            else { safePlay(fireVideo); onScroll(); }
           }
         }
         pauseBtn.addEventListener("click", function () { setPaused(!paused); });
@@ -464,9 +470,7 @@
             var status = signup.querySelector("[data-cinema-signup-status]");
             if (!input.checkValidity()) { input.reportValidity(); return; }
             var email = input.value.trim();
-            var subject = encodeURIComponent("Avvisami all'apertura MONO");
-            var body = encodeURIComponent("Email: " + email);
-            window.location.href = "mailto:monobottega@gmail.com?subject=" + subject + "&body=" + body;
+            window.location.href = "mailto:monobottega@gmail.com?subject=" + encodeURIComponent("Avvisami all'apertura MONO") + "&body=" + encodeURIComponent("Email: " + email);
             if (status) { status.textContent = "Ci siamo. Ti scriviamo noi. — MONO"; }
             signup.reset();
           });
@@ -475,19 +479,18 @@
         // ---- Activation ----
         function enable() {
           active = true;
-          if (mobileMq.matches) { startMobileSequence(); }
-          else { safePlay(fireVideo); onScroll(); }
+          if (mobileMq.matches) { startMobile(); }
+          else { if (!transitioned) { safePlay(fireVideo); } onScroll(); }
         }
         function disable() {
           active = false;
           safePause(fireVideo);
           safePause(pastaVideo);
-          if (mobileRaf) { window.cancelAnimationFrame(mobileRaf); }
-          mobileSeqRunning = false;
+          if (mobileTimer) { clearTimeout(mobileTimer); mobileTimer = null; }
         }
 
         if (reduceMq.matches) {
-          applyReducedMotion();
+          applyReduced();
         } else if ("IntersectionObserver" in window) {
           var io = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
@@ -495,11 +498,12 @@
             });
           }, { rootMargin: "10% 0px 10% 0px", threshold: 0.01 });
           io.observe(hero);
-          if (!mobileMq.matches) { window.addEventListener("scroll", onScroll, { passive: true }); }
+          window.addEventListener("scroll", onScroll, { passive: true });
           window.addEventListener("resize", function () { if (active && !mobileMq.matches) { onScroll(); } }, { passive: true });
         } else {
-          // No IO support: show final state so nothing is hidden
-          apply(1);
+          loadPasta();
+          triggerTransition();
+          setStage("3");
         }
       })();
     </script>
