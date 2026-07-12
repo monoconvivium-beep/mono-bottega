@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#262321">
+    <meta
+      name="description"
+      content="MONO Social Studio 1.0: studio AI per strategia social, contenuti, calendario, campagne, ADV e crescita locale a Torino."
+    >
+    <title>MONO Social Studio 1.0</title>
+    <link rel="icon" href="../icons/icon-192.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#workspace">Vai allo studio</a>
+
+    <div class="studio-shell">
+      <aside class="studio-sidebar" aria-label="Navigazione MONO Social Studio">
+        <a class="studio-brand" href="../" aria-label="Torna al sito MONO">
+          <img src="../assets/brand/mono-logo-primary.svg" alt="MONO">
+          <span>Social Studio 1.0</span>
+        </a>
+
+        <div class="nav-scroll" data-nav></div>
+      </aside>
+
+      <main class="studio-main" id="workspace">
+        <header class="studio-topbar">
+          <div>
+            <p class="eyebrow">Studio AI per crescita locale</p>
+            <h1 data-view-title>Dashboard</h1>
+          </div>
+          <div class="topbar-actions">
+            <button class="icon-button" type="button" data-action="generate-today" aria-label="Genera piano di oggi">
+              <span>Oggi</span>
+            </button>
+            <button class="button primary" type="button" data-action="calendar-week">Genera settimana</button>
+          </div>
+        </header>
+
+        <section class="signal-strip" aria-label="Stato operativo">
+          <article>
+            <span>Obiettivo</span>
+            <strong data-signal="objective">Visite in bottega e download app</strong>
+          </article>
+          <article>
+            <span>Area</span>
+            <strong>Torino, Santa Rita</strong>
+          </article>
+          <article>
+            <span>Fase</span>
+            <strong data-signal="phase">Apertura / crescita</strong>
+          </article>
+          <article>
+            <span>Output pronti</span>
+            <strong data-signal="ready">0</strong>
+          </article>
+          <article>
+            <span>Motore</span>
+            <strong data-signal="engine">Verifica AI</strong>
+          </article>
+        </section>
+
+        <section class="workspace" data-view-root aria-live="polite"></section>
+      </main>
+    </div>
+
+    <div class="toast" data-toast role="status" aria-live="polite"></div>
+
+    <noscript>
+      <div class="noscript">
+        MONO Social Studio richiede JavaScript per generare calendari, script, task ed esportazioni.
+      </div>
+    </noscript>
+  </body>
+</html>

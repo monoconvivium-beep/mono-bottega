@@ -8,7 +8,7 @@ MONO Convivium resta centrale: non una pagina laterale, ma il cuore umano del pr
 
 ## Migliorie applicate ora
 
-- CTA principali orientate all'app reale: `https://mono-app-jet.vercel.app/home`.
+- CTA principali orientate all'app reale: `https://app.monobottega.it`.
 - Testi homepage più commerciali e poetici: prodotto, app e parte umana più chiari.
 - Pagina App riscritta come ponte operativo tra desiderio e ritorno.
 - Pagina MONO Convivium rafforzata su inclusione, formazione e lavoro dignitoso.
