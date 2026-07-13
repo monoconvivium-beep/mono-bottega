@@ -701,8 +701,24 @@ h3 {
   color: var(--mono-butter);
 }
 
+.product-system-title span {
+  display: block;
+}
+
+.product-system-title span + span {
+  margin-top: 0.1em;
+}
+
+.product-system-title em {
+  font-style: italic;
+  font-weight: 700;
+}
+
 .product-system .page-card {
   color: var(--mono-anthracite);
+  display: flex;
+  flex-direction: column;
+  min-height: 430px;
 }
 
 .product-system .page-card p {
@@ -884,7 +900,8 @@ h3 {
   font-size: 13px;
   font-weight: 900;
   letter-spacing: 0.02em;
-  margin-top: 8px;
+  margin-top: auto;
+  padding-top: 18px;
   text-decoration: none;
 }
 
@@ -1970,6 +1987,10 @@ h3 {
 
   .product-system {
     min-height: 620px;
+  }
+
+  .product-system .page-card {
+    min-height: 0;
   }
 
   .has-js .product-system.is-cascade-playing {
