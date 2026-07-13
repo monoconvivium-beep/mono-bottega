@@ -1455,6 +1455,47 @@ h3 {
   margin-top: 34px;
 }
 
+.events-page .events-hero-title span,
+.events-page .events-proposal-title span,
+.events-page .events-process-title span,
+.events-page .events-process-closing span {
+  display: block;
+}
+
+.events-page .events-title-lock {
+  white-space: nowrap;
+}
+
+.events-page .events-proposals > p {
+  max-width: 860px;
+}
+
+.events-page .events-proposals .page-grid {
+  align-items: stretch;
+}
+
+.events-page .events-proposals .page-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 360px;
+}
+
+.events-page .events-process-closing {
+  border-top: 1px solid rgba(184, 92, 56, 0.34);
+  color: var(--mono-terracotta-dark);
+  font-family: "Libre Baskerville", Georgia, "Times New Roman", serif;
+  font-size: clamp(30px, 4vw, 58px);
+  font-weight: 700;
+  line-height: 1.08;
+  margin-top: 42px;
+  max-width: 980px;
+  padding-top: 26px;
+}
+
+.events-page .events-process .hero-actions {
+  margin-top: 32px;
+}
+
 .pdf-panel {
   align-items: center;
   display: flex;
@@ -1834,6 +1875,10 @@ h3 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .events-page .events-proposals .page-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .definition-grid {
     gap: 0;
     grid-template-columns: 1fr;
@@ -2002,6 +2047,10 @@ h3 {
     grid-template-columns: 1fr;
   }
 
+  .events-page .events-proposals .page-grid {
+    grid-template-columns: 1fr;
+  }
+
   .app-qr {
     display: none;
   }
@@ -2095,6 +2144,14 @@ h3 {
 
   .about-page .about-impact-principle {
     padding-left: 18px;
+  }
+
+  .events-page .events-title-lock {
+    white-space: normal;
+  }
+
+  .events-page .events-proposals .page-card {
+    min-height: 0;
   }
 
   .signup-form-row {
