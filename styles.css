@@ -645,10 +645,116 @@ h3 {
 
 .product-system {
   background:
-    radial-gradient(circle at 8% 20%, rgba(184, 92, 56, 0.16), transparent 30%),
-    linear-gradient(180deg, rgba(255, 249, 238, 0.56), rgba(244, 236, 221, 0.38));
+    radial-gradient(circle at 12% 16%, rgba(203, 167, 90, 0.2), transparent 30%),
+    radial-gradient(circle at 88% 76%, rgba(244, 236, 221, 0.1), transparent 34%),
+    linear-gradient(145deg, #4f502c, var(--mono-olive));
+  color: var(--mono-cream);
+  isolation: isolate;
+  min-height: 720px;
+  overflow: hidden;
   padding: 92px clamp(22px, 5vw, 72px);
   position: relative;
+}
+
+.product-system-content {
+  position: relative;
+  z-index: 2;
+}
+
+.product-system .section-heading p {
+  color: rgba(255, 249, 238, 0.78);
+}
+
+.product-system .eyebrow {
+  color: var(--mono-butter);
+}
+
+.product-system .page-card {
+  color: var(--mono-anthracite);
+}
+
+.product-system .page-card p {
+  color: rgba(38, 35, 33, 0.74);
+}
+
+.product-cascade {
+  background: #4c4c29;
+  inset: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  transform: scale(1.035);
+  transition:
+    opacity 720ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 1100ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  visibility: hidden;
+  z-index: 8;
+}
+
+.product-system.is-cascade-playing .product-cascade {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+  visibility: visible;
+}
+
+.product-system.is-cascade-revealing .product-cascade {
+  opacity: 0;
+  transform: scale(1.025);
+}
+
+.product-cascade-video {
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+  object-position: center;
+  position: absolute;
+  transform: scale(1.025);
+  width: 100%;
+}
+
+.product-cascade-shade {
+  background:
+    linear-gradient(180deg, rgba(38, 35, 33, 0.06), transparent 24%, rgba(38, 35, 33, 0.14)),
+    radial-gradient(ellipse at center, transparent 45%, rgba(38, 35, 33, 0.18));
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.product-cascade-skip,
+.product-cascade-replay {
+  appearance: none;
+  border: 1px solid rgba(255, 249, 238, 0.42);
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.product-cascade-skip {
+  backdrop-filter: blur(12px);
+  background: rgba(38, 35, 33, 0.28);
+  bottom: 24px;
+  color: var(--mono-cream);
+  padding: 10px 16px;
+  position: absolute;
+  right: 24px;
+  z-index: 2;
+}
+
+.product-cascade-replay {
+  background: rgba(255, 249, 238, 0.1);
+  color: var(--mono-cream);
+  margin-top: 14px;
+  padding: 10px 15px;
+}
+
+.product-cascade-skip:hover,
+.product-cascade-replay:hover {
+  background: rgba(255, 249, 238, 0.2);
 }
 
 .page-card::before {
@@ -1825,6 +1931,19 @@ h3 {
     border-radius: 22px;
   }
 
+  .product-system {
+    min-height: 620px;
+  }
+
+  .product-cascade-video {
+    object-position: center center;
+  }
+
+  .product-cascade-skip {
+    bottom: 18px;
+    right: 18px;
+  }
+
   .convivium-reader {
     padding-top: 76px;
   }
@@ -1880,6 +1999,10 @@ h3 {
   .has-js [data-reveal] {
     opacity: 1;
     transform: none;
+  }
+
+  .product-cascade {
+    display: none;
   }
 }
 

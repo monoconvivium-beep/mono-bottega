@@ -26,7 +26,7 @@
     <link rel="icon" href="icons/mono-favicon.svg?v=20260712-plate-icon-v1" type="image/svg+xml">
     <link rel="preload" as="image" href="assets/hero/mono-kitchen-fire-poster.jpg" fetchpriority="high">
     <script>document.documentElement.classList.add("has-js");</script>
-    <link rel="stylesheet" href="styles.css?v=20260712-cinematic-v4">
+    <link rel="stylesheet" href="styles.css?v=20260713-polpette-v1">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -226,8 +226,21 @@
         </div>
       </section>
 
-      <section class="product-system" id="prodotti" data-reveal>
-        <div class="section-heading">
+      <section class="product-system" id="prodotti" data-product-section data-reveal>
+        <div class="product-cascade" data-product-cascade aria-hidden="true">
+          <video
+            class="product-cascade-video"
+            data-product-cascade-video
+            data-src="assets/products/mono-polpette-cascade.mp4"
+            muted
+            playsinline
+            preload="none"
+          ></video>
+          <span class="product-cascade-shade" aria-hidden="true"></span>
+          <button class="product-cascade-skip" type="button" data-product-cascade-skip>Salta</button>
+        </div>
+        <div class="product-system-content">
+          <div class="section-heading">
           <p class="eyebrow">Quello che trovi da MONO</p>
           <h2>Poche linee. Molta memoria.</h2>
           <p>
@@ -235,9 +248,10 @@
             piatti pronti, dolci, aperitivo e firme di casa pensati per essere capiti
             subito, scelti con piacere e ricordati dopo.
           </p>
-          <p>Ogni prodotto deve rassicurare, distinguersi e farsi venire voglia di tornare.</p>
-        </div>
-        <div class="page-grid">
+            <p>Ogni prodotto deve rassicurare, distinguersi e farsi venire voglia di tornare.</p>
+            <button class="product-cascade-replay" type="button" data-product-cascade-replay>Rivedi la cascata</button>
+          </div>
+          <div class="page-grid">
           <article class="page-card" data-reveal>
             <span>Gastronomia</span>
             <h3>La cucina quotidiana, rifatta come si deve.</h3>
@@ -262,8 +276,9 @@
             <p>Vino, cocktail, analcolici, pane, olio e piccoli piatti: una pausa calda, ordinata, senza buffet confuso.</p>
             <a href="https://app.monobottega.it" target="_blank" rel="noopener">Scopri l'aperitivo</a>
           </article>
+          </div>
+          <p class="product-app-note">Il banco completo, con foto e prezzi, vive nell'app MONO. Il sito ti racconta, l'app te lo fa scegliere.</p>
         </div>
-        <p class="product-app-note">Il banco completo, con foto e prezzi, vive nell'app MONO. Il sito ti racconta, l'app te lo fa scegliere.</p>
       </section>
 
       <section class="definition-section" id="bottega" data-reveal>
@@ -476,6 +491,6 @@
       </nav>
     </footer>
 
-    <script src="app.js?v=20260712-cinematic-v4"></script>
+    <script src="app.js?v=20260713-polpette-v1"></script>
   </body>
 </html>
