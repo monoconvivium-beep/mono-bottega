@@ -345,9 +345,9 @@ function setupCinematicHero() {
   var mobileMq = window.matchMedia("(max-width: 820px)");
 
   // Agnolotti film timeline: 0-1s flour cloud | ~2-5s cut | 6s finished zoom
-  var TRIGGER = 0.34;
-  var MOBILE_FIRE_HOLD = 2200;
-  var STAGE2_AT = 1.4;
+  var TRIGGER = 0.20;
+  var MOBILE_FIRE_HOLD = 1200;
+  var STAGE2_AT = 1.6;
   var STAGE3_AT = 5.0;
 
   var pastaLoadStarted = false;
