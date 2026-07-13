@@ -1941,8 +1941,10 @@ h3 {
 
   .product-cascade {
     background: #07943a;
-    height: 100svh;
+    bottom: auto;
+    height: calc(100dvh + 128px);
     position: fixed;
+    top: -64px;
   }
 
   .product-cascade-video {
