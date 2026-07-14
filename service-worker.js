@@ -1,4 +1,4 @@
-const CACHE_NAME = "mono-site-v56";
+const CACHE_NAME = "mono-site-v57";
 const ASSETS = [
   "./",
   "./index.html",
@@ -44,6 +44,7 @@ const ASSETS = [
   "./assets/hero/mono-kitchen-fire-poster.jpg",
   "./assets/hero/mono-kitchen-fire-og.jpg",
   "./assets/cinematic/web/mono-02-cucina-magica-poster.webp",
+  "./assets/cinematic/web/mono-03-molte-mani-poster.webp",
   "./assets/app/mono-app-qr.svg",
   "./assets/mono-table/mono-table-ritual-desktop.webp",
   "./assets/mono-table/mono-table-ritual-mobile.webp",

@@ -387,17 +387,48 @@
   }
 
   function setupChapterFilms() {
+    const readSessionFlag = (key) => {
+      if (!key) return false;
+      try {
+        return window.sessionStorage.getItem(key) === "true";
+      } catch (error) {
+        return false;
+      }
+    };
+
+    const writeSessionFlag = (key) => {
+      if (!key) return;
+      try {
+        window.sessionStorage.setItem(key, "true");
+      } catch (error) {
+        return;
+      }
+    };
+
     document.querySelectorAll("[data-chapter-film]").forEach((film) => {
       const video = film.querySelector("[data-cinematic-video]");
       const poster = film.querySelector("[data-cinematic-poster]");
+      const badgeImage = film.querySelector("[data-cinematic-badge]");
+      const skipButton = film.querySelector("[data-cinematic-skip]");
+      const replayButton = film.querySelector("[data-cinematic-replay]");
       const asset = window.MONOCinematicAssets?.byId?.[film.dataset.assetId];
       if (!video || !poster || !asset) return;
 
+      const playOnce = asset.playback === "once";
+      const sessionKey = asset.sessionMemory ? asset.sessionKey || `mono-video-seen-${asset.id}` : "";
+      const visibilityThreshold = Math.min(0.9, Math.max(0.05, Number(asset.visibilityThreshold) || 0.22));
+      const motionLimited = prefersReducedMotion.matches || navigator.connection?.saveData;
       let sourcesAttached = false;
       let isVisible = false;
       let viewTracked = false;
-      let playTracked = false;
+      let startTracked = false;
+      let skipTracked = false;
+      let replayTracked = false;
       let completionTracked = false;
+      let hasFinished = readSessionFlag(sessionKey);
+      let manualPlaybackAuthorized = false;
+      let loadObserver;
+      let playbackObserver;
 
       poster.src = asset.posterWebp;
       poster.width = asset.width;
@@ -405,10 +436,48 @@
       video.poster = asset.posterWebp;
       video.width = asset.width;
       video.height = asset.height;
+      video.loop = asset.playback === "loop";
+      video.controls = false;
+      video.muted = true;
+      video.defaultMuted = true;
       film.style.setProperty("--film-aspect-ratio", asset.aspectRatio);
+      film.style.setProperty("--cinematic-object-fit", asset.objectFit || "cover");
+      film.style.setProperty("--cinematic-object-position", asset.objectPosition || "center center");
+
+      if (asset.badge && badgeImage) {
+        badgeImage.src = asset.badgeAsset;
+        film.style.setProperty("--video-badge-size", asset.badgeSize || "72px");
+        film.style.setProperty("--video-badge-right", asset.badgeRight || "16px");
+        film.style.setProperty("--video-badge-bottom", asset.badgeBottom || "16px");
+        film.style.setProperty("--video-badge-bg", asset.badgeBackground || "#F4ECDD");
+        film.style.setProperty("--video-badge-logo-scale", String(asset.badgeLogoScale || 0.76));
+      }
+
+      if (playOnce) {
+        video.autoplay = false;
+      }
+
+      const trackCinematic = (action, legacyAction = action) => {
+        trackExperience(asset.analyticsMode === "cinematic-controls" ? action : legacyAction, film);
+      };
+
+      const syncControls = () => {
+        if (skipButton) {
+          skipButton.hidden = !(playOnce && asset.skip && film.classList.contains("is-playing"));
+        }
+        if (replayButton) {
+          const posterOnly = film.classList.contains("is-poster-only");
+          replayButton.hidden = !(playOnce && asset.replay && (hasFinished || posterOnly));
+          replayButton.textContent = posterOnly && !hasFinished ? "Guarda" : "Rivedi";
+          replayButton.setAttribute("aria-label", posterOnly && !hasFinished ? "Riproduci il video" : "Rivedi il video");
+        }
+      };
 
       const showVideo = () => film.classList.add("is-ready");
-      const showPoster = () => film.classList.remove("is-ready");
+      const showPoster = () => {
+        film.classList.remove("is-ready", "is-playing");
+        syncControls();
+      };
       const attachSources = () => {
         if (sourcesAttached) return;
         asset.sources.forEach((sourceData) => {
@@ -421,59 +490,124 @@
         film.dataset.mediaLoaded = "true";
         video.load();
       };
-      const playWhenAllowed = () => {
-        if (!isVisible || document.hidden || prefersReducedMotion.matches || navigator.connection?.saveData) return;
+
+      const playWhenAllowed = ({ manual = false } = {}) => {
+        if (document.hidden || hasFinished) return;
+        if (!manual && !isVisible) return;
+        if (!manual && motionLimited && !manualPlaybackAuthorized) return;
         attachSources();
+        film.classList.remove("is-complete", "is-poster-only");
         video.play().catch(showPoster);
+      };
+
+      const showFinal = (reason = "", remember = true) => {
+        hasFinished = true;
+        video.pause();
+        film.classList.remove("is-playing", "is-ready", "is-poster-only");
+        film.classList.add("is-complete");
+        if (remember) writeSessionFlag(sessionKey);
+        syncControls();
+
+        if (reason === "skip" && !skipTracked) {
+          skipTracked = true;
+          trackCinematic("cinematic_video_skip", `cinematic_${asset.id}_skip`);
+        }
+        if (reason === "complete" && !completionTracked) {
+          completionTracked = true;
+          trackCinematic("cinematic_video_complete", `cinematic_${asset.id}_complete`);
+        }
+      };
+
+      const replay = () => {
+        hasFinished = false;
+        manualPlaybackAuthorized = true;
+        film.classList.add("is-motion-authorized");
+        film.classList.remove("is-complete", "is-poster-only");
+        attachSources();
+
+        if (!replayTracked) {
+          replayTracked = true;
+          trackCinematic("cinematic_video_replay", `cinematic_${asset.id}_replay`);
+        }
+
+        const restart = () => {
+          video.currentTime = 0;
+          playWhenAllowed({ manual: true });
+        };
+
+        if (video.readyState >= 1) {
+          restart();
+        } else {
+          video.addEventListener("loadedmetadata", restart, { once: true });
+        }
       };
 
       video.addEventListener("canplay", showVideo, { once: true });
       video.addEventListener("playing", () => {
         showVideo();
-        if (!playTracked) {
-          playTracked = true;
-          trackExperience(`cinematic_${asset.id}_play`, film);
+        film.classList.add("is-playing");
+        film.classList.remove("is-complete", "is-poster-only");
+        syncControls();
+        if (!startTracked) {
+          startTracked = true;
+          trackCinematic("cinematic_video_start", `cinematic_${asset.id}_play`);
         }
+      });
+      video.addEventListener("pause", () => {
+        if (!hasFinished && !video.ended) {
+          film.classList.remove("is-playing");
+          syncControls();
+        }
+      });
+      video.addEventListener("ended", () => {
+        if (playOnce) showFinal("complete");
       });
       video.addEventListener("timeupdate", () => {
-        if (!completionTracked && video.duration && video.currentTime >= video.duration - 0.3) {
-          completionTracked = true;
-          trackExperience(`cinematic_${asset.id}_complete`, film);
+        if (playOnce && !hasFinished && video.duration && video.currentTime >= video.duration - 0.2) {
+          showFinal("complete");
         }
       });
-      video.addEventListener("error", showPoster);
+      video.addEventListener("error", () => {
+        if (playOnce) {
+          showFinal("", false);
+        } else {
+          showPoster();
+        }
+      });
 
-      if (prefersReducedMotion.matches || navigator.connection?.saveData) {
+      skipButton?.addEventListener("click", () => showFinal("skip"));
+      replayButton?.addEventListener("click", replay);
+
+      if (hasFinished) {
+        film.classList.add("is-complete");
+      } else if (motionLimited) {
         film.classList.add("is-poster-only");
-        video.pause();
-        showPoster();
-        return;
       }
+      syncControls();
 
       if (!("IntersectionObserver" in window)) {
         isVisible = true;
-        attachSources();
-        playWhenAllowed();
+        if (!hasFinished && !motionLimited) playWhenAllowed();
         return;
       }
 
-      const loadObserver = new IntersectionObserver((entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
+      loadObserver = new IntersectionObserver((entries) => {
+        if (entries.some((entry) => entry.isIntersecting) && !hasFinished && !motionLimited) {
           attachSources();
           loadObserver.disconnect();
         }
       }, { rootMargin: "420px 0px", threshold: 0.01 });
 
-      const playbackObserver = new IntersectionObserver((entries) => {
+      playbackObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          isVisible = entry.isIntersecting && entry.intersectionRatio >= 0.22;
+          isVisible = entry.isIntersecting && entry.intersectionRatio >= visibilityThreshold;
           if (isVisible) {
-            if (!viewTracked) {
+            if (!viewTracked && asset.analyticsMode !== "cinematic-controls") {
               viewTracked = true;
               trackExperience(`cinematic_${asset.id}_view`, film);
             }
             playWhenAllowed();
-          } else {
+          } else if (!entry.isIntersecting || !manualPlaybackAuthorized) {
             video.pause();
           }
         });
@@ -490,7 +624,12 @@
       loadObserver.observe(film);
       playbackObserver.observe(film);
       document.addEventListener("visibilitychange", handleVisibility);
-      window.addEventListener("pagehide", () => video.pause(), { once: true });
+      window.addEventListener("pagehide", () => {
+        video.pause();
+        loadObserver?.disconnect();
+        playbackObserver?.disconnect();
+        document.removeEventListener("visibilitychange", handleVisibility);
+      }, { once: true });
     });
   }
 

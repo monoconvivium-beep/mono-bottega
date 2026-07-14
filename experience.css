@@ -1133,6 +1133,145 @@
   z-index: 5;
 }
 
+.about-cinematic {
+  background:
+    radial-gradient(circle at 86% 18%, rgba(203, 167, 90, 0.2), transparent 28rem),
+    linear-gradient(135deg, rgba(239, 227, 198, 0.72), rgba(244, 236, 221, 0.94));
+  padding: clamp(42px, 6vw, 88px) clamp(22px, 6vw, 92px);
+}
+
+.cinematic-film {
+  --video-badge-size: 72px;
+  --video-badge-right: 16px;
+  --video-badge-bottom: 16px;
+  --video-badge-bg: var(--mono-cashmere);
+  --video-badge-logo-scale: 0.76;
+  aspect-ratio: var(--film-aspect-ratio, 16 / 9);
+  background: var(--mono-anthracite);
+  border: 1px solid rgba(203, 167, 90, 0.46);
+  border-radius: clamp(28px, 3vw, 46px);
+  box-shadow:
+    0 34px 78px rgba(38, 35, 33, 0.16),
+    inset 0 0 0 1px rgba(255, 249, 238, 0.24);
+  isolation: isolate;
+  max-width: 1120px;
+  overflow: hidden;
+  position: relative;
+  width: min(68vw, 1120px);
+}
+
+.cinematic-film--about {
+  margin-left: clamp(0px, 7vw, 118px);
+}
+
+.cinematic-film__fallback,
+.cinematic-film__poster,
+.cinematic-film video {
+  height: 100%;
+  inset: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.cinematic-film__fallback {
+  background:
+    radial-gradient(circle at 34% 30%, rgba(203, 167, 90, 0.34), transparent 24rem),
+    linear-gradient(135deg, #4a3028, var(--mono-anthracite));
+  z-index: 0;
+}
+
+.cinematic-film__poster,
+.cinematic-film video {
+  object-fit: var(--cinematic-object-fit, cover);
+  object-position: var(--cinematic-object-position, center center);
+  transition: opacity 360ms var(--mono-ease-soft);
+}
+
+.cinematic-film__poster {
+  opacity: 1;
+  z-index: 1;
+}
+
+.cinematic-film video {
+  opacity: 0;
+  z-index: 2;
+}
+
+.cinematic-film.is-playing video {
+  opacity: 1;
+}
+
+.cinematic-film.is-playing .cinematic-film__poster {
+  opacity: 0;
+}
+
+.cinematic-film__badge {
+  align-items: center;
+  background: var(--video-badge-bg);
+  border: 1px solid rgba(203, 167, 90, 0.72);
+  border-radius: 34%;
+  bottom: var(--video-badge-bottom);
+  box-shadow: 0 10px 24px rgba(38, 35, 33, 0.18);
+  display: flex;
+  height: var(--video-badge-size);
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  right: var(--video-badge-right);
+  width: var(--video-badge-size);
+  z-index: 5;
+}
+
+.cinematic-film__badge img {
+  display: block;
+  height: calc(100% * var(--video-badge-logo-scale));
+  object-fit: contain;
+  width: calc(100% * var(--video-badge-logo-scale));
+}
+
+.cinematic-film__control {
+  align-items: center;
+  backdrop-filter: blur(12px);
+  background: rgba(244, 236, 221, 0.9);
+  border: 1px solid rgba(38, 35, 33, 0.18);
+  border-radius: 999px;
+  color: var(--mono-anthracite);
+  cursor: pointer;
+  display: inline-flex;
+  font: 700 13px/1 "Sora", sans-serif;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 72px;
+  padding: 0 18px;
+  position: absolute;
+  z-index: 6;
+}
+
+.cinematic-film__control[hidden] {
+  display: none !important;
+}
+
+.cinematic-film__control:hover {
+  background: var(--mono-cashmere);
+  transform: translateY(-1px);
+}
+
+.cinematic-film__control:focus-visible {
+  outline: 3px solid var(--mono-champagne);
+  outline-offset: 3px;
+}
+
+.cinematic-film__skip {
+  right: 16px;
+  top: 16px;
+}
+
+.cinematic-film__replay {
+  bottom: 16px;
+  left: 16px;
+}
+
 .mono-chapter-flow {
   align-items: center;
   background:
@@ -1391,6 +1530,19 @@
     display: none;
   }
 
+  .about-cinematic {
+    padding: 34px clamp(18px, 5vw, 36px) 46px;
+  }
+
+  .cinematic-film {
+    border-radius: clamp(22px, 5vw, 32px);
+    width: 100%;
+  }
+
+  .cinematic-film--about {
+    margin-left: 0;
+  }
+
   .mono-chapter-flow {
     gap: 22px;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -1459,6 +1611,22 @@
     width: calc(100vw - 36px);
   }
 
+  .cinematic-film__control {
+    font-size: 12px;
+    min-width: 68px;
+    padding: 0 15px;
+  }
+
+  .cinematic-film__skip {
+    right: 10px;
+    top: 10px;
+  }
+
+  .cinematic-film__replay {
+    bottom: 10px;
+    left: 10px;
+  }
+
   .mono-chapter-flow {
     gap: 28px 16px;
     padding-left: 18px;
@@ -1505,6 +1673,14 @@
   }
 
   .chapter-film__poster {
+    opacity: 1 !important;
+  }
+
+  .cinematic-film:not(.is-motion-authorized) video {
+    display: none;
+  }
+
+  .cinematic-film:not(.is-motion-authorized) .cinematic-film__poster {
     opacity: 1 !important;
   }
 }

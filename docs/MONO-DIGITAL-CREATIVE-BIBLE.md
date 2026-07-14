@@ -298,6 +298,7 @@ Viola, blu tech, neon, glow persistenti, gradienti social, texture evidenti, oro
 - loghi ufficiali e varianti in `assets/brand/`;
 - filmati Home in `assets/hero/`;
 - master cucina conservato in `assets/cinematic/source/mono-02-cucina-magica-master.mp4`;
+- master mani conservato in `assets/cinematic/source/mono-03-molte-mani-master.mp4`;
 - derivati WebM, MP4 muto e poster WebP in `assets/cinematic/web/`;
 - tavola rituale desktop/mobile in `assets/mono-table/`;
 - icona e QR app in `assets/app/`;
@@ -305,15 +306,6 @@ Viola, blu tech, neon, glow persistenti, gradienti social, texture evidenti, oro
 - scene CSS condivise in `experience.css` e `experience.js`.
 
 ## 16. Asset mancanti
-
-### Video mani
-
-- nome: `mono-hands-team.mp4` + poster WebP;
-- durata: 6–10 secondi;
-- ratio: 16:9 desktop, 4:5 mobile;
-- peso obiettivo: massimo 3 MB desktop, 1.5 MB mobile;
-- contenuto: preparazione, passaggio utensili, banco, confezionamento, pulizia;
-- nessun volto in posa o uniforme differenziata.
 
 ### Video tavola
 

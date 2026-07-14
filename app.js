@@ -168,14 +168,20 @@ function setupNewsletterForms() {
 }
 
 function emitTrackingEvent(action, element) {
+  const isCinematicEvent = action.startsWith("cinematic_video_");
   const eventPayload = {
-    event: TRACKING_EVENT_NAME,
+    event: isCinematicEvent ? action : TRACKING_EVENT_NAME,
     action,
-    event_category: "mono_cta",
+    event_category: isCinematicEvent ? "mono_cinematic" : "mono_cta",
     link_text: element.textContent?.trim() || element.getAttribute("aria-label") || action,
     link_url: element.getAttribute("href") || "",
     page_path: window.location.pathname
   };
+
+  const assetId = element.dataset.assetId || element.closest?.("[data-asset-id]")?.dataset.assetId;
+  if (assetId) {
+    eventPayload.asset_id = assetId;
+  }
 
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push(eventPayload);
