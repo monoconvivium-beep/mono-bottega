@@ -235,8 +235,8 @@ Viola, blu tech, neon, glow persistenti, gradienti social, texture evidenti, oro
 ### Chi siamo — Gesti e persone
 
 - parola e gesto hanno scala monumentale;
-- fallback attuale: mani e piatto costruiti in CSS;
-- slot futuro: “Molte mani, una sola squadra”;
+- film integrato: “Molte mani, una sola squadra”;
+- fallback: poster finale e scena CSS;
 - niente fondatore-centrismo o persone in posa.
 
 ### MONO Convivium — Crescita e squadra
@@ -279,8 +279,8 @@ Viola, blu tech, neon, glow persistenti, gradienti social, texture evidenti, oro
 | --- | --- | --- | --- |
 | Fuoco e pasta | approvata | `assets/hero/mono-kitchen-fire-desktop.mp4` + `assets/hero/mono-agnolotti-desktop.mp4` | Home |
 | La cucina lavora | integrata | manifest `cinematic-assets.js`, derivati in `assets/cinematic/web/` | Prodotti |
-| Molte mani, una sola squadra | da approvare/produrre | placeholder CSS `hands-team` | Chi siamo, dettaglio Convivium |
-| La tavola si prepara | da produrre | placeholder CSS `table-setting` | Eventi, chiusura del viaggio |
+| Molte mani, una sola squadra | integrata | manifest `cinematic-assets.js`, derivati in `assets/cinematic/web/` | Chi siamo; solo still/estratto in Convivium |
+| La tavola delle occasioni | master mancante | struttura predisposta nel manifest | Eventi, chiusura del viaggio |
 | Polpette | esclusa | asset legacy non referenziato | nessun uso flagship |
 
 ### Regole video
@@ -309,7 +309,7 @@ Viola, blu tech, neon, glow persistenti, gradienti social, texture evidenti, oro
 
 ### Video tavola
 
-- nome: `mono-table-setting.mp4` + poster WebP;
+- nome: `mono-04-tavola-eventi-master.mp4` + derivati e poster WebP;
 - durata: 6–10 secondi;
 - ratio: 16:9 desktop, 4:5 mobile;
 - peso obiettivo: massimo 3 MB desktop, 1.5 MB mobile;
