@@ -6,13 +6,22 @@
 - **Repository:** `C:\Users\feder\Documents\New project`
 - **Branch:** `main`
 - **Baseline:** `573cd1343dc777679796cf37fc637e80d612ae52`
+- **Release QA:** `a5b419c879641ea5fdebea1006ba2e9afd25cb77`
 - **Sito:** `https://monobottega.it/`
 - **Verdetto prodotto:** **C — completo e utilizzabile con rifiniture medie**
 - **Punteggio:** **88/100**
 - **Difetti critici o alti aperti sul percorso pubblico:** **0**
 - **Visibilità handoff Claude:** **D — non visibile o non verificabile**
 
-Il sito pubblico è navigabile, coerente, accessibile nelle funzioni fondamentali e pronto per la pubblicazione delle correzioni QA. Non viene certificato al 100% perché mancano il film Eventi approvato, una suite automatica ripetibile, il test su browser/dispositivi reali e il pacchetto documentale Claude richiesto. Le funzioni flagship sono state ricostruite e controllate direttamente sul repository.
+Il sito pubblico è navigabile, coerente, accessibile nelle funzioni fondamentali e le correzioni QA risultano pubblicate e verificate sul dominio ufficiale. Non viene certificato al 100% perché mancano il film Eventi approvato, una suite automatica ripetibile, il test su browser/dispositivi reali e il pacchetto documentale Claude richiesto. Le funzioni flagship sono state ricostruite e controllate direttamente sul repository.
+
+### Verifica live
+
+- **Stato:** `LIVE_VERIFIED`
+- **Data:** 15 luglio 2026, 01:53 Europe/Rome
+- **URL cache-bust:** `https://monobottega.it/?v=20260715-final-qa-v1`
+- **Smoke test:** 10/10 percorsi pubblici con risposta HTTP `200`.
+- **Contenuti verificati:** copy Home aggiornato, CTA app verso `/home`, cache `mono-site-v61`, Convivium con `main`, indirizzo 72D e nessun telefono non autorizzato.
 
 ## 2. Perimetro verificato
 

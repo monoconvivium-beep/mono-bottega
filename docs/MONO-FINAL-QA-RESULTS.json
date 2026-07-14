@@ -4,7 +4,7 @@
   "repository": "C:/Users/feder/Documents/New project",
   "branch": "main",
   "baselineCommit": "573cd1343dc777679796cf37fc637e80d612ae52",
-  "releaseCommit": null,
+  "releaseCommit": "a5b419c879641ea5fdebea1006ba2e9afd25cb77",
   "siteUrl": "https://monobottega.it/",
   "appUrl": "https://app.monobottega.it/home",
   "verdict": {
@@ -84,8 +84,8 @@
     {"severity": "INFORMATIVA", "id": "claude-handoff", "ownerAction": "Recover original handoff package only if audit continuity is required"}
   ],
   "deployment": {
-    "status": "PENDING_PUBLICATION",
-    "verifiedAt": null,
+    "status": "LIVE_VERIFIED",
+    "verifiedAt": "2026-07-15T01:53:20.0042870+02:00",
     "cacheBustUrl": "https://monobottega.it/?v=20260715-final-qa-v1"
   }
 }
