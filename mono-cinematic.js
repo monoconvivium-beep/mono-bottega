@@ -81,10 +81,10 @@
       film.style.setProperty("--video-badge-size", asset.badgeSize || "72px");
       film.style.setProperty("--video-badge-right", asset.badgeRight || "16px");
       film.style.setProperty("--video-badge-bottom", asset.badgeBottom || "16px");
-      film.style.setProperty("--video-badge-bg", asset.badgeBackground || "#F4ECDD");
+      film.style.setProperty("--video-badge-bg", asset.badgeBackground || "var(--mono-video-badge-bg)");
       film.style.setProperty("--video-badge-logo-scale", String(asset.badgeLogoScale || 0.76));
-      film.style.setProperty("--video-badge-border", asset.badgeBorder || "1px solid rgba(203, 167, 90, 0.65)");
-      film.style.setProperty("--video-badge-shadow", asset.badgeShadow || "0 10px 30px rgba(38, 35, 33, 0.2)");
+      film.style.setProperty("--video-badge-border", asset.badgeBorder || "1px solid rgb(var(--mono-gold-rgb) / 0.65)");
+      film.style.setProperty("--video-badge-shadow", asset.badgeShadow || "0 10px 30px rgb(var(--mono-anthracite-rgb) / 0.2)");
     }
 
     let skip = film.querySelector("[data-cinematic-skip]");

@@ -1,0 +1,133 @@
+:root {
+  color-scheme: light;
+
+  /* Primitive palette: sourced from mono-app/tokens/design.ts. */
+  --mono-cashmere: #f4ecdd;
+  --mono-butter: #efe3c8;
+  --mono-terracotta: #b85c38;
+  --mono-coral: #e27a60;
+  --mono-olive: #6e6a3c;
+  --mono-gold: #cba75a;
+  --mono-anthracite: #262321;
+  --mono-terracotta-tint: #c4563a;
+  --mono-gold-tint: #d9a94a;
+  --mono-sage: #4e6b47;
+  --mono-brick: #a83a28;
+  --mono-clay: #b5723f;
+  --mono-white: #ffffff;
+
+  /* Official logo asset colors. */
+  --mono-logo-ink: #231f20;
+  --mono-logo-gold: #d5a34c;
+
+  /* App-derived functional variants. */
+  --mono-olive-bright: #7e9247;
+  --mono-olive-bright-rgb: 126 146 71;
+  --mono-anthracite-warm: #2f2a25;
+  --mono-terracotta-accessible: var(--mono-brick);
+
+  /* RGB channels support controlled alpha without introducing new hues. */
+  --mono-cashmere-rgb: 244 236 221;
+  --mono-butter-rgb: 239 227 200;
+  --mono-terracotta-rgb: 184 92 56;
+  --mono-coral-rgb: 226 122 96;
+  --mono-olive-rgb: 110 106 60;
+  --mono-gold-rgb: 203 167 90;
+  --mono-anthracite-rgb: 38 35 33;
+  --mono-sage-rgb: 78 107 71;
+  --mono-brick-rgb: 168 58 40;
+  --mono-clay-rgb: 181 114 63;
+  --mono-white-rgb: 255 255 255;
+
+  /* Semantic surfaces and typography. */
+  --mono-bg-primary: var(--mono-cashmere);
+  --mono-bg-secondary: var(--mono-butter);
+  --mono-bg-inverse: var(--mono-anthracite);
+  --mono-surface-primary: var(--mono-white);
+  --mono-surface-secondary: var(--mono-cashmere);
+  --mono-surface-elevated: rgb(var(--mono-white-rgb) / 0.9);
+  --mono-text-primary: var(--mono-anthracite);
+  --mono-text-secondary: rgb(var(--mono-anthracite-rgb) / 0.72);
+  --mono-text-muted: rgb(var(--mono-anthracite-rgb) / 0.56);
+  --mono-text-inverse: var(--mono-cashmere);
+  --mono-accent-primary: var(--mono-terracotta);
+  --mono-accent-primary-accessible: var(--mono-terracotta-accessible);
+  --mono-accent-secondary: var(--mono-olive);
+  --mono-accent-premium: var(--mono-gold);
+  --mono-border-soft: rgb(var(--mono-butter-rgb) / 0.78);
+  --mono-border-strong: rgb(var(--mono-anthracite-rgb) / 0.2);
+  --mono-focus: var(--mono-brick);
+  --mono-focus-soft: rgb(var(--mono-gold-rgb) / 0.56);
+
+  /* Shared component language. */
+  --mono-button-primary-bg: var(--mono-terracotta-accessible);
+  --mono-button-primary-text: var(--mono-cashmere);
+  --mono-button-primary-hover: var(--mono-brick);
+  --mono-button-secondary-bg: var(--mono-butter);
+  --mono-button-secondary-text: var(--mono-anthracite);
+  --mono-button-ghost-bg: rgb(var(--mono-white-rgb) / 0.56);
+  --mono-card-bg: var(--mono-surface-elevated);
+  --mono-card-border: var(--mono-border-soft);
+  --mono-card-shadow: 0 28px 80px rgb(var(--mono-anthracite-rgb) / 0.11);
+  --mono-header-bg: rgb(var(--mono-cashmere-rgb) / 0.92);
+  --mono-header-border: rgb(var(--mono-terracotta-rgb) / 0.14);
+  --mono-overlay-dark: rgb(var(--mono-anthracite-rgb) / 0.72);
+  --mono-disabled-bg: rgb(var(--mono-anthracite-rgb) / 0.08);
+  --mono-disabled-text: rgb(var(--mono-anthracite-rgb) / 0.42);
+
+  /* States stay semantic even when they reuse the brand palette. */
+  --mono-state-success: var(--mono-sage);
+  --mono-state-warning: var(--mono-gold);
+  --mono-state-error: var(--mono-brick);
+  --mono-state-info: var(--mono-olive);
+
+  /* Backward-compatible aliases: values remain centralized here. */
+  --mono-champagne: var(--mono-gold);
+  --mono-copper: var(--mono-clay);
+  --mono-terracotta-dark: var(--mono-brick);
+  --mono-red: var(--mono-brick);
+  --mono-ink: var(--mono-anthracite);
+  --mono-ink-soft: var(--mono-text-secondary);
+  --mono-cream: var(--mono-cashmere);
+  --mono-paper: var(--mono-white);
+  --mono-stone: var(--mono-butter);
+  --mono-steel: rgb(var(--mono-anthracite-rgb) / 0.56);
+  --ink: var(--mono-text-primary);
+  --paper: var(--mono-bg-primary);
+  --surface: var(--mono-surface-elevated);
+  --line: var(--mono-border-strong);
+  --soft-line: rgb(var(--mono-white-rgb) / 0.38);
+  --shadow: 0 32px 90px rgb(var(--mono-terracotta-rgb) / 0.16);
+  --action-prenota: var(--mono-olive);
+  --action-ordina: var(--mono-terracotta);
+  --action-paga: var(--mono-gold);
+
+  /* Page temperatures use only app palette primitives. */
+  --mono-page-home-accent: var(--mono-clay);
+  --mono-page-products-accent: var(--mono-terracotta);
+  --mono-page-pastry-accent: var(--mono-coral);
+  --mono-page-about-accent: var(--mono-anthracite);
+  --mono-page-convivium-accent: var(--mono-sage);
+  --mono-page-events-accent: var(--mono-clay);
+  --mono-page-app-accent: var(--mono-olive);
+  --mono-page-location-accent: var(--mono-clay);
+  --mono-page-jobs-accent: var(--mono-brick);
+
+  /* Cinematic chrome, MONO DROP and video badge. */
+  --mono-video-badge-bg: var(--mono-cashmere);
+  --mono-video-badge-symbol: var(--mono-anthracite);
+  --mono-video-control-bg: rgb(var(--mono-cashmere-rgb) / 0.9);
+  --mono-video-control-text: var(--mono-anthracite);
+  --mono-drop-body: rgb(var(--mono-olive-rgb) / 0.78);
+  --mono-drop-body-light: rgb(var(--mono-olive-bright-rgb) / 0.92);
+  --mono-drop-reflection: rgb(var(--mono-gold-rgb) / 0.42);
+  --mono-drop-highlight: rgb(var(--mono-cashmere-rgb) / 0.94);
+  --mono-drop-border: rgb(var(--mono-cashmere-rgb) / 0.78);
+  --mono-shadow-paper: var(--mono-card-shadow);
+  --mono-shadow-oil: 0 10px 34px rgb(var(--mono-anthracite-rgb) / 0.22);
+}
+
+::selection {
+  background: var(--mono-brick);
+  color: var(--mono-cashmere);
+}

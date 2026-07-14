@@ -20,10 +20,10 @@
     badgeSize: "clamp(50px, 7vw, 76px)",
     badgeRight: "calc(9% - (var(--video-badge-size) / 2))",
     badgeBottom: "calc(15.3% - (var(--video-badge-size) / 2))",
-    badgeBackground: "#F4ECDD",
+    badgeBackground: "var(--mono-video-badge-bg)",
     badgeLogoScale: 0.76,
-    badgeBorder: "1px solid rgba(203, 167, 90, 0.65)",
-    badgeShadow: "0 10px 30px rgba(38, 35, 33, 0.2)"
+    badgeBorder: "1px solid rgb(var(--mono-gold-rgb) / 0.65)",
+    badgeShadow: "0 10px 30px rgb(var(--mono-anthracite-rgb) / 0.2)"
   });
 
   const fireRavioli = createAsset({

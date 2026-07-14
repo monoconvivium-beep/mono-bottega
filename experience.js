@@ -465,7 +465,7 @@
         film.style.setProperty("--video-badge-size", asset.badgeSize || "72px");
         film.style.setProperty("--video-badge-right", asset.badgeRight || "16px");
         film.style.setProperty("--video-badge-bottom", asset.badgeBottom || "16px");
-        film.style.setProperty("--video-badge-bg", asset.badgeBackground || "#F4ECDD");
+        film.style.setProperty("--video-badge-bg", asset.badgeBackground || "var(--mono-video-badge-bg)");
         film.style.setProperty("--video-badge-logo-scale", String(asset.badgeLogoScale || 0.76));
       }
 

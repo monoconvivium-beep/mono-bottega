@@ -236,6 +236,10 @@ Gli eventi passano attraverso il tracker già presente. Sono previsti menu, capi
 
 Non sono stati eseguiti Lighthouse, Safari, Firefox, iOS reale o Android reale nell'ambiente disponibile. Non esiste una build o una suite lint/test del sito statico da eseguire.
 
+## Coerenza cromatica sito ↔ app
+
+La palette dell'app è ora la fonte normativa del sito. Primitive, token semantici, contrasti, eccezioni e QA sono descritti in `docs/MONO-SHARED-COLOR-SYSTEM.md`; il formato machine-readable è `docs/MONO-SHARED-COLOR-TOKENS.json`. Il sito consuma il master `mono-colors.css` prima degli altri fogli di stile. Il punteggio corrente è 97/100: resta esclusa soltanto la verifica browser completa delle schermate autenticate e non esiste ancora un package di token fisicamente condiviso tra i due repository.
+
 ## Limiti e interventi futuri
 
 - Il quarto master ufficiale Eventi è assente; la pagina usa il proprio fallback editoriale, senza video sostitutivo.

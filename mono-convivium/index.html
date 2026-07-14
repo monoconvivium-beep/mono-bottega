@@ -17,17 +17,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../mono-colors.css?v=20260714-shared-colors-v1">
 <style>
   :root{
-    --cashmere:#F4ECDD;
-    --butter:#EFE3C8;
-    --terracotta:#B85C38;
-    --coral:#E27A60;
-    --olive:#6E6A3C;
-    --gold:#CBA75A;
-    --ink:#262321;
-    --ink-soft:#4a443e;
-    --line: rgba(38,35,33,0.14);
+    --cashmere:var(--mono-cashmere);
+    --butter:var(--mono-butter);
+    --terracotta:var(--mono-terracotta);
+    --coral:var(--mono-coral);
+    --olive:var(--mono-olive);
+    --gold:var(--mono-gold);
+    --ink:var(--mono-anthracite);
+    --ink-soft:var(--mono-text-secondary);
+    --line:var(--mono-border-strong);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
@@ -216,7 +217,7 @@
 
   /* pausa editoriale */
   .breather{
-    background:linear-gradient(180deg, var(--cashmere), #ECE6D4 50%, var(--cashmere));
+    background:linear-gradient(180deg, var(--cashmere), var(--mono-butter) 50%, var(--cashmere));
     padding:130px 24px;
     display:flex;
     align-items:center;
@@ -280,7 +281,7 @@
     border-top:3px solid var(--c-accent, var(--terracotta));
     transition:background .35s ease;
   }
-  .principio:hover{ background:#fff9ee; }
+  .principio:hover{ background:var(--mono-white); }
   .principio h4{
     font-family:'Baskerville','Baskerville Old Face','Libre Baskerville', Georgia, serif;
     font-weight:500;
@@ -372,7 +373,7 @@
       radial-gradient(ellipse 700px 500px at 15% 0%, rgba(226,122,96,0.30), transparent 60%),
       radial-gradient(ellipse 800px 600px at 100% 15%, rgba(203,167,90,0.24), transparent 60%),
       radial-gradient(ellipse 900px 700px at 50% 100%, rgba(110,106,60,0.30), transparent 65%),
-      linear-gradient(160deg, #3a2a20 0%, #2c2420 55%, #241f1d 100%);
+      linear-gradient(160deg, var(--mono-brick) 0%, var(--mono-anthracite-warm) 55%, var(--mono-anthracite) 100%);
     color:var(--cashmere);
     text-align:center;
     padding:110px 24px 0;
@@ -434,7 +435,7 @@
   }
 
   footer{
-    background:#241f1d;
+    background:var(--mono-anthracite-warm);
     text-align:center;
     padding:22px 24px 34px;
     font-family:'Sora'; font-size:11.5px; letter-spacing:0.08em;
@@ -445,8 +446,8 @@
   ::-webkit-scrollbar-track{ background:var(--cashmere); }
   ::-webkit-scrollbar-thumb{ background:var(--terracotta); border-radius:6px; }
 </style>
-<link rel="stylesheet" href="../experience.css?v=20260714-kitchen-magic-v1">
-    <link rel="stylesheet" href="../mono-engineering.css?v=20260714-engineering-master-v2">
+<link rel="stylesheet" href="../experience.css?v=20260714-shared-colors-v1">
+<link rel="stylesheet" href="../mono-engineering.css?v=20260714-shared-colors-v1">
 </head>
 <body class="mono-world convivium-page" data-mono-world="convivium">
 <a class="mono-site-return" href="../" aria-label="Torna al sito MONO">← Sito MONO</a>
@@ -710,12 +711,12 @@
 </script>
 
 <script src="../mono-experience-config.js?v=20260714-engineering-master-v1"></script>
-<script src="../cinematic-assets.js?v=20260714-engineering-master-v1"></script>
-    <script src="../mono-cinematic.js?v=20260714-engineering-master-v2"></script>
+<script src="../cinematic-assets.js?v=20260714-shared-colors-v1"></script>
+<script src="../mono-cinematic.js?v=20260714-shared-colors-v1"></script>
 <script src="../mono-navigation.js?v=20260714-engineering-master-v1"></script>
 <script src="../mono-signature.js?v=20260714-engineering-master-v1"></script>
 <script src="../app.js?v=20260714-engineering-master-v1"></script>
-<script src="../experience.js?v=20260714-engineering-master-v1"></script>
+<script src="../experience.js?v=20260714-shared-colors-v1"></script>
 
 </body>
 </html>
