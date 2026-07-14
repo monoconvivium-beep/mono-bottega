@@ -21,7 +21,9 @@
     badgeRight: "calc(9% - (var(--video-badge-size) / 2))",
     badgeBottom: "calc(15.3% - (var(--video-badge-size) / 2))",
     badgeBackground: "#F4ECDD",
-    badgeLogoScale: 0.76
+    badgeLogoScale: 0.76,
+    badgeBorder: "1px solid rgba(203, 167, 90, 0.65)",
+    badgeShadow: "0 10px 30px rgba(38, 35, 33, 0.2)"
   });
 
   const fireRavioli = createAsset({
@@ -108,7 +110,7 @@
     codec: Object.freeze({ masterVideo: "h264", masterAudio: "aac", desktopWebm: "vp9", desktopMp4: "h264", pixelFormat: "yuv420p" }),
     audio: false,
     masterAudio: true,
-    playback: "loop",
+    playback: "once",
     playbackMode: "once",
     sessionMemory: true,
     sessionKey: "mono-video-seen-kitchen-magic",
@@ -127,9 +129,9 @@
     posterPriority: "low",
     decorative: true,
     status: "approved",
-    implementationStatus: "integrated-runtime-loop-pending-third-brief",
+    implementationStatus: "integrated-play-once",
     attribution: "Simbolo a stella incorporato nel master, non alterato; configurazione badge predisposta.",
-    notes: "Il terzo brief sostituira il loop runtime con play once, Salta e Rivedi senza cambiare i file preparati."
+    notes: "Play once, Salta, Rivedi e memoria di sessione gestiti dal componente cinematico condiviso."
   });
 
   const handsTeam = createAsset({

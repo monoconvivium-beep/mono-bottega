@@ -66,6 +66,10 @@ function setupHeroVideo() {
 }
 
 function setupCursorLight() {
+  if (window.MONODrop || window.MONOExperienceConfig?.runtime?.flags?.monoDrop) {
+    return;
+  }
+
   const canUseCursorLight = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -339,6 +343,11 @@ function setupHeroParallax() {
 }
 
 function setupCinematicHero() {
+  if (window.MONOCinematicController?.mountHome) {
+    window.MONOCinematicController.mountHome();
+    return;
+  }
+
   var hero = document.querySelector("[data-cinema-hero]");
 
   if (!hero) {

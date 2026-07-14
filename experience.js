@@ -3,16 +3,18 @@
 
   const body = document.body;
   const root = document.documentElement;
+  const experienceConfig = window.MONOExperienceConfig;
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
-  const memoryKey = "mono_table_memory_v1";
+  const memoryKey = experienceConfig?.keys?.visitedChapters || "mono-visited-chapters";
+  const legacyMemoryKey = "mono_table_memory_v1";
   const introKey = "mono_intro_seen_v1";
 
   if (!body?.classList.contains("mono-world")) {
     return;
   }
 
-  const worldTargets = [
+  const fallbackWorldTargets = [
     { id: "mono", label: "Cos'è MONO", href: "#bottega", object: "linen" },
     { id: "products", label: "Prodotti", href: "gastronomia/", object: "plate" },
     { id: "people", label: "Chi siamo", href: "la-bottega/", object: "spoon" },
@@ -22,8 +24,11 @@
     { id: "location", label: "Dove siamo", href: "contatti/", object: "place" },
     { id: "jobs", label: "Lavora con noi", href: "lavora-con-noi/", object: "tools" }
   ];
+  const worldTargets = experienceConfig?.chapters
+    ?.filter((chapter) => chapter.id !== "home")
+    .map((chapter) => ({ id: chapter.id, label: chapter.title, href: chapter.href, object: chapter.narrativeObject })) || fallbackWorldTargets;
 
-  const chapterSequence = [
+  const fallbackChapterSequence = [
     { id: "home", label: "Home", href: "./", temperature: "fire", regia: "materica", gesture: "vapore" },
     { id: "products", label: "Prodotti", href: "gastronomia/", temperature: "warm", regia: "materica", gesture: "materia" },
     { id: "mono", label: "Cos'è MONO", href: "#bottega", temperature: "warm", regia: "monumentale", gesture: "o" },
@@ -34,6 +39,7 @@
     { id: "location", label: "Dove siamo", href: "contatti/", temperature: "local", regia: "monumentale", gesture: "traccia" },
     { id: "jobs", label: "Lavora con noi", href: "lavora-con-noi/", temperature: "human", regia: "dialogata", gesture: "cura" }
   ];
+  const chapterSequence = experienceConfig?.chapters?.map((chapter) => ({ ...chapter, label: chapter.title })) || fallbackChapterSequence;
 
   const sceneMarkup = {
     people: `
@@ -117,6 +123,7 @@
   }
 
   function worldFromUrl(url) {
+    if (experienceConfig?.worldFromUrl) return experienceConfig.worldFromUrl(url);
     if (url.hash === "#bottega") return "mono";
     if (url.hash === "#prodotti") return "products";
     if (url.hash === "#dove-siamo") return "location";
@@ -140,7 +147,7 @@
   function setupCreativeDirection() {
     const chapter = chapterSequence.find((item) => item.id === currentWorld()) || chapterSequence[0];
     const hour = new Date().getHours();
-    const time = hour >= 5 && hour < 11 ? "morning" : hour >= 11 && hour < 18 ? "lunch" : "evening";
+    const time = experienceConfig?.runtime?.time || (hour >= 5 && hour < 11 ? "morning" : hour >= 11 && hour < 18 ? "day" : "evening");
 
     body.dataset.monoTemperature = chapter.temperature;
     body.dataset.monoRegia = chapter.regia;
@@ -150,8 +157,11 @@
 
   function safeReadMemory() {
     try {
-      const storedValue = window.localStorage.getItem(memoryKey);
+      const storedValue = window.localStorage.getItem(memoryKey) || window.localStorage.getItem(legacyMemoryKey);
       const parsedValue = storedValue ? JSON.parse(storedValue) : [];
+      if (!window.localStorage.getItem(memoryKey) && storedValue) {
+        window.localStorage.setItem(memoryKey, storedValue);
+      }
       return Array.isArray(parsedValue) ? parsedValue.filter((value) => typeof value === "string") : [];
     } catch (error) {
       return [];
@@ -226,6 +236,7 @@
   }
 
   function setupPortalNavigation() {
+    if (window.MONONavigation) return;
     const portal = document.createElement("div");
     portal.className = "mono-portal";
     portal.setAttribute("aria-hidden", "true");
@@ -387,6 +398,11 @@
   }
 
   function setupChapterFilms() {
+    if (window.MONOCinematicController?.mountAll) {
+      window.MONOCinematicController.mountAll();
+      return;
+    }
+
     const readSessionFlag = (key) => {
       if (!key) return false;
       try {
@@ -634,6 +650,7 @@
   }
 
   function setupChapterFlow() {
+    if (window.MONONavigation) return;
     const footer = document.querySelector(".site-footer, footer");
     if (!footer || document.querySelector(".mono-chapter-flow")) return;
 
@@ -660,6 +677,7 @@
   }
 
   function setupTableMemory() {
+    if (experienceConfig && !experienceConfig.runtime.flags.monoTable) return;
     const worldId = currentWorld();
     if (worldId !== "home") {
       rememberWorld(worldId);

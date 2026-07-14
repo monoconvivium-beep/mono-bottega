@@ -1,4 +1,4 @@
-const CACHE_NAME = "mono-site-v57";
+const CACHE_NAME = "mono-site-v59";
 const ASSETS = [
   "./",
   "./index.html",
@@ -26,6 +26,11 @@ const ASSETS = [
   "./app.js",
   "./experience.css",
   "./experience.js",
+  "./mono-engineering.css",
+  "./mono-experience-config.js",
+  "./mono-cinematic.js",
+  "./mono-navigation.js",
+  "./mono-signature.js",
   "./cinematic-assets.js",
   "./manifest.webmanifest",
   "./robots.txt",
@@ -40,9 +45,10 @@ const ASSETS = [
   "./assets/brand/mono-convivium-light.svg",
   "./assets/brand/mono-loghissimo-light.svg",
   "./assets/brand/mono-convivium-warm.svg",
-  "./assets/hero/mono-kitchen-fire-desktop.mp4",
   "./assets/hero/mono-kitchen-fire-poster.jpg",
   "./assets/hero/mono-kitchen-fire-og.jpg",
+  "./assets/cinematic/web/mono-01-fuoco-ravioli-poster.webp",
+  "./assets/cinematic/web/mono-01-ravioli-cut-poster.webp",
   "./assets/cinematic/web/mono-02-cucina-magica-poster.webp",
   "./assets/cinematic/web/mono-03-molte-mani-poster.webp",
   "./assets/app/mono-app-qr.svg",
@@ -75,6 +81,11 @@ self.addEventListener("fetch", (event) => {
   }
 
   if (event.request.headers.has("range")) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
+  if (event.request.destination === "video") {
     event.respondWith(fetch(event.request));
     return;
   }
