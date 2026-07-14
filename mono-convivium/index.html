@@ -6,6 +6,7 @@
 <meta name="description" content="MONO Convivium è il progetto sociale di MONO Bottega Gastronomica: formazione, inclusione, lavoro dignitoso e crescita reale dentro una bottega autentica a Torino.">
 <meta name="theme-color" content="#B85C38">
 <link rel="canonical" href="https://monobottega.it/mono-convivium/">
+<link rel="manifest" href="../manifest.webmanifest">
 <link rel="icon" href="../icons/mono-favicon.svg?v=20260712-plate-icon-v1" type="image/svg+xml">
 <meta property="og:title" content="MONO Convivium | Nutriamo il futuro, con arte e cuore">
 <meta property="og:description" content="Il cuore sociale di MONO: percorsi concreti di formazione, inclusione e lavoro dignitoso dentro una bottega gastronomica autentica.">
@@ -32,6 +33,13 @@
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
+  .skip-link{
+    position:fixed; left:18px; top:12px; z-index:10000;
+    transform:translateY(-160%); padding:11px 15px;
+    border-radius:999px; background:var(--cashmere); color:var(--ink);
+    font-family:'Sora'; font-weight:700; text-decoration:none;
+  }
+  .skip-link:focus{ transform:translateY(0); }
   body{
     background:var(--cashmere);
     color:var(--ink);
@@ -450,7 +458,10 @@
 <link rel="stylesheet" href="../mono-engineering.css?v=20260714-shared-colors-v1">
 </head>
 <body class="mono-world convivium-page" data-mono-world="convivium">
+<a class="skip-link" href="#main-content">Vai al contenuto</a>
 <a class="mono-site-return" href="../" aria-label="Torna al sito MONO">← Sito MONO</a>
+
+<main id="main-content" tabindex="-1">
 
 <!-- HERO -->
 <section class="hero">
@@ -513,11 +524,11 @@
     </div>
     <div class="legame">
       <div class="col" style="--c-accent:var(--terracotta)">
-        <h3>MONO</h3>
+        <h3 role="heading" aria-level="2">MONO</h3>
         <p>Racconta il cibo come cultura e gesto. Identità, qualità e coerenza tradotte in un banco, in una ricetta, in un servizio.</p>
       </div>
       <div class="col" style="--c-accent:var(--coral)">
-        <h3>Monoconvivium</h3>
+        <h3 role="heading" aria-level="2">Monoconvivium</h3>
         <p>Racconta il lavoro come possibilità e costruzione personale. Le stesse regole, la stessa cura, applicate alle persone.</p>
       </div>
     </div>
@@ -539,12 +550,12 @@
     <div class="vm-grid">
       <div class="vm-cell" style="background:linear-gradient(180deg, rgba(184,92,56,0.06), transparent 40%);">
         <div class="eyebrow" style="margin-bottom:14px;">Visione</div>
-        <h3>Un sistema replicabile</h3>
+        <h3 role="heading" aria-level="2">Un sistema replicabile</h3>
         <p>Costruire un modello in cui impresa, formazione e comunità non siano mondi separati. Un metodo capace di generare opportunità reali, crescere, adattarsi ed essere replicato.</p>
       </div>
       <div class="vm-cell" style="background:linear-gradient(180deg, rgba(110,106,60,0.07), transparent 40%);">
         <div class="eyebrow" style="margin-bottom:14px;">Missione</div>
-        <h3>Dal potenziale all'autonomia</h3>
+        <h3 role="heading" aria-level="2">Dal potenziale all'autonomia</h3>
         <p>Creare opportunità lavorative e formative concrete dentro l'universo MONO, attraverso inserimento graduale, affiancamento reale e responsabilità proporzionata. Passo dopo passo, senza scorciatoie.</p>
       </div>
     </div>
@@ -560,13 +571,13 @@
   </div>
   <div class="wrap">
     <div class="principi">
-      <div class="principio" style="--c-accent:var(--terracotta)"><h4>Dignità</h4><p>Prima della funzione, viene la persona.</p></div>
-      <div class="principio" style="--c-accent:var(--coral)"><h4>Lavoro reale</h4><p>Nessun ruolo simbolico. Solo attività che contano.</p></div>
-      <div class="principio" style="--c-accent:var(--gold)"><h4>Metodo</h4><p>Accogliere significa strutturare, non improvvisare.</p></div>
-      <div class="principio" style="--c-accent:var(--olive)"><h4>Standard</h4><p>Il livello non si abbassa. Si costruiscono le condizioni per raggiungerlo.</p></div>
-      <div class="principio" style="--c-accent:var(--terracotta)"><h4>Relazione</h4><p>La crescita passa dalle persone, non solo dai compiti.</p></div>
-      <div class="principio" style="--c-accent:var(--coral)"><h4>Comunità</h4><p>Il progetto vive in una rete: impresa, formazione, territorio.</p></div>
-      <div class="principio" style="--c-accent:var(--gold)"><h4>Replicabilità</h4><p>Costruita per durare, e per essere ripetuta altrove.</p></div>
+      <div class="principio" style="--c-accent:var(--terracotta)"><h4 role="heading" aria-level="3">Dignità</h4><p>Prima della funzione, viene la persona.</p></div>
+      <div class="principio" style="--c-accent:var(--coral)"><h4 role="heading" aria-level="3">Lavoro reale</h4><p>Nessun ruolo simbolico. Solo attività che contano.</p></div>
+      <div class="principio" style="--c-accent:var(--gold)"><h4 role="heading" aria-level="3">Metodo</h4><p>Accogliere significa strutturare, non improvvisare.</p></div>
+      <div class="principio" style="--c-accent:var(--olive)"><h4 role="heading" aria-level="3">Standard</h4><p>Il livello non si abbassa. Si costruiscono le condizioni per raggiungerlo.</p></div>
+      <div class="principio" style="--c-accent:var(--terracotta)"><h4 role="heading" aria-level="3">Relazione</h4><p>La crescita passa dalle persone, non solo dai compiti.</p></div>
+      <div class="principio" style="--c-accent:var(--coral)"><h4 role="heading" aria-level="3">Comunità</h4><p>Il progetto vive in una rete: impresa, formazione, territorio.</p></div>
+      <div class="principio" style="--c-accent:var(--gold)"><h4 role="heading" aria-level="3">Replicabilità</h4><p>Costruita per durare, e per essere ripetuta altrove.</p></div>
     </div>
   </div>
 </section>
@@ -620,27 +631,27 @@
       <div class="process-line"></div>
       <div class="step" style="--c-accent:var(--terracotta)">
         <div class="step-num">1</div>
-        <h4>Ingresso</h4>
+        <h4 role="heading" aria-level="3">Ingresso</h4>
         <p>Accesso tramite enti, partner o selezione diretta. Si parte da dove è possibile iniziare.</p>
       </div>
       <div class="step" style="--c-accent:var(--coral)">
         <div class="step-num">2</div>
-        <h4>Affiancamento</h4>
+        <h4 role="heading" aria-level="3">Affiancamento</h4>
         <p>Ogni persona è accompagnata. Il contesto è reale, il supporto costante.</p>
       </div>
       <div class="step" style="--c-accent:var(--gold)">
         <div class="step-num">3</div>
-        <h4>Ruolo</h4>
+        <h4 role="heading" aria-level="3">Ruolo</h4>
         <p>Inserimento operativo in laboratorio, banco o sala. Attività vere, non simboliche.</p>
       </div>
       <div class="step" style="--c-accent:var(--olive)">
         <div class="step-num">4</div>
-        <h4>Crescita</h4>
+        <h4 role="heading" aria-level="3">Crescita</h4>
         <p>Sviluppo di competenze, autonomia e responsabilità. Ogni passo è costruito.</p>
       </div>
       <div class="step" style="--c-accent:var(--terracotta)">
         <div class="step-num">5</div>
-        <h4>Integrazione</h4>
+        <h4 role="heading" aria-level="3">Integrazione</h4>
         <p>L'obiettivo finale: diventare parte del sistema, in modo stabile e reale. Il cerchio si chiude dove si è aperto.</p>
       </div>
     </div>
@@ -660,7 +671,7 @@
   <div class="cta-block">
     <div class="cta-head">
       <div class="eyebrow">Costruiamolo insieme</div>
-      <h3>Monoconvivium cerca le persone e i partner giusti per crescere.</h3>
+      <h3 role="heading" aria-level="2">Monoconvivium cerca le persone e i partner giusti per crescere.</h3>
     </div>
     <div class="cta-grid">
       <div class="cta-col">
@@ -683,7 +694,6 @@
         <span class="tag">Contatti</span>
         <div class="contact-name">Federico Pasciucco</div>
         <ul>
-          <li><a href="tel:+393420989412">342 09 89 412</a></li>
           <li><a href="mailto:monobottega@gmail.com">monobottega@gmail.com</a></li>
           <li><a href="mailto:monoconvivium@gmail.com">monoconvivium@gmail.com</a></li>
         </ul>
@@ -691,8 +701,10 @@
     </div>
   </div>
 
-  <div class="closing-tag">MONO — Bottega Gastronomica · Via Barletta 72, Santa Rita, Torino · dal 2026</div>
+  <div class="closing-tag">MONO — Bottega Gastronomica · Via Barletta 72D, Santa Rita, Torino · dal 2026</div>
 </section>
+
+</main>
 
 <footer>MONO — Bottega Gastronomica · Progetto Monoconvivium</footer>
 

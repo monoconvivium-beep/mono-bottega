@@ -1,5 +1,5 @@
-const APP_STORE_URL = "https://app.monobottega.it";
-const GOOGLE_PLAY_URL = "https://app.monobottega.it";
+const APP_STORE_URL = "https://app.monobottega.it/home";
+const GOOGLE_PLAY_URL = "https://app.monobottega.it/home";
 const NEWSLETTER_EMAIL = "monobottega@gmail.com";
 const NEWSLETTER_ENDPOINT = window.MONO_NEWSLETTER_ENDPOINT || "";
 const TRACKING_EVENT_NAME = "mono_cta_click";
@@ -18,6 +18,11 @@ function setupMobileMenu() {
     return;
   }
 
+  const closeMenu = () => {
+    primaryNav.classList.remove("is-open");
+    mobileMenuToggle.setAttribute("aria-expanded", "false");
+  };
+
   mobileMenuToggle.addEventListener("click", () => {
     const isOpen = primaryNav.classList.toggle("is-open");
     mobileMenuToggle.setAttribute("aria-expanded", String(isOpen));
@@ -25,8 +30,14 @@ function setupMobileMenu() {
 
   primaryNav.addEventListener("click", (event) => {
     if (event.target instanceof HTMLAnchorElement) {
-      primaryNav.classList.remove("is-open");
-      mobileMenuToggle.setAttribute("aria-expanded", "false");
+      closeMenu();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && primaryNav.classList.contains("is-open")) {
+      closeMenu();
+      mobileMenuToggle.focus();
     }
   });
 }
@@ -151,7 +162,6 @@ function setupNewsletterForms() {
             throw new Error("Newsletter endpoint error");
           }
         } else {
-          localStorage.setItem("mono_newsletter_last_signup", JSON.stringify(payload));
           const subject = encodeURIComponent("Avvisami all'apertura MONO");
           const body = encodeURIComponent(`Email: ${email}\nOrigine: ${window.location.href}\nData: ${createdAt}`);
           window.location.href = `mailto:${NEWSLETTER_EMAIL}?subject=${subject}&body=${body}`;

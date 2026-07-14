@@ -1,0 +1,91 @@
+{
+  "generatedAt": "2026-07-15T01:39:36.6469978+02:00",
+  "timezone": "Europe/Rome",
+  "repository": "C:/Users/feder/Documents/New project",
+  "branch": "main",
+  "baselineCommit": "573cd1343dc777679796cf37fc637e80d612ae52",
+  "releaseCommit": null,
+  "siteUrl": "https://monobottega.it/",
+  "appUrl": "https://app.monobottega.it/home",
+  "verdict": {
+    "category": "C",
+    "label": "Completo e utilizzabile con rifiniture medie",
+    "score": 88,
+    "criticalOpen": 0,
+    "highOpen": 0
+  },
+  "handoff": {
+    "visibilityCategory": "D",
+    "label": "Handoff non visibile o non verificabile",
+    "report": "docs/handoff/CODEX-CLAUDE-HANDOFF-VERIFICATION.md",
+    "results": "docs/handoff/CODEX-CLAUDE-HANDOFF-VERIFICATION.json"
+  },
+  "scope": {
+    "mainChapters": 9,
+    "distinctMainDocuments": 8,
+    "supportPages": 3,
+    "javascriptFilesChecked": 9,
+    "publicHtmlDocumentsChecked": 11,
+    "cinematicAssetsDeclared": 17
+  },
+  "tests": [
+    {"id": "js-syntax", "status": "PASS", "evidence": "node --check on 9 shared scripts"},
+    {"id": "html-structure", "status": "PASS", "evidence": "11/11 pages with title, one H1, main, skip, canonical, OG URL, Twitter Card and manifest"},
+    {"id": "duplicate-ids", "status": "PASS", "evidence": "0 duplicate IDs"},
+    {"id": "internal-references", "status": "PASS", "evidence": "0 missing internal href/file references"},
+    {"id": "navigation", "status": "PASS", "evidence": "nine-chapter sequence, deep link and browser history verified"},
+    {"id": "console", "status": "PASS", "evidence": "no error/warning logs on tested Chromium routes"},
+    {"id": "cinematic-01", "status": "PASS", "evidence": "Home two-segment play-once, poster, skip and replay"},
+    {"id": "cinematic-02", "status": "PASS", "evidence": "Products WebM/MP4/poster, skip and replay"},
+    {"id": "cinematic-03", "status": "PASS", "evidence": "About WebM/MP4/poster, skip and replay"},
+    {"id": "cinematic-04", "status": "DEFERRED", "evidence": "approved master not supplied; editorial fallback only"},
+    {"id": "binary-assets", "status": "PASS", "evidence": "17/17 declared assets present, non-empty, tracked, format-valid, non-LFS"},
+    {"id": "responsive-matrix", "status": "PASS_WITH_LIMITATION", "evidence": "90 first-cycle page/width combinations; no material overflow; no physical devices"},
+    {"id": "mobile-second-pass", "status": "STATIC_PASS_RUNTIME_LIMITED", "evidence": "browser viewport override failed to apply 390px; CSS and computed target styles verified"},
+    {"id": "reduced-motion", "status": "PASS", "evidence": "runtime flags and CSS media queries disable advanced motion/autoplay"},
+    {"id": "accessibility", "status": "PASS_WITH_NOTES", "evidence": "landmarks, skip, labels, focus path and 44px targets; no full screen-reader lab"},
+    {"id": "seo", "status": "PASS", "evidence": "canonical, OG URL, Twitter Card, sitemap, robots and local schema"},
+    {"id": "app-link", "status": "PASS", "evidence": "app /home reachable and redirects to /onboarding"},
+    {"id": "privacy", "status": "PASS", "evidence": "newsletter email no longer persisted locally; no secrets found"},
+    {"id": "analytics", "status": "READY_NOT_ACTIVE", "evidence": "hooks present, GA4/GTM identifiers empty"},
+    {"id": "cross-browser", "status": "LIMITED", "evidence": "only in-app Chromium available"},
+    {"id": "lighthouse", "status": "NOT_RUN", "evidence": "no repeatable throttled-mobile runner available"}
+  ],
+  "scores": {
+    "functionalityRouting": 19.5,
+    "contentLinks": 10,
+    "responsiveMobile": 13.5,
+    "videoMotion": 12,
+    "performance": 12,
+    "accessibility": 9.5,
+    "seoLocal": 4.5,
+    "crossBrowser": 2,
+    "stability": 5,
+    "total": 88
+  },
+  "fixesApplied": [
+    "app links normalized to /home",
+    "internal OG URL and Twitter Card completed",
+    "Convivium main, skip, manifest and ARIA hierarchy added",
+    "unauthorized phone removed and address normalized to 72D",
+    "secondary Convivium page marked noindex with canonical",
+    "newsletter local email persistence removed",
+    "mobile menu Escape close and focus restore added",
+    "mobile menu and pause controls raised to 44px",
+    "stale copy replaced",
+    "service worker cache bumped to mono-site-v61"
+  ],
+  "openIssues": [
+    {"severity": "MEDIA", "id": "event-film-04", "ownerAction": "Supply approved Event film master"},
+    {"severity": "MEDIA", "id": "real-device-cross-browser", "ownerAction": "Run iPhone, Android, Safari and Firefox smoke checks"},
+    {"severity": "MEDIA", "id": "mobile-lighthouse", "ownerAction": "Run repeatable throttled Lighthouse"},
+    {"severity": "MEDIA", "id": "analytics-identifiers", "ownerAction": "Provide GA4 or GTM identifier"},
+    {"severity": "MEDIA", "id": "convivium-weight", "ownerAction": "Approve extraction/compression of embedded assets"},
+    {"severity": "INFORMATIVA", "id": "claude-handoff", "ownerAction": "Recover original handoff package only if audit continuity is required"}
+  ],
+  "deployment": {
+    "status": "PENDING_PUBLICATION",
+    "verifiedAt": null,
+    "cacheBustUrl": "https://monobottega.it/?v=20260715-final-qa-v1"
+  }
+}

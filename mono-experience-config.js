@@ -32,7 +32,7 @@
       id: "products",
       title: "Prodotti",
       eyebrow: "Quello che trovi da MONO",
-      preview: "Poche linee. Molta memoria.",
+      preview: "La cucina quotidiana, rifatta come si deve.",
       href: "gastronomia/",
       index: 2,
       temperature: "warm",
