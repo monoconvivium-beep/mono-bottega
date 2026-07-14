@@ -189,6 +189,8 @@ function emitTrackingEvent(action, element) {
   }
 }
 
+window.MONOTrackEvent = emitTrackingEvent;
+
 function loadScript(src) {
   const existingScript = document.querySelector(`script[src="${src}"]`);
 
