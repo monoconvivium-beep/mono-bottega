@@ -332,126 +332,6 @@ function setupHeroParallax() {
   window.addEventListener("resize", requestUpdate, { passive: true });
 }
 
-function setupProductCascade() {
-  const section = document.querySelector("[data-product-section]");
-
-  if (!(section instanceof HTMLElement)) {
-    return;
-  }
-
-  const cascade = section.querySelector("[data-product-cascade]");
-  const video = section.querySelector("[data-product-cascade-video]");
-  const skipButton = section.querySelector("[data-product-cascade-skip]");
-  const replayButton = section.querySelector("[data-product-cascade-replay]");
-  const productLinks = document.querySelectorAll('a[href="#prodotti"]');
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  if (!(cascade instanceof HTMLElement) || !(video instanceof HTMLVideoElement)) {
-    return;
-  }
-
-  let hasPlayed = false;
-  let isPlaying = false;
-  let endTimer = null;
-  let resetTimer = null;
-
-  const prepareVideo = () => {
-    if (video.src) {
-      return;
-    }
-
-    const source = video.dataset.src;
-
-    if (source) {
-      video.src = source;
-      video.load();
-    }
-  };
-
-  const finishCascade = () => {
-    if (!isPlaying) {
-      return;
-    }
-
-    isPlaying = false;
-    hasPlayed = true;
-    window.clearTimeout(endTimer);
-    section.classList.add("is-cascade-revealing");
-    section.setAttribute("aria-busy", "false");
-
-    resetTimer = window.setTimeout(() => {
-      video.pause();
-      section.classList.remove("is-cascade-playing", "is-cascade-revealing");
-      cascade.setAttribute("aria-hidden", "true");
-    }, 760);
-  };
-
-  const playCascade = () => {
-    if (prefersReducedMotion || isPlaying) {
-      return;
-    }
-
-    prepareVideo();
-    window.clearTimeout(endTimer);
-    window.clearTimeout(resetTimer);
-    isPlaying = true;
-    cascade.setAttribute("aria-hidden", "false");
-    section.setAttribute("aria-busy", "true");
-    section.classList.remove("is-cascade-revealing");
-    section.classList.add("is-cascade-playing");
-    video.muted = true;
-    video.playbackRate = 2.15;
-
-    if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
-      video.currentTime = 0;
-    }
-
-    const playPromise = video.play();
-
-    if (playPromise && typeof playPromise.catch === "function") {
-      playPromise.catch(finishCascade);
-    }
-
-    endTimer = window.setTimeout(finishCascade, 5200);
-  };
-
-  video.addEventListener("ended", finishCascade);
-  skipButton?.addEventListener("click", finishCascade);
-  replayButton?.addEventListener("click", playCascade);
-
-  productLinks.forEach((link) => {
-    link.addEventListener("click", () => {
-      window.setTimeout(playCascade, 420);
-    });
-  });
-
-  if (prefersReducedMotion) {
-    replayButton?.setAttribute("hidden", "");
-    return;
-  }
-
-  if ("IntersectionObserver" in window) {
-    const preloadObserver = new IntersectionObserver((entries) => {
-      if (entries.some((entry) => entry.isIntersecting)) {
-        prepareVideo();
-        preloadObserver.disconnect();
-      }
-    }, { rootMargin: "65% 0px" });
-
-    const playObserver = new IntersectionObserver((entries) => {
-      if (!hasPlayed && entries.some((entry) => entry.isIntersecting)) {
-        playCascade();
-        playObserver.disconnect();
-      }
-    }, { threshold: 0.38 });
-
-    preloadObserver.observe(section);
-    playObserver.observe(section);
-  } else {
-    prepareVideo();
-  }
-}
-
 function setupCinematicHero() {
   var hero = document.querySelector("[data-cinema-hero]");
 
@@ -614,7 +494,6 @@ setupHeroVideo();
 setupCursorLight();
 setupHeroParallax();
 setupCinematicHero();
-setupProductCascade();
 setupReveals();
 setupAnalytics();
 setupAppLinks();

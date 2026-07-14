@@ -5,10 +5,13 @@
   --mono-terracotta: #b85c38;
   --mono-terracotta-dark: #963f27;
   --mono-red: #a7442c;
-  --mono-coral: #d06b55;
+  --mono-coral: #e27a60;
   --mono-olive: #6e6a3c;
   --mono-champagne: #cba75a;
   --mono-anthracite: #262321;
+  --mono-sage: #77785b;
+  --mono-copper: #a85a37;
+  --mono-ink-soft: #5c554e;
   --mono-cream: #fbf6ea;
   --mono-paper: #fff9ee;
   --mono-stone: #b8ad9c;
@@ -26,6 +29,10 @@
   --radius-medium: 22px;
   --cursor-light-x: 50vw;
   --cursor-light-y: 50vh;
+  --mono-ease-out: cubic-bezier(0.2, 0.9, 0.18, 1);
+  --mono-ease-soft: cubic-bezier(0.45, 0, 0.15, 1);
+  --mono-duration-fast: 220ms;
+  --mono-duration-scene: 760ms;
 }
 
 * {
@@ -43,7 +50,7 @@ body {
     radial-gradient(circle at 92% 18%, rgba(203, 167, 90, 0.24), transparent 30vw),
     linear-gradient(145deg, var(--mono-cashmere), var(--mono-paper) 48%, #fffdf6);
   color: var(--ink);
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: "Sora", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.5;
   min-height: 100vh;
   overflow-x: hidden;
@@ -81,6 +88,15 @@ textarea {
 
 button {
   color: inherit;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--mono-champagne);
+  outline-offset: 4px;
 }
 
 img {
@@ -723,86 +739,6 @@ h3 {
 
 .product-system .page-card p {
   color: rgba(38, 35, 33, 0.74);
-}
-
-.product-cascade {
-  background: #4c4c29;
-  inset: 0;
-  opacity: 0;
-  overflow: hidden;
-  pointer-events: none;
-  position: absolute;
-  transform: scale(1.035);
-  transition:
-    opacity 720ms cubic-bezier(0.2, 0.8, 0.2, 1),
-    transform 1100ms cubic-bezier(0.2, 0.8, 0.2, 1);
-  visibility: hidden;
-  z-index: 8;
-}
-
-.product-system.is-cascade-playing .product-cascade {
-  opacity: 1;
-  pointer-events: auto;
-  transform: scale(1);
-  visibility: visible;
-}
-
-.product-system.is-cascade-revealing .product-cascade {
-  opacity: 0;
-  transform: scale(1.025);
-}
-
-.product-cascade-video {
-  height: 100%;
-  inset: 0;
-  object-fit: cover;
-  object-position: center;
-  position: absolute;
-  transform: scale(1.025);
-  width: 100%;
-}
-
-.product-cascade-shade {
-  background:
-    linear-gradient(180deg, rgba(38, 35, 33, 0.06), transparent 24%, rgba(38, 35, 33, 0.14)),
-    radial-gradient(ellipse at center, transparent 45%, rgba(38, 35, 33, 0.18));
-  inset: 0;
-  pointer-events: none;
-  position: absolute;
-}
-
-.product-cascade-skip,
-.product-cascade-replay {
-  appearance: none;
-  border: 1px solid rgba(255, 249, 238, 0.42);
-  border-radius: 999px;
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: 0.04em;
-}
-
-.product-cascade-skip {
-  backdrop-filter: blur(12px);
-  background: rgba(38, 35, 33, 0.28);
-  bottom: 24px;
-  color: var(--mono-cream);
-  padding: 10px 16px;
-  position: absolute;
-  right: 24px;
-  z-index: 2;
-}
-
-.product-cascade-replay {
-  background: rgba(255, 249, 238, 0.1);
-  color: var(--mono-cream);
-  margin-top: 14px;
-  padding: 10px 15px;
-}
-
-.product-cascade-skip:hover,
-.product-cascade-replay:hover {
-  background: rgba(255, 249, 238, 0.2);
 }
 
 .page-card::before {
@@ -2374,30 +2310,6 @@ h3 {
     min-height: 0;
   }
 
-  .has-js .product-system.is-cascade-playing {
-    transform: none;
-  }
-
-  .product-cascade {
-    background: #07943a;
-    bottom: auto;
-    height: calc(100dvh + 128px);
-    position: fixed;
-    top: -64px;
-  }
-
-  .product-cascade-video {
-    background: #07943a;
-    object-fit: contain;
-    object-position: center;
-    transform: scale(1.025);
-  }
-
-  .product-cascade-skip {
-    bottom: 18px;
-    right: 18px;
-  }
-
   .convivium-reader {
     padding-top: 76px;
   }
@@ -2455,9 +2367,6 @@ h3 {
     transform: none;
   }
 
-  .product-cascade {
-    display: none;
-  }
 }
 
 /* ======= Cinematic two-chapter hero (2026-07) ======= */

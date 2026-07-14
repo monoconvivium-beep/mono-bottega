@@ -1,11 +1,22 @@
-# MONO — Asset cinematografici opzionali
+# MONO — Asset cinematografici e slot creativi
 
-Il sistema flagship funziona già con CSS, asset esistenti e fallback statici. Questi asset sono upgrade facoltativi: non devono essere sostituiti con stock generici.
+Il sistema flagship funziona con CSS, asset approvati e fallback statici. Gli slot ancora aperti non devono essere sostituiti con stock generici.
+
+## Asset integrati
+
+| Nome file | Stato | Posizione | Regola |
+| --- | --- | --- | --- |
+| `assets/hero/mono-kitchen-fire-desktop.mp4` | attivo | Home, apertura cinematografica | autoplay muto, poster e fallback |
+| `assets/products/mono-kitchen-works.mp4` | attivo | Prodotti, film materico dentro la O | autoplay muto, loop, fallback CSS |
+
+Il precedente video della cascata di polpette è stato rimosso dal progetto.
+
+## Slot da produrre e approvare
 
 | Nome file | Formato | Rapporto | Durata | Peso massimo | Posizione |
 | --- | --- | --- | --- | --- | --- |
 | `mono-intro-table-ritual.webm` + `.mp4` | WebM VP9 + MP4 H.264 | 16:9 desktop, 9:16 mobile | 3–4 s | 2,2 MB desktop, 1,2 MB mobile | Intro home, solo prima visita |
-| `mono-hands-one-table.webp` | WebP/AVIF | 4:5 | immagine | 320 KB | Chi siamo, scena “molte mani” |
+| `mono-hands-team.webm` + `.mp4` | WebM VP9 + MP4 H.264 | 4:5 | 4–6 s | 1,8 MB | Chi siamo e Convivium, mani al lavoro |
 | `mono-convivium-workflow.webp` | WebP/AVIF | 16:9 | immagine | 360 KB | Monoconvivium, ingresso → squadra |
 | `mono-events-table-setting.webm` + `.mp4` | WebM VP9 + MP4 H.264 | 16:9 | 4–6 s | 2,8 MB | Eventi, tavola che si prepara |
 | `mono-app-ticket-fold.webm` + `.mp4` | WebM VP9 + MP4 H.264 | 4:5 | 4–5 s | 1,8 MB | App, scontrino che diventa tessera |

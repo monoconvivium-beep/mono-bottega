@@ -23,6 +23,18 @@
     { id: "jobs", label: "Lavora con noi", href: "lavora-con-noi/", object: "tools" }
   ];
 
+  const chapterSequence = [
+    { id: "home", label: "Home", href: "./", temperature: "fire", regia: "materica", gesture: "vapore" },
+    { id: "products", label: "Prodotti", href: "gastronomia/", temperature: "warm", regia: "materica", gesture: "materia" },
+    { id: "mono", label: "Cos'è MONO", href: "#bottega", temperature: "warm", regia: "monumentale", gesture: "o" },
+    { id: "people", label: "Chi siamo", href: "la-bottega/", temperature: "human", regia: "dialogata", gesture: "mani" },
+    { id: "convivium", label: "MONO Convivium", href: "mono-convivium/", temperature: "human", regia: "silenziosa", gesture: "filo" },
+    { id: "events", label: "Eventi", href: "eventi/", temperature: "convivial", regia: "monumentale", gesture: "tavola" },
+    { id: "app", label: "App MONO", href: "app/", temperature: "clear", regia: "silenziosa", gesture: "flusso" },
+    { id: "location", label: "Dove siamo", href: "contatti/", temperature: "local", regia: "monumentale", gesture: "traccia" },
+    { id: "jobs", label: "Lavora con noi", href: "lavora-con-noi/", temperature: "human", regia: "dialogata", gesture: "cura" }
+  ];
+
   const sceneMarkup = {
     people: `
       <span class="scene-hand scene-hand--one"></span>
@@ -88,6 +100,16 @@
     return cleanPath.endsWith("/") ? cleanPath : `${cleanPath}/`;
   }
 
+  function siteRootUrl() {
+    const chapterPath = /\/(?:la-bottega|gastronomia|pasticceria|aperitivo|catering|eventi|app|contatti|lavora-con-noi|mono-convivium)\/$/;
+    return new URL(chapterPath.test(normalizePath(window.location.pathname)) ? "../" : "./", window.location.href);
+  }
+
+  function chapterUrl(chapter) {
+    const href = chapter.href.startsWith("#") ? `./${chapter.href}` : chapter.href;
+    return new URL(href, siteRootUrl()).href;
+  }
+
   function trackExperience(action, element = body) {
     if (typeof window.MONOTrackEvent === "function") {
       window.MONOTrackEvent(action, element);
@@ -111,7 +133,19 @@
   }
 
   function currentWorld() {
-    return body.dataset.monoWorld || worldFromUrl(new URL(window.location.href));
+    const urlWorld = worldFromUrl(new URL(window.location.href));
+    return urlWorld === "mono" || window.location.hash ? urlWorld : body.dataset.monoWorld || urlWorld;
+  }
+
+  function setupCreativeDirection() {
+    const chapter = chapterSequence.find((item) => item.id === currentWorld()) || chapterSequence[0];
+    const hour = new Date().getHours();
+    const time = hour >= 5 && hour < 11 ? "morning" : hour >= 11 && hour < 18 ? "lunch" : "evening";
+
+    body.dataset.monoTemperature = chapter.temperature;
+    body.dataset.monoRegia = chapter.regia;
+    body.dataset.monoGesture = chapter.gesture;
+    body.dataset.monoTime = time;
   }
 
   function safeReadMemory() {
@@ -216,7 +250,7 @@
       const sameOrigin = destination.origin === window.location.origin;
       const samePage = normalizePath(destination.pathname) === normalizePath(window.location.pathname);
       const narrativeWorld = worldFromUrl(destination);
-      const eligibleArea = link.closest(".nav, .site-footer, .mono-table-memory, .hero-actions, .definition-section, .convivium-feature, .contacts-info");
+      const eligibleArea = link.closest(".nav, .site-footer, .mono-chapter-flow, .mono-table-memory, .hero-actions, .definition-section, .convivium-feature, .contacts-info");
 
       if (!protocolIsNavigable || !sameOrigin || samePage || !narrativeWorld || !eligibleArea) return;
 
@@ -313,11 +347,13 @@
 
     const markup = sceneMarkup[sceneId];
     const hero = document.querySelector(".page-hero, .convivium-page .hero");
-    if (!markup || !hero || hero.querySelector(".mono-page-scene")) return;
+    if (!markup || !hero || hero.querySelector(".mono-page-scene, [data-chapter-film]")) return;
 
     const scene = document.createElement("div");
     scene.className = `mono-page-scene mono-page-scene--${sceneId}`;
     scene.setAttribute("aria-hidden", "true");
+    if (sceneId === "people" || sceneId === "convivium") scene.dataset.videoSlot = "hands-team";
+    if (sceneId === "events") scene.dataset.videoSlot = "table-setting";
     scene.innerHTML = markup;
     hero.prepend(scene);
 
@@ -348,6 +384,67 @@
         scene.style.setProperty("--scene-y", "0px");
       });
     }
+  }
+
+  function setupChapterFilms() {
+    document.querySelectorAll("[data-chapter-film]").forEach((film) => {
+      const video = film.querySelector("video");
+      if (!video) return;
+
+      const showVideo = () => film.classList.add("is-ready");
+      const showFallback = () => film.classList.remove("is-ready");
+      video.addEventListener("canplay", showVideo, { once: true });
+      video.addEventListener("error", showFallback);
+
+      if (prefersReducedMotion.matches || navigator.connection?.saveData) {
+        video.pause();
+        showFallback();
+        return;
+      }
+
+      if (!("IntersectionObserver" in window)) {
+        video.play().catch(showFallback);
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video.play().catch(showFallback);
+          } else {
+            video.pause();
+          }
+        });
+      }, { threshold: 0.08 });
+
+      observer.observe(film);
+    });
+  }
+
+  function setupChapterFlow() {
+    const footer = document.querySelector(".site-footer, footer");
+    if (!footer || document.querySelector(".mono-chapter-flow")) return;
+
+    const chapterIndex = chapterSequence.findIndex((chapter) => chapter.id === currentWorld());
+    const safeIndex = chapterIndex >= 0 ? chapterIndex : 0;
+    const previousChapter = chapterSequence[(safeIndex - 1 + chapterSequence.length) % chapterSequence.length];
+    const nextChapter = chapterSequence[(safeIndex + 1) % chapterSequence.length];
+    const flow = document.createElement("nav");
+
+    flow.className = "mono-chapter-flow";
+    flow.setAttribute("aria-label", "Continua il racconto di MONO");
+    flow.innerHTML = `
+      <a class="mono-chapter-flow__link" href="${chapterUrl(previousChapter)}" data-track="chapter_previous_${previousChapter.id}">
+        <span class="mono-chapter-flow__direction">Capitolo precedente</span>
+        <span class="mono-chapter-flow__title">${previousChapter.label}</span>
+      </a>
+      <span class="mono-chapter-flow__o" aria-hidden="true">O</span>
+      <a class="mono-chapter-flow__link" href="${chapterUrl(nextChapter)}" data-track="chapter_next_${nextChapter.id}">
+        <span class="mono-chapter-flow__direction">Capitolo successivo</span>
+        <span class="mono-chapter-flow__title">${nextChapter.label}</span>
+      </a>`;
+
+    footer.before(flow);
   }
 
   function setupTableMemory() {
@@ -424,10 +521,13 @@
     document.querySelectorAll("[data-material-scene]").forEach((scene) => sceneObserver.observe(scene));
   }
 
+  setupCreativeDirection();
   setupActiveNavigation();
   setupPortalNavigation();
   setupIntro();
   setupPageScene();
+  setupChapterFilms();
   setupTableMemory();
+  setupChapterFlow();
   setupSceneVisibility();
 })();
