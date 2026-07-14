@@ -1585,6 +1585,79 @@ h3 {
   margin-top: 30px;
 }
 
+.jobs-page .jobs-hero-title span,
+.jobs-page .jobs-section-title span {
+  display: block;
+}
+
+.jobs-page .jobs-hero-title span + span {
+  color: var(--mono-terracotta-dark);
+}
+
+.jobs-page .jobs-hero-title {
+  font-size: clamp(44px, 6vw, 88px);
+  max-width: 1180px;
+}
+
+.jobs-page .jobs-hero {
+  padding-bottom: clamp(52px, 4.5vw, 64px);
+}
+
+.jobs-page .jobs-paths,
+.jobs-page .jobs-apply {
+  padding-bottom: clamp(48px, 4.5vw, 64px);
+  padding-top: clamp(48px, 4.5vw, 64px);
+}
+
+.jobs-page .jobs-paths > p,
+.jobs-page .jobs-apply > p {
+  max-width: 860px;
+}
+
+.jobs-page .jobs-paths .page-grid {
+  align-items: stretch;
+  margin-top: 24px;
+}
+
+.jobs-page .jobs-paths .page-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 310px;
+  padding: clamp(24px, 2.7vw, 30px);
+}
+
+.jobs-page .jobs-paths .page-card p {
+  margin-bottom: 12px;
+}
+
+.jobs-page .jobs-paths .page-card > a {
+  color: var(--mono-terracotta-dark);
+  font-weight: 900;
+  margin-top: auto;
+  padding-top: 20px;
+  text-underline-offset: 0.18em;
+}
+
+.jobs-page .jobs-email {
+  color: var(--mono-terracotta-dark);
+  display: inline-flex;
+  font-size: 18px;
+  font-weight: 900;
+  margin-top: 10px;
+  overflow-wrap: anywhere;
+  text-underline-offset: 0.18em;
+}
+
+.jobs-page .jobs-apply {
+  background:
+    radial-gradient(circle at 86% 16%, rgba(203, 167, 90, 0.18), transparent 30%),
+    rgba(255, 249, 238, 0.38);
+}
+
+.jobs-page .jobs-apply .hero-actions {
+  margin-top: 22px;
+}
+
 .pdf-panel {
   align-items: center;
   display: flex;
@@ -1976,6 +2049,10 @@ h3 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .jobs-page .jobs-paths .page-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .definition-grid {
     gap: 0;
     grid-template-columns: 1fr;
@@ -2156,6 +2233,10 @@ h3 {
     grid-template-columns: 1fr;
   }
 
+  .jobs-page .jobs-paths .page-grid {
+    grid-template-columns: 1fr;
+  }
+
   .app-qr {
     display: none;
   }
@@ -2265,6 +2346,16 @@ h3 {
 
   .contacts-page .contacts-info .page-card {
     min-height: 0;
+  }
+
+  .jobs-page .jobs-paths .page-card {
+    min-height: 0;
+  }
+
+  .jobs-page .jobs-paths,
+  .jobs-page .jobs-apply {
+    padding-bottom: 48px;
+    padding-top: 48px;
   }
 
   .signup-form-row {
