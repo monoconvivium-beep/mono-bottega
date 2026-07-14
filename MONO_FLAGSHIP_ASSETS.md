@@ -7,9 +7,14 @@ Il sistema flagship funziona con CSS, asset approvati e fallback statici. Gli sl
 | Nome file | Stato | Posizione | Regola |
 | --- | --- | --- | --- |
 | `assets/hero/mono-kitchen-fire-desktop.mp4` | attivo | Home, apertura cinematografica | autoplay muto, poster e fallback |
-| `assets/products/mono-kitchen-works.mp4` | attivo | Prodotti, film materico dentro la O | autoplay muto, loop, fallback CSS |
+| `assets/cinematic/source/mono-02-cucina-magica-master.mp4` | master conservato | Sorgente ufficiale “La cucina lavora” | H.264 + AAC, non caricato dal componente |
+| `assets/cinematic/web/mono-02-cucina-magica-desktop.webm` | attivo | Prodotti, sorgente primaria | VP9, muto, 1280×720, 24 fps |
+| `assets/cinematic/web/mono-02-cucina-magica-desktop.mp4` | attivo | Prodotti, fallback browser | H.264, muto, faststart, 1280×720, 24 fps |
+| `assets/cinematic/web/mono-02-cucina-magica-poster.webp` | attivo | Poster immediato e reduced motion | fotogramma 8,5 s, 1280×720 |
 
 Il precedente video della cascata di polpette è stato rimosso dal progetto.
+
+Il master “La cucina lavora” contiene un simbolo a stella incorporato in più fotogrammi, visibile anche nel poster. Non è stato cancellato, coperto, sfocato o ritagliato. Per la pubblicazione definitiva senza simbolo serve un master autorizzato e pulito.
 
 ## Slot da produrre e approvare
 

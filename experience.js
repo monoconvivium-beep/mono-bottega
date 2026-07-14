@@ -388,36 +388,109 @@
 
   function setupChapterFilms() {
     document.querySelectorAll("[data-chapter-film]").forEach((film) => {
-      const video = film.querySelector("video");
-      if (!video) return;
+      const video = film.querySelector("[data-cinematic-video]");
+      const poster = film.querySelector("[data-cinematic-poster]");
+      const asset = window.MONOCinematicAssets?.byId?.[film.dataset.assetId];
+      if (!video || !poster || !asset) return;
+
+      let sourcesAttached = false;
+      let isVisible = false;
+      let viewTracked = false;
+      let playTracked = false;
+      let completionTracked = false;
+
+      poster.src = asset.posterWebp;
+      poster.width = asset.width;
+      poster.height = asset.height;
+      video.poster = asset.posterWebp;
+      video.width = asset.width;
+      video.height = asset.height;
+      film.style.setProperty("--film-aspect-ratio", asset.aspectRatio);
 
       const showVideo = () => film.classList.add("is-ready");
-      const showFallback = () => film.classList.remove("is-ready");
+      const showPoster = () => film.classList.remove("is-ready");
+      const attachSources = () => {
+        if (sourcesAttached) return;
+        asset.sources.forEach((sourceData) => {
+          const source = document.createElement("source");
+          source.src = sourceData.src;
+          source.type = sourceData.type;
+          video.append(source);
+        });
+        sourcesAttached = true;
+        film.dataset.mediaLoaded = "true";
+        video.load();
+      };
+      const playWhenAllowed = () => {
+        if (!isVisible || document.hidden || prefersReducedMotion.matches || navigator.connection?.saveData) return;
+        attachSources();
+        video.play().catch(showPoster);
+      };
+
       video.addEventListener("canplay", showVideo, { once: true });
-      video.addEventListener("error", showFallback);
+      video.addEventListener("playing", () => {
+        showVideo();
+        if (!playTracked) {
+          playTracked = true;
+          trackExperience(`cinematic_${asset.id}_play`, film);
+        }
+      });
+      video.addEventListener("timeupdate", () => {
+        if (!completionTracked && video.duration && video.currentTime >= video.duration - 0.3) {
+          completionTracked = true;
+          trackExperience(`cinematic_${asset.id}_complete`, film);
+        }
+      });
+      video.addEventListener("error", showPoster);
 
       if (prefersReducedMotion.matches || navigator.connection?.saveData) {
+        film.classList.add("is-poster-only");
         video.pause();
-        showFallback();
+        showPoster();
         return;
       }
 
       if (!("IntersectionObserver" in window)) {
-        video.play().catch(showFallback);
+        isVisible = true;
+        attachSources();
+        playWhenAllowed();
         return;
       }
 
-      const observer = new IntersectionObserver((entries) => {
+      const loadObserver = new IntersectionObserver((entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          attachSources();
+          loadObserver.disconnect();
+        }
+      }, { rootMargin: "420px 0px", threshold: 0.01 });
+
+      const playbackObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            video.play().catch(showFallback);
+          isVisible = entry.isIntersecting && entry.intersectionRatio >= 0.22;
+          if (isVisible) {
+            if (!viewTracked) {
+              viewTracked = true;
+              trackExperience(`cinematic_${asset.id}_view`, film);
+            }
+            playWhenAllowed();
           } else {
             video.pause();
           }
         });
-      }, { threshold: 0.08 });
+      }, { threshold: [0, 0.22, 0.6] });
 
-      observer.observe(film);
+      const handleVisibility = () => {
+        if (document.hidden) {
+          video.pause();
+        } else {
+          playWhenAllowed();
+        }
+      };
+
+      loadObserver.observe(film);
+      playbackObserver.observe(film);
+      document.addEventListener("visibilitychange", handleVisibility);
+      window.addEventListener("pagehide", () => video.pause(), { once: true });
     });
   }
 

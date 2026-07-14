@@ -1049,9 +1049,9 @@
 }
 
 .chapter-film {
-  aspect-ratio: 1;
+  aspect-ratio: var(--film-aspect-ratio, 16 / 9);
   border: 1px solid rgba(203, 167, 90, 0.42);
-  border-radius: 50%;
+  border-radius: 50% / 46%;
   box-shadow:
     0 42px 90px rgba(38, 35, 33, 0.18),
     inset 0 0 0 1px rgba(255, 249, 238, 0.34);
@@ -1061,7 +1061,7 @@
   right: clamp(30px, 6vw, 110px);
   top: 50%;
   transform: translateY(-50%);
-  width: min(36vw, 560px);
+  width: min(43vw, 690px);
   z-index: 1 !important;
 }
 
@@ -1073,10 +1073,11 @@
   inset: 0;
   pointer-events: none;
   position: absolute;
-  z-index: 2;
+  z-index: 4;
 }
 
 .chapter-film__fallback,
+.chapter-film__poster,
 .chapter-film video {
   height: 100%;
   inset: 0;
@@ -1091,16 +1092,28 @@
     linear-gradient(135deg, var(--mono-terracotta-dark), var(--mono-copper) 48%, var(--mono-olive));
 }
 
+.chapter-film__poster {
+  object-fit: cover;
+  object-position: center;
+  opacity: 1;
+  transition: opacity 420ms var(--mono-ease-soft);
+  z-index: 1;
+}
+
 .chapter-film video {
   opacity: 0;
   object-fit: cover;
   object-position: center;
   transition: opacity 420ms var(--mono-ease-soft);
-  z-index: 1;
+  z-index: 2;
 }
 
 .chapter-film.is-ready video {
   opacity: 1;
+}
+
+.chapter-film.is-ready .chapter-film__poster {
+  opacity: 0;
 }
 
 .chapter-film__o {
@@ -1111,13 +1124,13 @@
   box-shadow:
     0 0 0 1px rgba(38, 35, 33, 0.08),
     0 18px 44px rgba(38, 35, 33, 0.16);
-  height: 47%;
+  height: 54%;
   left: 50%;
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 47%;
-  z-index: 3;
+  width: 34%;
+  z-index: 5;
 }
 
 .mono-chapter-flow {
@@ -1251,7 +1264,7 @@
 
   .chapter-film {
     right: clamp(22px, 4vw, 50px);
-    width: min(38vw, 430px);
+    width: min(44vw, 560px);
   }
 }
 
@@ -1276,7 +1289,7 @@
   }
 
   .gastronomia-page .page-hero {
-    padding-bottom: clamp(390px, 92vw, 520px);
+    padding-bottom: clamp(310px, 58vw, 460px);
   }
 
   .mono-world .page-hero h1 {
@@ -1364,12 +1377,18 @@
   .mono-intro__copy p { font-size: clamp(28px, 8vw, 46px); }
 
   .chapter-film {
+    aspect-ratio: 16 / 9;
     bottom: 30px;
+    border-radius: clamp(22px, 5vw, 34px);
     left: 50%;
     right: auto;
     top: auto;
     transform: translateX(-50%);
-    width: min(76vw, 390px);
+    width: min(calc(100vw - 40px), 700px);
+  }
+
+  .chapter-film__o {
+    display: none;
   }
 
   .mono-chapter-flow {
@@ -1403,7 +1422,7 @@
   }
 
   .gastronomia-page .page-hero {
-    padding-bottom: 350px;
+    padding-bottom: 300px;
   }
 
   .mono-world .page-hero h1 {
@@ -1437,7 +1456,7 @@
 
   .chapter-film {
     bottom: 24px;
-    width: min(82vw, 330px);
+    width: calc(100vw - 36px);
   }
 
   .mono-chapter-flow {
@@ -1483,6 +1502,10 @@
 
   .chapter-film video {
     display: none;
+  }
+
+  .chapter-film__poster {
+    opacity: 1 !important;
   }
 }
 

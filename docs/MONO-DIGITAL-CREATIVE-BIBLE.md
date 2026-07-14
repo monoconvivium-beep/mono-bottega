@@ -278,7 +278,7 @@ Viola, blu tech, neon, glow persistenti, gradienti social, texture evidenti, oro
 | Matrice | Stato | File | Uso |
 | --- | --- | --- | --- |
 | Fuoco e pasta | approvata | `assets/hero/mono-kitchen-fire-desktop.mp4` + `assets/hero/mono-agnolotti-desktop.mp4` | Home |
-| La cucina lavora | integrata | `assets/products/mono-kitchen-works.mp4` | Prodotti |
+| La cucina lavora | integrata | manifest `cinematic-assets.js`, derivati in `assets/cinematic/web/` | Prodotti |
 | Molte mani, una sola squadra | da approvare/produrre | placeholder CSS `hands-team` | Chi siamo, dettaglio Convivium |
 | La tavola si prepara | da produrre | placeholder CSS `table-setting` | Eventi, chiusura del viaggio |
 | Polpette | esclusa | asset legacy non referenziato | nessun uso flagship |
@@ -297,7 +297,8 @@ Viola, blu tech, neon, glow persistenti, gradienti social, texture evidenti, oro
 
 - loghi ufficiali e varianti in `assets/brand/`;
 - filmati Home in `assets/hero/`;
-- filmato cucina in `assets/products/mono-kitchen-works.mp4`;
+- master cucina conservato in `assets/cinematic/source/mono-02-cucina-magica-master.mp4`;
+- derivati WebM, MP4 muto e poster WebP in `assets/cinematic/web/`;
 - tavola rituale desktop/mobile in `assets/mono-table/`;
 - icona e QR app in `assets/app/`;
 - illustrazioni leggere di categoria in `assets/product-visuals/`;
