@@ -285,6 +285,75 @@
   transform: translate3d(var(--scene-x), calc(-50% + var(--scene-y)), 0) scale(1);
 }
 
+.mono-page-scene--people {
+  aspect-ratio: 1;
+  filter: none;
+  width: min(34vw, 500px);
+}
+
+.scene-table-plan {
+  height: 100%;
+  inset: 0;
+  overflow: visible;
+  width: 100%;
+}
+
+.scene-table-plan__halo {
+  fill: rgb(var(--mono-gold-rgb) / 0.075);
+  stroke: rgb(var(--mono-gold-rgb) / 0.18);
+  stroke-width: 1.5;
+}
+
+.scene-table-plan__chairs rect {
+  fill: url(#monoPeopleChairFinish);
+  stroke: rgb(var(--mono-cashmere-rgb) / 0.68);
+  stroke-width: 2;
+}
+
+.scene-table-plan__chairs path {
+  fill: none;
+  opacity: 0.58;
+  stroke: var(--mono-champagne);
+  stroke-linecap: round;
+  stroke-width: 3;
+}
+
+.scene-table-plan__table > circle:first-child {
+  fill: url(#monoPeopleTableSurface);
+  stroke: var(--mono-champagne);
+  stroke-width: 7;
+}
+
+.scene-table-plan__rim {
+  fill: none;
+  stroke: rgb(var(--mono-terracotta-rgb) / 0.18);
+  stroke-width: 1.5;
+}
+
+.scene-table-plan__settings circle {
+  fill: var(--mono-paper);
+  stroke: var(--mono-champagne);
+  stroke-width: 2;
+}
+
+.scene-table-plan__settings path {
+  fill: none;
+  stroke: rgb(var(--mono-olive-rgb) / 0.52);
+  stroke-linecap: round;
+  stroke-width: 3;
+}
+
+.scene-table-plan__center {
+  fill: var(--mono-olive);
+  opacity: 0.94;
+  stroke: var(--mono-champagne);
+  stroke-width: 3;
+}
+
+.scene-table-plan__center-dot {
+  fill: var(--mono-champagne);
+}
+
 .mono-page-scene span,
 .mono-page-scene svg {
   position: absolute;
@@ -1430,6 +1499,14 @@
     width: min(78vw, 390px);
   }
 
+  .about-page .page-hero {
+    padding-bottom: clamp(250px, 66vw, 330px);
+  }
+
+  .mono-page-scene--people {
+    width: min(66vw, 320px);
+  }
+
   .page-hero.is-scene-awake .mono-page-scene,
   .convivium-page .hero.is-scene-awake .mono-page-scene {
     opacity: 0.58;
@@ -1549,6 +1626,14 @@
 
   .mono-page-scene {
     width: 88vw;
+  }
+
+  .about-page .page-hero {
+    padding-bottom: 250px;
+  }
+
+  .mono-page-scene--people {
+    width: min(72vw, 300px);
   }
 
   .mono-table-memory {

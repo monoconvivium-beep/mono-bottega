@@ -43,10 +43,43 @@
 
   const sceneMarkup = {
     people: `
-      <span class="scene-hand scene-hand--one"></span>
-      <span class="scene-hand scene-hand--two"></span>
-      <span class="scene-hand scene-hand--three"></span>
-      <span class="scene-plate"></span>`,
+      <svg class="scene-table-plan" viewBox="0 0 520 520" focusable="false" aria-hidden="true">
+        <defs>
+          <radialGradient id="monoPeopleTableSurface" cx="38%" cy="30%" r="76%">
+            <stop offset="0" stop-color="#fff9ee" />
+            <stop offset="0.72" stop-color="#f4ecdd" />
+            <stop offset="1" stop-color="#efe3c6" />
+          </radialGradient>
+          <linearGradient id="monoPeopleChairFinish" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#e27a60" />
+            <stop offset="1" stop-color="#b85c38" />
+          </linearGradient>
+          <filter id="monoPeopleTableShadow" x="-30%" y="-30%" width="160%" height="170%">
+            <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#262321" flood-opacity="0.16" />
+          </filter>
+        </defs>
+        <circle class="scene-table-plan__halo" cx="260" cy="260" r="232" />
+        <g class="scene-table-plan__chairs" filter="url(#monoPeopleTableShadow)">
+          <g transform="rotate(0 260 260)"><rect x="218" y="24" width="84" height="126" rx="38" /><path d="M238 55h44" /></g>
+          <g transform="rotate(72 260 260)"><rect x="218" y="24" width="84" height="126" rx="38" /><path d="M238 55h44" /></g>
+          <g transform="rotate(144 260 260)"><rect x="218" y="24" width="84" height="126" rx="38" /><path d="M238 55h44" /></g>
+          <g transform="rotate(216 260 260)"><rect x="218" y="24" width="84" height="126" rx="38" /><path d="M238 55h44" /></g>
+          <g transform="rotate(288 260 260)"><rect x="218" y="24" width="84" height="126" rx="38" /><path d="M238 55h44" /></g>
+        </g>
+        <g class="scene-table-plan__table" filter="url(#monoPeopleTableShadow)">
+          <circle cx="260" cy="260" r="160" />
+          <circle class="scene-table-plan__rim" cx="260" cy="260" r="153" />
+        </g>
+        <g class="scene-table-plan__settings">
+          <g transform="rotate(0 260 260)"><circle cx="260" cy="145" r="20" /><path d="M247 169h26" /></g>
+          <g transform="rotate(72 260 260)"><circle cx="260" cy="145" r="20" /><path d="M247 169h26" /></g>
+          <g transform="rotate(144 260 260)"><circle cx="260" cy="145" r="20" /><path d="M247 169h26" /></g>
+          <g transform="rotate(216 260 260)"><circle cx="260" cy="145" r="20" /><path d="M247 169h26" /></g>
+          <g transform="rotate(288 260 260)"><circle cx="260" cy="145" r="20" /><path d="M247 169h26" /></g>
+        </g>
+        <circle class="scene-table-plan__center" cx="260" cy="260" r="27" />
+        <circle class="scene-table-plan__center-dot" cx="260" cy="260" r="7" />
+      </svg>`,
     products: `
       <span class="scene-tray"></span>
       <span class="scene-ingredient scene-ingredient--one"></span>
