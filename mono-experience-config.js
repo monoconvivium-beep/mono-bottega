@@ -212,7 +212,7 @@
   const defaults = {
     quality: detectedQuality,
     flags: {
-      monoFlow: true,
+      monoFlow: false,
       oPortal: true,
       monoDrop: true,
       oilTrail: true,
