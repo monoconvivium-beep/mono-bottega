@@ -42,9 +42,9 @@
   const readAudioPreference = () => {
     try {
       const value = window.sessionStorage.getItem(AUDIO_STORAGE_KEY);
-      return value === "on" || value === "off" ? value : "auto";
+      return value === "on" || value === "off" ? value : "on";
     } catch (error) {
-      return "auto";
+      return "on";
     }
   };
 
@@ -157,6 +157,45 @@
     });
     updateAudioButton(button, getVideo());
   };
+
+  const armAutomaticAudioUnlock = () => {
+    let armed = true;
+    const disarm = () => {
+      if (!armed) return;
+      armed = false;
+      document.removeEventListener("pointerdown", unlock);
+      document.removeEventListener("keydown", unlock);
+    };
+    const unlock = async (event) => {
+      if (!armed) return;
+      if (event.target instanceof Element && event.target.closest("[data-cinematic-audio]")) return;
+      if (event.type === "keydown" && event.key !== "Enter" && event.key !== " ") return;
+      if (readAudioPreference() === "off") {
+        disarm();
+        return;
+      }
+      const activeVideo = [...audioVideos].find((video) => !video.paused && !video.ended && video.dataset.hasAudio === "true");
+      if (!activeVideo) return;
+      muteOtherVideos(activeVideo);
+      setVideoMuted(activeVideo, false);
+      try {
+        await activeVideo.play();
+        writeAudioPreference("on");
+        activeVideo.dataset.audioAutoplay = "gesture-enabled";
+        syncAudioControls();
+        track("video_audio_auto_unlocked", activeVideo.closest("[data-cinema-hero], [data-chapter-film]") || activeVideo);
+        disarm();
+      } catch (error) {
+        setVideoMuted(activeVideo, true);
+        syncAudioControls();
+      }
+    };
+    document.addEventListener("pointerdown", unlock, { passive: true });
+    document.addEventListener("keydown", unlock);
+    window.addEventListener("pagehide", disarm, { once: true });
+  };
+
+  armAutomaticAudioUnlock();
 
   const ensureFilmChrome = (film, asset) => {
     film.removeAttribute("aria-hidden");
@@ -602,7 +641,7 @@
   };
 
   window.MONOCinematicController = Object.freeze({
-    version: "20260715-cinematic-audio-v1",
+    version: "20260715-cinematic-audio-v2",
     controlsHome: true,
     mountFilm,
     mountAll,

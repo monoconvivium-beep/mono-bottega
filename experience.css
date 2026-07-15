@@ -959,14 +959,14 @@
   68%, 100% { opacity: 0; transform: scale(1.52); }
 }
 
-.mono-table-object--linen { left: 12%; top: 18%; }
+.mono-table-object--linen { left: 16%; top: 41%; }
 .mono-table-object--plate { left: 39%; top: 37%; }
-.mono-table-object--spoon { left: 24%; top: 48%; }
-.mono-table-object--apron { left: 68%; top: 18%; }
-.mono-table-object--glass { right: 15%; top: 45%; }
+.mono-table-object--spoon { left: 36.5%; top: 60%; }
+.mono-table-object--apron { left: 74.8%; top: 27%; }
+.mono-table-object--glass { right: 10.5%; top: 56%; }
 .mono-table-object--card { bottom: 16%; left: 58%; }
 .mono-table-object--place { bottom: 18%; left: 12%; }
-.mono-table-object--tools { right: 30%; top: 13%; }
+.mono-table-object--tools { left: 63.5%; top: 39%; }
 
 .mono-table-memory__message {
   font-family: "Libre Baskerville", Baskerville, Georgia, serif;
@@ -1666,6 +1666,7 @@
     padding: 5px 8px;
   }
 
+  .mono-table-object--linen { left: 12%; top: 18%; }
   .mono-table-object--plate { left: 36%; top: 38%; }
   .mono-table-object--spoon { left: 12%; top: 50%; }
   .mono-table-object--apron { left: 66%; top: 22%; }

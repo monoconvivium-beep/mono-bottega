@@ -751,6 +751,7 @@
 
     const insertionPoint = document.querySelector(".value-section");
     if (!insertionPoint) return;
+    const tableTargets = worldTargets.filter((target) => target.id !== "location");
 
     const section = document.createElement("section");
     section.className = "mono-table-memory";
@@ -762,7 +763,7 @@
       </picture>
       <span class="mono-table-memory__veil" aria-hidden="true"></span>
       <div class="mono-table-memory__objects">
-        ${worldTargets.map((target) => `
+        ${tableTargets.map((target) => `
           <a class="mono-table-object mono-table-object--${target.object}" data-world-object="${target.id}" data-track="table_object_${target.id}" href="${target.href}" aria-label="${target.label}">
             <span class="mono-table-object__shape" aria-hidden="true"></span>
             <span class="mono-table-object__label">${target.label}</span>
