@@ -732,6 +732,10 @@
   width: min(38vw, 500px);
 }
 
+.convivium-page .mono-page-scene--convivium {
+  display: none;
+}
+
 .mono-table-memory {
   align-items: end;
   background: var(--mono-anthracite-warm);
@@ -1519,6 +1523,10 @@
     right: auto;
     top: auto;
     width: min(84vw, 390px);
+  }
+
+  .convivium-page .mono-page-scene--convivium {
+    display: block;
   }
 
   .mono-table-memory {
