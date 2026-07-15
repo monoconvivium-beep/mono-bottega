@@ -129,7 +129,7 @@
       title: "Dove siamo",
       eyebrow: "Torino, Santa Rita",
       preview: "La linea arriva in Via Barletta 72D.",
-      href: "contatti/",
+      href: "dove-siamo/",
       index: 8,
       temperature: "local",
       regia: "materica",
@@ -142,17 +142,17 @@
     },
     {
       id: "jobs",
-      title: "Lavora con noi",
-      eyebrow: "Persone, prima ancora dei ruoli",
-      preview: "Una postazione pronta per chi lavora con cura.",
-      href: "lavora-con-noi/",
+      title: "Contatti",
+      eyebrow: "Tutto quello che serve",
+      preview: "Informazioni, orari e canali MONO in un solo posto.",
+      href: "contatti/",
       index: 9,
       temperature: "human",
       regia: "silenziosa",
       gesture: "cura",
       entry: "workstation",
       exit: "table-complete",
-      primaryAction: "Invia la candidatura",
+      primaryAction: "Contatta MONO",
       cinematicAsset: null,
       narrativeObject: "tools"
     }
@@ -163,7 +163,7 @@
   }));
 
   const chapterById = Object.freeze(Object.fromEntries(chapters.map((chapter) => [chapter.id, chapter])));
-  const chapterPathPattern = /\/(?:la-bottega|gastronomia|pasticceria|aperitivo|catering|eventi|app|contatti|lavora-con-noi|mono-convivium)\/?$/;
+  const chapterPathPattern = /\/(?:la-bottega|gastronomia|pasticceria|aperitivo|catering|eventi|app|dove-siamo|contatti|lavora-con-noi|mono-convivium)\/?$/;
   const normalizePath = (pathname = "/") => {
     const clean = pathname.replace(/index\.html$/i, "").replace(/\/{2,}/g, "/");
     return clean.endsWith("/") ? clean : `${clean}/`;
@@ -180,7 +180,8 @@
     if (/\/(eventi|catering)\/$/.test(path)) return "events";
     if (/\/mono-convivium\/$/.test(path)) return "convivium";
     if (/\/app\/$/.test(path)) return "app";
-    if (/\/contatti\/$/.test(path)) return "location";
+    if (/\/dove-siamo\/$/.test(path)) return "location";
+    if (/\/contatti\/$/.test(path)) return "jobs";
     if (/\/lavora-con-noi\/$/.test(path)) return "jobs";
     return "home";
   };

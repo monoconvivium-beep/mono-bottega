@@ -21,8 +21,8 @@
     { id: "convivium", label: "MONO Convivium", href: "mono-convivium/", object: "apron" },
     { id: "events", label: "Eventi", href: "eventi/", object: "glass" },
     { id: "app", label: "App MONO", href: "app/", object: "card" },
-    { id: "location", label: "Dove siamo", href: "contatti/", object: "place" },
-    { id: "jobs", label: "Lavora con noi", href: "lavora-con-noi/", object: "tools" }
+    { id: "location", label: "Dove siamo", href: "dove-siamo/", object: "place" },
+    { id: "jobs", label: "Contatti", href: "contatti/", object: "tools" }
   ];
   const worldTargets = experienceConfig?.chapters
     ?.filter((chapter) => chapter.id !== "home")
@@ -36,8 +36,8 @@
     { id: "convivium", label: "MONO Convivium", href: "mono-convivium/", temperature: "human", regia: "silenziosa", gesture: "filo" },
     { id: "events", label: "Eventi", href: "eventi/", temperature: "convivial", regia: "monumentale", gesture: "tavola" },
     { id: "app", label: "App MONO", href: "app/", temperature: "clear", regia: "silenziosa", gesture: "flusso" },
-    { id: "location", label: "Dove siamo", href: "contatti/", temperature: "local", regia: "monumentale", gesture: "traccia" },
-    { id: "jobs", label: "Lavora con noi", href: "lavora-con-noi/", temperature: "human", regia: "dialogata", gesture: "cura" }
+    { id: "location", label: "Dove siamo", href: "dove-siamo/", temperature: "local", regia: "monumentale", gesture: "traccia" },
+    { id: "jobs", label: "Contatti", href: "contatti/", temperature: "human", regia: "dialogata", gesture: "cura" }
   ];
   const chapterSequence = experienceConfig?.chapters?.map((chapter) => ({ ...chapter, label: chapter.title })) || fallbackChapterSequence;
 
@@ -172,7 +172,7 @@
   }
 
   function siteRootUrl() {
-    const chapterPath = /\/(?:la-bottega|gastronomia|pasticceria|aperitivo|catering|eventi|app|contatti|lavora-con-noi|mono-convivium)\/$/;
+    const chapterPath = /\/(?:la-bottega|gastronomia|pasticceria|aperitivo|catering|eventi|app|dove-siamo|contatti|lavora-con-noi|mono-convivium)\/$/;
     return new URL(chapterPath.test(normalizePath(window.location.pathname)) ? "../" : "./", window.location.href);
   }
 
@@ -199,7 +199,8 @@
     if (/\/(eventi|catering)\/$/.test(path)) return "events";
     if (/\/mono-convivium\/$/.test(path)) return "convivium";
     if (/\/app\/$/.test(path)) return "app";
-    if (/\/contatti\/$/.test(path)) return "location";
+    if (/\/dove-siamo\/$/.test(path)) return "location";
+    if (/\/contatti\/$/.test(path)) return "jobs";
     if (/\/lavora-con-noi\/$/.test(path)) return "jobs";
     return "home";
   }
