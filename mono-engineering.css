@@ -588,9 +588,10 @@ html[data-mono-time="evening"] .mono-world {
     cursor: none !important;
   }
 
-  .mono-table-object:hover .mono-table-object__shape {
+  .mono-table-object:hover .mono-table-object__shape,
+  .mono-table-object:focus-visible .mono-table-object__shape {
     filter: saturate(1.12) brightness(1.05);
-    transform: translateY(-5px) scale(1.035);
+    transform: scale(1.18);
   }
 }
 
@@ -723,6 +724,7 @@ html[data-mono-quality="static"] .mono-oil-surface {
   .mono-next-chapter__stage,
   .mono-table-memory__picture img,
   .mono-table-object__shape,
+  .mono-table-object__shape::before,
   .mono-oil-surface {
     animation: none !important;
     transition-duration: 1ms !important;
