@@ -717,6 +717,97 @@
   width: 25%;
 }
 
+.mono-page-scene--jobs {
+  aspect-ratio: 1.22;
+  filter: none;
+  width: min(37vw, 540px);
+}
+
+.scene-megaphone {
+  height: 100%;
+  inset: 0;
+  overflow: visible;
+  width: 100%;
+}
+
+.scene-megaphone__halo {
+  fill: rgb(var(--mono-gold-rgb) / 0.08);
+  stroke: rgb(var(--mono-gold-rgb) / 0.16);
+  stroke-width: 1.5;
+}
+
+.scene-megaphone__sound path {
+  fill: none;
+  stroke: var(--mono-olive);
+  stroke-dasharray: 78;
+  stroke-dashoffset: 78;
+  stroke-linecap: round;
+  stroke-width: 8;
+  transition: stroke-dashoffset 900ms var(--mono-ease-out) 520ms;
+}
+
+.is-scene-awake .scene-megaphone__sound path {
+  stroke-dashoffset: 0;
+}
+
+.scene-megaphone__sound path:nth-child(2) { transition-delay: 620ms; }
+.scene-megaphone__sound path:nth-child(3) { transition-delay: 720ms; }
+.scene-megaphone__sound path:nth-child(4) { transition-delay: 820ms; }
+
+.scene-megaphone__rear {
+  fill: url(#monoJobsMegaphoneBody);
+  stroke: rgb(var(--mono-cashmere-rgb) / 0.7);
+  stroke-width: 2;
+}
+
+.scene-megaphone__neck {
+  fill: var(--mono-coral);
+}
+
+.scene-megaphone__cone {
+  fill: url(#monoJobsMegaphoneCone);
+  stroke: var(--mono-champagne);
+  stroke-width: 3;
+}
+
+.scene-megaphone__rim {
+  fill: var(--mono-champagne);
+  stroke: rgb(var(--mono-paper-rgb, 255 249 238) / 0.82);
+  stroke-width: 3;
+}
+
+.scene-megaphone__mouth {
+  fill: var(--mono-olive);
+  opacity: 0.9;
+  stroke: var(--mono-cashmere);
+  stroke-width: 3;
+}
+
+.scene-megaphone__handle {
+  fill: var(--mono-olive);
+  stroke: var(--mono-champagne);
+  stroke-width: 2;
+}
+
+.scene-megaphone__trigger {
+  fill: var(--mono-anthracite);
+  opacity: 0.88;
+}
+
+.scene-megaphone__sleeve {
+  fill: var(--mono-anthracite);
+}
+
+.scene-megaphone__skin {
+  fill: var(--mono-butter);
+  stroke: rgb(var(--mono-terracotta-rgb) / 0.34);
+  stroke-width: 2;
+}
+
+.scene-megaphone__cuff {
+  fill: var(--mono-terracotta);
+}
+
 .scene-team-apron {
   height: 38%;
   left: 36%;

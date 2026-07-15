@@ -117,11 +117,43 @@
       </svg>
       <span class="scene-route-label">72D</span>`,
     jobs: `
-      <span class="scene-bench"></span>
-      <span class="scene-apron"></span>
-      <span class="scene-utensil scene-utensil--one"></span>
-      <span class="scene-utensil scene-utensil--two"></span>
-      <span class="scene-towel"></span>`,
+      <svg class="scene-megaphone" viewBox="0 0 560 460" focusable="false" aria-hidden="true">
+        <defs>
+          <linearGradient id="monoJobsMegaphoneBody" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#e27a60" />
+            <stop offset="1" stop-color="#b85c38" />
+          </linearGradient>
+          <linearGradient id="monoJobsMegaphoneCone" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#efe3c6" />
+            <stop offset="0.72" stop-color="#f4ecdd" />
+            <stop offset="1" stop-color="#cba75a" />
+          </linearGradient>
+          <filter id="monoJobsMegaphoneShadow" x="-30%" y="-30%" width="170%" height="180%">
+            <feDropShadow dx="0" dy="18" stdDeviation="17" flood-color="#262321" flood-opacity="0.17" />
+          </filter>
+        </defs>
+        <circle class="scene-megaphone__halo" cx="316" cy="227" r="205" />
+        <g class="scene-megaphone__sound">
+          <path d="M472 86 L523 44" />
+          <path d="M500 130 L550 111" />
+          <path d="M506 183 L558 184" />
+          <path d="M494 235 L545 258" />
+        </g>
+        <g class="scene-megaphone__object" filter="url(#monoJobsMegaphoneShadow)">
+          <rect class="scene-megaphone__rear" x="92" y="174" width="166" height="82" rx="41" />
+          <rect class="scene-megaphone__neck" x="223" y="185" width="62" height="60" rx="18" />
+          <path class="scene-megaphone__cone" d="M263 168 L445 81 Q467 70 472 94 L505 257 Q510 283 486 276 L263 224 Z" />
+          <ellipse class="scene-megaphone__rim" cx="482" cy="180" rx="46" ry="99" transform="rotate(-10 482 180)" />
+          <ellipse class="scene-megaphone__mouth" cx="478" cy="180" rx="31" ry="77" transform="rotate(-10 478 180)" />
+          <path class="scene-megaphone__handle" d="M246 224 L300 232 L273 360 Q269 378 251 376 L218 372 Q204 369 210 352 Z" />
+          <path class="scene-megaphone__trigger" d="M250 246 L284 252 L276 278 L242 272 Z" />
+        </g>
+        <g class="scene-megaphone__hand" filter="url(#monoJobsMegaphoneShadow)">
+          <path class="scene-megaphone__sleeve" d="M113 388 L198 338 L250 409 L153 457 L93 457 Z" />
+          <path class="scene-megaphone__skin" d="M189 329 Q210 300 232 297 L273 302 Q286 304 286 316 Q285 328 270 329 L244 328 L273 344 Q285 351 279 362 Q273 372 260 367 L231 351 L251 369 Q261 379 251 388 Q242 397 231 387 L205 363 L218 381 Q225 393 214 400 Q203 406 194 394 L163 354 Q156 342 166 334 Z" />
+          <path class="scene-megaphone__cuff" d="M143 360 L188 335 L218 381 L174 408 Z" />
+        </g>
+      </svg>`,
     convivium: `
       <svg class="scene-thread" viewBox="0 0 520 280" focusable="false" aria-hidden="true">
         <path d="M34 188 C90 72 144 214 208 116 C270 22 314 218 382 118 C424 58 460 74 492 52" />
