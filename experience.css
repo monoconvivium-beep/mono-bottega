@@ -720,6 +720,9 @@
 .mono-page-scene--jobs {
   aspect-ratio: 1.22;
   filter: none;
+  opacity: 0.88;
+  transform: translate3d(var(--scene-x), calc(-50% + var(--scene-y)), 0) scale(1);
+  transition: none;
   width: min(37vw, 540px);
 }
 
@@ -740,19 +743,10 @@
   fill: none;
   stroke: var(--mono-olive);
   stroke-dasharray: 78;
-  stroke-dashoffset: 78;
+  stroke-dashoffset: 0;
   stroke-linecap: round;
   stroke-width: 8;
-  transition: stroke-dashoffset 900ms var(--mono-ease-out) 520ms;
 }
-
-.is-scene-awake .scene-megaphone__sound path {
-  stroke-dashoffset: 0;
-}
-
-.scene-megaphone__sound path:nth-child(2) { transition-delay: 620ms; }
-.scene-megaphone__sound path:nth-child(3) { transition-delay: 720ms; }
-.scene-megaphone__sound path:nth-child(4) { transition-delay: 820ms; }
 
 .scene-megaphone__rear {
   fill: url(#monoJobsMegaphoneBody);
@@ -1604,6 +1598,11 @@
 
   .page-hero.is-scene-awake .mono-page-scene,
   .convivium-page .hero.is-scene-awake .mono-page-scene {
+    opacity: 0.58;
+    transform: translate3d(-50%, 0, 0) scale(1);
+  }
+
+  .mono-page-scene--jobs {
     opacity: 0.58;
     transform: translate3d(-50%, 0, 0) scale(1);
   }
