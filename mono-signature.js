@@ -78,6 +78,11 @@
     }
 
     inferLabel(target) {
+      const cinematicControl = target?.closest?.(
+        "[data-cinematic-state], [data-cinematic-skip], [data-cinematic-replay]"
+      );
+      if (cinematicControl) return "";
+
       const interactive = target?.closest?.("[data-cursor-label], [data-cinematic-state], a, button");
       if (!interactive) return "";
       if (interactive.dataset.cursorLabel) return interactive.dataset.cursorLabel.slice(0, 10).toUpperCase();
@@ -156,10 +161,6 @@
       });
       document.addEventListener("pointerdown", () => this.overlay.classList.add("is-pressed"), { passive: true });
       document.addEventListener("pointerup", () => this.overlay.classList.remove("is-pressed"), { passive: true });
-      document.addEventListener("mono:cinematic-state", (event) => {
-        const state = event.detail?.state;
-        event.target.dataset.cursorLabel = state === "playing" ? "SALTA" : state === "complete" ? "RIVEDI" : "GUARDA";
-      });
       document.addEventListener("visibilitychange", () => {
         if (document.hidden) {
           this.running = false;
@@ -260,8 +261,6 @@
   }
 
   const setupCursorLabels = () => {
-    document.querySelectorAll("[data-cinematic-skip]").forEach((element) => { element.dataset.cursorLabel = "SALTA"; });
-    document.querySelectorAll("[data-cinematic-replay]").forEach((element) => { element.dataset.cursorLabel = "RIVEDI"; });
     document.querySelectorAll('.nav a').forEach((element) => { element.dataset.cursorLabel = "ENTRA"; });
     document.querySelectorAll('a[href^="mailto:"]').forEach((element) => { element.dataset.cursorLabel = "SCRIVI"; });
     document.querySelectorAll('a[href*="google.com/maps"]').forEach((element) => { element.dataset.cursorLabel = "PORTAMI"; });
@@ -277,7 +276,7 @@
   }
 
   window.MONOSignature = Object.freeze({
-    version: "20260714-engineering-master-v1",
+    version: "20260715-cinematic-cleanup-v1",
     oilAlive: runtime.flags.oilAlive,
     monoDrop: Boolean(window.MONODrop)
   });

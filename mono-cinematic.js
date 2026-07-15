@@ -93,7 +93,6 @@
       skip.className = "cinematic-film__control cinematic-film__skip";
       skip.type = "button";
       skip.dataset.cinematicSkip = "";
-      skip.dataset.cursorLabel = "SALTA";
       skip.setAttribute("aria-label", "Salta il video");
       skip.textContent = "Salta";
       skip.hidden = true;
@@ -106,7 +105,6 @@
       replay.className = "cinematic-film__control cinematic-film__replay";
       replay.type = "button";
       replay.dataset.cinematicReplay = "";
-      replay.dataset.cursorLabel = "RIVEDI";
       replay.setAttribute("aria-label", "Rivedi il video");
       replay.textContent = "Rivedi";
       replay.hidden = true;
@@ -162,7 +160,6 @@
         chrome.replay.hidden = !(state === "complete" || state === "poster");
         const firstManualPlay = state === "poster" && !hasFinished;
         chrome.replay.textContent = firstManualPlay ? "Guarda" : "Rivedi";
-        chrome.replay.dataset.cursorLabel = firstManualPlay ? "GUARDA" : "RIVEDI";
         chrome.replay.setAttribute("aria-label", firstManualPlay ? "Guarda il video" : "Rivedi il video");
       }
       dispatchState(film, asset, state);
@@ -315,7 +312,6 @@
       if (chrome.replay) {
         chrome.replay.hidden = !(state === "complete" || state === "poster");
         chrome.replay.textContent = state === "poster" && !finished ? "Guarda" : "Rivedi";
-        chrome.replay.dataset.cursorLabel = state === "poster" && !finished ? "GUARDA" : "RIVEDI";
       }
       dispatchState(hero, asset, state);
     };
