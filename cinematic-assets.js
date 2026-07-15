@@ -122,6 +122,7 @@
     replay: true,
     visibilityThreshold: 0.35,
     ...badgeDefaults,
+    badge: false,
     safeTextArea: "outside-video",
     preferredTextSide: "outside-video",
     focalPoint: "52% 58%",
@@ -134,8 +135,8 @@
     decorative: true,
     status: "approved",
     implementationStatus: "integrated-play-once",
-    attribution: "Simbolo a stella incorporato nel master, non alterato; configurazione badge predisposta.",
-    notes: "Play once, Salta, Rivedi e memoria di sessione gestiti dal componente cinematico condiviso."
+    attribution: "Simbolo a stella incorporato nel master, non alterato.",
+    notes: "Play once, Salta, Rivedi e memoria di sessione gestiti dal componente cinematico condiviso; nessun badge sovrapposto."
   });
 
   const handsTeam = createAsset({

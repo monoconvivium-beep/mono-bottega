@@ -30,7 +30,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="mono-colors.css?v=20260714-shared-colors-v1">
-    <link rel="stylesheet" href="styles.css?v=20260714-shared-colors-v1">
+    <link rel="stylesheet" href="styles.css?v=20260715-qr-lightbox-v1">
 <link rel="stylesheet" href="experience.css?v=20260715-table-hotspots-v1">
 <link rel="stylesheet" href="mono-engineering.css?v=20260715-table-hotspots-v1">
     <script type="application/ld+json">
@@ -384,10 +384,10 @@
             </div>
               <a class="button ghost" data-track="app_gateway_info" href="https://app.monobottega.it/home" target="_blank" rel="noopener">Scopri come funziona</a>
           </div>
-          <div class="app-qr" aria-label="QR code app MONO">
+          <button class="app-qr" type="button" data-qr-open aria-haspopup="dialog" aria-controls="appQrDialog">
             <img src="assets/app/mono-app-qr.svg" alt="QR code per aprire l'app MONO">
-            <span>Inquadra e scarica MONO sul telefono.</span>
-          </div>
+            <span>Clicca per ingrandire e inquadrare.</span>
+          </button>
         </div>
             <a class="phone-card" data-reveal data-track="app_phone_card" href="https://app.monobottega.it/home" target="_blank" rel="noopener" aria-label="Apri l'app MONO">
           <span class="phone-pill">MONO</span>
@@ -395,6 +395,17 @@
           <small>Wallet · vantaggi · caffè sospeso</small>
         </a>
       </section>
+
+      <dialog class="app-qr-dialog" id="appQrDialog" data-qr-dialog aria-labelledby="appQrDialogTitle">
+        <div class="app-qr-dialog__panel">
+          <button class="app-qr-dialog__close" type="button" data-qr-close aria-label="Chiudi QR code">×</button>
+          <span class="app-qr-dialog__brand">App MONO</span>
+          <h2 id="appQrDialogTitle">Porta MONO sul telefono.</h2>
+          <p>Inquadra il QR code. Oppure fai uno screenshot dal PC e aprilo sul telefono.</p>
+          <img class="app-qr-dialog__image" src="assets/app/mono-app-qr.svg" alt="QR code ingrandito per aprire l'app MONO">
+          <a class="button primary" data-track="app_qr_dialog_open_app" href="https://app.monobottega.it/home" target="_blank" rel="noopener">Apri l'app MONO</a>
+        </div>
+      </dialog>
 
       <section class="local-info-section" id="dove-siamo" data-reveal>
         <div class="section-heading">
@@ -512,7 +523,7 @@
 <script src="mono-cinematic.js?v=20260715-cinematic-cleanup-v1"></script>
     <script src="mono-navigation.js?v=20260714-engineering-master-v1"></script>
     <script src="mono-signature.js?v=20260715-cinematic-cleanup-v1"></script>
-    <script src="app.js?v=20260714-engineering-master-v1"></script>
+    <script src="app.js?v=20260715-qr-lightbox-v1"></script>
 <script src="experience.js?v=20260714-shared-colors-v1"></script>
   </body>
 </html>

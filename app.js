@@ -129,6 +129,50 @@ function setupAppLinks() {
   });
 }
 
+function setupQrDialog() {
+  const trigger = document.querySelector("[data-qr-open]");
+  const dialog = document.querySelector("[data-qr-dialog]");
+  const closeButton = dialog?.querySelector("[data-qr-close]");
+
+  if (!(trigger instanceof HTMLButtonElement) || !(dialog instanceof HTMLElement) || !(closeButton instanceof HTMLButtonElement)) {
+    return;
+  }
+
+  const openDialog = () => {
+    if (typeof dialog.showModal === "function") {
+      dialog.showModal();
+    } else {
+      dialog.setAttribute("open", "");
+    }
+
+    document.body.classList.add("qr-dialog-open");
+    closeButton.focus();
+    emitTrackingEvent("app_qr_enlarge", trigger);
+  };
+
+  const closeDialog = () => {
+    if (typeof dialog.close === "function") {
+      dialog.close();
+    } else {
+      dialog.removeAttribute("open");
+      document.body.classList.remove("qr-dialog-open");
+      trigger.focus();
+    }
+  };
+
+  trigger.addEventListener("click", openDialog);
+  closeButton.addEventListener("click", closeDialog);
+  dialog.addEventListener("click", (event) => {
+    if (event.target === dialog) {
+      closeDialog();
+    }
+  });
+  dialog.addEventListener("close", () => {
+    document.body.classList.remove("qr-dialog-open");
+    trigger.focus();
+  });
+}
+
 function setupNewsletterForms() {
   document.querySelectorAll("[data-newsletter-form]").forEach((form) => {
     const emailInput = form.querySelector('input[type="email"]');
@@ -522,5 +566,6 @@ setupCinematicHero();
 setupReveals();
 setupAnalytics();
 setupAppLinks();
+setupQrDialog();
 setupNewsletterForms();
 setupTracking();
