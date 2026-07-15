@@ -161,6 +161,43 @@
   --page-glow-secondary: rgb(var(--mono-olive-rgb) / 0.18);
 }
 
+.gastronomia-page .page-hero {
+  padding-right: clamp(24px, 50vw, 960px);
+}
+
+.gastronomia-page .gastronomia-hero-logo {
+  display: block;
+  height: auto;
+  margin: clamp(16px, 2vw, 26px) 0 clamp(18px, 2.2vw, 30px);
+  width: clamp(160px, 13vw, 230px);
+}
+
+.gastronomia-page .page-hero .gastronomia-hero-title {
+  font-size: clamp(50px, 5.15vw, 84px);
+  max-width: 940px;
+}
+
+.gastronomia-page .page-hero .gastronomia-hero-title > span {
+  display: block;
+}
+
+.gastronomia-page .page-hero .gastronomia-hero-title > span + span {
+  margin-left: 0;
+}
+
+.gastronomia-page .page-hero .gastronomia-hero-payoff {
+  color: var(--mono-anthracite);
+  font-family: "Libre Baskerville", Baskerville, Georgia, serif;
+  font-size: clamp(21px, 1.65vw, 28px);
+  line-height: 1.35;
+  margin-bottom: 14px;
+  max-width: 760px;
+}
+
+.gastronomia-page .page-hero .gastronomia-hero-description {
+  max-width: 64ch;
+}
+
 .pasticceria-page {
   --page-accent: var(--mono-page-pastry-accent);
   --page-glow: rgb(var(--mono-coral-rgb) / 0.2);
@@ -1556,6 +1593,10 @@
     padding-right: clamp(24px, 34vw, 420px);
   }
 
+  .gastronomia-page .page-hero {
+    padding-right: 50vw;
+  }
+
   .mono-page-scene {
     opacity: 0.64;
     right: 2vw;
@@ -1590,6 +1631,19 @@
 
   .gastronomia-page .page-hero {
     padding-bottom: clamp(310px, 58vw, 460px);
+  }
+
+  .gastronomia-page .gastronomia-hero-logo {
+    margin-bottom: 18px;
+    width: clamp(140px, 34vw, 190px);
+  }
+
+  .gastronomia-page .page-hero .gastronomia-hero-title {
+    font-size: clamp(38px, 10vw, 54px);
+  }
+
+  .gastronomia-page .page-hero .gastronomia-hero-payoff {
+    font-size: clamp(19px, 5.2vw, 24px);
   }
 
   .mono-world .page-hero h1 {
@@ -1749,6 +1803,10 @@
 
   .gastronomia-page .page-hero {
     padding-bottom: 300px;
+  }
+
+  .gastronomia-page .page-hero .gastronomia-hero-title {
+    font-size: clamp(36px, 10.4vw, 48px);
   }
 
   .mono-world .page-hero h1 {
