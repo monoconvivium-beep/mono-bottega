@@ -9,7 +9,9 @@
     const sources = [];
     if (config.desktopWebm) sources.push({ src: config.desktopWebm, type: "video/webm" });
     if (config.desktopMp4) sources.push({ src: config.desktopMp4, type: "video/mp4" });
-    return Object.freeze({ ...config, sources: freezeList(sources) });
+    const audioSources = [];
+    if (config.master && config.masterAudio) audioSources.push({ src: config.master, type: "video/mp4" });
+    return Object.freeze({ ...config, sources: freezeList(sources), audioSources: freezeList(audioSources) });
   };
 
   const badgeDefaults = Object.freeze({
@@ -50,12 +52,14 @@
     chapterDuration: 20.01,
     fps: 24,
     codec: Object.freeze({ masterVideo: "h264", masterAudio: "aac", desktopWebm: "vp9", desktopMp4: "h264", pixelFormat: "yuv420p" }),
-    audio: false,
+    audio: true,
     masterAudio: true,
     companion: Object.freeze({
       role: "ravioli-cut",
       originalSourceName: "VIDEO AGNOLOTTI.mp4",
       master: assetUrl("assets/cinematic/source/mono-01-ravioli-cut-master.mp4"),
+      audio: true,
+      masterAudio: true,
       desktopWebm: assetUrl("assets/cinematic/web/mono-01-ravioli-cut-desktop.webm"),
       desktopMp4: assetUrl("assets/cinematic/web/mono-01-ravioli-cut-desktop.mp4"),
       posterWebp: assetUrl("assets/cinematic/web/mono-01-ravioli-cut-poster.webp"),
@@ -112,7 +116,7 @@
     duration: 10.005,
     fps: 24,
     codec: Object.freeze({ masterVideo: "h264", masterAudio: "aac", desktopWebm: "vp9", desktopMp4: "h264", pixelFormat: "yuv420p" }),
-    audio: false,
+    audio: true,
     masterAudio: true,
     playback: "once",
     playbackMode: "once",
@@ -162,7 +166,7 @@
     duration: 10.005,
     fps: 24,
     codec: Object.freeze({ masterVideo: "h264", masterAudio: "aac", desktopWebm: "vp9", desktopMp4: "h264", pixelFormat: "yuv420p" }),
-    audio: false,
+    audio: true,
     masterAudio: true,
     playback: "once",
     playbackMode: "once",
@@ -239,7 +243,7 @@
   });
 
   window.MONOCinematicAssets = Object.freeze({
-    version: "20260714-cinematic-bible-v1",
+    version: "20260715-cinematic-audio-v1",
     badgeDefaults,
     byId: Object.freeze({
       [fireRavioli.id]: fireRavioli,

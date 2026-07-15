@@ -9,6 +9,10 @@
     saveData: Boolean(navigator.connection?.saveData),
     flags: { cinematicAutoplay: true, videoBadges: true }
   };
+  const AUDIO_STORAGE_KEY = "mono-video-sound";
+  const AUDIO_VOLUME = 0.44;
+  const audioVideos = new Set();
+  const audioControls = new Set();
 
   const track = (action, element) => {
     if (typeof window.MONOTrackEvent === "function") {
@@ -35,8 +39,55 @@
     }));
   };
 
-  const setSources = (video, sources) => {
-    if (!video || video.dataset.sourcesAttached === "true") return;
+  const readAudioPreference = () => {
+    try {
+      const value = window.sessionStorage.getItem(AUDIO_STORAGE_KEY);
+      return value === "on" || value === "off" ? value : "auto";
+    } catch (error) {
+      return "auto";
+    }
+  };
+
+  const writeAudioPreference = (value) => {
+    try {
+      window.sessionStorage.setItem(AUDIO_STORAGE_KEY, value);
+    } catch (error) {
+      document.documentElement.dataset.audioStorage = "unavailable";
+    }
+  };
+
+  const setVideoMuted = (video, muted) => {
+    if (!video) return;
+    video.muted = muted;
+    video.defaultMuted = muted;
+    if (!muted) video.volume = AUDIO_VOLUME;
+  };
+
+  const updateAudioButton = (button, video) => {
+    if (!button || !video) return;
+    const enabled = video.dataset.hasAudio === "true" && !video.muted;
+    const label = enabled ? "Disattiva audio" : "Attiva audio";
+    button.dataset.audioState = enabled ? "on" : "off";
+    button.setAttribute("aria-pressed", String(enabled));
+    button.setAttribute("aria-label", label);
+    const labelElement = button.querySelector("[data-cinematic-audio-label]");
+    if (labelElement) labelElement.textContent = label;
+  };
+
+  const syncAudioControls = () => {
+    audioControls.forEach((control) => updateAudioButton(control.button, control.getVideo()));
+  };
+
+  const muteOtherVideos = (activeVideo) => {
+    audioVideos.forEach((video) => {
+      if (video !== activeVideo) setVideoMuted(video, true);
+    });
+  };
+
+  const setSources = (video, sources, hasAudio = false) => {
+    if (!video) return;
+    const signature = sources.filter((source) => source?.src).map((source) => `${source.type || ""}:${source.src}`).join("|");
+    if (video.dataset.sourceSignature === signature) return;
     video.querySelectorAll("source").forEach((source) => source.remove());
     sources.filter((source) => source?.src).forEach((sourceData) => {
       const source = document.createElement("source");
@@ -44,7 +95,9 @@
       source.type = sourceData.type;
       video.append(source);
     });
-    video.dataset.sourcesAttached = "true";
+    video.dataset.sourceSignature = signature;
+    video.dataset.hasAudio = String(Boolean(hasAudio));
+    if (hasAudio) audioVideos.add(video);
     try {
       video.load();
     } catch (error) {
@@ -52,12 +105,57 @@
     }
   };
 
-  const safePlay = (video) => {
-    if (!video) return Promise.resolve(false);
-    video.muted = true;
-    video.defaultMuted = true;
-    const playPromise = video.play();
-    return playPromise?.then(() => true).catch(() => false) || Promise.resolve(true);
+  const safePlay = async (video, { preferSound = true } = {}) => {
+    if (!video) return false;
+    const hasAudio = video.dataset.hasAudio === "true";
+    const wantsSound = hasAudio && preferSound && readAudioPreference() !== "off";
+
+    if (wantsSound) {
+      muteOtherVideos(video);
+      setVideoMuted(video, false);
+      try {
+        await video.play();
+        syncAudioControls();
+        return true;
+      } catch (error) {
+        video.dataset.audioAutoplay = "blocked";
+      }
+    }
+
+    setVideoMuted(video, true);
+    try {
+      await video.play();
+      syncAudioControls();
+      return true;
+    } catch (error) {
+      syncAudioControls();
+      return false;
+    }
+  };
+
+  const bindAudioControl = (button, getVideo, owner, prepare = () => {}) => {
+    if (!button) return;
+    const control = { button, getVideo };
+    audioControls.add(control);
+    button.addEventListener("click", async () => {
+      const video = getVideo();
+      if (!video) return;
+      prepare(video);
+      const enable = video.muted || readAudioPreference() === "off";
+      writeAudioPreference(enable ? "on" : "off");
+      if (enable) {
+        video.dataset.audioAutoplay = "user-enabled";
+        await safePlay(video, { preferSound: true });
+      } else {
+        setVideoMuted(video, true);
+        syncAudioControls();
+      }
+      window.dispatchEvent(new CustomEvent("mono:audio-preference", {
+        detail: { enabled, assetId: owner?.dataset?.assetId || "home" }
+      }));
+      track(enable ? "video_audio_on" : "video_audio_off", owner || button);
+    });
+    updateAudioButton(button, getVideo());
   };
 
   const ensureFilmChrome = (film, asset) => {
@@ -111,7 +209,20 @@
       film.append(replay);
     }
 
-    return { badge, skip, replay };
+    let audio = film.querySelector("[data-cinematic-audio]");
+    if (asset.audio && asset.masterAudio && !audio) {
+      audio = document.createElement("button");
+      audio.className = "cinematic-film__control cinematic-film__audio";
+      audio.type = "button";
+      audio.dataset.cinematicAudio = "";
+      audio.dataset.audioState = "off";
+      audio.setAttribute("aria-pressed", "false");
+      audio.setAttribute("aria-label", "Attiva audio");
+      audio.innerHTML = '<svg class="cinematic-film__audio-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Z" fill="currentColor"/><path class="cinematic-audio-waves" d="M16 8.5c1.3 1.7 1.3 5.3 0 7M19 6c2.8 3.2 2.8 8.8 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path class="cinematic-audio-muted" d="m16 9 5 6m0-6-5 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span data-cinematic-audio-label>Attiva audio</span>';
+      film.append(audio);
+    }
+
+    return { badge, skip, replay, audio };
   };
 
   const mountFilm = (film) => {
@@ -127,6 +238,8 @@
     const playOnce = (asset.playbackMode || asset.playback) === "once";
     const motionLimited = runtime.reducedMotion || runtime.saveData || !runtime.flags.cinematicAutoplay;
     const threshold = Math.min(0.9, Math.max(0.05, Number(asset.visibilityThreshold) || 0.35));
+    const playbackSources = asset.audioSources?.length ? asset.audioSources : asset.sources || [];
+    const hasAudio = Boolean(asset.audio && asset.masterAudio && asset.audioSources?.length);
     let hasFinished = readSeen(asset);
     let isVisible = false;
     let manual = false;
@@ -143,14 +256,14 @@
     video.autoplay = false;
     video.loop = false;
     video.controls = false;
-    video.muted = true;
-    video.defaultMuted = true;
+    setVideoMuted(video, true);
+    video.dataset.hasAudio = String(hasAudio);
+    if (hasAudio) audioVideos.add(video);
     video.playsInline = true;
     video.preload = "none";
     film.style.setProperty("--film-aspect-ratio", asset.aspectRatio || "16 / 9");
     film.style.setProperty("--cinematic-object-fit", asset.objectFit || "cover");
     film.style.setProperty("--cinematic-object-position", asset.objectPosition || "center center");
-
     const sync = (state) => {
       film.classList.toggle("is-playing", state === "playing");
       film.classList.toggle("is-complete", state === "complete");
@@ -165,7 +278,8 @@
       dispatchState(film, asset, state);
     };
 
-    const attach = () => setSources(video, asset.sources || []);
+    const attach = () => setSources(video, playbackSources, hasAudio);
+    if (chrome.audio) bindAudioControl(chrome.audio, () => video, film, attach);
     const finish = (reason, remember = true) => {
       hasFinished = true;
       video.pause();
@@ -182,7 +296,7 @@
       if (userInitiated && video.readyState < 1) {
         await new Promise((resolve) => video.addEventListener("loadedmetadata", resolve, { once: true }));
       }
-      const didPlay = await safePlay(video);
+      const didPlay = await safePlay(video, { preferSound: true });
       if (!didPlay) sync("poster");
     };
     const replay = () => {
@@ -268,11 +382,15 @@
     const pauseButton = hero.querySelector("[data-cinema-pause]");
     if (!trackElement || !stage || !fireVideo || !pastaVideo) return;
 
-    const fireSources = asset.sources || [];
-    const pastaSources = [
-      { src: asset.companion?.desktopWebm, type: "video/webm" },
-      { src: asset.companion?.desktopMp4, type: "video/mp4" }
-    ];
+    const fireSources = asset.audioSources?.length ? asset.audioSources : asset.sources || [];
+    const pastaSources = asset.companion?.master && asset.companion?.masterAudio
+      ? [{ src: asset.companion.master, type: "video/mp4" }]
+      : [
+          { src: asset.companion?.desktopWebm, type: "video/webm" },
+          { src: asset.companion?.desktopMp4, type: "video/mp4" }
+        ];
+    const fireHasAudio = Boolean(asset.audio && asset.masterAudio && asset.audioSources?.length);
+    const pastaHasAudio = Boolean(asset.companion?.audio && asset.companion?.masterAudio && asset.companion?.master);
     const motionLimited = runtime.reducedMotion || runtime.saveData || !runtime.flags.cinematicAutoplay;
     const mobile = window.matchMedia("(max-width: 820px)");
     const chrome = ensureFilmChrome(hero, asset);
@@ -292,8 +410,12 @@
     pastaVideo.loop = false;
     fireVideo.preload = "none";
     pastaVideo.preload = "none";
-    fireVideo.muted = pastaVideo.muted = true;
-    fireVideo.defaultMuted = pastaVideo.defaultMuted = true;
+    setVideoMuted(fireVideo, true);
+    setVideoMuted(pastaVideo, true);
+    fireVideo.dataset.hasAudio = String(fireHasAudio);
+    pastaVideo.dataset.hasAudio = String(pastaHasAudio);
+    if (fireHasAudio) audioVideos.add(fireVideo);
+    if (pastaHasAudio) audioVideos.add(pastaVideo);
     fireVideo.playsInline = pastaVideo.playsInline = true;
 
     if (chrome.badge) {
@@ -302,9 +424,16 @@
     }
     const controlWrap = document.createElement("div");
     controlWrap.className = "cinema-cinematic-controls";
+    if (chrome.audio) controlWrap.append(chrome.audio);
     if (chrome.skip) controlWrap.append(chrome.skip);
     if (chrome.replay) controlWrap.append(chrome.replay);
     hero.querySelector(".cinema-sticky")?.append(controlWrap);
+    if (chrome.audio) {
+      bindAudioControl(chrome.audio, () => transitioned ? pastaVideo : fireVideo, hero, () => {
+        if (transitioned) setSources(pastaVideo, pastaSources, pastaHasAudio);
+        else setSources(fireVideo, fireSources, fireHasAudio);
+      });
+    }
 
     const sync = (state) => {
       hero.dataset.cinematicState = state;
@@ -341,15 +470,16 @@
     const transitionToPasta = async () => {
       if (transitioned || finished) return;
       transitioned = true;
-      setSources(pastaVideo, pastaSources);
+      setSources(pastaVideo, pastaSources, pastaHasAudio);
       fireVideo.pause();
       hero.classList.add("is-transitioned", "pasta-ready");
       setStage("t");
       try { pastaVideo.currentTime = 0; } catch (error) { pastaVideo.dataset.mediaError = "seek"; }
       if (!paused) {
-        const didPlay = await safePlay(pastaVideo);
+        const didPlay = await safePlay(pastaVideo, { preferSound: true });
         if (!didPlay) sync("poster");
       }
+      syncAudioControls();
     };
     const start = async ({ userInitiated = false } = {}) => {
       if (!active && !userInitiated) return;
@@ -362,12 +492,12 @@
       started = true;
       finished = false;
       writeSeen(asset, false);
-      setSources(fireVideo, fireSources);
+      setSources(fireVideo, fireSources, fireHasAudio);
       hero.classList.remove("is-transitioned");
       transitioned = false;
       setStage("1");
       try { fireVideo.currentTime = 0; } catch (error) { fireVideo.dataset.mediaError = "seek"; }
-      const didPlay = await safePlay(fireVideo);
+      const didPlay = await safePlay(fireVideo, { preferSound: true });
       if (!didPlay) sync("poster");
       if (mobile.matches) {
         window.clearTimeout(mobileTimer);
@@ -472,7 +602,7 @@
   };
 
   window.MONOCinematicController = Object.freeze({
-    version: "20260714-engineering-master-v1",
+    version: "20260715-cinematic-audio-v1",
     controlsHome: true,
     mountFilm,
     mountAll,

@@ -339,6 +339,11 @@ html[data-mono-time="evening"] .mono-world {
   left: 16%;
 }
 
+.chapter-film .cinematic-film__audio {
+  left: 16%;
+  top: 16%;
+}
+
 .chapter-film.is-complete video,
 .chapter-film.is-poster-only video,
 .cinematic-film.is-complete video,
@@ -714,6 +719,11 @@ html[data-mono-quality="static"] .mono-oil-surface {
   .chapter-film .cinematic-film__replay {
     bottom: 12%;
     left: 12%;
+  }
+
+  .chapter-film .cinematic-film__audio {
+    left: 12%;
+    top: 12%;
   }
 }
 
