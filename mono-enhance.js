@@ -5,7 +5,7 @@
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (!fine || reduce) return;
 
-  var MAX = 7; // gradi: sobrio, elegante (non giocattolo)
+  var MAX = 11; // gradi: vivo ma non giocattolo (dal prototipo approvato)
 
   function bind(card) {
     card.addEventListener("pointermove", function (e) {
@@ -16,7 +16,7 @@
       var ry = (px - 0.5) * MAX;
       card.style.transform =
         "perspective(900px) rotateX(" + rx.toFixed(2) + "deg) rotateY(" +
-        ry.toFixed(2) + "deg) translateY(-8px) scale(1.012)";
+        ry.toFixed(2) + "deg) translateY(-10px) scale(1.02)";
     });
     card.addEventListener("pointerleave", function () {
       card.style.transform = "";
@@ -111,7 +111,7 @@
       stage.className = "mono-embers-stage";
       stage.setAttribute("aria-hidden", "true");
       document.body.insertBefore(stage, document.body.firstChild);
-      hosts.push({ el: stage, hero: true });
+      hosts.push({ el: stage, stage: true });
     } else {
       document.querySelectorAll(".product-system").forEach(function (s) { hosts.push({ el: s, hero: true }); });
     }
@@ -125,8 +125,95 @@
       canvas.setAttribute("aria-hidden", "true");
       canvas.style.cssText = "position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;";
       host.insertBefore(canvas, host.firstChild);
-      run(canvas, host, h.hero);
+      if (h.stage) run3d(canvas, host);
+      else run(canvas, host, h.hero);
     });
+  }
+
+  /* Motore 3D per lo stage a tutta pagina: profondità vera.
+     Parallasse col mouse (la telecamera si guarda intorno) e
+     scroll = camminata (le braci ti vengono incontro). */
+  function run3d(canvas, host) {
+    var ctx = canvas.getContext("2d");
+    var DPR = Math.min(window.devicePixelRatio || 1, 2);
+    var W = 1, H = 1, tick = 0, DEPTH = 1400, FOCAL = 520 * DPR;
+    function size() {
+      var r = host.getBoundingClientRect();
+      W = canvas.width = Math.max(1, Math.round(r.width * DPR));
+      H = canvas.height = Math.max(1, Math.round(r.height * DPR));
+    }
+    size();
+    window.addEventListener("resize", size);
+
+    var N = window.innerWidth < 640 ? 110 : 170, pts = [];
+    function mk() {
+      var spark = Math.random() < 0.12;
+      var high = spark || Math.random() < 0.26;
+      var birthY = 430 + Math.random() * 520;
+      var rise = high ? (1500 + Math.random() * 900) : (470 + Math.random() * 680);
+      return {
+        x: (Math.random() - 0.5) * 2400, y: birthY, birthY: birthY, endY: birthY - rise,
+        z: Math.random() * DEPTH,
+        vy: spark ? (1.9 + Math.random() * 2.6) : (0.5 + Math.random() * 1.5),
+        vx: (Math.random() - 0.5) * 0.5,
+        wob: Math.random() * 6.28, wobAmp: 4 + Math.random() * 10, wobSpd: 0.006 + Math.random() * 0.02,
+        rect: Math.random() < 0.42, rot: Math.random() * 6.28, rotSpd: (Math.random() - 0.5) * 0.05,
+        r: spark ? (0.5 + Math.random()) : (1 + Math.random() * 2.1),
+        br: 0.75 + Math.random() * 0.25, fl: Math.random() * 6.28, fs: 0.15 + Math.random() * 0.5
+      };
+    }
+    for (var i = 0; i < N; i++) { var q = mk(); q.y = q.birthY - Math.random() * (q.birthY - q.endY); pts.push(q); }
+
+    var mx = 0, my = 0, camx = 0, camy = 0, camz = 0;
+    window.addEventListener("mousemove", function (e) {
+      mx = e.clientX / window.innerWidth - 0.5;
+      my = e.clientY / window.innerHeight - 0.5;
+    }, { passive: true });
+
+    var visible = true;
+    if (window.IntersectionObserver) {
+      new IntersectionObserver(function (e) { visible = e[0].isIntersecting; }, { threshold: 0 }).observe(host);
+    }
+
+    function frame() {
+      tick++;
+      camx += (mx * 220 - camx) * 0.05;
+      camy += (my * 140 - camy) * 0.05;
+      camz += (window.scrollY * 1.1 - camz) * 0.06;
+      ctx.clearRect(0, 0, W, H);
+      ctx.globalCompositeOperation = "lighter";
+      var cxp = W / 2, cyp = H / 2;
+      for (var i = 0; i < pts.length; i++) {
+        var p = pts[i];
+        if (!reduce) { p.y -= p.vy; p.x += p.vx; p.wob += p.wobSpd; p.rot += p.rotSpd; }
+        var prog = (p.birthY - p.y) / (p.birthY - p.endY);
+        if (prog >= 1) { pts[i] = mk(); continue; }
+        var zr = p.z - (camz % DEPTH); if (zr <= 1) zr += DEPTH;
+        var k = FOCAL / zr;
+        var sx = cxp + (p.x + Math.sin(p.wob) * p.wobAmp - camx * DPR) * k;
+        var sy = cyp + (p.y - camy * DPR) * k;
+        if (sx < -60 || sx > W + 60 || sy < -60 || sy > H + 60) continue;
+        var depth = 1 - zr / DEPTH;
+        var glow = 0.3 + 0.7 * Math.sin(Math.max(0, Math.min(1, prog)) * Math.PI);
+        if (prog > 0.86) glow *= (1 - (prog - 0.86) / 0.14);
+        var fl = 0.86 + 0.14 * Math.sin(p.fl + tick * p.fs * 0.22);
+        var a = glow * fl * p.br * (0.4 + 0.6 * depth);
+        if (a <= 0.02) continue;
+        var c = fireCol(Math.max(0, Math.min(1, prog))), R = c[0] | 0, G = c[1] | 0, B = c[2] | 0;
+        var col = "rgba(" + R + "," + G + "," + B + ",";
+        var rr = Math.max(0.5, p.r * DPR * k);
+        ctx.beginPath(); ctx.arc(sx, sy, rr * 3.2, 0, 6.283); ctx.fillStyle = col + (a * 0.15).toFixed(3) + ")"; ctx.fill();
+        if (p.rect) {
+          ctx.save(); ctx.translate(sx, sy); ctx.rotate(p.rot);
+          ctx.fillStyle = col + Math.min(1, a).toFixed(3) + ")"; ctx.fillRect(-rr * 1.3, -rr * 0.5, rr * 2.6, rr); ctx.restore();
+        } else {
+          ctx.beginPath(); ctx.arc(sx, sy, rr, 0, 6.283); ctx.fillStyle = col + Math.min(1, a).toFixed(3) + ")"; ctx.fill();
+        }
+      }
+      ctx.globalCompositeOperation = "source-over";
+    }
+    function loop() { requestAnimationFrame(loop); if (visible && !reduce) frame(); }
+    if (reduce) frame(); else loop();
   }
 
   function run(canvas, host, hero) {

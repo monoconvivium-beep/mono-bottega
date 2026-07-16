@@ -1,10 +1,12 @@
 /* ============================================================
-   MONO — HOME NOTTURNA (prova, 2026-07-16).
-   Attiva SOLO con <body class="... mono-dark-home"> su index.html.
-   ROLLBACK: togliere la classe dal body + il <link> a questo file.
-   Principio (dal prototipo approvato): mondo scuro, testi crema,
-   accenti oro, header terracotta col logo originale, card crema
-   con testo scuro (il cibo e i contenuti restano "appetitosi").
+   MONO — MONDO NOTTURNO (site-wide, 2026-07-16).
+   Attivo su ogni pagina con <body class="... mono-dark-home">.
+   ROLLBACK: togliere la classe dai body + i <link> a questo file.
+   Principio (dal prototipo approvato): notte, testi crema, accenti
+   ORO, header terracotta col logo originale, card crema col testo
+   scuro (contenuti e cibo restano leggibili e appetitosi).
+   Ordine del file: mondo → header → sezioni → testi (larghi) →
+   accenti → IMMUNIZZAZIONI (per ultime: vincono a parità di peso).
    ============================================================ */
 
 /* ---------- mondo ---------- */
@@ -51,7 +53,9 @@ body.mono-dark-home .header-action {
   box-shadow: none;
 }
 
-/* ---------- sezioni chiare → notte ---------- */
+/* ---------- sezioni chiare → notte (tutto il sito) ---------- */
+body.mono-dark-home .page-hero,
+body.mono-dark-home .page-section,
 body.mono-dark-home .definition-section,
 body.mono-dark-home .value-section,
 body.mono-dark-home .convivium-feature,
@@ -65,52 +69,64 @@ body.mono-dark-home .opening-signup-section {
   color: var(--mono-cream);
 }
 
-/* ---------- testi di sezione → crema (cadenza dal prototipo) ---------- */
-body.mono-dark-home .definition-grid { color: rgba(244, 236, 221, 0.74); }
-body.mono-dark-home .section-heading p,
-body.mono-dark-home .page-section > p,
-body.mono-dark-home .definition-column p,
-body.mono-dark-home .app-gateway > p,
-body.mono-dark-home .convivium-feature p:not([class]) {
-  color: rgba(244, 236, 221, 0.74);
-}
-body.mono-dark-home .definition-section-title,
-body.mono-dark-home .section-heading h2,
-body.mono-dark-home .page-section h2,
-body.mono-dark-home .local-faq-section h2,
-body.mono-dark-home .app-gateway h2,
-body.mono-dark-home .convivium-feature h2,
-body.mono-dark-home .local-info-section h2 {
+/* ---------- testi → crema (regole larghe; le card vengono immunizzate sotto) ---------- */
+body.mono-dark-home main h1,
+body.mono-dark-home main h2,
+body.mono-dark-home main h3,
+body.mono-dark-home main h4 {
   color: var(--mono-cream);
 }
+body.mono-dark-home main p,
+body.mono-dark-home main li,
+body.mono-dark-home .definition-grid {
+  color: rgba(244, 236, 221, 0.74);
+}
 
-/* accenti dei titoli sul buio → ORO (non terracotta, che si spegne) */
+/* ---------- accenti: ORO sul buio (la terracotta si spegne) ---------- */
+body.mono-dark-home .eyebrow { color: var(--mono-champagne); margin-bottom: 18px; }
 body.mono-dark-home .definition-section-title span + span,
 body.mono-dark-home .definition-people-emphasis,
-body.mono-dark-home .section-heading h2 em,
-body.mono-dark-home .page-section h2 em {
+body.mono-dark-home main h1 em,
+body.mono-dark-home main h2 em,
+body.mono-dark-home .cinema-claim .soft {
   color: var(--mono-champagne);
 }
-body.mono-dark-home .eyebrow { color: var(--mono-champagne); }
-
-/* ---------- le card restano CREMA col testo scuro (come approvato) ---------- */
-body.mono-dark-home .page-card,
-body.mono-dark-home .local-info-card,
-body.mono-dark-home .phone-card {
-  color: var(--mono-anthracite);
-  box-shadow: 0 30px 70px -34px rgba(0, 0, 0, 0.85);
-}
-body.mono-dark-home .page-card h3,
-body.mono-dark-home .local-info-card h3 { color: var(--mono-anthracite); }
-body.mono-dark-home .page-card p,
-body.mono-dark-home .local-info-card p { color: rgba(38, 35, 33, 0.74); }
+body.mono-dark-home .section-heading h2,
+body.mono-dark-home .page-section h2,
+body.mono-dark-home .page-hero h1 { text-wrap: balance; }
 
 /* ---------- firma / signup ---------- */
 body.mono-dark-home .opening-signup strong { color: var(--mono-cream); }
 body.mono-dark-home .opening-signup small { color: rgba(244, 236, 221, 0.66); }
 body.mono-dark-home .signup-status { color: rgba(244, 236, 221, 0.8); }
 
-/* respiro tra eyebrow, titolo e testo (la "cadenza") */
-body.mono-dark-home .section-heading h2,
-body.mono-dark-home .page-section h2 { text-wrap: balance; }
-body.mono-dark-home .eyebrow { margin-bottom: 18px; }
+/* ============================================================
+   IMMUNIZZAZIONI (per ultime: a parità di specificità vincono).
+   Le card restano CREMA col testo scuro; QR e input restano chiari.
+   ============================================================ */
+body.mono-dark-home .page-card,
+body.mono-dark-home .local-info-card,
+body.mono-dark-home .phone-card,
+body.mono-dark-home .pdf-panel {
+  color: var(--mono-anthracite);
+  box-shadow: 0 30px 70px -34px rgba(0, 0, 0, 0.85);
+}
+body.mono-dark-home .page-card h2,
+body.mono-dark-home .page-card h3,
+body.mono-dark-home .page-card h4,
+body.mono-dark-home .local-info-card h3,
+body.mono-dark-home .phone-card h3,
+body.mono-dark-home .pdf-panel h3 {
+  color: var(--mono-anthracite);
+}
+body.mono-dark-home .page-card p,
+body.mono-dark-home .page-card li,
+body.mono-dark-home .local-info-card p,
+body.mono-dark-home .phone-card p,
+body.mono-dark-home .pdf-panel p {
+  color: rgba(38, 35, 33, 0.74);
+}
+body.mono-dark-home .page-card .eyebrow,
+body.mono-dark-home .local-info-card .eyebrow {
+  color: var(--mono-terracotta);
+}

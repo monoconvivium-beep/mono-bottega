@@ -27,7 +27,7 @@
    Qui solo la fluidità; l'hover-lift esistente resta come fallback senza JS. */
 @media (hover: hover) and (pointer: fine) {
   .page-card {
-    transition: transform 160ms ease-out, box-shadow 350ms ease, border-color 350ms ease;
+    transition: transform 110ms ease-out, box-shadow 350ms ease, border-color 350ms ease;
     will-change: transform;
   }
 }
