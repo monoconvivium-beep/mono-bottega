@@ -34,6 +34,57 @@
 })();
 
 /* ============================================================
+   SIPARIO "dal basso" per il cambio pagina (tutti i browser).
+   Uscita: sale il pannello, poi si naviga. Arrivo: l'inline script
+   in <head> ha già coperto la pagina (classe mono-curtain-cover);
+   qui la sveliamo facendo uscire il pannello verso l'alto.
+   ============================================================ */
+(function () {
+  var html = document.documentElement;
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function reveal() {
+    if (!html.classList.contains("mono-curtain-cover")) return;
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        html.classList.remove("mono-curtain-cover");
+        html.classList.add("mono-curtain-exit");
+        window.setTimeout(function () { html.classList.remove("mono-curtain-exit"); }, 720);
+      });
+    });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", reveal);
+  else reveal();
+
+  window.addEventListener("pageshow", function () {
+    html.classList.remove("mono-curtain-in");
+  });
+
+  if (reduce) return;
+
+  var leaving = false;
+  function norm(p) { return (p.replace(/index\.html$/, "").replace(/\/+$/, "") || "/"); }
+
+  document.addEventListener("click", function (e) {
+    if (leaving || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var link = e.target && e.target.closest ? e.target.closest("a[href]") : null;
+    if (!link || link.target || link.hasAttribute("download") || link.dataset.noPortal !== undefined) return;
+    var url;
+    try { url = new URL(link.href, window.location.href); } catch (err) { return; }
+    if (!/^https?:$/.test(url.protocol) || url.origin !== window.location.origin) return;
+    if (norm(url.pathname) === norm(window.location.pathname)) return; /* àncore e stessa pagina */
+
+    e.preventDefault();
+    if (e.stopImmediatePropagation) e.stopImmediatePropagation(); else e.stopPropagation();
+    leaving = true;
+    try { sessionStorage.setItem("monoCurtain", "1"); } catch (err) {}
+    html.classList.add("mono-curtain-in");
+    window.setTimeout(function () { window.location.assign(url.href); }, 430);
+    window.setTimeout(function () { leaving = false; html.classList.remove("mono-curtain-in"); }, 2600);
+  }, true);
+})();
+
+/* ============================================================
    BRACI DI FALÒ nei momenti scuri (hero + footer).
    Canvas decorativo (pointer-events:none), additivo. Modello:
    rosso in basso → oro a metà → baglioncino → si spegne; alcune

@@ -32,25 +32,38 @@
   }
 }
 
-/* Transizione pagina "dal basso" (come il prototipo approvato): la pagina
-   nuova SALE piena dal fondo e spinge via la vecchia, che scivola su e sfuma.
-   Usa le view-transition native (il portale-cerchio è disattivato via
-   MONO_EXPERIENCE_OVERRIDES). Attiva solo senza prefers-reduced-motion. */
-@media (prefers-reduced-motion: no-preference) {
-  @keyframes mono-rise-in {
-    from { transform: translateY(100%); }
-    to   { transform: translateY(0); }
-  }
-  @keyframes mono-rise-out {
-    to { opacity: 0; transform: translateY(-14%); }
-  }
-  ::view-transition-old(mono-main) {
-    animation: mono-rise-out 700ms cubic-bezier(0.5, 0.02, 0.2, 1) both;
-  }
-  ::view-transition-new(mono-main) {
-    animation: mono-rise-in 700ms cubic-bezier(0.5, 0.02, 0.2, 1) both;
-  }
+/* Transizione "dal basso" col SIPARIO (come il prototipo approvato).
+   Non dipende dalle view-transition del browser: funziona ovunque.
+   Click → il pannello scuro SALE a coprire la pagina; si naviga sotto
+   copertura; sulla pagina nuova il pannello ESCE verso l'alto rivelando
+   il contenuto dal basso. Gestito da mono-enhance.js + inline script. */
+@view-transition { navigation: none; }
+
+html.mono-curtain-in::before,
+html.mono-curtain-cover::before,
+html.mono-curtain-exit::before {
+  content: "";
+  position: fixed;
+  inset: -2vh 0;
+  z-index: 2147483000;
+  background: linear-gradient(180deg, #221b16, #150f0a);
+  pointer-events: none;
 }
+@keyframes mono-curtain-su  { from { transform: translateY(103%); } to { transform: translateY(0); } }
+@keyframes mono-curtain-via { from { transform: translateY(0); } to { transform: translateY(-103%); } }
+html.mono-curtain-in::before   { animation: mono-curtain-su 440ms cubic-bezier(0.5, 0.02, 0.2, 1) both; }
+html.mono-curtain-cover::before { transform: translateY(0); }
+html.mono-curtain-exit::before  { animation: mono-curtain-via 640ms cubic-bezier(0.6, 0.05, 0.2, 1) both; }
+
+/* la pagina vecchia viene "spinta" su mentre il sipario sale;
+   la nuova arriva con una leggera salita mentre il sipario esce */
+html.mono-curtain-in main {
+  transform: translateY(-26px);
+  opacity: 0.8;
+  transition: transform 440ms cubic-bezier(0.5, 0.02, 0.2, 1), opacity 440ms ease;
+}
+@keyframes mono-main-arriva { from { transform: translateY(34px); opacity: 0; } }
+html.mono-curtain-exit main { animation: mono-main-arriva 640ms cubic-bezier(0.2, 0.7, 0.2, 1) backwards; }
 
 /* Braci di falò (canvas montato via JS nelle sezioni scure: prodotti + footer).
    Il canvas sta a z0; il contenuto della sezione va sopra. */
