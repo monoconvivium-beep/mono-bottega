@@ -51,9 +51,10 @@
   }
 
   function mountEmbers() {
+    /* SOLO sezioni scure senza video: prodotti + footer.
+       MAI sull'hero (il video del fuoco basta a se stesso). */
     var hosts = [];
-    var sticky = document.querySelector(".cinema-hero .cinema-sticky");
-    if (sticky) hosts.push({ el: sticky, hero: true });
+    document.querySelectorAll(".product-system").forEach(function (s) { hosts.push({ el: s, hero: true }); });
     document.querySelectorAll(".site-footer").forEach(function (f) { hosts.push({ el: f, hero: false }); });
 
     hosts.forEach(function (h) {
@@ -62,7 +63,7 @@
       var canvas = document.createElement("canvas");
       canvas.className = "mono-embers";
       canvas.setAttribute("aria-hidden", "true");
-      canvas.style.cssText = "position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:" + (h.hero ? 3 : -1) + ";";
+      canvas.style.cssText = "position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;";
       host.insertBefore(canvas, host.firstChild);
       run(canvas, host, h.hero);
     });
