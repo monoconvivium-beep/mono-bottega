@@ -178,7 +178,7 @@ html[data-mono-time="evening"] .mono-world {
 .mono-next-chapter__index,
 .mono-next-chapter__eyebrow,
 .mono-next-chapter__gesture {
-  font-family: "Sora", sans-serif;
+  font-family: "Bricolage Grotesque", sans-serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -187,7 +187,7 @@ html[data-mono-time="evening"] .mono-world {
 
 .mono-next-chapter__previous strong {
   color: var(--mono-anthracite);
-  font-family: "Libre Baskerville", Georgia, serif;
+  font-family: "Fraunces", Georgia, serif;
   font-size: 20px;
 }
 
@@ -234,7 +234,7 @@ html[data-mono-time="evening"] .mono-world {
 }
 
 .mono-next-chapter__title {
-  font-family: "Libre Baskerville", Georgia, serif;
+  font-family: "Fraunces", Georgia, serif;
   font-size: clamp(54px, 7.2vw, 116px);
   letter-spacing: -0.045em;
   line-height: 0.94;
@@ -288,7 +288,7 @@ html[data-mono-time="evening"] .mono-world {
   border-radius: 50%;
   color: rgba(255, 249, 238, 0.82);
   display: flex;
-  font-family: "Libre Baskerville", Georgia, serif;
+  font-family: "Fraunces", Georgia, serif;
   font-size: clamp(54px, 7vw, 104px);
   justify-content: center;
   pointer-events: none;
@@ -406,7 +406,7 @@ html[data-mono-time="evening"] .mono-world {
   background: linear-gradient(90deg, rgba(38, 35, 33, 0.82), transparent);
   bottom: 0;
   color: var(--mono-paper);
-  font-family: "Sora", sans-serif;
+  font-family: "Bricolage Grotesque", sans-serif;
   font-size: clamp(14px, 1.2vw, 17px);
   left: 0;
   margin: 0;
@@ -552,7 +552,7 @@ html[data-mono-time="evening"] .mono-world {
 }
 
 .mono-drop__label {
-  font-family: "Sora", sans-serif;
+  font-family: "Bricolage Grotesque", sans-serif;
   font-size: 0;
   font-weight: 800;
   letter-spacing: 0.1em;
