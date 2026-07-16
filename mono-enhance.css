@@ -1,24 +1,15 @@
 /* ============================================================
    MONO — Layer di POTENZIAMENTO (non sostituisce nulla)
    Fase 1: sistema-colore dei titoli bicolore.
-   Regola: solo COLORE sui pezzi già esistenti (<span>, <em>, .soft).
-   Nessun testo, video o bottone viene toccato.
-   Principio: sezioni CHIARE → base antracite + enfasi terracotta;
-              sezioni SCURE  → base cashmere + enfasi oro champagne.
+   Fase 2: interazioni (card tilt, transizione "dal basso").
+   Solo aggiunte; nessun testo/video/bottone toccato.
    ============================================================ */
 
-/* --- SEZIONI CHIARE: enfasi in TERRACOTTA --- */
+/* ---------- FASE 1 — colori titoli ---------- */
 
-/* "Buono come una volta. / Pensato per la vita di oggi." (definizione) */
-.definition-section-title span + span {
-  color: var(--mono-terracotta);
-}
-/* "È fatto di persone." */
-.definition-people-emphasis {
-  color: var(--mono-terracotta);
-}
-
-/* enfasi <em> nei titoli su fondo chiaro (fallback generico) */
+/* SEZIONI CHIARE: enfasi in TERRACOTTA */
+.definition-section-title span + span { color: var(--mono-terracotta); }
+.definition-people-emphasis { color: var(--mono-terracotta); }
 .section-heading h2 em,
 .page-hero h1 em,
 .page-section h2 em {
@@ -26,15 +17,30 @@
   font-style: italic;
 }
 
-/* --- SEZIONI SCURE: enfasi in ORO CHAMPAGNE --- */
+/* SEZIONI SCURE: enfasi in ORO CHAMPAGNE (specificità alzata per battere la regola generica) */
+.product-system .section-heading .product-system-title em { color: var(--mono-champagne); }
+.cinema-claim .soft { color: var(--mono-champagne); }
 
-/* "Tutto quello che ami. / Fatto con amore." (prodotti — fondo scuro)
-   specificità alzata per battere la regola generica .section-heading h2 em */
-.product-system .section-heading .product-system-title em {
-  color: var(--mono-champagne);
+/* ---------- FASE 2 — interazioni ---------- */
+
+/* Card che si inclinano verso il cursore (il transform lo mette il JS).
+   Qui solo la fluidità; l'hover-lift esistente resta come fallback senza JS. */
+@media (hover: hover) and (pointer: fine) {
+  .page-card {
+    transition: transform 160ms ease-out, box-shadow 350ms ease, border-color 350ms ease;
+    will-change: transform;
+  }
 }
 
-/* hero cinematografico: "Pensato per la vita di oggi." */
-.cinema-claim .soft {
-  color: var(--mono-champagne);
+/* Transizione pagina "dal basso": la pagina entrante SALE.
+   Riusa il sistema view-transition di Codex, sovrascrivendo solo la keyframe
+   della pagina nuova (mono-main). Attiva solo se l'utente non chiede meno movimento. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes mono-rise-in {
+    from { opacity: 0; transform: translateY(46px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  ::view-transition-new(mono-main) {
+    animation: mono-rise-in var(--mono-motion-scene, 560ms) var(--mono-ease-out, cubic-bezier(0.2, 0.7, 0.2, 1)) both;
+  }
 }
