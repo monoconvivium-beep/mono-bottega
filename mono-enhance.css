@@ -44,3 +44,7 @@
     animation: mono-rise-in var(--mono-motion-scene, 560ms) var(--mono-ease-out, cubic-bezier(0.2, 0.7, 0.2, 1)) both;
   }
 }
+
+/* Braci di falò (canvas montato via JS nei momenti scuri: hero + footer) */
+.mono-embers { position: absolute; inset: 0; pointer-events: none; }
+.site-footer { position: relative; }
