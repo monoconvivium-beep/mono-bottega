@@ -102,10 +102,19 @@
   }
 
   function mountEmbers() {
-    /* SOLO sezioni scure senza video: prodotti + footer.
-       MAI sull'hero (il video del fuoco basta a se stesso). */
+    /* Home notturna: braci diffuse su TUTTA la pagina (canvas fisso dietro
+       ai contenuti). Altrimenti: solo sezioni scure senza video (prodotti).
+       MAI sopra i video. Footer: sempre. */
     var hosts = [];
-    document.querySelectorAll(".product-system").forEach(function (s) { hosts.push({ el: s, hero: true }); });
+    if (document.body.classList.contains("mono-dark-home")) {
+      var stage = document.createElement("div");
+      stage.className = "mono-embers-stage";
+      stage.setAttribute("aria-hidden", "true");
+      document.body.insertBefore(stage, document.body.firstChild);
+      hosts.push({ el: stage, hero: true });
+    } else {
+      document.querySelectorAll(".product-system").forEach(function (s) { hosts.push({ el: s, hero: true }); });
+    }
     document.querySelectorAll(".site-footer").forEach(function (f) { hosts.push({ el: f, hero: false }); });
 
     hosts.forEach(function (h) {
