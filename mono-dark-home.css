@@ -95,10 +95,31 @@ body.mono-dark-home .section-heading h2,
 body.mono-dark-home .page-section h2,
 body.mono-dark-home .page-hero h1 { text-wrap: balance; }
 
-/* ---------- firma / signup ---------- */
+/* ---------- firma / signup: card TERRACOTTA (richiesta 16/7) ---------- */
+body.mono-dark-home .opening-signup {
+  background: linear-gradient(150deg, var(--mono-terracotta), #9d4c2c);
+  box-shadow: 0 30px 70px -34px rgba(0, 0, 0, 0.85);
+}
 body.mono-dark-home .opening-signup strong { color: var(--mono-cream); }
-body.mono-dark-home .opening-signup small { color: rgba(244, 236, 221, 0.66); }
-body.mono-dark-home .signup-status { color: rgba(244, 236, 221, 0.8); }
+body.mono-dark-home .opening-signup small { color: rgba(251, 239, 227, 0.88); }
+body.mono-dark-home .opening-signup .button.primary {
+  background: var(--mono-champagne);
+  border-color: var(--mono-champagne);
+  color: #262321;
+  box-shadow: none;
+}
+body.mono-dark-home .signup-status { color: rgba(251, 239, 227, 0.92); }
+
+/* ---------- fix generici pagine interne ---------- */
+/* seconda riga dei titoli a due righe: era terracotta-dark (si spegne sul buio) → ORO */
+body.mono-dark-home main h1 span + span,
+body.mono-dark-home main h2 span + span {
+  color: var(--mono-champagne);
+}
+/* enfasi in grassetto fuori dalle card */
+body.mono-dark-home main strong { color: var(--mono-cream); }
+/* email lavora-con-noi */
+body.mono-dark-home .jobs-email { color: var(--mono-champagne); }
 
 /* ============================================================
    IMMUNIZZAZIONI (per ultime: a parità di specificità vincono).
@@ -129,4 +150,104 @@ body.mono-dark-home .pdf-panel p {
 body.mono-dark-home .page-card .eyebrow,
 body.mono-dark-home .local-info-card .eyebrow {
   color: var(--mono-terracotta);
+}
+
+/* ============================================================
+   FIX LEGGIBILITÀ NOTTE (giro screenshot utente 16/7)
+   ============================================================ */
+
+/* Convivium: paragrafo leggibile sul buio; didascalia scura sulla card crema */
+body.mono-dark-home .convivium-copy p { color: rgba(244, 236, 221, 0.78); }
+body.mono-dark-home .convivium-mark { color: var(--mono-anthracite); }
+body.mono-dark-home .convivium-mark p { color: rgba(38, 35, 33, 0.78); }
+
+/* App: i 3 step diventano TERRACOTTA (dal prototipo, rendeva benissimo) */
+body.mono-dark-home .app-reason-grid article {
+  background: linear-gradient(155deg, var(--mono-terracotta), #9d4c2c);
+  border-color: rgba(0, 0, 0, 0.16);
+  box-shadow: 0 26px 60px -32px rgba(0, 0, 0, 0.85);
+}
+body.mono-dark-home .app-reason-grid article:nth-child(n) span { color: var(--mono-butter); }
+body.mono-dark-home .app-reason-grid article strong { color: var(--mono-cream); }
+body.mono-dark-home .app-reason-grid article small { color: rgba(251, 239, 227, 0.86); }
+
+/* bottoni "ghost" sul buio → CHAMPAGNE pieno (leggibili, eleganti) */
+body.mono-dark-home .button.ghost,
+body.mono-dark-home .convivium-feature .button.ghost {
+  background: var(--mono-champagne);
+  border-color: var(--mono-champagne);
+  color: #262321;
+}
+
+/* nota sotto "Scarica l'app MONO" */
+body.mono-dark-home .app-download-wrap small { color: rgba(244, 236, 221, 0.74); }
+
+/* QR: card terracotta, QR resta bianco (deve scansionarsi) */
+body.mono-dark-home .app-qr {
+  background: var(--mono-terracotta);
+  border-color: rgba(0, 0, 0, 0.15);
+}
+body.mono-dark-home .app-qr span { color: var(--mono-cream); }
+body.mono-dark-home .app-qr img { background: #fff; border-radius: 12px; padding: 6px; }
+
+/* phone-card: testi scuri sulla card chiara */
+body.mono-dark-home .phone-card strong { color: var(--mono-anthracite); }
+body.mono-dark-home .phone-card small { color: rgba(38, 35, 33, 0.72); }
+
+/* ============================================================
+   GASTRONOMIA — hero ridisegnato (notte):
+   banner cashmere col logo centrale + claim sotto, video sotto
+   il banner (non più assoluto sopra i testi), testi crema.
+   ============================================================ */
+body.mono-dark-home.gastronomia-page .page-hero {
+  padding-right: clamp(20px, 6vw, 90px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+body.mono-dark-home.gastronomia-page .page-hero .chapter-film {
+  position: relative !important;
+  right: auto;
+  top: auto;
+  transform: none;
+  order: 10;
+  width: min(880px, 96%);
+  margin: clamp(28px, 4vw, 48px) auto 0;
+}
+.gastro-brand-banner {
+  background: var(--mono-cashmere);
+  border-radius: 30px;
+  padding: clamp(26px, 4vw, 46px) clamp(22px, 5vw, 60px);
+  max-width: 780px;
+  margin: 0 auto;
+  box-shadow: 0 46px 110px -46px rgba(0, 0, 0, 0.85);
+  position: relative;
+  z-index: 2;
+}
+body.mono-dark-home.gastronomia-page .gastro-brand-banner .gastronomia-hero-logo {
+  width: min(400px, 66vw);
+  margin: 0 auto 16px;
+}
+body.mono-dark-home.gastronomia-page .gastro-brand-banner .gastronomia-hero-title {
+  color: var(--mono-anthracite);
+  font-size: clamp(22px, 2.6vw, 36px);
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+  max-width: none;
+  margin: 0;
+  text-wrap: balance;
+}
+body.mono-dark-home.gastronomia-page .gastro-brand-banner .gastronomia-hero-title > span {
+  display: inline;
+  margin: 0;
+  text-wrap: initial;
+}
+body.mono-dark-home.gastronomia-page .page-hero .gastronomia-hero-payoff {
+  color: var(--mono-cream);
+  margin-top: 28px;
+}
+body.mono-dark-home.gastronomia-page .page-hero .gastronomia-hero-description {
+  color: rgba(244, 236, 221, 0.74);
+  margin-inline: auto;
 }

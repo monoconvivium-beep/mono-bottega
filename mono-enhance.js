@@ -24,7 +24,9 @@
   }
 
   function init() {
-    document.querySelectorAll(".page-card").forEach(bind);
+    document.querySelectorAll(
+      ".page-card, .local-info-card, .phone-card, .app-reason-grid article, .app-qr, .pdf-panel, .convivium-mark"
+    ).forEach(bind);
   }
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);

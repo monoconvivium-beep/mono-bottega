@@ -26,7 +26,13 @@
 /* Card che si inclinano verso il cursore (il transform lo mette il JS).
    Qui solo la fluidità; l'hover-lift esistente resta come fallback senza JS. */
 @media (hover: hover) and (pointer: fine) {
-  .page-card {
+  .page-card,
+  .local-info-card,
+  .phone-card,
+  .app-reason-grid article,
+  .app-qr,
+  .pdf-panel,
+  .convivium-mark {
     transition: transform 110ms ease-out, box-shadow 350ms ease, border-color 350ms ease;
     will-change: transform;
   }
