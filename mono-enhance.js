@@ -7,26 +7,108 @@
 
   var MAX = 11; // gradi: vivo ma non giocattolo (dal prototipo approvato)
 
+  /* Perche' cosi' (giro fluidita' 17/7): la versione precedente chiamava
+     getBoundingClientRect() ad OGNI pointermove — cioe' obbligava il browser a
+     ricalcolare il layout decine di volte al secondo — e scriveva subito lo
+     stile. Ora la posizione si misura UNA volta (all'ingresso, e su
+     resize/scroll) e la scrittura e' sincronizzata col disegno via rAF.
+     Il ritardo percepito veniva pero' soprattutto dal CSS: `transition:
+     transform 110ms` faceva inseguire il cursore con un decimo di secondo di
+     ritardo. Ora .is-tilting azzera la transizione mentre segui, e la
+     ripristina al rilascio (vedi mono-enhance.css). */
   function bind(card) {
-    card.addEventListener("pointermove", function (e) {
-      var r = card.getBoundingClientRect();
-      var px = (e.clientX - r.left) / r.width;
-      var py = (e.clientY - r.top) / r.height;
-      var rx = (0.5 - py) * MAX;
-      var ry = (px - 0.5) * MAX;
+    var rect = null;
+    var frame = 0;
+    var nx = 0;
+    var ny = 0;
+
+    var measure = function () { rect = card.getBoundingClientRect(); };
+
+    var paint = function () {
+      frame = 0;
+      if (!rect) return;
+      var rx = (0.5 - ny) * MAX;
+      var ry = (nx - 0.5) * MAX;
       card.style.transform =
         "perspective(900px) rotateX(" + rx.toFixed(2) + "deg) rotateY(" +
         ry.toFixed(2) + "deg) translateY(-10px) scale(1.02)";
+    };
+
+    card.addEventListener("pointerenter", function () {
+      measure();
+      card.classList.add("is-tilting");
     });
+
+    card.addEventListener("pointermove", function (e) {
+      if (!rect) measure();
+      nx = (e.clientX - rect.left) / rect.width;
+      ny = (e.clientY - rect.top) / rect.height;
+      if (!frame) frame = requestAnimationFrame(paint);
+    });
+
     card.addEventListener("pointerleave", function () {
+      if (frame) { cancelAnimationFrame(frame); frame = 0; }
+      rect = null;
+      card.classList.remove("is-tilting");
+      /* Il ritorno: a riposo vince la transizione della comparsa di Codex
+         (transform .86s) e la card impiegherebbe quasi un secondo a tornare
+         dritta. Questa classe transitoria da' un ritorno di 260ms e sparisce
+         subito: cosi' l'animazione d'ingresso delle card resta intatta. */
+      card.classList.add("is-untilting");
       card.style.transform = "";
+      setTimeout(function () { card.classList.remove("is-untilting"); }, 300);
     });
+
+    // la posizione cambia se la pagina scorre o cambia larghezza
+    window.addEventListener("scroll", function () { if (rect) measure(); }, { passive: true });
+    window.addEventListener("resize", function () { if (rect) measure(); }, { passive: true });
   }
 
   function init() {
     document.querySelectorAll(
-      ".page-card, .local-info-card, .phone-card, .app-reason-grid article, .app-qr, .pdf-panel, .convivium-mark"
+      ".page-card, .local-info-card, .phone-card, .app-reason-grid article, .app-qr, .pdf-panel, .convivium-mark, .principio, .cta-block"
     ).forEach(bind);
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+
+/* ============================================================
+   "Scrivici" (header di Contatti) — sembrava rotto (17/7)
+   Non era rotto: e' un link mailto:, e su un dispositivo senza client
+   di posta collegato il clic non fa NULLA. Qui NON blocchiamo il link
+   (chi ha la posta configurata la vede aprirsi come prima): copiamo
+   l'indirizzo negli appunti e lo diciamo. Cosi' non si perde un contatto
+   nemmeno quando il mailto muore in silenzio.
+   ============================================================ */
+(function () {
+  function nota(testo, ancora) {
+    var el = document.createElement("span");
+    el.className = "mono-copiato";
+    el.setAttribute("role", "status");
+    el.textContent = testo;
+    /* la comparsa e' un'animazione CSS, non un rAF: cosi' non dipende dal
+       fatto che la pagina sia "visibile" secondo il browser. */
+    (ancora.parentNode || document.body).appendChild(el);
+    setTimeout(function () {
+      el.classList.add("is-out");
+      setTimeout(function () { el.remove(); }, 400);
+    }, 2600);
+  }
+
+  function init() {
+    var link = document.querySelector('a.header-action[href^="mailto:"]');
+    if (!link) return;
+    var indirizzo = link.getAttribute("href").replace(/^mailto:/, "").split("?")[0];
+    link.addEventListener("click", function () {
+      if (!navigator.clipboard || !navigator.clipboard.writeText) return;
+      navigator.clipboard.writeText(indirizzo).then(function () {
+        nota(indirizzo + " copiato", link);
+      }).catch(function () { /* niente appunti: resta il mailto */ });
+    });
   }
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);

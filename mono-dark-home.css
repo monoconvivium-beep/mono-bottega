@@ -423,3 +423,66 @@ body.mono-dark-home .product-system .product-system-title span,
 body.mono-dark-home .product-system .product-system-title em {
   color: var(--mono-butter);
 }
+
+/* ============================================================
+   SISTEMA COLORE DEI TITOLI (scelta utente 17/7)
+   I titoli bianchi "rendevano meno": ora il colore porta anche
+   un'informazione. Due colori, invertiti secondo il contesto:
+     PRODOTTO (gastronomia, pasticceria, aperitivo, app, home...)
+       titolo ORO, accento BRACE
+     PERSONE (Chi siamo, Lavora con noi, Convivium, Eventi)
+       titolo BRACE, accento ORO
+   BRACE #D87356 = via di mezzo terracotta↔corallo scelta dall'utente.
+   ⚠️ Il brace vive SOLO sul buio (5.59). Su oliva crolla a 1.81 e su
+   terracotta a 1.61: la' l'accento resta crema. Non spargerlo.
+   ============================================================ */
+body.mono-dark-home {
+  --mono-brace: #d87356;        /* terracotta↔corallo, solo su fondo scuro */
+  --mono-oro-luminoso: #ebce7c; /* per l'OLIVA: l'oro normale li' sparisce (2.56) */
+  --mono-oro-pallido: #f2dfa0;  /* per la TERRACOTTA */
+  --titolo: var(--mono-champagne);
+  --accento: var(--mono-brace);
+}
+body.mono-dark-home.about-page,
+body.mono-dark-home.jobs-page,
+body.mono-dark-home.convivium-page,
+body.mono-dark-home.events-page {
+  --titolo: var(--mono-brace);
+  --accento: var(--mono-champagne);
+}
+
+/* i titoli veri (h1/h2). h3/h4 restano crema: sono sottotitoli, e quasi
+   sempre stanno dentro le card crema (gia' immunizzate piu' sopra). */
+body.mono-dark-home main h1,
+body.mono-dark-home main h2 {
+  color: var(--titolo);
+}
+/* la parola-accento dentro il titolo */
+body.mono-dark-home main h1 em,
+body.mono-dark-home main h2 em,
+body.mono-dark-home .definition-section-title span + span,
+body.mono-dark-home .definition-people-emphasis,
+body.mono-dark-home .cinema-claim .soft,
+body.mono-dark-home .about-hero-title span + span,
+body.mono-dark-home .about-impact-title span + span,
+body.mono-dark-home .app-hero-title span + span,
+body.mono-dark-home .contacts-hero-title span + span,
+body.mono-dark-home .jobs-hero-title span + span {
+  color: var(--accento);
+}
+
+/* --- ISOLE COLORATE: qui il brace non si vede, si usano gli ori dedicati --- */
+/* OLIVA (banner verde): titolo oro luminoso, accento crema */
+body.mono-dark-home .product-system .product-system-title {
+  color: var(--mono-oro-luminoso);
+}
+body.mono-dark-home .product-system .product-system-title span,
+body.mono-dark-home .product-system .product-system-title em {
+  color: var(--mono-cream);
+}
+/* TERRACOTTA (firma/signup): titolo oro pallido */
+body.mono-dark-home .opening-signup h2,
+body.mono-dark-home .opening-signup h3,
+body.mono-dark-home .contact-strip h2 {
+  color: var(--mono-oro-pallido);
+}

@@ -26,16 +26,84 @@
 /* Card che si inclinano verso il cursore (il transform lo mette il JS).
    Qui solo la fluidità; l'hover-lift esistente resta come fallback senza JS. */
 @media (hover: hover) and (pointer: fine) {
-  .page-card,
-  .local-info-card,
-  .phone-card,
-  .app-reason-grid article,
-  .app-qr,
-  .pdf-panel,
-  .convivium-mark {
-    transition: transform 110ms ease-out, box-shadow 350ms ease, border-color 350ms ease;
+  /* A riposo NON si tocca nulla: li' vince (giustamente) la transizione della
+     comparsa delle card di Codex, e va lasciata stare. Servono solo i due
+     stati del tilt: mentre segue il cursore, e mentre torna dritta. */
+  .page-card.is-untilting,
+  .local-info-card.is-untilting,
+  .phone-card.is-untilting,
+  .app-reason-grid article.is-untilting,
+  .app-qr.is-untilting,
+  .pdf-panel.is-untilting,
+  .convivium-mark.is-untilting,
+  .principio.is-untilting,
+  .cta-block.is-untilting {
+    transition: transform 260ms ease-out, box-shadow 350ms ease, border-color 350ms ease;
+  }
+  /* Mentre segui il cursore la transizione va AZZERATA: con 110ms la card
+     inseguiva il mouse con un decimo di secondo di ritardo — era quella la
+     "lentezza". will-change solo durante il tilt: tenerlo sempre acceso
+     costringe il browser a promuovere ogni card su un livello a se'. */
+  .page-card.is-tilting,
+  .local-info-card.is-tilting,
+  .phone-card.is-tilting,
+  .app-reason-grid article.is-tilting,
+  .app-qr.is-tilting,
+  .pdf-panel.is-tilting,
+  .convivium-mark.is-tilting,
+  .principio.is-tilting,
+  .cta-block.is-tilting {
+    transition: box-shadow 350ms ease, border-color 350ms ease;
     will-change: transform;
   }
+}
+
+/* ============================================================
+   HEADER piu' reattivo (giro fluidita' 17/7)
+   Cambiando stato animava padding/top/left/right per 220ms: sono
+   proprieta' che obbligano il browser a rifare il LAYOUT ad ogni
+   fotogramma — da qui la sensazione di menu "lento a riapparire".
+   Ora la geometria scatta subito e restano in transizione solo
+   colore e ombra, che sono gratis. Il blur del vetro scende da 22px
+   a 14px: differenza quasi invisibile, costo molto minore su mobile.
+   ============================================================ */
+.site-header {
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+  backdrop-filter: blur(14px);
+}
+
+/* conferma del "Scrivici": l'indirizzo e' stato copiato */
+.mono-copiato {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 70;
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: var(--mono-terracotta, #b85c38);
+  color: var(--mono-cream, #f4ecdd);
+  font-size: 12.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  /* NESSUNA animazione d'ingresso, di proposito: un'animazione avviata ma
+     congelata (animazioni ridotte, pagina non "visibile", browser che
+     throttla) inchioda l'elemento al suo fotogramma iniziale — cioe'
+     opacity:0 — e l'avviso non compare MAI. Un avviso che puo' sparire e'
+     peggio che un avviso senza fronzoli: qui compare e basta. */
+  opacity: 1;
+}
+.mono-copiato.is-out {
+  animation: mono-copiato-out 320ms ease-in forwards;
+}
+@keyframes mono-copiato-out {
+  to { opacity: 0; transform: translateY(-6px); }
+}
+.site-header .header-action {
+  position: relative;
 }
 
 /* Transizione "dal basso" col SIPARIO (come il prototipo approvato).
