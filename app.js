@@ -417,7 +417,11 @@ function setupCinematicHero() {
 
   // Agnolotti film timeline: 0-1s flour cloud | ~2-5s cut | 6s finished zoom
   var TRIGGER = 0.20;
-  var MOBILE_FIRE_HOLD = 1200;
+  // Su mobile il fuoco (pentolino) restava solo 1.2s e poi tagliava sugli
+  // agnolotti: troppo veloce, non si capiva ne' l'uno ne' l'altro (17/7 sera).
+  // Ora il fuoco resta 3.5s e i due video girano un po' piu' lenti (0.8x).
+  var MOBILE_FIRE_HOLD = 3500;
+  var MOBILE_RATE = 0.8;
   var STAGE2_AT = 1.6;
   var STAGE3_AT = 5.0;
 
@@ -429,7 +433,7 @@ function setupCinematicHero() {
   var ticking = false;
   var mobileTimer = null;
 
-  function safePlay(v) { if (!v) { return; } v.muted = true; var p = v.play(); if (p && typeof p.catch === "function") { p.catch(function () {}); } }
+  function safePlay(v) { if (!v) { return; } v.muted = true; try { v.playbackRate = mobileMq.matches ? MOBILE_RATE : 1; } catch (e) {} var p = v.play(); if (p && typeof p.catch === "function") { p.catch(function () {}); } }
   function safePause(v) { if (v) { try { v.pause(); } catch (e) {} } }
   function setStage(s) { if (hero.getAttribute("data-stage") !== s) { hero.setAttribute("data-stage", s); } }
 
