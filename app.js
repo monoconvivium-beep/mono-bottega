@@ -418,9 +418,10 @@ function setupCinematicHero() {
   // Agnolotti film timeline: 0-1s flour cloud | ~2-5s cut | 6s finished zoom
   var TRIGGER = 0.20;
   // Su mobile il fuoco (pentolino) restava solo 1.2s e poi tagliava sugli
-  // agnolotti: troppo veloce, non si capiva ne' l'uno ne' l'altro (17/7 sera).
-  // Ora il fuoco resta 3.5s e i due video girano un po' piu' lenti (0.8x).
-  var MOBILE_FIRE_HOLD = 3500;
+  // agnolotti: troppo veloce, non si capiva ne' l'uno ne' l'altro. Alzato a
+  // 3.5s (17/7) e poi a 4.8s (18/7: "almeno un secondo in piu', se no si
+  // perde la magia"). I due video girano anche piu' lenti (0.8x).
+  var MOBILE_FIRE_HOLD = 4800;
   var MOBILE_RATE = 0.8;
   var STAGE2_AT = 1.6;
   var STAGE3_AT = 5.0;

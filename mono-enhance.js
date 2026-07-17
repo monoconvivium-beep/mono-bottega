@@ -195,6 +195,25 @@
     });
     initFormEventi();
     initQrSblocco();
+    initBadgeProdotti();
+  }
+
+  /* Video PRODOTTI (gastronomia): l'asset mono-kitchen-magic ha badge:false,
+     quindi il watermark "Gemini" in basso a destra NON e' coperto. Su PC il
+     ritaglio ovale del riquadro lo nasconde; su mobile si vede. Iniettiamo il
+     badge MONO (favicon piatto+posate) come sugli altri video; il CSS lo mostra
+     solo su mobile (18/7). */
+  function initBadgeProdotti() {
+    var film = document.querySelector(".chapter-film--products");
+    if (!film || film.querySelector(".chapter-film__badge")) return;
+    var badge = document.createElement("span");
+    badge.className = "chapter-film__badge";
+    badge.setAttribute("aria-hidden", "true");
+    var img = document.createElement("img");
+    img.src = "/icons/mono-favicon.svg"; // assoluto: vale su ogni pagina
+    img.alt = "";
+    badge.appendChild(img);
+    film.appendChild(badge);
   }
 
   /* Rete di sicurezza QR (bug 17/7 sera: "e' un casino tornare indietro").

@@ -557,3 +557,21 @@ body.mono-dark-home .site-header .nav a {
    resto. Assoluta -> nasconderla non sposta nulla.
    ============================================================ */
 body.mono-dark-home.convivium-page .mono-page-scene--convivium { display: none !important; }
+
+/* ============================================================
+   VIDEO PRODOTTI — badge MONO a coprire il watermark "Gemini" (18/7)
+   Iniettato da mono-enhance.js. Su DESKTOP nascosto (il ritaglio ovale
+   gia' copre l'angolo, e il PC "e' perfetto"): si mostra SOLO su mobile,
+   in basso a destra sopra lo stemma.
+   ============================================================ */
+body.mono-dark-home .chapter-film--products .chapter-film__badge { display: none; }
+@media (max-width: 820px) {
+  body.mono-dark-home .chapter-film--products .chapter-film__badge {
+    display: flex;
+    --video-badge-size: clamp(46px, 15vw, 74px);
+    --video-badge-right: 7%;
+    --video-badge-bottom: 9%;
+    --video-badge-bg: var(--mono-cashmere);
+    --video-badge-logo-scale: 0.74;
+  }
+}
