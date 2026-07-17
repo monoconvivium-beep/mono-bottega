@@ -86,13 +86,23 @@
    ============================================================ */
 (function () {
   function nota(testo, ancora) {
+    var vecchia = document.querySelector(".mono-copiato");
+    if (vecchia) vecchia.remove();
     var el = document.createElement("span");
     el.className = "mono-copiato";
     el.setAttribute("role", "status");
     el.textContent = testo;
-    /* la comparsa e' un'animazione CSS, non un rAF: cosi' non dipende dal
-       fatto che la pagina sia "visibile" secondo il browser. */
-    (ancora.parentNode || document.body).appendChild(el);
+    /* position:fixed calcolata dal bottone cliccato: funziona ovunque nella
+       pagina, non solo nell'header (i bottoni mailto stanno anche dentro
+       card e sezioni). Niente animazione d'ingresso: deve VEDERSI sempre. */
+    document.body.appendChild(el);
+    var r = ancora.getBoundingClientRect();
+    var w = el.offsetWidth || 220;
+    var x = Math.max(10, Math.min(r.left + r.width / 2 - w / 2, window.innerWidth - w - 10));
+    var y = r.bottom + 10;
+    if (y + 44 > window.innerHeight) y = Math.max(10, r.top - 44);
+    el.style.left = x + "px";
+    el.style.top = y + "px";
     setTimeout(function () {
       el.classList.add("is-out");
       setTimeout(function () { el.remove(); }, 400);
@@ -100,14 +110,17 @@
   }
 
   function init() {
-    var link = document.querySelector('a.header-action[href^="mailto:"]');
-    if (!link) return;
-    var indirizzo = link.getAttribute("href").replace(/^mailto:/, "").split("?")[0];
-    link.addEventListener("click", function () {
-      if (!navigator.clipboard || !navigator.clipboard.writeText) return;
-      navigator.clipboard.writeText(indirizzo).then(function () {
-        nota(indirizzo + " copiato", link);
-      }).catch(function () { /* niente appunti: resta il mailto */ });
+    /* TUTTI i mailto del sito, non solo l'header: su un dispositivo senza
+       client di posta il mailto non fa nulla, e il bottone sembra rotto
+       (Contatta MONO, Scrivi alla bottega, Raccontaci il tuo evento...). */
+    document.querySelectorAll('a[href^="mailto:"]').forEach(function (link) {
+      var indirizzo = link.getAttribute("href").replace(/^mailto:/, "").split("?")[0];
+      link.addEventListener("click", function () {
+        if (!navigator.clipboard || !navigator.clipboard.writeText) return;
+        navigator.clipboard.writeText(indirizzo).then(function () {
+          nota("Email copiata: " + indirizzo, link);
+        }).catch(function () { /* niente appunti: resta il mailto */ });
+      });
     });
   }
   if (document.readyState === "loading") {

@@ -74,12 +74,11 @@
   backdrop-filter: blur(14px);
 }
 
-/* conferma del "Scrivici": l'indirizzo e' stato copiato */
+/* conferma "email copiata" (per TUTTI i bottoni mailto del sito);
+   left/top li mette il JS in base al bottone cliccato */
 .mono-copiato {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  z-index: 70;
+  position: fixed;
+  z-index: 2147483001;
   padding: 7px 13px;
   border-radius: 999px;
   background: var(--mono-terracotta, #b85c38);

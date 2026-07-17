@@ -437,7 +437,11 @@ body.mono-dark-home .product-system .product-system-title em {
    terracotta a 1.61: la' l'accento resta crema. Non spargerlo.
    ============================================================ */
 body.mono-dark-home {
-  --mono-brace: #d87356;        /* terracotta↔corallo, solo su fondo scuro */
+  /* Era #D87356 (via di mezzo terracotta↔corallo). Cambiato il 17/7 su
+     richiesta: STESSO terracotta della tendina/header, "così è tutto
+     connesso". Sul buio fa 3.97: buono per i TITOLI (soglia 3), non per
+     testo piccolo — se serve un accento su testo minuto, usare l'oro. */
+  --mono-brace: var(--mono-terracotta);
   --mono-oro-luminoso: #ebce7c; /* per l'OLIVA: l'oro normale li' sparisce (2.56) */
   --mono-oro-pallido: #f2dfa0;  /* per la TERRACOTTA */
   --titolo: var(--mono-champagne);
@@ -457,12 +461,13 @@ body.mono-dark-home main h1,
 body.mono-dark-home main h2 {
   color: var(--titolo);
 }
-/* la parola-accento dentro il titolo */
+/* la parola-accento dentro il titolo.
+   NON in lista (restano ORO, dalla regola piu' sopra):
+   - .cinema-claim .soft: sta SOPRA IL VIDEO, e li' il terracotta fa 2.19;
+   - .definition-people-emphasis: testo da 16px, il terracotta fa 3.77 (<4.5). */
 body.mono-dark-home main h1 em,
 body.mono-dark-home main h2 em,
 body.mono-dark-home .definition-section-title span + span,
-body.mono-dark-home .definition-people-emphasis,
-body.mono-dark-home .cinema-claim .soft,
 body.mono-dark-home .about-hero-title span + span,
 body.mono-dark-home .about-impact-title span + span,
 body.mono-dark-home .app-hero-title span + span,
