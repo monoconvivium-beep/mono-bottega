@@ -5,63 +5,83 @@
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (!fine || reduce) return;
 
-  var MAX = 11; // gradi: vivo ma non giocattolo (dal prototipo approvato)
+  var MAX = 8;     // gradi: era 11, l'utente lo trovava "troppo" (17/7 sera)
+  var EASE = 0.22; // smorzamento per-frame: la card GLIDE verso il cursore
+                   // invece di scattare -> "rallentarle un pelo"
 
-  /* Perche' cosi' (giro fluidita' 17/7): la versione precedente chiamava
-     getBoundingClientRect() ad OGNI pointermove — cioe' obbligava il browser a
-     ricalcolare il layout decine di volte al secondo — e scriveva subito lo
-     stile. Ora la posizione si misura UNA volta (all'ingresso, e su
-     resize/scroll) e la scrittura e' sincronizzata col disegno via rAF.
-     Il ritardo percepito veniva pero' soprattutto dal CSS: `transition:
-     transform 110ms` faceva inseguire il cursore con un decimo di secondo di
-     ritardo. Ora .is-tilting azzera la transizione mentre segui, e la
-     ripristina al rilascio (vedi mono-enhance.css). */
+  /* Un solo rAF che interpola lo stato ATTUALE verso il TARGET (cx,cy →
+     tx,ty). Questo da' due cose insieme: il movimento morbido chiesto
+     ("rallentare un pelo") e il rientro dolce a piatto quando esci (basta
+     mettere il target a 0). La posizione si misura all'ingresso (e su
+     scroll/resize), mai dentro pointermove -> niente forced layout.
+     .is-tilting resta per TUTTO il tempo che il JS controlla il transform,
+     cosi' la transizione di comparsa di Codex (transform .86s) non azzuffa
+     con la scrittura frame-by-frame. */
+  function campoInUso(card) {
+    var a = document.activeElement;
+    return a && card.contains(a) && /^(INPUT|SELECT|TEXTAREA)$/.test(a.tagName);
+  }
+
   function bind(card) {
-    var rect = null;
-    var frame = 0;
-    var nx = 0;
-    var ny = 0;
+    var rect = null, loop = 0, active = false;
+    var tx = 0, ty = 0, cx = 0, cy = 0;
 
     var measure = function () { rect = card.getBoundingClientRect(); };
 
-    var paint = function () {
-      frame = 0;
-      if (!rect) return;
-      var rx = (0.5 - ny) * MAX;
-      var ry = (nx - 0.5) * MAX;
+    var step = function () {
+      cx += (tx - cx) * EASE;
+      cy += (ty - cy) * EASE;
+      var fermo = Math.abs(tx - cx) < 0.02 && Math.abs(ty - cy) < 0.02;
+      if (fermo && !active && tx === 0 && ty === 0) {
+        // rientrata a piatto: pulisci e ferma (cosi' torna la transizione di comparsa)
+        card.style.transform = "";
+        card.classList.remove("is-tilting");
+        loop = 0;
+        return;
+      }
       card.style.transform =
-        "perspective(900px) rotateX(" + rx.toFixed(2) + "deg) rotateY(" +
-        ry.toFixed(2) + "deg) translateY(-10px) scale(1.02)";
+        "perspective(1000px) rotateX(" + cy.toFixed(2) + "deg) rotateY(" +
+        cx.toFixed(2) + "deg) translateY(-7px) scale(1.014)";
+      // raggiunto il target: fermati e basta (un pointermove fara' ripartire).
+      // Cosi' col cursore fermo il rAF non gira a vuoto.
+      loop = fermo ? 0 : requestAnimationFrame(step);
     };
+    var kick = function () { if (!loop) loop = requestAnimationFrame(step); };
 
     card.addEventListener("pointerenter", function () {
       measure();
+      active = true;
       card.classList.add("is-tilting");
+      kick();
     });
 
     card.addEventListener("pointermove", function (e) {
+      if (!active) return;
       if (!rect) measure();
-      nx = (e.clientX - rect.left) / rect.width;
-      ny = (e.clientY - rect.top) / rect.height;
-      if (!frame) frame = requestAnimationFrame(paint);
+      // Card-modulo in compilazione: resta ferma (i campi non devono ballare)
+      if (campoInUso(card)) { tx = 0; ty = 0; kick(); return; }
+      var px = (e.clientX - rect.left) / rect.width;
+      var py = (e.clientY - rect.top) / rect.height;
+      ty = (0.5 - py) * MAX;
+      tx = (px - 0.5) * MAX;
+      kick();
     });
 
     card.addEventListener("pointerleave", function () {
-      if (frame) { cancelAnimationFrame(frame); frame = 0; }
+      active = false;
+      tx = 0; ty = 0;   // il loop fa il rientro morbido a piatto, poi si ferma
       rect = null;
-      card.classList.remove("is-tilting");
-      /* Il ritorno: a riposo vince la transizione della comparsa di Codex
-         (transform .86s) e la card impiegherebbe quasi un secondo a tornare
-         dritta. Questa classe transitoria da' un ritorno di 260ms e sparisce
-         subito: cosi' l'animazione d'ingresso delle card resta intatta. */
-      card.classList.add("is-untilting");
-      card.style.transform = "";
-      setTimeout(function () { card.classList.remove("is-untilting"); }, 300);
+      kick();
     });
 
-    // la posizione cambia se la pagina scorre o cambia larghezza
-    window.addEventListener("scroll", function () { if (rect) measure(); }, { passive: true });
-    window.addEventListener("resize", function () { if (rect) measure(); }, { passive: true });
+    // appena clicchi in un campo la card si appiattisce subito (non aspetta
+    // il prossimo movimento del mouse): compilare non deve far ballare i campi
+    card.addEventListener("focusin", function () {
+      if (campoInUso(card)) { tx = 0; ty = 0; kick(); }
+    });
+
+    window.addEventListener("scroll", function () { if (active) measure(); }, { passive: true });
+    window.addEventListener("resize", function () { if (active) measure(); }, { passive: true });
   }
 
   function init() {
@@ -174,7 +194,27 @@
       });
     });
     initFormEventi();
+    initQrSblocco();
   }
+
+  /* Rete di sicurezza QR (bug 17/7 sera: "e' un casino tornare indietro").
+     Chiudendo il modale del QR, il <dialog> si chiude (perde l'attributo
+     `open`) ma la classe `qr-dialog-open` — che tiene `overflow:hidden` sul
+     body — puo' restare se l'evento `close` non scatta: la PAGINA RESTA
+     BLOCCATA, non scrolla piu'. Qui osserviamo l'attributo `open`: appena il
+     dialog e' chiuso, sblocchiamo sempre. (Il cursore invisibile e' risolto
+     nel CSS.) */
+  function initQrSblocco() {
+    var dialog = document.querySelector(".app-qr-dialog, [data-qr-dialog]");
+    if (!dialog || typeof MutationObserver !== "function") return;
+    var sblocca = function () {
+      if (!dialog.open) document.body.classList.remove("qr-dialog-open");
+    };
+    new MutationObserver(sblocca).observe(dialog, { attributes: true, attributeFilter: ["open"] });
+    dialog.addEventListener("close", sblocca);
+    dialog.addEventListener("cancel", sblocca);
+  }
+
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
   } else {

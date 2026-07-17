@@ -26,24 +26,12 @@
 /* Card che si inclinano verso il cursore (il transform lo mette il JS).
    Qui solo la fluidità; l'hover-lift esistente resta come fallback senza JS. */
 @media (hover: hover) and (pointer: fine) {
-  /* A riposo NON si tocca nulla: li' vince (giustamente) la transizione della
-     comparsa delle card di Codex, e va lasciata stare. Servono solo i due
-     stati del tilt: mentre segue il cursore, e mentre torna dritta. */
-  .page-card.is-untilting,
-  .local-info-card.is-untilting,
-  .phone-card.is-untilting,
-  .app-reason-grid article.is-untilting,
-  .app-qr.is-untilting,
-  .pdf-panel.is-untilting,
-  .convivium-mark.is-untilting,
-  .principio.is-untilting,
-  .cta-block.is-untilting {
-    transition: transform 260ms ease-out, box-shadow 350ms ease, border-color 350ms ease;
-  }
-  /* Mentre segui il cursore la transizione va AZZERATA: con 110ms la card
-     inseguiva il mouse con un decimo di secondo di ritardo — era quella la
-     "lentezza". will-change solo durante il tilt: tenerlo sempre acceso
-     costringe il browser a promuovere ogni card su un livello a se'. */
+  /* Il tilt e il rientro morbido li fa TUTTI il JS (interpolazione per frame).
+     A riposo non si tocca nulla (vince la comparsa di Codex). Mentre il JS
+     controlla il transform, la transizione CSS su transform va AZZERATA: se
+     restasse, ogni frame verrebbe animato e la card diventerebbe una melma.
+     will-change solo durante il tilt (tenerlo sempre acceso promuove ogni
+     card su un livello a se', spreco di memoria). */
   .page-card.is-tilting,
   .local-info-card.is-tilting,
   .phone-card.is-tilting,
@@ -216,4 +204,38 @@ html.mono-curtain-exit main { animation: mono-main-arriva 640ms cubic-bezier(0.2
 .site-footer > :not(.mono-embers) {
   position: relative;
   z-index: 1;
+}
+
+/* ============================================================
+   QR ingrandito: RIDAI IL CURSORE (bug segnalato 17/7 sera)
+   Il sito usa un cursore-glow custom: mono-engineering.css mette
+   `cursor: none !important` su tutta la pagina quando c'e'
+   `.mono-drop-active`. Il glow e' disegnato su body::before, che sta
+   DIETRO il backdrop del <dialog> aperto con showModal(): dentro il
+   riquadro non si vede ne' il cursore vero ne' il glow -> impossibile
+   trovare la X per chiudere. Qui, col dialog aperto, il cursore vero
+   torna. Specificita' alzata con `body.qr-dialog-open` per battere le
+   regole `.mono-drop-active *` (entrambe !important).
+   ============================================================ */
+body.qr-dialog-open .app-qr-dialog,
+body.qr-dialog-open .app-qr-dialog *,
+.app-qr-dialog::backdrop {
+  cursor: auto !important;
+}
+body.qr-dialog-open .app-qr-dialog a,
+body.qr-dialog-open .app-qr-dialog button,
+body.qr-dialog-open .app-qr-dialog [role="button"],
+body.qr-dialog-open .app-qr-dialog__close {
+  cursor: pointer !important;
+}
+/* La X di chiusura piu' evidente: piena terracotta, un filo piu' grande.
+   L'utente diceva "e' un casino tornare indietro" -> deve saltare all'occhio. */
+body.qr-dialog-open .app-qr-dialog__close {
+  background: var(--mono-terracotta, #b85c38);
+  color: var(--mono-cream, #f4ecdd);
+  border-color: rgba(0, 0, 0, 0.15);
+  width: 48px;
+  height: 48px;
+  font-size: 30px;
+  box-shadow: 0 10px 26px -10px rgba(0, 0, 0, 0.6);
 }
