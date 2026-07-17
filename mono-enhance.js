@@ -109,19 +109,71 @@
     }, 2600);
   }
 
+  /* Apre la composizione di Gmail gia' compilata (richiesta 17/7 sera: "non
+     solo copiare, portami subito alla scrittura"). Se il popup viene bloccato
+     si ripiega sul mailto: classico. L'indirizzo viene comunque copiato. */
+  function apriGmail(indirizzo, oggetto, corpo, fallbackHref) {
+    var url = "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(indirizzo);
+    if (oggetto) url += "&su=" + encodeURIComponent(oggetto);
+    if (corpo) url += "&body=" + encodeURIComponent(corpo);
+    var win = window.open(url, "_blank", "noopener");
+    if (!win) window.location.href = fallbackHref || ("mailto:" + indirizzo);
+  }
+  window.MONOApriGmail = apriGmail;
+  window.MONONotaCopia = nota;
+
+  /* Questionario eventi: alla conferma si apre Gmail con la richiesta gia'
+     scritta riga per riga. Nessun servizio esterno, zero costi. */
+  function initFormEventi() {
+    var form = document.querySelector("[data-mono-form-eventi]");
+    if (!form) return;
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var v = function (n) { return (form.elements[n] && form.elements[n].value || "").trim(); };
+      if (!v("tipo")) { form.elements.tipo.focus(); return; }
+      var dataIt = "";
+      if (v("data")) {
+        var p = v("data").split("-"); // yyyy-mm-dd → gg/mm/aaaa
+        dataIt = p[2] + "/" + p[1] + "/" + p[0];
+      }
+      var righe = [
+        "Ciao MONO!",
+        "",
+        "Tipo di evento: " + v("tipo"),
+        "Data: " + (dataIt || "da definire"),
+        "Numero di persone: " + (v("persone") || "da definire"),
+        "Budget orientativo: " + (v("budget") || "da definire insieme"),
+        "",
+        "L'occasione: " + (v("note") || "-"),
+        "",
+        (v("nome") ? "— " + v("nome") : "")
+      ];
+      var oggetto = "Richiesta evento MONO — " + v("tipo") + (dataIt ? " (" + dataIt + ")" : "");
+      apriGmail("monobottega@gmail.com", oggetto, righe.join("\n"),
+        "mailto:monobottega@gmail.com?subject=" + encodeURIComponent(oggetto) + "&body=" + encodeURIComponent(righe.join("\n")));
+      nota("Richiesta pronta: controlla e invia", form.querySelector("button[type=submit]"));
+    });
+  }
+
   function init() {
-    /* TUTTI i mailto del sito, non solo l'header: su un dispositivo senza
-       client di posta il mailto non fa nulla, e il bottone sembra rotto
-       (Contatta MONO, Scrivi alla bottega, Raccontaci il tuo evento...). */
+    /* TUTTI i mailto del sito: click → copia l'indirizzo + apre Gmail con
+       destinatario e oggetto gia' impostati. Chi ha i popup bloccati finisce
+       sul mailto: nativo (com'era prima). */
     document.querySelectorAll('a[href^="mailto:"]').forEach(function (link) {
-      var indirizzo = link.getAttribute("href").replace(/^mailto:/, "").split("?")[0];
-      link.addEventListener("click", function () {
-        if (!navigator.clipboard || !navigator.clipboard.writeText) return;
-        navigator.clipboard.writeText(indirizzo).then(function () {
-          nota("Email copiata: " + indirizzo, link);
-        }).catch(function () { /* niente appunti: resta il mailto */ });
+      var href = link.getAttribute("href");
+      var indirizzo = href.replace(/^mailto:/, "").split("?")[0];
+      var oggetto = (href.split("subject=")[1] || "").split("&")[0];
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(indirizzo).then(function () {
+            nota("Email copiata: " + indirizzo, link);
+          }).catch(function () {});
+        }
+        apriGmail(indirizzo, decodeURIComponent(oggetto || ""), "", href);
       });
     });
+    initFormEventi();
   }
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);

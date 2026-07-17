@@ -23,9 +23,9 @@
     <link rel="stylesheet" href="../styles.css?v=20260716-fonts-v1">
 <link rel="stylesheet" href="../experience.css?v=20260716-fonts-v1">
 <link rel="stylesheet" href="../mono-engineering.css?v=20260716-fonts-v1">
-      <link rel="stylesheet" href="../mono-enhance.css?v=20260717-qr-contatti-v2">
-    <link rel="stylesheet" href="../mono-dark-home.css?v=20260717-qr-contatti-v2">
-      <script defer src="../mono-enhance.js?v=20260717-qr-contatti-v2"></script>
+      <link rel="stylesheet" href="../mono-enhance.css?v=20260717-tendina-form-v3">
+    <link rel="stylesheet" href="../mono-dark-home.css?v=20260717-tendina-form-v3">
+      <script defer src="../mono-enhance.js?v=20260717-tendina-form-v3"></script>
   </head>
   <body class="mono-world events-page mono-dark-home" data-mono-world="events">
     <a class="skip-link" href="#main">Vai al contenuto</a>
@@ -44,7 +44,7 @@
         <p>Catering, box gastronomiche, dolci e aperitivi per aziende e occasioni private.</p>
         <p>Proposte curate, semplici da organizzare e pensate per lasciare un buon ricordo.</p>
         <div class="hero-actions">
-          <a class="button primary" data-track="events_email" href="mailto:monobottega@gmail.com?subject=Richiesta%20evento%20MONO">Raccontaci il tuo evento</a>
+          <a class="button primary" data-track="events_form" href="#richiesta-evento">Raccontaci il tuo evento</a>
           <a class="button ghost" data-track="events_contacts" href="../contatti/">Contattaci</a>
         </div>
       </section>
@@ -68,9 +68,47 @@
         </p>
         <p>Ti risponderemo con una proposta chiara, pensata per le tue esigenze e semplice da gestire.</p>
         <p class="events-process-closing"><span>Meno pensieri da organizzare.</span><span>Più tempo per goderti il momento.</span></p>
-        <div class="hero-actions">
-          <a class="button primary" data-track="events_email_final" href="mailto:monobottega@gmail.com?subject=Richiesta%20evento%20MONO">Richiedi una proposta</a>
-        </div>
+        <article class="page-card mono-form-card" id="richiesta-evento">
+          <span>RICHIEDI UNA PROPOSTA</span>
+          <h3>Due minuti, e ci pensiamo noi.</h3>
+          <form class="mono-form" data-mono-form-eventi novalidate>
+            <label>Tipo di evento
+              <select name="tipo" required>
+                <option value="" selected disabled>Scegli…</option>
+                <option>Cena o festa privata</option>
+                <option>Evento aziendale</option>
+                <option>Aperitivo</option>
+                <option>Box o regalo gastronomico</option>
+                <option>Altro</option>
+              </select>
+            </label>
+            <label>Data (anche indicativa)
+              <input type="date" name="data">
+            </label>
+            <label>Numero di persone
+              <input type="number" name="persone" min="1" max="500" inputmode="numeric" placeholder="es. 20">
+            </label>
+            <label>Budget orientativo
+              <select name="budget">
+                <option value="" selected>Da definire insieme</option>
+                <option>Fino a 500 €</option>
+                <option>500–1.000 €</option>
+                <option>1.000–2.500 €</option>
+                <option>Oltre 2.500 €</option>
+              </select>
+            </label>
+            <label class="mono-form-wide">Raccontaci l'occasione
+              <textarea name="note" rows="3" placeholder="Luogo, orario, tono che vuoi dare, esigenze particolari…"></textarea>
+            </label>
+            <label class="mono-form-wide">Il tuo nome
+              <input type="text" name="nome" autocomplete="name" placeholder="Come ti chiami?">
+            </label>
+            <div class="mono-form-actions mono-form-wide">
+              <button class="button primary" type="submit" data-track="events_form_submit">Invia la richiesta</button>
+              <small>Si apre la tua mail già scritta: la controlli e la mandi. Oppure scrivici: <a href="mailto:monobottega@gmail.com?subject=Richiesta%20evento%20MONO">monobottega@gmail.com</a></small>
+            </div>
+          </form>
+        </article>
       </section>
     </main>
     <footer class="site-footer"><strong>MONO — Bottega Gastronomica</strong><nav aria-label="Navigazione footer"><a href="../">Home</a><a href="../gastronomia/">Gastronomia</a><a href="../pasticceria/">Pasticceria</a><a href="../aperitivo/">Aperitivo</a><a href="../mono-convivium/">MONO Convivium</a><a href="../dove-siamo/">Dove siamo</a><a href="../contatti/">Contatti</a></nav></footer>

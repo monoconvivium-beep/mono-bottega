@@ -71,7 +71,77 @@
   transition:
     background-color 160ms ease,
     box-shadow 160ms ease;
-  backdrop-filter: blur(14px);
+  /* NIENTE backdrop-filter (2° giro fluidita' 17/7): il vetro sfocato su un
+     elemento fisso si ricalcola ad OGNI fotogramma di scroll — e in fondo
+     pagina, con braci + "prossimo capitolo" in movimento, la tendina arrancava
+     nel ricomparire. Visivamente non cambia nulla: il fondo dell'header e'
+     gia' opaco al ~90%. translateZ la promuove su un livello suo: lo scroll
+     della pagina non la ridisegna piu'. */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transform: translateZ(0);
+}
+
+/* ============================================================
+   QUESTIONARIO EVENTI (card crema, dentro .page-card gia' stilata)
+   ============================================================ */
+.mono-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 18px;
+  margin-top: 18px;
+}
+.mono-form label {
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(38, 35, 33, 0.66);
+}
+.mono-form-wide { grid-column: 1 / -1; }
+.mono-form input,
+.mono-form select,
+.mono-form textarea {
+  appearance: none;
+  border: 1px solid rgba(38, 35, 33, 0.22);
+  border-radius: 12px;
+  background: #fffdf8;
+  color: var(--mono-anthracite, #262321);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: normal;
+  padding: 11px 13px;
+  min-height: 46px;
+}
+.mono-form textarea { min-height: 84px; resize: vertical; }
+.mono-form input:focus-visible,
+.mono-form select:focus-visible,
+.mono-form textarea:focus-visible {
+  outline: 2px solid var(--mono-terracotta, #b85c38);
+  outline-offset: 1px;
+}
+.mono-form-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+.mono-form-actions small {
+  font-weight: 500;
+  letter-spacing: normal;
+  text-transform: none;
+  font-size: 12.5px;
+  color: rgba(38, 35, 33, 0.62);
+  max-width: 380px;
+}
+.mono-form-actions small a { color: var(--mono-terracotta-dark, #a83a28); font-weight: 800; }
+@media (max-width: 640px) {
+  .mono-form { grid-template-columns: 1fr; }
 }
 
 /* conferma "email copiata" (per TUTTI i bottoni mailto del sito);
