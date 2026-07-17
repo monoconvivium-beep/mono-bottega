@@ -149,8 +149,12 @@
     chapter: "about",
     primaryPage: "la-bottega",
     secondaryUses: freezeList(["poster", "still", "short-extract", "convivium-mask"]),
-    originalSourceName: "Vorrei_migliorare_il_video_ovv.mp4",
-    master: assetUrl("assets/cinematic/source/mono-03-molte-mani-master.mp4"),
+    originalSourceName: "VIDEO MICHELIN.mp4",
+    // ⚠️ Il player NON usa desktopMp4 quando c'e' l'audio: createAsset costruisce
+    // audioSources da `master` (se masterAudio) e mono-cinematic.js gli da'
+    // la precedenza. Quindi `master` DEVE puntare al video che si vuole vedere:
+    // se resta indietro, si vede il film vecchio col poster nuovo.
+    master: assetUrl("assets/cinematic/source/mono-04-chi-siamo-master.mp4"),
     desktopWebm: null,
     desktopMp4: assetUrl("assets/cinematic/web/mono-04-chi-siamo-desktop.mp4"),
     mobileMaster: null,
