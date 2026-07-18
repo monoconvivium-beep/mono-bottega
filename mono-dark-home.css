@@ -740,17 +740,61 @@ body.mono-dark-home .mono-form-card.is-tilting {
    vale SOLO da 821px in su: nel pannello mobile il menu resta
    antracite e leggibile. Non togliere il media query.
    ============================================================ */
+/* Header: mattone PIU' COTTO, per reggere l'oro (scelta utente 18/7).
+   Il terracotta acceso #B85C38 e' di mezza luminosita': l'oro del
+   marchio sopra dava 2.15, il valore peggiore del sito. Scurendo solo
+   la striscia dell'header a #5A2E1E l'oro sale a 5.00 e passa.
+   Il terracotta acceso resta ovunque nel resto del sito: cambia solo
+   la barra in alto, che cosi' fa tutt'uno con la tendina mobile. */
+body.mono-dark-home .site-header {
+  background: linear-gradient(180deg, #5A2E1E, #4A2517);
+  border-bottom: 1px solid rgba(203, 167, 90, 0.22);
+}
+
 @media (min-width: 821px) {
   body.mono-dark-home .site-header .nav a {
-    color: #fff9ee;
+    color: var(--mono-gold, #CBA75A);
   }
   body.mono-dark-home .site-header .nav a:hover,
   body.mono-dark-home .site-header .nav a:focus-visible {
-    color: #fff;
+    color: #EBCE7C;
     text-decoration: underline;
     text-underline-offset: 0.28em;
   }
   body.mono-dark-home .site-header .nav a::after {
-    background: linear-gradient(90deg, #fff9ee, rgba(255, 249, 238, 0.4));
+    background: linear-gradient(90deg, #CBA75A, rgba(203, 167, 90, 0.4));
+  }
+}
+
+/* ============================================================
+   TENDINA MOBILE — marrone scuro con le scritte ORO (18/7,
+   richiesta dell'utente: filo dorato con il resto del sito)
+
+   Sul buio l'oro del marchio finalmente respira: #CBA75A su
+   marrone #3A2A20 = 6.01, ben sopra la soglia di 4.5. E' lo
+   stesso principio della regola d'oro del sistema colori:
+   l'oro vuole il BUIO. Sul terracotta dell'header darebbe 2.15,
+   per questo lassu' il menu resta crema.
+
+   Il pannello era crema (styles.css:2111) con scritte nere.
+   ============================================================ */
+@media (max-width: 820px) {
+  body.mono-dark-home .site-header .nav {
+    background: linear-gradient(180deg, #3A2A20, #2E211A);
+    border: 1px solid rgba(203, 167, 90, 0.28);
+    box-shadow: 0 24px 60px rgba(20, 14, 10, 0.42);
+  }
+  body.mono-dark-home .site-header .nav a {
+    color: var(--mono-gold, #CBA75A);
+    font-weight: 800;
+  }
+  body.mono-dark-home .site-header .nav a:hover,
+  body.mono-dark-home .site-header .nav a:focus-visible {
+    color: #EBCE7C;
+    text-decoration: underline;
+    text-underline-offset: 0.28em;
+  }
+  body.mono-dark-home .site-header .nav a::after {
+    background: linear-gradient(90deg, #CBA75A, rgba(203, 167, 90, 0.4));
   }
 }
