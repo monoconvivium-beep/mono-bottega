@@ -211,26 +211,32 @@
     chapter: "events",
     primaryPage: "eventi",
     secondaryUses: freezeList(["home-closing", "poster", "short-transition"]),
-    originalSourceName: null,
-    expectedMasterPath: "assets/cinematic/source/mono-04-tavola-eventi-master.mp4",
-    master: null,
+    originalSourceName: "Cinematic_food_film_sho.mp4",
+    // ⚠️ Come per mono-hands-team: con masterAudio:true il player usa SOLO
+    // `master`. Aggiornare desktopMp4 da solo non cambierebbe nulla.
+    master: assetUrl("assets/cinematic/source/mono-05-tavola-eventi-master.mp4"),
     desktopWebm: null,
+    // Volutamente null: con masterAudio:true il player legge SOLO `master`,
+    // quindi una copia web sarebbe 2,7 MB identici e mai scaricati da
+    // nessuno. Se un giorno si spegne l'audio, va creata davvero.
     desktopMp4: null,
     mobileMaster: null,
     mobileWebm: null,
     mobileMp4: null,
-    posterWebp: null,
+    posterWebp: assetUrl("assets/cinematic/web/mono-05-tavola-eventi-poster.webp"),
     posterAvif: null,
-    posterTimestamp: null,
-    posterTime: null,
-    width: null,
-    height: null,
+    // Copertina presa al vino versato, NON all'apertura: il film comincia
+    // con il tavolo vuoto e da fermo non direbbe niente.
+    posterTimestamp: 6.5,
+    posterTime: 6.5,
+    width: 1280,
+    height: 720,
     aspectRatio: "16 / 9",
-    duration: null,
-    fps: null,
-    codec: null,
-    audio: false,
-    masterAudio: null,
+    duration: 10.005,
+    fps: 24,
+    codec: Object.freeze({ masterVideo: "h264", masterAudio: "aac", desktopWebm: null, desktopMp4: "h264", pixelFormat: "yuv420p" }),
+    audio: true,
+    masterAudio: true,
     playback: "once",
     playbackMode: "once",
     sessionMemory: true,
@@ -246,12 +252,13 @@
     objectFit: "cover",
     objectPosition: "center center",
     mobileStrategy: "contained-landscape",
-    preloadStrategy: "disabled-until-master-arrives",
-    posterPriority: "none",
+    preloadStrategy: "poster-then-master",
+    posterPriority: "low",
     decorative: true,
-    status: "missing-master",
-    implementationStatus: "structure-ready-no-fallback-video",
-    notes: "Non sostituire con stock o altri film esclusi. Badge e focal point sono provvisori fino all'ispezione del master reale."
+    status: "ready",
+    implementationStatus: "live",
+    attribution: "Generato con Google Veo (Gemini) il 18/7/2026 su prompt scritto per questa pagina. La filigrana Gemini e' incorporata nel master a (1159,600) su 1280x720 e viene coperta dal badge ufficiale, il cui centro cade a (1164,609): 10px di scarto, badge 112px contro ~46px di filigrana. Verificato misurando il badge su un film gia' in pagina.",
+    notes: "Non sostituire con stock o altri film esclusi. NON spostare il badge: e' quello che copre la filigrana."
   });
 
   window.MONOCinematicAssets = Object.freeze({
