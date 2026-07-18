@@ -564,14 +564,13 @@
       const didPlay = await safePlay(fireVideo, { preferSound: true });
       if (!didPlay) sync("poster");
       if (mobile.matches) {
-        // ⚠️ Qui c'era un taglio secco a 1800ms: su telefono il fuoco durava
-        // 1,8s su 10, la musica partiva e veniva troncata a meta'. Su desktop
-        // non esiste nessun timer, il passaggio lo decide lo scorrimento
-        // (updateScroll, progress >= 0.2) o la fine naturale del video.
-        // Ora il timer e' solo una RETE DI SICUREZZA per il caso in cui
-        // "ended" non arrivi mai (video in stallo, decodifica fallita):
-        // scatta DOPO la fine naturale, quindi in condizioni normali
-        // vince sempre l'evento "ended" e il film si vede tutto.
+        // ⚠️ Qui c'era un taglio secco a 1800ms: il fuoco durava 1,8s su 10
+        // e la musica veniva troncata a meta'. Ora lo stacco lo decide
+        // STACCO_MOBILE sul timeupdate (vedi piu' sotto).
+        // Questo timer resta solo come ULTIMA rete di sicurezza, per il caso
+        // in cui il video non parta proprio e quindi timeupdate non arrivi
+        // mai: senza, il telefono resterebbe piantato sul pentolino.
+        // Volutamente piu' lungo dello stacco, cosi' non lo anticipa.
         window.clearTimeout(mobileTimer);
         const durata = Number(fireVideo.duration) || Number(asset.duration) || 10;
         mobileTimer = window.setTimeout(transitionToPasta, durata * 1000 + 2000);
@@ -601,6 +600,29 @@
 
     fireVideo.addEventListener("playing", () => sync("playing"));
     fireVideo.addEventListener("ended", transitionToPasta);
+
+    // ---- PUNTO DI STACCO SU TELEFONO ----------------------------------
+    // Su desktop il passaggio lo guida lo scorrimento; su telefono no, e
+    // serve decidere quando lasciare il fuoco. 1,8s mutilava il filmato,
+    // 10s (la fine naturale) tira troppo: l'utente li ha provati entrambi.
+    //
+    // Scelto misurando quanto cambia l'immagine secondo per secondo:
+    //   1,4>2,4s  162.800   la fiammata
+    //   3,4>4,4s  120.000   il picco di luce
+    //   4,4>5,4s   82.500
+    //   5,4>6,4s   47.800
+    //   6,4>7,4s   29.300   da qui restano vapore e sfarfallio
+    // A 6,4s la scena ha gia' detto tutto.
+    //
+    // Legato a currentTime e NON a un setTimeout: su una linea lenta
+    // l'orologio corre anche mentre il video e' fermo a caricare, e si
+    // finirebbe per mostrarne ancora meno proprio a chi ha la rete
+    // peggiore. Cosi' tutti vedono la stessa porzione di film.
+    const STACCO_MOBILE = 6.4;
+    fireVideo.addEventListener("timeupdate", () => {
+      if (!mobile.matches || transitioned || finished || paused) return;
+      if (fireVideo.currentTime >= STACCO_MOBILE) transitionToPasta();
+    });
     fireVideo.addEventListener("error", transitionToPasta);
     pastaVideo.addEventListener("playing", () => sync("playing"));
     pastaVideo.addEventListener("timeupdate", updatePastaStage);
