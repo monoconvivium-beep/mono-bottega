@@ -712,3 +712,15 @@ body.mono-dark-home .mono-conto.is-aperto .mono-conto__testo {
   font-family: "Fraunces", Georgia, serif;
   font-weight: 700;
 }
+
+/* ============================================================
+   La scheda DA COMPILARE non si muove mai (18/7)
+   Il tilt rendeva difficile centrare i campi: doppia garanzia,
+   esclusa dal JS (mono-enhance.js) e bloccata anche qui.
+   ============================================================ */
+body.mono-dark-home .mono-form-card,
+body.mono-dark-home .mono-form-card:hover,
+body.mono-dark-home .mono-form-card.is-tilting {
+  transform: none !important;
+  will-change: auto !important;
+}

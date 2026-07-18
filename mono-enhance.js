@@ -85,8 +85,11 @@
   }
 
   function init() {
+    /* .mono-form-card ESCLUSA di proposito (18/7): e' la scheda "Due minuti,
+       e ci pensiamo noi" degli eventi. Una card che si deve COMPILARE non
+       deve muoversi: il tilt rendeva difficile centrare i campi. Ferma. */
     document.querySelectorAll(
-      ".page-card, .local-info-card, .phone-card, .app-reason-grid article, .app-qr, .pdf-panel, .convivium-mark, .principio, .cta-block"
+      ".page-card:not(.mono-form-card), .local-info-card, .phone-card, .app-reason-grid article, .app-qr, .pdf-panel, .convivium-mark, .principio, .cta-block"
     ).forEach(bind);
   }
   if (document.readyState === "loading") {
