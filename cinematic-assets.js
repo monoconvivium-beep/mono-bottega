@@ -145,7 +145,15 @@
 
   const handsTeam = createAsset({
     id: "mono-hands-team",
-    title: "Molte mani, una sola squadra",
+    // Rinominato il 18/7: il vecchio nome descriveva il film mono-03, non
+    // questo. Qui si vede la brigata al passe, il filetto impiattato,
+    // salsato, rifinito con la pinzetta, e la campanella che lo manda via.
+    // Il titolo NON e' testo visibile: finisce nell'aria-label del player
+    // (mono-cinematic.js:203) e nella figcaption dello still Convivium
+    // (mono-cinematic.js:631), che pero' e' disattivata da un segnaposto
+    // hidden in mono-convivium/index.html:509. Serve a chi naviga con
+    // lettore di schermo e a ritrovarsi nel catalogo.
+    title: "La cura, fino all'ultimo dettaglio",
     chapter: "about",
     primaryPage: "la-bottega",
     secondaryUses: freezeList(["poster", "still", "short-extract", "convivium-mask"]),

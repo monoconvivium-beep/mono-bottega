@@ -724,3 +724,33 @@ body.mono-dark-home .mono-form-card.is-tilting {
   transform: none !important;
   will-change: auto !important;
 }
+
+/* ============================================================
+   MENU HEADER — contrasto risolto schiarendo, non scurendo (18/7)
+
+   Misurato sul fondo composito reale del gradiente, rgb(177,87,53):
+     nero (com'era)   4.28  ✗   crema #fff9ee   4.68  ✓
+     cashmere #f4ecdd 4.18  ✗   bianco pieno    4.90  ✓
+   La nota precedente ("nemmeno il nero arriva a 4.5") era esatta ma
+   guardava dalla parte sbagliata: sul terracotta di mezza luminosita'
+   si passa la soglia ANDANDO VERSO IL CHIARO.
+
+   ⚠️ Perche' era nero: sotto 820px .nav diventa un PANNELLO CREMA
+   (styles.css:2111) e le scritte crema sparivano. Per questo la regola
+   vale SOLO da 821px in su: nel pannello mobile il menu resta
+   antracite e leggibile. Non togliere il media query.
+   ============================================================ */
+@media (min-width: 821px) {
+  body.mono-dark-home .site-header .nav a {
+    color: #fff9ee;
+  }
+  body.mono-dark-home .site-header .nav a:hover,
+  body.mono-dark-home .site-header .nav a:focus-visible {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 0.28em;
+  }
+  body.mono-dark-home .site-header .nav a::after {
+    background: linear-gradient(90deg, #fff9ee, rgba(255, 249, 238, 0.4));
+  }
+}
