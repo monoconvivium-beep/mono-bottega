@@ -506,11 +506,36 @@
       else if (pastaVideo.currentTime < 5) setStage("2");
       else setStage("3");
     };
+    // Se il fuoco viene interrotto mentre suona ancora (rete di sicurezza,
+    // "Salta", scorrimento veloce su desktop), tagliare l'audio di netto fa
+    // un tonfo. Sfuma in 260ms e poi mette in pausa. Se il video e' gia'
+    // finito da solo non c'e' niente da sfumare e si esce subito.
+    const sfumaEPausa = (video) => new Promise((resolve) => {
+      if (!video || video.paused || video.muted || video.ended || !video.volume) {
+        video?.pause();
+        resolve();
+        return;
+      }
+      const partenza = video.volume;
+      const passi = 8;
+      let i = 0;
+      const giu = window.setInterval(() => {
+        i += 1;
+        try { video.volume = Math.max(0, partenza * (1 - i / passi)); } catch (e) { /* ignora */ }
+        if (i >= passi) {
+          window.clearInterval(giu);
+          video.pause();
+          try { video.volume = partenza; } catch (e) { /* ignora */ }
+          resolve();
+        }
+      }, 260 / passi);
+    });
+
     const transitionToPasta = async () => {
       if (transitioned || finished) return;
       transitioned = true;
       setSources(pastaVideo, pastaSources, pastaHasAudio);
-      fireVideo.pause();
+      await sfumaEPausa(fireVideo);
       hero.classList.add("is-transitioned", "pasta-ready");
       setStage("t");
       try { pastaVideo.currentTime = 0; } catch (error) { pastaVideo.dataset.mediaError = "seek"; }
@@ -539,8 +564,17 @@
       const didPlay = await safePlay(fireVideo, { preferSound: true });
       if (!didPlay) sync("poster");
       if (mobile.matches) {
+        // ⚠️ Qui c'era un taglio secco a 1800ms: su telefono il fuoco durava
+        // 1,8s su 10, la musica partiva e veniva troncata a meta'. Su desktop
+        // non esiste nessun timer, il passaggio lo decide lo scorrimento
+        // (updateScroll, progress >= 0.2) o la fine naturale del video.
+        // Ora il timer e' solo una RETE DI SICUREZZA per il caso in cui
+        // "ended" non arrivi mai (video in stallo, decodifica fallita):
+        // scatta DOPO la fine naturale, quindi in condizioni normali
+        // vince sempre l'evento "ended" e il film si vede tutto.
         window.clearTimeout(mobileTimer);
-        mobileTimer = window.setTimeout(transitionToPasta, 1800);
+        const durata = Number(fireVideo.duration) || Number(asset.duration) || 10;
+        mobileTimer = window.setTimeout(transitionToPasta, durata * 1000 + 2000);
       }
     };
     const resetAndReplay = () => {
