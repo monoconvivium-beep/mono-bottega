@@ -575,3 +575,140 @@ body.mono-dark-home .chapter-film--products .chapter-film__badge { display: none
     --video-badge-logo-scale: 0.74;
   }
 }
+
+/* ============================================================
+   INVITO ALL'APP (18/7) — il sito racconta, l'app converte.
+   10 pagine su 12 non nominavano nemmeno l'app: proprio quelle
+   dove la persona sta leggendo con interesse. Qui l'invito chiude
+   la pagina con una promessa SPECIFICA per quella pagina (non un
+   generico "scarica l'app", che nessuno legge).
+   Prefisso body.mono-dark-home: serve a battere le regole larghe
+   "main p / main h*" scritte piu' sopra in questo file.
+   ============================================================ */
+body.mono-dark-home .mono-app-invito {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(16px, 3vw, 34px);
+  flex-wrap: wrap;
+  margin: clamp(26px, 5vw, 56px) auto clamp(10px, 2vw, 22px);
+  max-width: 1020px;
+  padding: clamp(22px, 3.4vw, 34px) clamp(22px, 4vw, 40px);
+  border-radius: 28px;
+  /* Terracotta appena piu' scuro del solito (#B25836 invece di #B85C38):
+     impercettibile a occhio, ma porta la riga piccola da 4.33 a 4.61 di
+     contrasto — sopra la soglia di legge anche nel punto piu' chiaro. */
+  background: linear-gradient(150deg, #b25836, #9d4c2c);
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  box-shadow: 0 30px 70px -34px rgba(0, 0, 0, 0.85);
+  position: relative;
+  z-index: 2;
+}
+body.mono-dark-home .mono-app-invito__testo {
+  flex: 1 1 320px;
+  min-width: 0;
+}
+body.mono-dark-home .mono-app-invito__occhiello {
+  display: block;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  /* era burro: a 11px faceva 3.80, sotto la soglia. Bianco caldo -> 4.61 */
+  color: #fff9ee;
+  margin-bottom: 9px;
+}
+body.mono-dark-home .mono-app-invito__frase {
+  margin: 0;
+  font-family: "Fraunces", Georgia, "Times New Roman", serif;
+  font-size: clamp(19px, 2.3vw, 27px);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--mono-cream);
+  text-wrap: balance;
+}
+body.mono-dark-home .mono-app-invito__nota {
+  margin: 9px 0 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  /* bianco caldo PIENO: a 13.5px serve 4.5 di contrasto e il crema
+     semitrasparente si fermava a 3.64 (misurato 18/7) */
+  color: #fff9ee;
+}
+body.mono-dark-home .mono-app-invito .button {
+  flex: 0 0 auto;
+  background: var(--mono-champagne);
+  border-color: var(--mono-champagne);
+  color: #262321;
+  box-shadow: none;
+}
+@media (max-width: 640px) {
+  body.mono-dark-home .mono-app-invito { flex-direction: column; align-items: stretch; text-align: left; }
+  body.mono-dark-home .mono-app-invito .button { width: 100%; justify-content: center; }
+}
+
+/* ============================================================
+   CONTRASTO A NORMA su header e footer (18/7)
+   I link erano semitrasparenti: 3.3 in header, 3.7 nel footer —
+   sotto la soglia di legge (4.5 per testo normale).
+   Footer: crema PIENO -> 5.32. Risolto.
+   Menu header: sul terracotta (colore di mezza luminosita') nemmeno
+   il nero pieno arriva a 4.5 (max 4.28). Portiamo il menu al massimo
+   possibile SENZA cambiare il terracotta del marchio: 3.19 -> 4.28.
+   ============================================================ */
+body.mono-dark-home .site-footer a {
+  color: #fff9ee;
+}
+body.mono-dark-home .site-header .nav a {
+  color: #000;
+}
+body.mono-dark-home .site-header .nav a:hover,
+body.mono-dark-home .site-header .nav a:focus-visible {
+  color: #000;
+  text-decoration: underline;
+  text-underline-offset: 0.28em;
+}
+
+/* ============================================================
+   CONTO ALLA ROVESCIA apertura (18/7)
+   Accanto alla raccolta email: "mancano N giorni" da' un motivo per
+   lasciare l'indirizzo adesso invece di rimandare a mai.
+   ============================================================ */
+body.mono-dark-home .mono-conto {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 14px 0 4px;
+  flex-wrap: wrap;
+}
+/* specificita' alzata: `.opening-signup span` (piu' sopra) vincerebbe
+   e tingerebbe il numero di burro invece che d'oro */
+body.mono-dark-home .opening-signup .mono-conto .mono-conto__numero,
+body.mono-dark-home .mono-conto__numero {
+  font-family: "Fraunces", Georgia, "Times New Roman", serif;
+  font-size: clamp(38px, 6vw, 58px);
+  font-weight: 700;
+  line-height: 1;
+  color: #f2dfa0;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+body.mono-dark-home .opening-signup .mono-conto .mono-conto__testo,
+body.mono-dark-home .mono-conto__testo {
+  color: #fff9ee;
+  margin: 0;
+}
+body.mono-dark-home .mono-conto__testo {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff9ee;
+}
+body.mono-dark-home .mono-conto.is-aperto .mono-conto__testo {
+  font-size: clamp(20px, 3vw, 28px);
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 700;
+}

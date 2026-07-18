@@ -194,6 +194,14 @@ function setupNewsletterForms() {
       const createdAt = new Date().toISOString();
       const payload = { email, created_at: createdAt };
 
+      /* ⚠️ ONESTA' DEL MESSAGGIO (18/7). Prima qui si diceva SEMPRE "Ci siamo,
+         ti scriviamo noi" anche quando l'email non era stata raccolta da
+         nessuno: senza endpoint si apriva un `mailto:` che, su un telefono
+         senza client di posta, NON FA NULLA. Risultato: la persona credeva di
+         essersi iscritta e il contatto era perso in silenzio.
+         Ora: se c'e' l'endpoint si salva davvero; se non c'e' si apre Gmail
+         gia' compilato (funziona su qualunque dispositivo) e il messaggio dice
+         la verita' — l'iscrizione si completa premendo invia. */
       try {
         if (NEWSLETTER_ENDPOINT) {
           const response = await fetch(NEWSLETTER_ENDPOINT, {
@@ -205,20 +213,43 @@ function setupNewsletterForms() {
           if (!response.ok) {
             throw new Error("Newsletter endpoint error");
           }
-        } else {
-          const subject = encodeURIComponent("Avvisami all'apertura MONO");
-          const body = encodeURIComponent(`Email: ${email}\nOrigine: ${window.location.href}\nData: ${createdAt}`);
-          window.location.href = `mailto:${NEWSLETTER_EMAIL}?subject=${subject}&body=${body}`;
+
+          if (status) {
+            status.textContent = "Ci siamo. Ti scriviamo noi. — MONO";
+          }
+          form.reset();
+          return;
         }
+
+        const subject = "Avvisami all'apertura MONO";
+        const body = `Email: ${email}\nOrigine: ${window.location.href}\nData: ${createdAt}`;
+        const gmailUrl =
+          "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(NEWSLETTER_EMAIL) +
+          "&su=" + encodeURIComponent(subject) +
+          "&body=" + encodeURIComponent(body);
+
+        const composeWindow = window.open(gmailUrl, "_blank", "noopener");
+
+        if (composeWindow) {
+          if (status) {
+            status.textContent = "Ti abbiamo aperto la mail già scritta: premi invia e sei dentro.";
+          }
+          form.reset();
+          return;
+        }
+
+        // popup bloccato: ultima spiaggia il mailto: nativo, senza promesse
+        window.location.href =
+          "mailto:" + NEWSLETTER_EMAIL +
+          "?subject=" + encodeURIComponent(subject) +
+          "&body=" + encodeURIComponent(body);
 
         if (status) {
-          status.textContent = "Ci siamo. Ti scriviamo noi. — MONO";
+          status.textContent = "Apri la mail che abbiamo preparato e premi invia. Oppure scrivici a " + NEWSLETTER_EMAIL + ".";
         }
-
-        form.reset();
       } catch (error) {
         if (status) {
-          status.textContent = "Non siamo riusciti a salvare l'email. Scrivici a monobottega@gmail.com.";
+          status.textContent = "Non siamo riusciti a salvare l'email. Scrivici a " + NEWSLETTER_EMAIL + ".";
         }
       }
     });

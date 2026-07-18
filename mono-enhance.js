@@ -196,6 +196,34 @@
     initFormEventi();
     initQrSblocco();
     initBadgeProdotti();
+    initContoApertura();
+  }
+
+  /* Conto alla rovescia per l'apertura (18/7). Sta accanto alla raccolta
+     email: "mancano N giorni" da' un motivo per lasciare l'indirizzo ADESSO
+     invece di rimandare. Resta nascosto finche' il JS non ha un numero vero,
+     cosi' non si vede mai un trattino al posto della cifra. */
+  function initContoApertura() {
+    var blocco = document.querySelector("[data-conto-apertura]");
+    if (!blocco) return;
+    var numero = blocco.querySelector("[data-conto-giorni]");
+    var testo = blocco.querySelector(".mono-conto__testo");
+    if (!numero) return;
+
+    var apertura = new Date(2026, 8, 1); // 1 settembre 2026 (mese 0-based)
+    var oggi = new Date();
+    oggi.setHours(0, 0, 0, 0);
+    var giorni = Math.ceil((apertura - oggi) / 86400000);
+
+    if (giorni > 0) {
+      numero.textContent = giorni;
+      if (testo) testo.textContent = giorni === 1 ? "giorno all'apertura" : "giorni all'apertura";
+    } else {
+      numero.textContent = "";
+      if (testo) testo.textContent = "La bottega è aperta.";
+      blocco.classList.add("is-aperto");
+    }
+    blocco.hidden = false;
   }
 
   /* Video PRODOTTI (gastronomia): l'asset mono-kitchen-magic ha badge:false,
