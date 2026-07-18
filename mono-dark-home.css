@@ -761,6 +761,46 @@ body.mono-dark-home .mono-form-card.is-tilting {
 }
 
 /* ============================================================
+   BADGE SUI VIDEO — copertura della filigrana, definitiva (18/7)
+
+   PROBLEMA: il badge era dimensionato `clamp(50px, 7vw, 76px)`,
+   cioe' legato alla FINESTRA. Ma il video si ferma a 1120px, il badge
+   a 76px: piu' lo schermo e' grande, piu' il badge rimpicciolisce in
+   proporzione al fotogramma.
+     finestra 1280 -> film  870 -> badge 112px sul fotogramma
+     finestra 1920 -> film 1120 -> badge  87px sul fotogramma
+   La filigrana Gemini e' 46px e sta ferma a (1161,600) su 1280x720:
+   a 1920 il margine si assottigliava fino a sbucare.
+
+   SOLUZIONE: badge legato al VIDEO (unita' cqw) invece che alla
+   finestra, e centrato sulla filigrana invece che 9px piu' in basso.
+     da destra  1280-1161 = 119 -> 9.30%
+     da sotto    720- 600 = 120 -> 16.65%
+   Cosi' copre una porzione COSTANTE del fotogramma (8,9%) a ogni
+   larghezza: 1280, 1920, 4K. Una volta per tutte.
+
+   Su TELEFONO non cambia niente: la clamp minima resta 50px, che e'
+   esattamente quel che usciva prima (7vw a 375px = 26px -> 50px).
+
+   Fuori dal @supports non succede nulla e resta il comportamento
+   di prima: nessun rischio sui browser vecchi.
+   ============================================================ */
+@supports (width: 1cqw) {
+  .cinematic-film,
+  .mono-cinematic-still {
+    container-type: inline-size;
+  }
+  .cinematic-film .cinematic-film__badge,
+  .mono-cinematic-still .mono-cinematic-still__badge {
+    --mono-badge: clamp(50px, 8.9cqw, 132px);
+    width: var(--mono-badge);
+    height: var(--mono-badge);
+    right: calc(9.3% - var(--mono-badge) / 2);
+    bottom: calc(16.65% - var(--mono-badge) / 2);
+  }
+}
+
+/* ============================================================
    FILM "La tavola delle occasioni" su Eventi (18/7)
 
    Stessa fascia chiara di .about-cinematic (experience.css:1312),
