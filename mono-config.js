@@ -44,7 +44,7 @@ window.MONO_NEWSLETTER_ENDPOINT = "";
      4. ti danno un "token" (una sequenza di lettere e numeri)
      5. incollalo qui sotto fra le virgolette
    ------------------------------------------------------------ */
-window.MONO_CF_TOKEN = "";
+window.MONO_CF_TOKEN = "49cdcc2e80cf458db73629f60acd9a34";
 
 /* ------------------------------------------------------------
    2B) GOOGLE ANALYTICS 4  (gratis, ma CON cookie)
