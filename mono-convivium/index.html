@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="description" content="MONO Convivium è il progetto sociale di MONO Bottega Gastronomica: formazione, inclusione, lavoro dignitoso e crescita reale dentro una bottega autentica a Torino.">
 <meta name="theme-color" content="#B85C38">
 <link rel="canonical" href="https://monobottega.it/mono-convivium/">
@@ -21,7 +22,7 @@
 <title>MONO Convivium | Progetto sociale MONO Bottega Gastronomica</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../mono-colors.css?v=20260714-shared-colors-v1">
 <style>
   :root{
@@ -76,6 +77,10 @@
     backdrop-filter:blur(14px);
   }
   .mono-site-return:hover{ color:var(--terracotta); border-color:var(--terracotta); }
+  a:focus-visible{
+    outline:3px solid var(--gold);
+    outline-offset:4px;
+  }
   @media (max-width:680px){
     .mono-site-return{ top:12px; left:12px; padding:8px 11px; font-size:10px; }
   }
@@ -113,7 +118,10 @@
   .reveal{ opacity:0; transform:translateY(28px); transition:opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
   .reveal.in{ opacity:1; transform:translateY(0); }
   @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
     .reveal{ opacity:1; transform:none; transition:none; }
+    .hero-mark,.hero-tagline,.hero-sub,.hero-badge{ opacity:1; animation:none; }
+    .scroll-cue{ animation:none; }
   }
 
   /* ---------- HERO ---------- */
@@ -419,6 +427,7 @@
   }
   .cta-head .eyebrow{ justify-content:flex-start; margin-bottom:12px; }
   .cta-head h3{ font-size:26px; max-width:520px; }
+  .cta-head p{ max-width:650px; margin-top:14px; font-size:15.5px; }
   .cta-grid{
     display:grid;
     grid-template-columns:1fr 1fr 1fr;
@@ -434,6 +443,24 @@
   .cta-col li::before{ content:"—"; position:absolute; left:0; color:var(--gold); }
   .cta-col .contact-name{ font-family:'Baskerville','Baskerville Old Face','Libre Baskerville', Georgia, serif; font-size:16px; margin-bottom:10px; }
   .cta-col a{ color:var(--ink); text-decoration:none; border-bottom:1px solid var(--terracotta); font-size:14px; }
+  .cta-action{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-height:46px;
+    margin-top:16px;
+    padding:12px 18px;
+    border:1px solid var(--terracotta) !important;
+    border-radius:999px;
+    background:var(--terracotta);
+    color:var(--cashmere) !important;
+    font-size:12px !important;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    transition:background .25s ease, color .25s ease, transform .25s ease;
+  }
+  .cta-action:hover{ background:transparent; color:var(--terracotta) !important; transform:translateY(-2px); }
   @media (max-width:760px){
     .cta-grid{ grid-template-columns:1fr; }
     .cta-col + .cta-col{ border-left:none; border-top:1px solid var(--line); }
@@ -462,6 +489,28 @@
 <link rel="stylesheet" href="../mono-engineering.css?v=20260716-fonts-v1">
     <link rel="stylesheet" href="../mono-enhance.css?v=20260718-badge-favicon-v19">
     <link rel="stylesheet" href="../mono-dark-home.css?v=20260718-badge-favicon-v19">
+    <style>
+      body.convivium-page,
+      body.convivium-page p,
+      body.convivium-page a,
+      body.convivium-page li,
+      body.convivium-page .eyebrow,
+      body.convivium-page .tag,
+      body.convivium-page .mono-app-invito__occhiello,
+      body.convivium-page .mono-app-invito__nota{
+        font-family:'Sora',sans-serif;
+      }
+      body.convivium-page h1,
+      body.convivium-page h2,
+      body.convivium-page h3,
+      body.convivium-page h4,
+      body.convivium-page .pull,
+      body.convivium-page .breather-line,
+      body.convivium-page .contact-name,
+      body.convivium-page .mono-app-invito__frase{
+        font-family:'Baskerville','Baskerville Old Face','Libre Baskerville',Georgia,serif;
+      }
+    </style>
       <script defer src="../mono-enhance.js?v=20260718-badge-favicon-v19"></script>
       <script type="application/ld+json">
       {
@@ -514,7 +563,7 @@
 <section class="hero">
   <img class="hero-mark" src="../assets/convivium/convivium-marchio.png" alt="Monoconvivium">
   <h1 class="hero-tagline">Nutriamo il futuro, con arte e cuore</h1>
-  <p class="hero-sub">Il progetto sociale firmato MONO. Non un'iniziativa a fianco dell'impresa: il suo cuore.</p>
+  <p class="hero-sub">Il cuore sociale di MONO: formazione, lavoro vero e comunità dentro un'impresa gastronomica reale.</p>
   <div class="hero-badge"><span class="dot"></span> Un progetto MONO — Bottega Gastronomica</div>
   <div class="scroll-cue"></div>
 </section>
@@ -556,7 +605,7 @@
       <p class="lede">Tra formazione e lavoro esiste ancora una distanza reale. Molte persone hanno capacità e potenziale, ma non trovano un contesto in cui poter iniziare davvero — non perché manchino opportunità, ma perché mancano sistemi capaci di accoglierle.</p>
       <p>Troppo spesso vengono inserite male, accompagnate senza metodo, o escluse in partenza. Monoconvivium nasce per colmare questa distanza.</p>
     </div>
-    <div class="pull">Contesti reali, non spazi protetti. <span class="accent">È questa la differenza che conta.</span></div>
+    <div class="pull">Non crea spazi protetti. Costruisce contesti reali.<br>Non inventa percorsi paralleli. <span class="accent">Apre ingressi possibili.</span></div>
     <p style="max-width:600px; font-size:17px;">Fare del lavoro un luogo accessibile, senza renderlo artificiale. Trasformare l'accesso al lavoro in un percorso concreto, umano e sostenibile. È per questo che Monoconvivium esiste.</p>
   </div>
 </section>
@@ -655,7 +704,8 @@
       <p class="lede">Monoconvivium nasce dentro un'impresa privata: non una ONLUS, non una fondazione.</p>
       <p>È un modello che unisce impresa e impatto, dimostrando che il valore sociale può esistere dentro un contesto professionale reale — senza compromessi su qualità, standard e sostenibilità.</p>
     </div>
-    <div class="pull">Monoconvivium non sostituisce la professionalità. <span class="accent">La rafforza.</span> Il livello resta alto: si costruiscono le condizioni per raggiungerlo.</div>
+    <div class="pull">L'inclusione non avviene in uno spazio semplificato, <span class="accent">ma dentro un sistema vero.</span></div>
+    <p class="prose" style="max-width:660px;">Monoconvivium non sostituisce la professionalità: la rafforza. Il livello resta alto; si costruiscono le condizioni per raggiungerlo.</p>
     <div class="facts">
       <div class="fact" style="--c-accent:var(--terracotta)"><div class="k">Cosa non è</div><div class="v">Uno spazio protetto o semplificato. Non esistono ruoli simbolici.</div></div>
       <div class="fact" style="--c-accent:var(--coral)"><div class="k">Cosa è</div><div class="v">Un sistema vero, dove competenza, ritmo e responsabilità fanno parte del percorso.</div></div>
@@ -706,6 +756,7 @@
     <div class="process-arrow">
       <span>Ingresso</span><span class="sep">→</span><span>Affiancamento</span><span class="sep">→</span><span>Ruolo</span><span class="sep">→</span><span>Crescita</span><span class="sep">→</span><span>Integrazione</span>
     </div>
+    <div class="pull" style="margin:46px auto 0; text-align:center;">Monoconvivium non inserisce. <span class="accent">Crea percorsi.</span></div>
   </div>
 </section>
 
@@ -717,8 +768,9 @@
 
   <div class="cta-block">
     <div class="cta-head">
-      <div class="eyebrow">Costruiamolo insieme</div>
-      <h3 role="heading" aria-level="2">Monoconvivium cerca le persone e i partner giusti per crescere.</h3>
+      <div class="eyebrow">Alleanze giuste</div>
+      <h3 role="heading" aria-level="2">MONO Convivium non cerca attenzione. Cerca alleanze giuste.</h3>
+      <p>Se sei un ente, una scuola, un partner o una realtà del territorio, possiamo costruire qualcosa insieme.</p>
     </div>
     <div class="cta-grid">
       <div class="cta-col">
@@ -744,6 +796,7 @@
           <li><a href="mailto:monobottega@gmail.com">monobottega@gmail.com</a></li>
           <li><a href="mailto:monoconvivium@gmail.com">monoconvivium@gmail.com</a></li>
         </ul>
+        <a class="cta-action" href="mailto:monoconvivium@gmail.com?subject=Collaborazione%20MONO%20Convivium">Entriamo in contatto</a>
       </div>
     </div>
   </div>
