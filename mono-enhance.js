@@ -150,31 +150,60 @@
   function initFormEventi() {
     var form = document.querySelector("[data-mono-form-eventi]");
     if (!form) return;
+    var ENDPOINT = "https://app.monobottega.it/api/events";
+    var CAT = {
+      "Cena o festa privata": "privato", "Evento aziendale": "aziendale",
+      "Aperitivo": "aperitivo", "Box o regalo gastronomico": "gifting", "Altro": "altro"
+    };
+    var BUD = {
+      "Da definire insieme": "da_definire", "Fino a 500 €": "fino_500",
+      "500–1.000 €": "500_1000", "1.000–2.500 €": "1000_2500", "Oltre 2.500 €": "oltre_2500"
+    };
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var v = function (n) { return (form.elements[n] && form.elements[n].value || "").trim(); };
+      var btn = form.querySelector("button[type=submit]");
       if (!v("tipo")) { form.elements.tipo.focus(); return; }
+      if (v("email").indexOf("@") < 0) { form.elements.email.focus(); nota("Serve la tua email", btn); return; }
+      if (v("telefono").replace(/\D/g, "").length < 8) { form.elements.telefono.focus(); nota("Serve il cellulare", btn); return; }
+      if (form.elements.consenso && !form.elements.consenso.checked) { nota("Serve il consenso", btn); return; }
+
       var dataIt = "";
-      if (v("data")) {
-        var p = v("data").split("-"); // yyyy-mm-dd → gg/mm/aaaa
-        dataIt = p[2] + "/" + p[1] + "/" + p[0];
-      }
+      if (v("data")) { var p = v("data").split("-"); dataIt = p[2] + "/" + p[1] + "/" + p[0]; }
       var righe = [
-        "Ciao MONO!",
-        "",
+        "Ciao MONO!", "",
         "Tipo di evento: " + v("tipo"),
         "Data: " + (dataIt || "da definire"),
         "Numero di persone: " + (v("persone") || "da definire"),
-        "Budget orientativo: " + (v("budget") || "da definire insieme"),
-        "",
-        "L'occasione: " + (v("note") || "-"),
-        "",
-        (v("nome") ? "— " + v("nome") : "")
+        "Budget orientativo: " + (v("budget") || "da definire insieme"), "",
+        "L'occasione: " + (v("note") || "-"), "",
+        "Nome: " + (v("nome") || "-"),
+        "Email: " + v("email"),
+        "Cellulare: " + v("telefono")
       ];
       var oggetto = "Richiesta evento MONO — " + v("tipo") + (dataIt ? " (" + dataIt + ")" : "");
-      apriGmail("monobottega@gmail.com", oggetto, righe.join("\n"),
-        "mailto:monobottega@gmail.com?subject=" + encodeURIComponent(oggetto) + "&body=" + encodeURIComponent(righe.join("\n")));
-      nota("Richiesta pronta: controlla e invia", form.querySelector("button[type=submit]"));
+      var doMail = function () {
+        apriGmail("monobottega@gmail.com", oggetto, righe.join("\n"),
+          "mailto:monobottega@gmail.com?subject=" + encodeURIComponent(oggetto) + "&body=" + encodeURIComponent(righe.join("\n")));
+        nota("Richiesta pronta: controlla e invia", btn);
+      };
+
+      var payload = {
+        customerType: "private", category: CAT[v("tipo")] || "altro", title: v("tipo"),
+        dateExact: v("data") || null,
+        partySize: v("persone") ? parseInt(v("persone"), 10) : null,
+        budgetBand: BUD[v("budget")] || "da_definire",
+        description: v("note") || null, name: v("nome") || null,
+        email: v("email"), phone: v("telefono"), consent: true
+      };
+      nota("Invio…", btn);
+      fetch(ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+          if (res && res.ok) { nota("Richiesta inviata! Ti ricontattiamo presto ✓", btn); form.reset(); }
+          else { doMail(); }   // disabilitato o errore → si ripiega sulla mail
+        })
+        .catch(function () { doMail(); });  // rete giù → mail
     });
   }
 

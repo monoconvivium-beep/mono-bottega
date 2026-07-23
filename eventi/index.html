@@ -154,6 +154,16 @@
             <label class="mono-form-wide">Il tuo nome
               <input type="text" name="nome" autocomplete="name" placeholder="Come ti chiami?">
             </label>
+            <label>Email
+              <input type="email" name="email" autocomplete="email" required placeholder="dove ti scriviamo la proposta">
+            </label>
+            <label>Cellulare
+              <input type="tel" name="telefono" autocomplete="tel" required placeholder="così possiamo richiamarti">
+            </label>
+            <label class="mono-form-wide" style="display:flex;gap:.55rem;align-items:flex-start;font-weight:400;font-size:.9rem;">
+              <input type="checkbox" name="consenso" required style="margin-top:.25rem;flex:none;">
+              <span>Acconsento al trattamento dei miei dati per gestire questa richiesta.</span>
+            </label>
             <div class="mono-form-actions mono-form-wide">
               <button class="button primary" type="submit" data-track="events_form_submit">Invia la richiesta</button>
               <small>Si apre la tua mail già scritta: la controlli e la mandi. Oppure scrivici: <a href="mailto:monobottega@gmail.com?subject=Richiesta%20evento%20MONO">monobottega@gmail.com</a></small>
