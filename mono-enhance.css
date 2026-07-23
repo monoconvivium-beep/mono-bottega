@@ -112,6 +112,22 @@
   outline: 2px solid var(--mono-terracotta, #b85c38);
   outline-offset: 1px;
 }
+/* La casella del consenso: NON deve ereditare il reset dei campi di testo
+   (appearance:none + bordo + min-height la rendevano un riquadro vuoto senza
+   spunta). Qui la riportiamo a casella vera, con la spunta verde-oliva. */
+.mono-form input[type="checkbox"] {
+  appearance: auto;
+  -webkit-appearance: checkbox;
+  width: 20px;
+  height: 20px;
+  min-height: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  accent-color: #6e6a3c;
+  flex: none;
+  cursor: pointer;
+}
 .mono-form-actions {
   display: flex;
   align-items: center;
