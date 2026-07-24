@@ -112,6 +112,22 @@
   outline: 2px solid var(--mono-terracotta, #b85c38);
   outline-offset: 1px;
 }
+/* La RIGA del consenso e' una frase, non l'etichetta di un campo: senza questa
+   regola eredita da .mono-form label il maiuscolo + spaziatura e sembra un
+   titoletto urlato invece di una cosa da leggere e spuntare. */
+.mono-form label.mono-form-consenso {
+  display: flex;
+  gap: 0.55rem;
+  align-items: flex-start;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: normal;
+  text-transform: none;
+  line-height: 1.45;
+  color: rgba(38, 35, 33, 0.78);
+  cursor: pointer;
+}
+
 /* La casella del consenso: NON deve ereditare il reset dei campi di testo
    (appearance:none + bordo + min-height la rendevano un riquadro vuoto senza
    spunta). Qui la riportiamo a casella vera, con la spunta verde-oliva. */
