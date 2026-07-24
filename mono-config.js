@@ -7,14 +7,12 @@
    ============================================================ */
 
 /* ------------------------------------------------------------
-   1) RACCOLTA EMAIL AUTOMATICA  (Formspree — gratis)
+   1) FORMSPREE — 🔌 NON SERVE PIU', lasciare vuoto
 
-   Oggi: quando qualcuno lascia l'email, gli si apre la SUA posta
-   già scritta e deve premere invia. Funziona, ma chi non ha voglia
-   di premere invia si perde per strada.
-
-   Con questo attivo: l'email si salva DA SOLA e a te arriva la
-   notifica. La persona non deve fare nient'altro.
+   ⚠️ Superato dal 24/7: la raccolta email ora la fa l'APP (vedi
+   1-BIS qui sotto), che non ha tetti mensili e tiene i dati in casa.
+   Questa casella resta solo come terza scorta: NON riempirla senza
+   parlarne, o si finirebbe con le iscrizioni in due posti diversi.
 
    Come si fa (5 minuti):
      1. vai su  formspree.io  e crea un account gratuito
@@ -24,6 +22,54 @@
      4. incollalo qui sotto fra le virgolette
    ------------------------------------------------------------ */
 window.MONO_NEWSLETTER_ENDPOINT = "";
+
+/* ------------------------------------------------------------
+   1-BIS) ⭐⭐ APP MONO — QUESTA E' LA STRADA ATTIVA (dal 24/7)
+
+   Le iscrizioni "Avvisami all'apertura" entrano DIRETTAMENTE nell'app
+   (app.monobottega.it), dentro il CRM, come contatti con consenso
+   marketing. Nessun servizio esterno, nessun tetto, nessun account
+   in piu': i dati sono tuoi e stanno dove stanno tutti gli altri.
+
+   Dove le ritrovi:
+     - Admin  > "Lista apertura"  = elenco completo + Scarica CSV
+     - Counter> "Lista apertura"  = SOLO il numero, mai le email
+       (al banco serve sapere che e' arrivata roba da segnalarti)
+
+   Se un giorno vuoi spegnerla: si spegne dal lato APP, mettendo
+   LISTA_APERTURA_ENABLED = false in lib/flags.ts. Il sito se ne
+   accorge da solo e ripiega sulla mail: non si perde nessuno.
+   ------------------------------------------------------------ */
+window.MONO_APP_WAITLIST_ENDPOINT = "https://app.monobottega.it/api/waitlist";
+
+/* ------------------------------------------------------------
+   1-TER) MODULO GOOGLE — 🔌 SCORTA, OGGI SPENTA
+   Preparato e provato il 24/7, poi messo da parte: Google vive
+   FUORI dall'app, quindi i dipendenti avrebbero dovuto aprire un
+   link esterno con un altro account, e l'app non poteva essere
+   avvisata delle nuove iscrizioni. L'app fa tutto meglio.
+
+   Il modulo esiste ancora ed e' valido. Per riaccenderlo (solo se
+   un giorno l'app non fosse disponibile) rimetti i due valori:
+     ACTION: https://docs.google.com/forms/d/e/1FAIpQLSeVmJIhfb13X6
+             s9Uze1z7sra4oQc5FeIB3LC74j7TCFSQ3LpQ/formResponse
+     FIELD:  entry.570361845
+   Modulo "LISTA EVENTI MONO", proprietario federicopasciucco1989@
+   gmail.com. Verificato con un invio vero il 24/7.
+
+   ⚠️ Sotto restano VUOTI di proposito: vuoti = spento.
+   Nota storica: il modulo Google era stato scelto al posto di
+   Formspree perche' Formspree gratis si ferma a 50 email al mese.
+   Poi e' arrivata la strada dell'app, che le batte entrambe.
+
+   ⚠️ SE UN GIORNO LO RIACCENDI e rifai il modulo da capo, servono
+   due cose nuove: l'indirizzo (finisce sempre in /formResponse,
+   NON in /viewform) e il numero del campo, diverso per ogni modulo.
+   E "Visualizzazione intervistato" DEVE stare su "Chiunque abbia il
+   link", altrimenti Google chiede il login e non si iscrive nessuno.
+   ------------------------------------------------------------ */
+window.MONO_GFORM_ACTION = "";
+window.MONO_GFORM_FIELD = "";
 
 /* ------------------------------------------------------------
    2) STATISTICHE DEL SITO — SCEGLI UNA DELLE DUE

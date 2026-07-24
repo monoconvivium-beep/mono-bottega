@@ -2,6 +2,9 @@ const APP_STORE_URL = "https://app.monobottega.it/home";
 const GOOGLE_PLAY_URL = "https://app.monobottega.it/home";
 const NEWSLETTER_EMAIL = "monobottega@gmail.com";
 const NEWSLETTER_ENDPOINT = window.MONO_NEWSLETTER_ENDPOINT || "";
+const APP_WAITLIST_ENDPOINT = window.MONO_APP_WAITLIST_ENDPOINT || "";
+const GFORM_ACTION = window.MONO_GFORM_ACTION || "";
+const GFORM_FIELD = window.MONO_GFORM_FIELD || "";
 const TRACKING_EVENT_NAME = "mono_cta_click";
 const ANALYTICS_CONFIG = {
   ga4MeasurementId: "",
@@ -202,25 +205,14 @@ function setupNewsletterForms() {
          Ora: se c'e' l'endpoint si salva davvero; se non c'e' si apre Gmail
          gia' compilato (funziona su qualunque dispositivo) e il messaggio dice
          la verita' — l'iscrizione si completa premendo invia. */
-      try {
-        if (NEWSLETTER_ENDPOINT) {
-          const response = await fetch(NEWSLETTER_ENDPOINT, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
-          });
-
-          if (!response.ok) {
-            throw new Error("Newsletter endpoint error");
-          }
-
-          if (status) {
-            status.textContent = "Ci siamo. Ti scriviamo noi. — MONO";
-          }
-          form.reset();
-          return;
-        }
-
+      /* RIPIEGO DI SCORTA (24/7). Apre Gmail gia' compilato. Serve in due casi:
+         quando non e' configurato NESSUN sistema di raccolta, e - questa e' la
+         novita' - quando quello configurato FALLISCE (rete assente, modulo
+         cancellato, Google giu'). Prima in quel caso si diceva soltanto "non
+         siamo riusciti a salvare l'email": la persona aveva gia' scritto il suo
+         indirizzo, si sentiva dire di no, e il contatto era perso lo stesso.
+         Ora il peggio che puo' capitare e' tornare al comportamento di prima. */
+      const ripiegaSuGmail = () => {
         const subject = "Avvisami all'apertura MONO";
         const body = `Email: ${email}\nOrigine: ${window.location.href}\nData: ${createdAt}`;
         const gmailUrl =
@@ -247,10 +239,90 @@ function setupNewsletterForms() {
         if (status) {
           status.textContent = "Apri la mail che abbiamo preparato e premi invia. Oppure scrivici a " + NEWSLETTER_EMAIL + ".";
         }
-      } catch (error) {
-        if (status) {
-          status.textContent = "Non siamo riusciti a salvare l'email. Scrivici a " + NEWSLETTER_EMAIL + ".";
+      };
+
+      try {
+        if (NEWSLETTER_ENDPOINT) {
+          const response = await fetch(NEWSLETTER_ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+
+          if (!response.ok) {
+            throw new Error("Newsletter endpoint error");
+          }
+
+          if (status) {
+            status.textContent = "Ci siamo. Ti scriviamo noi. — MONO";
+          }
+          form.reset();
+          return;
         }
+
+        /* ⭐ APP MONO - la strada VERA, dal 24/7 (app v115).
+           L'iscrizione entra direttamente nel CRM dell'app come contatto con
+           consenso marketing. Da li' il titolare la vede in Admin > Lista
+           apertura (elenco + CSV) e il banco vede solo QUANTE sono.
+           Scelta al posto del modulo Google perche' Google vive FUORI
+           dall'app: i dipendenti avrebbero dovuto aprire un link esterno con
+           un altro account, e l'app non poteva essere avvisata di niente.
+           L'app risponde:
+             {ok:true}                -> salvata
+             {ok:true, already:true}  -> gia' iscritta (per la persona e' un
+                                         successo comunque: non la spaventiamo)
+             {disabled:true}          -> interruttore spento lato app
+           Negli ultimi due casi NON ci si ferma: si prova la strada dopo. */
+        if (APP_WAITLIST_ENDPOINT) {
+          try {
+            const risposta = await fetch(APP_WAITLIST_ENDPOINT, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email })
+            });
+            const esito = await risposta.json().catch(() => ({}));
+
+            if (esito && esito.ok) {
+              if (status) {
+                status.textContent = "Ci siamo. Ti scriviamo noi. — MONO";
+              }
+              form.reset();
+              return;
+            }
+          } catch (e) {
+            /* app irraggiungibile: si scende alla strada dopo, non si molla */
+          }
+        }
+
+        /* MODULO GOOGLE - scorta SPENTA (i due valori sono vuoti in
+           mono-config.js, quindi questo blocco non parte mai). Tenuto pronto
+           nel caso un giorno serva senza l'app.
+           ⚠️ Se lo si riaccende: mode:"no-cors" e' OBBLIGATORIO (Google non
+           concede CORS ai moduli) e ha un prezzo - la risposta e' "opaca",
+           NON possiamo sapere se ha funzionato, quindi il successo si
+           annuncia fidandosi. La fetch rifiuta solo se la rete e' giu', e li'
+           il catch ripiega su Gmail. */
+        if (GFORM_ACTION && GFORM_FIELD) {
+          const dati = new URLSearchParams();
+          dati.append(GFORM_FIELD, email);
+
+          await fetch(GFORM_ACTION, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: dati.toString()
+          });
+
+          if (status) {
+            status.textContent = "Ci siamo. Ti scriviamo noi. — MONO";
+          }
+          form.reset();
+          return;
+        }
+
+        ripiegaSuGmail();
+      } catch (error) {
+        ripiegaSuGmail();
       }
     });
   });
