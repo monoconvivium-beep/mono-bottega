@@ -612,13 +612,27 @@
     //   4,4>5,4s   82.500
     //   5,4>6,4s   47.800
     //   6,4>7,4s   29.300   da qui restano vapore e sfarfallio
-    // A 6,4s la scena ha gia' detto tutto.
+    //
+    // 22/7 - PORTATO DA 6,4 A 5,0. L'utente ha riferito che 6,4 era
+    // diventato troppo lungo (dopo che 1,8 era troppo corto).
+    // ⚠️ IL MOTIVO VERO, che a luglio non avevamo considerato: lo stacco
+    // NON e' istantaneo. .cinema-video--fire/--pasta hanno
+    // "transition: opacity 1000ms" (styles.css:2482-2493) + il lampo
+    // .cinema-bridge da 1500ms. Quindi il fuoco resta in scena fino a
+    // STACCO_MOBILE + ~1s: con 6,4 il pentolino si vedeva fino a ~7,4s.
+    // Alla durata scelta va SEMPRE sommato 1s di dissolvenza.
+    // 5,0 tiene tutto cio' che racconta qualcosa - la fiammata (1,4-2,4)
+    // e il picco di luce completo (3,4-4,4) - piu' 0,6s di respiro, e
+    // taglia solo la coda che si stava gia' spegnendo. Il fuoco sparisce
+    // del tutto verso i 6,0s invece che 7,4s.
+    // Se va ancora ritoccato: muovere di +/-0,5s. NON scendere sotto 4,4
+    // o si taglia il picco di luce a meta' (era il difetto di 1,8s).
     //
     // Legato a currentTime e NON a un setTimeout: su una linea lenta
     // l'orologio corre anche mentre il video e' fermo a caricare, e si
     // finirebbe per mostrarne ancora meno proprio a chi ha la rete
     // peggiore. Cosi' tutti vedono la stessa porzione di film.
-    const STACCO_MOBILE = 6.4;
+    const STACCO_MOBILE = 5.0;
     fireVideo.addEventListener("timeupdate", () => {
       if (!mobile.matches || transitioned || finished || paused) return;
       if (fireVideo.currentTime >= STACCO_MOBILE) transitionToPasta();
