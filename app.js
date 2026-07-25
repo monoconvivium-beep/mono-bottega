@@ -132,6 +132,37 @@ function setupAppLinks() {
   });
 }
 
+/* CARTELLINI UTM SUI LINK VERSO L'APP (25/7).
+   Aggiunge a ogni link verso app.monobottega.it un'etichetta invisibile che
+   dice DA DOVE arriva la persona (quale pagina, quale pulsante). Serve a
+   rispondere a "da dove entrano nell'app?" senza toccare l'esperienza: sono
+   parametri in coda all'indirizzo, l'app li ignora se non li usa.
+
+   Fatto QUI e non a mano nelle 12 pagine di proposito: un punto solo da
+   mantenere, nessun rischio di refuso su 18 link, e i link NUOVI vengono
+   marcati da soli. L'etichetta riusa `data-track`, che e' gia' unica per
+   ogni pulsante (app_invite_gastronomia, app_gateway_download, ...).
+
+   ⚠️ Va chiamata DOPO setupAppLinks(): quella riscrive gli href dei pulsanti
+   store, e se girasse dopo cancellerebbe i cartellini.
+   ⚠️ Il QR NON e' marcato: e' un'immagine SVG con l'indirizzo gia' inciso
+   dentro, andrebbe rigenerata (lavoro a se').
+   ⚠️ Perche' si veda qualcosa, l'APP deve registrare questi parametri
+   all'arrivo: oggi salva solo il percorso, non l'etichetta. */
+function setupAppUtm() {
+  const PAGINA = (location.pathname.replace(/\/index\.html$/, "").replace(/^\/|\/$/g, "") || "home");
+  document.querySelectorAll('a[href*="app.monobottega.it"]').forEach((link) => {
+    let url;
+    try { url = new URL(link.href, location.href); } catch (error) { return; }
+    if (url.searchParams.has("utm_source")) return;   // gia' marcato: non si tocca
+    url.searchParams.set("utm_source", "monobottega_site");
+    url.searchParams.set("utm_medium", "cta");
+    url.searchParams.set("utm_campaign", "preopening");
+    url.searchParams.set("utm_content", link.dataset.track || PAGINA);
+    link.href = url.toString();
+  });
+}
+
 function setupQrDialog() {
   const trigger = document.querySelector("[data-qr-open]");
   const dialog = document.querySelector("[data-qr-dialog]");
@@ -694,6 +725,7 @@ setupCinematicHero();
 setupReveals();
 setupAnalytics();
 setupAppLinks();
+setupAppUtm();      // subito DOPO setupAppLinks: quella riscrive gli href
 setupQrDialog();
 setupNewsletterForms();
 setupTracking();
