@@ -145,6 +145,53 @@
   window.MONOApriGmail = apriGmail;
   window.MONONotaCopia = nota;
 
+  /* Conferma dopo l'invio della richiesta evento.
+
+     ⚠️ Perche' esiste. Prima al posto suo c'era una nota volante (`nota`) che
+     spariva dopo due secondi e mezzo e diceva solo "Ti ricontattiamo presto".
+     L'app RESTITUISCE il codice pratica (`publicCode`) e nessuno lo mostrava:
+     chi mandava la richiesta dal sito restava senza niente in mano — nessun
+     codice da citare al telefono, nessuna prova di aver mandato qualcosa.
+     Il titolare se n'e' accorto in collaudo: "la conferma con il codice
+     pratica non c'e' sullo schermo".
+
+     Il riquadro prende il posto del modulo e RESTA: si puo' fotografare. */
+  function mostraConferma(form, codice, email) {
+    var box = document.createElement("div");
+    box.className = "mono-eventi-ok";
+    box.setAttribute("role", "status");
+
+    var h = document.createElement("p");
+    h.className = "mono-eventi-ok__titolo";
+    h.textContent = "✓ Richiesta ricevuta";
+    box.appendChild(h);
+
+    if (codice) {
+      var et = document.createElement("p");
+      et.className = "mono-eventi-ok__etichetta";
+      et.textContent = "Il tuo codice pratica";
+      box.appendChild(et);
+
+      var c = document.createElement("p");
+      c.className = "mono-eventi-ok__codice";
+      c.textContent = codice;
+      box.appendChild(c);
+    }
+
+    var p = document.createElement("p");
+    p.className = "mono-eventi-ok__testo";
+    /* Due cose che evitano la telefonata "non mi e' arrivato niente":
+       dove cercare la mail, e che questa NON e' una prenotazione. */
+    p.textContent = email
+      ? "Ti abbiamo mandato una conferma a " + email + " — se non la vedi, guarda in Promozioni o Spam. "
+        + "Ti ricontattiamo noi: quella che hai mandato e' una richiesta, non ancora una prenotazione."
+      : "Ti ricontattiamo noi: quella che hai mandato e' una richiesta, non ancora una prenotazione.";
+    box.appendChild(p);
+
+    form.replaceWith(box);
+    if (box.scrollIntoView) box.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
   /* Questionario eventi: alla conferma si apre Gmail con la richiesta gia'
      scritta riga per riga. Nessun servizio esterno, zero costi. */
   function initFormEventi() {
@@ -200,7 +247,7 @@
       fetch(ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
         .then(function (r) { return r.json(); })
         .then(function (res) {
-          if (res && res.ok) { nota("Richiesta inviata! Ti ricontattiamo presto ✓", btn); form.reset(); }
+          if (res && res.ok) { mostraConferma(form, res.publicCode, v("email")); }
           else { doMail(); }   // disabilitato o errore → si ripiega sulla mail
         })
         .catch(function () { doMail(); });  // rete giù → mail

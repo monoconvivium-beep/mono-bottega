@@ -282,3 +282,46 @@ body.qr-dialog-open .app-qr-dialog__close {
   font-size: 30px;
   box-shadow: 0 10px 26px -10px rgba(0, 0, 0, 0.6);
 }
+
+/* ============================================================
+   CONFERMA della richiesta evento — prende il posto del modulo.
+   Prima c'era solo una nota volante che spariva in due secondi: chi
+   mandava la richiesta restava senza il codice pratica, che pure l'app
+   restituisce. Questo riquadro RESTA a schermo e si puo' fotografare.
+   ============================================================ */
+.mono-eventi-ok {
+  background: var(--mono-cashmere, #f4ecdd);
+  border: 1px solid rgba(38, 35, 33, 0.12);
+  border-radius: var(--radius-medium, 22px);
+  padding: clamp(22px, 5vw, 34px);
+  text-align: center;
+  color: var(--mono-anthracite, #262321);
+}
+.mono-eventi-ok__titolo {
+  margin: 0;
+  font-size: clamp(20px, 3.4vw, 26px);
+  font-weight: 700;
+  color: var(--mono-sage, #4e6b47);
+}
+.mono-eventi-ok__etichetta {
+  margin: 18px 0 2px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+.mono-eventi-ok__codice {
+  margin: 0;
+  font-size: clamp(26px, 5vw, 34px);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  /* Un codice si legge carattere per carattere e a volte si ricopia a mano. */
+  font-variant-numeric: tabular-nums;
+}
+.mono-eventi-ok__testo {
+  margin: 16px auto 0;
+  max-width: 44ch;
+  font-size: 14.5px;
+  line-height: 1.6;
+  opacity: 0.8;
+}
