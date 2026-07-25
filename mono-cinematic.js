@@ -493,8 +493,9 @@
 
     /* ⭐ BADGE INCOLLATO SULLA FILIGRANA GEMINI (25/7) — la soluzione vera,
        dopo che le % fisse continuavano a mancarla.
-       La filigrana ✦ e' incisa nel fotogramma a ~(1215,595) su 1280x720
-       (letto dai poster). Il video home e' object-fit:cover: viene RITAGLIATO,
+       La filigrana ✦ e' incisa nel fotogramma a ~(1158,610) su 1280x720
+       (MISURATA sui pixel dei poster, vedi sotto). Il video home e'
+       object-fit:cover: viene RITAGLIATO,
        e a ogni forma di schermo quel punto cade in un posto DIVERSO — percio'
        nessuna % fissa lo copre ovunque. Qui calcoliamo dove cade DAVVERO
        (stessa matematica del cover) e ci mettiamo sopra il badge, ricalcolando
@@ -531,10 +532,25 @@
       badge.style.left = left + "px";
       badge.style.top = top + "px";
     };
+    /* ⚡ PERFORMANCE (25/7): il badge va ricalcolato SOLO quando cambia la
+       finestra o all'avvio, NON di continuo. Prima un ResizeObserver sullo
+       stage lo faceva ricalcolare in continuazione — anche durante lo scroll e
+       la transizione video→testo — e ogni ricalcolo forza un reflow
+       (getBoundingClientRect + getComputedStyle): e' questo che rallentava la
+       pagina. Rimosso. Ora: init + load + resize/orientamento, e il resize e'
+       frenato a UNA volta per fotogramma (rAF). Il badge non cambia posizione
+       ne' durante lo scroll ne' al cambio video (la filigrana e' nello stesso
+       punto del fotogramma per entrambi), quindi non serve osservarlo. */
+    let badgeRaf = 0;
+    const ricollocaBadge = () => {
+      if (badgeRaf) return;
+      badgeRaf = requestAnimationFrame(() => { badgeRaf = 0; posizionaBadgeSuFiligrana(); });
+    };
     posizionaBadgeSuFiligrana();
-    window.addEventListener("resize", posizionaBadgeSuFiligrana, { passive: true });
+    window.addEventListener("load", posizionaBadgeSuFiligrana, { once: true });
+    window.addEventListener("resize", ricollocaBadge, { passive: true });
+    window.addEventListener("orientationchange", ricollocaBadge, { passive: true });
     fireVideo.addEventListener("loadedmetadata", posizionaBadgeSuFiligrana);
-    if (window.ResizeObserver) new ResizeObserver(posizionaBadgeSuFiligrana).observe(stage);
 
     const controlWrap = document.createElement("div");
     controlWrap.className = "cinema-cinematic-controls";
