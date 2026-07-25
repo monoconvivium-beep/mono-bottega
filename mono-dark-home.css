@@ -810,11 +810,16 @@ body.mono-dark-home .mono-form-card.is-tilting {
    15,3% dal fondo, da `badgeDefaults` in cinematic-assets.js) invece che del
    fotogramma → su PC largo non la copriva piu'.
 
-   Misurato/calcolato: su schermi >= 16:9 il video riempie ESATTA la larghezza,
-   quindi la filigrana resta STABILE a ~7,8% dal bordo destro; in verticale
-   deriva col rapporto (dal ~13% al ~18% dal fondo). Percio': centro il badge
-   a 7,8% da destra e 15,5% dal fondo (la media), e lo faccio un filo piu'
-   grande (88px) per avere margine su tutte le forme di schermo.
+   Misurato dai DUE poster (fuoco E agnolotti: la filigrana ✦ e' nello stesso
+   punto del fotogramma, ~1215,595 su 1280x720 = ~4% da destra, 17,4% dal
+   fondo). Su schermi >= 16:9 il video riempie ESATTA la larghezza, quindi la
+   filigrana resta STABILE a ~4% dal bordo destro; in verticale deriva col
+   rapporto (dal ~11% su schermo largo al ~17% a 16:9 pieno).
+
+   Percio': badge a 4% da destra, 13% dal fondo, e piu' GRANDE (100px) apposta
+   per coprire tutta la deriva verticale (~11-17%) con un solo badge fisso.
+   ⚠️ Il primo tentativo (7,8% / 15,5% / 88px) era troppo in alto e a sinistra:
+   confermato dallo screenshot utente, la stellina sbucava in basso a destra.
 
    Solo da 821px in su: su TELEFONO il video ritaglia i lati e la filigrana
    finisce FUORI dal bordo destro (verificato: sul mobile non e' visibile),
@@ -825,11 +830,13 @@ body.mono-dark-home .mono-form-card.is-tilting {
    ============================================================ */
 @media (min-width: 821px) {
   body.mono-dark-home .cinema-hero .cinematic-film__badge {
-    --mono-home-badge: 88px;
+    --mono-home-badge: 100px;
     width: var(--mono-home-badge);
     height: var(--mono-home-badge);
-    right: calc(7.8% - var(--mono-home-badge) / 2);
-    bottom: calc(15.5% - var(--mono-home-badge) / 2);
+    /* max(16px, …): su finestre strette 4% diventa piccolo e il badge grande
+       sporgerebbe dal bordo → il max lo tiene sempre almeno 16px dentro. */
+    right: max(16px, calc(4% - var(--mono-home-badge) / 2));
+    bottom: max(16px, calc(13% - var(--mono-home-badge) / 2));
   }
 }
 
