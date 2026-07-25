@@ -94,7 +94,11 @@
    ⚠️ .mono-form label è display:grid → un elemento sciolto nel label finirebbe
    su una RIGA A SÉ: per questo il testo dell'etichetta sta dentro
    .mono-form-caption e l'asterisco vive lì dentro, inline. */
-.mono-req { color: #A83A28; font-weight: 800; }
+/* Doppia classe di proposito: la scheda (.page-card span / simili) colora
+   TUTTI gli span di terracotta e scavalcava il singolo .mono-req — misurato
+   live: usciva #B85C38 invece del rosso. Con .mono-form davanti si vince. */
+.mono-form .mono-req,
+.mono-form-card .mono-req { color: #A83A28; font-weight: 800; }
 .mono-form-actions small .mono-req { font-size: 1.1em; }
 .mono-form input,
 .mono-form select,
