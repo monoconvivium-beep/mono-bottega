@@ -164,6 +164,8 @@
       if (!armed) return;
       armed = false;
       document.removeEventListener("pointerdown", unlock);
+      document.removeEventListener("touchstart", unlock);
+      document.removeEventListener("wheel", unlock);
       document.removeEventListener("keydown", unlock);
     };
     const unlock = async (event) => {
@@ -211,7 +213,13 @@
         syncAudioControls();
       }
     };
+    // Il PIU' PRESTO possibile: qualunque cosa faccia il visitatore accende
+    // l'audio. pointerdown+touchstart = tocco sul telefono; wheel = primo
+    // scroll col mouse su PC (la prima cosa che fa quasi tutti). I browser
+    // NON permettono l'audio prima di un gesto: questo e' il minimo gesto.
     document.addEventListener("pointerdown", unlock, { passive: true });
+    document.addEventListener("touchstart", unlock, { passive: true });
+    document.addEventListener("wheel", unlock, { passive: true });
     document.addEventListener("keydown", unlock);
     window.addEventListener("pagehide", disarm, { once: true });
   };
