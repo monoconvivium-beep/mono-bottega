@@ -490,6 +490,48 @@
       chrome.badge.classList.add("cinema-film-badge");
       stage.append(chrome.badge);
     }
+
+    /* ⭐ BADGE INCOLLATO SULLA FILIGRANA GEMINI (25/7) — la soluzione vera,
+       dopo che le % fisse continuavano a mancarla.
+       La filigrana ✦ e' incisa nel fotogramma a ~(1215,595) su 1280x720
+       (letto dai poster). Il video home e' object-fit:cover: viene RITAGLIATO,
+       e a ogni forma di schermo quel punto cade in un posto DIVERSO — percio'
+       nessuna % fissa lo copre ovunque. Qui calcoliamo dove cade DAVVERO
+       (stessa matematica del cover) e ci mettiamo sopra il badge, ricalcolando
+       a ogni resize. Solo desktop: su telefono il video taglia i lati e la
+       filigrana esce dal bordo (non visibile), quindi il badge resta alla CSS. */
+    const posizionaBadgeSuFiligrana = () => {
+      const badge = chrome.badge;
+      if (!badge) return;
+      if (mobile.matches) {
+        badge.style.left = badge.style.top = badge.style.right = badge.style.bottom = "";
+        return;
+      }
+      const vb = fireVideo.getBoundingClientRect();
+      const sb = stage.getBoundingClientRect();
+      if (!vb.width || !vb.height) return;
+      const FW = 1280, FH = 720, WX = 1215, WY = 595;
+      const scale = Math.max(vb.width / FW, vb.height / FH);
+      const op = getComputedStyle(fireVideo).objectPosition.split(" ");
+      const px = (parseFloat(op[0]) || 50) / 100;
+      const py = (parseFloat(op[1]) || 50) / 100;
+      const cx = vb.left + (vb.width - FW * scale) * px + WX * scale;
+      const cy = vb.top + (vb.height - FH * scale) * py + WY * scale;
+      const size = badge.offsetWidth || 100;
+      // clamp: su schermi stretti la filigrana finisce quasi sul bordo; il badge
+      // non deve sporgere fuori dallo stage (resta 6px dentro, coprendola lo stesso).
+      const left = Math.max(6, Math.min(cx - sb.left - size / 2, sb.width - size - 6));
+      const top = Math.max(6, Math.min(cy - sb.top - size / 2, sb.height - size - 6));
+      badge.style.right = "auto";
+      badge.style.bottom = "auto";
+      badge.style.left = left + "px";
+      badge.style.top = top + "px";
+    };
+    posizionaBadgeSuFiligrana();
+    window.addEventListener("resize", posizionaBadgeSuFiligrana, { passive: true });
+    fireVideo.addEventListener("loadedmetadata", posizionaBadgeSuFiligrana);
+    if (window.ResizeObserver) new ResizeObserver(posizionaBadgeSuFiligrana).observe(stage);
+
     const controlWrap = document.createElement("div");
     controlWrap.className = "cinema-cinematic-controls";
     if (chrome.audio) controlWrap.append(chrome.audio);
