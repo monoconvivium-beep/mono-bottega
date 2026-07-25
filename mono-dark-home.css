@@ -801,6 +801,39 @@ body.mono-dark-home .mono-form-card.is-tilting {
 }
 
 /* ============================================================
+   BADGE DELLA HOME su PC — coprire la filigrana Gemini (25/7)
+
+   Il video home e' `object-fit: cover` a tutto schermo (styles.css:2479),
+   NON contenuto come gli altri film: quindi il fotogramma viene RITAGLIATO
+   e la filigrana ✦ (nel sorgente a ~1180,592 su 1280x720) "galleggia"
+   rispetto al badge. Il badge era piazzato in % dello SCHERMO (9% da destra,
+   15,3% dal fondo, da `badgeDefaults` in cinematic-assets.js) invece che del
+   fotogramma → su PC largo non la copriva piu'.
+
+   Misurato/calcolato: su schermi >= 16:9 il video riempie ESATTA la larghezza,
+   quindi la filigrana resta STABILE a ~7,8% dal bordo destro; in verticale
+   deriva col rapporto (dal ~13% al ~18% dal fondo). Percio': centro il badge
+   a 7,8% da destra e 15,5% dal fondo (la media), e lo faccio un filo piu'
+   grande (88px) per avere margine su tutte le forme di schermo.
+
+   Solo da 821px in su: su TELEFONO il video ritaglia i lati e la filigrana
+   finisce FUORI dal bordo destro (verificato: sul mobile non e' visibile),
+   quindi li' il badge resta com'era, puramente decorativo.
+
+   Agisce sulle PROPRIETA' del badge (non sulle --video-badge-*, che il JS
+   mette inline e vincerebbero): 3 classi = specificita' sufficiente.
+   ============================================================ */
+@media (min-width: 821px) {
+  body.mono-dark-home .cinema-hero .cinematic-film__badge {
+    --mono-home-badge: 88px;
+    width: var(--mono-home-badge);
+    height: var(--mono-home-badge);
+    right: calc(7.8% - var(--mono-home-badge) / 2);
+    bottom: calc(15.5% - var(--mono-home-badge) / 2);
+  }
+}
+
+/* ============================================================
    FILM "La tavola delle occasioni" su Eventi (18/7)
 
    Stessa fascia chiara di .about-cinematic (experience.css:1312),
