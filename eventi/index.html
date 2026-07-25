@@ -28,9 +28,9 @@
     <link rel="stylesheet" href="../styles.css?v=20260716-fonts-v1">
 <link rel="stylesheet" href="../experience.css?v=20260716-fonts-v1">
 <link rel="stylesheet" href="../mono-engineering.css?v=20260716-fonts-v1">
-      <link rel="stylesheet" href="../mono-enhance.css?v=20260725-badge-home-v26">
-    <link rel="stylesheet" href="../mono-dark-home.css?v=20260725-badge-home-v26">
-      <script defer src="../mono-enhance.js?v=20260725-badge-home-v26"></script>
+      <link rel="stylesheet" href="../mono-enhance.css?v=20260725-form-eventi-v27">
+    <link rel="stylesheet" href="../mono-dark-home.css?v=20260725-form-eventi-v27">
+      <script defer src="../mono-enhance.js?v=20260725-form-eventi-v27"></script>
       <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -66,7 +66,7 @@
         ]
       }
     </script>
-    <script src="../mono-config.js?v=20260725-badge-home-v26"></script>
+    <script src="../mono-config.js?v=20260725-form-eventi-v27"></script>
 </head>
   <body class="mono-world events-page mono-dark-home" data-mono-world="events">
     <a class="skip-link" href="#main">Vai al contenuto</a>
@@ -122,8 +122,11 @@
         <article class="page-card mono-form-card" id="richiesta-evento">
           <span>RICHIEDI UNA PROPOSTA</span>
           <h3>Due minuti, e ci pensiamo noi.</h3>
-          <form class="mono-form" data-mono-form-eventi novalidate>
-            <label>Tipo di evento
+          <!-- niente novalidate: il browser blocca DA SOLO i campi obbligatori
+               vuoti (bolla sul campo), il JS rifinisce (cifre del cellulare).
+               Doppia rete: se uno dei due manca, l'altro tiene. -->
+          <form class="mono-form" data-mono-form-eventi>
+            <label><span class="mono-form-caption">Tipo di evento <span class="mono-req" aria-hidden="true">*</span></span>
               <select name="tipo" required>
                 <option value="" selected disabled>Scegli…</option>
                 <option>Cena o festa privata</option>
@@ -154,11 +157,11 @@
             <label class="mono-form-wide">Il tuo nome
               <input type="text" name="nome" autocomplete="name" placeholder="Come ti chiami?">
             </label>
-            <label>Email
+            <label><span class="mono-form-caption">Email <span class="mono-req" aria-hidden="true">*</span></span>
               <input type="email" name="email" autocomplete="email" required placeholder="dove ti scriviamo la proposta">
             </label>
-            <label>Cellulare
-              <input type="tel" name="telefono" autocomplete="tel" required placeholder="così possiamo richiamarti">
+            <label><span class="mono-form-caption">Cellulare <span class="mono-req" aria-hidden="true">*</span></span>
+              <input type="tel" name="telefono" autocomplete="tel" required inputmode="tel" placeholder="così possiamo richiamarti">
             </label>
             <label class="mono-form-wide mono-form-consenso">
               <input type="checkbox" name="consenso" required style="margin-top:.15rem;flex:none;">
@@ -166,7 +169,7 @@
             </label>
             <div class="mono-form-actions mono-form-wide">
               <button class="button primary" type="submit" data-track="events_form_submit">Invia la richiesta</button>
-              <small>Si apre la tua mail già scritta: la controlli e la mandi. Oppure scrivici: <a href="mailto:monobottega@gmail.com?subject=Richiesta%20evento%20MONO">monobottega@gmail.com</a></small>
+              <small><span class="mono-req">*</span> Email e cellulare servono per risponderti e richiamarti: senza, la richiesta non parte. Oppure scrivici: <a href="mailto:monobottega@gmail.com?subject=Richiesta%20evento%20MONO">monobottega@gmail.com</a></small>
             </div>
           </form>
         </article>
@@ -188,7 +191,7 @@
 <script src="../mono-cinematic.js?v=20260725-fluido-v8"></script>
     <script src="../mono-navigation.js?v=20260714-engineering-master-v1"></script>
     <script src="../mono-signature.js?v=20260714-engineering-master-v1"></script>
-    <script src="../app.js?v=20260725-badge-home-v26"></script>
+    <script src="../app.js?v=20260725-form-eventi-v27"></script>
 <script src="../experience.js?v=20260714-shared-colors-v1"></script>
   </body>
 </html>

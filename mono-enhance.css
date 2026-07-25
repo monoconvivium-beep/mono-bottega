@@ -89,6 +89,13 @@
   color: rgba(38, 35, 33, 0.66);
 }
 .mono-form-wide { grid-column: 1 / -1; }
+/* Asterisco rosso dei campi obbligatori (25/7, chiesto dall'utente: senza
+   email E cellulare non si può richiamare chi chiede un evento).
+   ⚠️ .mono-form label è display:grid → un elemento sciolto nel label finirebbe
+   su una RIGA A SÉ: per questo il testo dell'etichetta sta dentro
+   .mono-form-caption e l'asterisco vive lì dentro, inline. */
+.mono-req { color: #A83A28; font-weight: 800; }
+.mono-form-actions small .mono-req { font-size: 1.1em; }
 .mono-form input,
 .mono-form select,
 .mono-form textarea {
