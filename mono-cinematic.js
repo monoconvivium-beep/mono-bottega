@@ -510,7 +510,11 @@
       const vb = fireVideo.getBoundingClientRect();
       const sb = stage.getBoundingClientRect();
       if (!vb.width || !vb.height) return;
-      const FW = 1280, FH = 720, WX = 1215, WY = 595;
+      // Posizione della filigrana ✦ nel fotogramma, MISURATA sui pixel dei due
+      // poster (analisi luminanza, non a occhio): centroide ~(1158,610) su
+      // 1280x720, concorde fra fuoco e agnolotti. Le stime precedenti (1215,595)
+      // erano ~57px troppo a destra → il badge cadeva a destra della stellina.
+      const FW = 1280, FH = 720, WX = 1158, WY = 610;
       const scale = Math.max(vb.width / FW, vb.height / FH);
       const op = getComputedStyle(fireVideo).objectPosition.split(" ");
       const px = (parseFloat(op[0]) || 50) / 100;
