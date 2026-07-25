@@ -175,7 +175,28 @@
         return;
       }
       const activeVideo = [...audioVideos].find((video) => !video.paused && !video.ended && video.dataset.hasAudio === "true");
-      if (!activeVideo) return;
+      if (!activeVideo) {
+        // La gesture e' arrivata PRIMA che il video partisse (rete lenta del
+        // telefono): non sprecarla. Appena un video con audio parte, lo si
+        // accende una volta sola. Senza questo, chi tocca lo schermo troppo
+        // presto restava muto e credeva che "l'audio non parte da solo".
+        // Non si disarma: se questo non basta, un tocco successivo riprova.
+        audioVideos.forEach((video) => {
+          if (video.dataset.hasAudio !== "true") return;
+          video.addEventListener("playing", function accePrimaCheParta() {
+            video.removeEventListener("playing", accePrimaCheParta);
+            if (readAudioPreference() === "off") return;
+            muteOtherVideos(video);
+            setVideoMuted(video, false);
+            video.play().then(() => {
+              writeAudioPreference("on");
+              video.dataset.audioAutoplay = "gesture-deferred";
+              syncAudioControls();
+            }).catch(() => { setVideoMuted(video, true); syncAudioControls(); });
+          });
+        });
+        return;
+      }
       muteOtherVideos(activeVideo);
       setVideoMuted(activeVideo, false);
       try {

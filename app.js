@@ -665,6 +665,26 @@ if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register(new URL("service-worker.js", scriptUrl));
 }
 
+/* La home ha il film "wow" in CIMA: deve aprirsi da lì, non dove il browser
+   aveva lasciato lo scroll la volta prima. `scrollRestoration` di default è
+   "auto" → sul telefono, a chi aveva già visitato il sito, la pagina si
+   riapriva "a metà" (sul claim "Buono come una volta"), saltando il video e
+   costringendo a risalire. Qui: solo sulla home (c'è .cinema-hero), riporto
+   in cima. Rispetto i link con #ancora e il tasto Indietro. */
+function setupHomeScrollTop() {
+  if (!document.querySelector(".cinema-hero")) return;
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  var toTop = function () {
+    if (location.hash) return;
+    var nav = performance.getEntriesByType && performance.getEntriesByType("navigation")[0];
+    if (nav && nav.type === "back_forward") return;
+    window.scrollTo(0, 0);
+  };
+  toTop();
+  window.addEventListener("load", toTop);
+}
+setupHomeScrollTop();
+
 setupMobileMenu();
 setupHeaderState();
 setupHeroVideo();
