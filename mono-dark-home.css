@@ -859,3 +859,25 @@ body.mono-dark-home .mono-form-card.is-tilting {
     background: linear-gradient(90deg, #CBA75A, rgba(203, 167, 90, 0.4));
   }
 }
+
+/* ============================================================
+   CONTROLLI DEL FILM HOME → in alto a destra, in colonna (24/7)
+   Prima stavano in BASSO a destra e su iPhone finivano SOPRA la
+   barra "Sii tra i primi a entrare in bottega" (segnalato da una
+   cliente): l'audio e "Rivedi" coprivano il form iscrizione.
+   Ora: angolo in alto a destra, uno sotto l'altro ("fila indiana").
+   - top a ~86px: l'header e' `position:fixed` e galleggia in alto;
+     cosi' i controlli gli restano SOTTO e non toccano il menu su PC.
+   - `body.mono-dark-home` + questo file caricato per ultimo = vince
+     sulle regole di mono-engineering.css (che e' di Codex, non toccato).
+   Il tasto "⏸ Pausa" e' stato rimosso dall'HTML: era di troppo e il
+   JS lo gestisce con `?.`, quindi niente si rompe senza di lui.
+   ============================================================ */
+body.mono-dark-home .cinema-cinematic-controls {
+  top: clamp(80px, 10vh, 104px);
+  bottom: auto;
+  right: clamp(14px, 2.4vw, 30px);
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}

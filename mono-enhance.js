@@ -403,7 +403,13 @@
      scroll = camminata (le braci ti vengono incontro). */
   function run3d(canvas, host) {
     var ctx = canvas.getContext("2d");
-    var DPR = Math.min(window.devicePixelRatio || 1, 2);
+    // ⚠️ SU TELEFONO SI ALLEGGERISCE (24/7). Gli iPhone hanno schermi a densità
+    // 3×: con DPR pieno il canvas a tutta pagina ha ~4× i pixel di un Android e
+    // Safari, che già arranca su canvas + "lighter", scalda e scatta. Il tetto
+    // a 1,5 dimezza i pixel da dipingere; l'occhio non lo nota su braci sfocate.
+    // Il PC resta a 2 (invariato).
+    var MOBILE = window.innerWidth < 640;
+    var DPR = Math.min(window.devicePixelRatio || 1, MOBILE ? 1.5 : 2);
     var W = 1, H = 1, tick = 0, DEPTH = 1400, FOCAL = 520 * DPR;
     function size() {
       var r = host.getBoundingClientRect();
@@ -413,7 +419,7 @@
     size();
     window.addEventListener("resize", size);
 
-    var N = window.innerWidth < 640 ? 110 : 170, pts = [];
+    var N = MOBILE ? 66 : 170, pts = [];   // meno scintille sul telefono: su schermo piccolo non si distingue, ma pesa parecchio meno
     function mk() {
       var spark = Math.random() < 0.12;
       var high = spark || Math.random() < 0.26;
@@ -486,7 +492,8 @@
 
   function run(canvas, host, hero) {
     var ctx = canvas.getContext("2d");
-    var DPR = Math.min(window.devicePixelRatio || 1, 2);
+    // Stesso alleggerimento del motore 3D: canvas meno fitto sui telefoni Retina.
+    var DPR = Math.min(window.devicePixelRatio || 1, window.innerWidth < 640 ? 1.5 : 2);
     var W = 1, H = 1, pts = [], N = 0, tick = 0;
 
     function mk(seed) {
