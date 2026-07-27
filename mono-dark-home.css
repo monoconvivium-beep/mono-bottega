@@ -1064,3 +1064,110 @@ body.mono-dark-home .mono-social--sottohero {
 @media (max-width: 820px) {
   body.mono-dark-home .mono-social--hero { display: none; }
 }
+
+/* ============================================================
+   CONTATTI — TELEFONO A ROTELLA ANIMATO + QUARTO TASTO (28/7)
+
+   Idea del proprietario, parole sue: "quei telefoni vecchi che si girava
+   la rotella, si alza la cornetta col filo. Una cosa retro perche' noi
+   siamo tradizionalmente moderni, che salta subito all'occhio e rende
+   anche i tasti piu' vivi."
+   Sta accanto ai tre tasti della chiusura "Ci vediamo, ci scriviamo, ci
+   sentiamo", dove ora ce n'e' un quarto: "Seguici", che apre le icone.
+
+   Colore ORO: verificato che li' il fondo e' SCURO (la regola crema di
+   styles.css:1604 e' scavalcata dal tema notturno; misurato sul sito
+   vero: titolo #CBA75A, testo crema). Quindi "oro solo sul buio" e'
+   rispettato. Su fondo chiaro sarebbe stato terracotta scura.
+   ============================================================ */
+body.mono-dark-home .mono-chiamata {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(14px, 3vw, 34px);
+  justify-content: center;
+  margin-top: 30px;
+}
+body.mono-dark-home .mono-chiamata .hero-actions { margin-top: 0; }
+body.mono-dark-home .mono-chiamata__disegno {
+  color: var(--mono-champagne);
+  flex: 0 0 auto;
+  line-height: 0;
+}
+body.mono-dark-home .mono-telefono {
+  height: auto;
+  width: clamp(104px, 13vw, 150px);
+}
+
+/* L'animazione: prima si alza la cornetta, poi gira il disco, poi si
+   riappoggia. Un giro ogni 5,5s con una pausa lunga in mezzo: deve
+   farsi notare, non ipnotizzare chi legge.
+   ⚠️ `transform-box: fill-box` e' OBBLIGATORIO: senza, l'origine della
+   rotazione e' l'angolo dell'intera SVG e il disco parte per la tangente. */
+body.mono-dark-home .mono-telefono__cornetta,
+body.mono-dark-home .mono-telefono__filo,
+body.mono-dark-home .mono-telefono__disco {
+  transform-box: fill-box;
+}
+body.mono-dark-home .mono-telefono__cornetta {
+  animation: mono-cornetta 5.5s ease-in-out infinite;
+  transform-origin: 20% 80%;
+}
+body.mono-dark-home .mono-telefono__filo {
+  animation: mono-filo 5.5s ease-in-out infinite;
+  transform-origin: 100% 100%;
+}
+body.mono-dark-home .mono-telefono__disco {
+  animation: mono-disco 5.5s ease-in-out infinite;
+  transform-origin: center;
+}
+@keyframes mono-cornetta {
+  0%, 10%   { transform: translateY(0) rotate(0deg); }
+  18%, 52%  { transform: translateY(-2.5px) rotate(-6deg); }
+  60%, 100% { transform: translateY(0) rotate(0deg); }
+}
+@keyframes mono-filo {
+  0%, 10%   { transform: rotate(0deg); }
+  18%, 52%  { transform: rotate(-5deg); }
+  60%, 100% { transform: rotate(0deg); }
+}
+@keyframes mono-disco {
+  0%, 24%   { transform: rotate(0deg); }
+  40%       { transform: rotate(150deg); }
+  52%, 100% { transform: rotate(0deg); }
+}
+/* Chi ha chiesto meno movimento al sistema operativo lo vede fermo. */
+@media (prefers-reduced-motion: reduce) {
+  body.mono-dark-home .mono-telefono__cornetta,
+  body.mono-dark-home .mono-telefono__filo,
+  body.mono-dark-home .mono-telefono__disco { animation: none; }
+}
+
+/* La tendina che si apre dal tasto "Seguici" */
+body.mono-dark-home .mono-social--tendina {
+  justify-content: center;
+  margin-top: 14px;
+}
+body.mono-dark-home .mono-social--tendina .mono-social__lista a {
+  color: var(--mono-champagne);
+}
+
+/* ---------- Icone social piu' VISIBILI (28/7) ----------
+   "Sul PC son talmente piccole che non le avevo manco viste."
+   Due leve, nessuna delle quali allarga il tasto (resta 44x44, spazio
+   sudato nella hero): disegno da 26 a 30px, e un contorno che le fa
+   leggere come tasti invece che come decorazione. */
+body.mono-dark-home .mono-social--hero .mono-social__lista svg,
+body.mono-dark-home .mono-social--sottohero .mono-social__lista svg,
+body.mono-dark-home .mono-social--tendina .mono-social__lista svg {
+  height: 30px;
+  width: 30px;
+}
+body.mono-dark-home .mono-social--hero .mono-social__lista a,
+body.mono-dark-home .mono-social--sottohero .mono-social__lista a,
+body.mono-dark-home .mono-social--tendina .mono-social__lista a {
+  border: 1px solid rgba(255, 249, 238, 0.34);
+}
+body.mono-dark-home .mono-social--tendina .mono-social__lista a {
+  border-color: rgba(203, 167, 90, 0.5);
+}

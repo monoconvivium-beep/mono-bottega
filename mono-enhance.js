@@ -364,7 +364,13 @@
       var titolo = document.createElement("h3");
       titolo.textContent = "Vieni a vederla nascere.";
       var testo = document.createElement("p");
-      testo.textContent = "Su Instagram e TikTok raccontiamo MONO mentre prende forma: le prove in cucina, quello che riesce e quello che no, le persone che ci lavorano. Seguici adesso e a settembre sarai già dei nostri — e sì, ci sarà da divertirsi.";
+      /* Riscritto il 28/7 su richiesta del proprietario. Due cose sue:
+         (1) mancava FACEBOOK, c'erano solo Instagram e TikTok;
+         (2) "le prove in cucina, quello che riesce e quello che no, le
+             persone che ci lavorano" non gli piaceva -> tolta.
+         Al suo posto le parole che ha scelto lui per i social della home,
+         cosi' il sito parla con una voce sola. */
+      testo.textContent = "Su Instagram, TikTok e Facebook raccontiamo MONO mentre prende forma. Entra a far parte della community e aiutaci a crescere: a settembre, quando apriamo, sarai già dei nostri.";
       card.appendChild(occhiello);
       card.appendChild(titolo);
       card.appendChild(testo);
@@ -408,6 +414,90 @@
         !sezioneHero.parentNode.querySelector(".mono-social--sottohero")) {
       sezioneHero.insertAdjacentElement("afterend", filaSocial("sottohero", "home_telefono"));
     }
+
+    initChiusuraContatti(voci);
+  }
+
+  /* ============================================================
+     CONTATTI — il quarto tasto "Seguici" + il telefono a rotella (28/7)
+
+     Richiesta del proprietario: nella chiusura "Ci vediamo, ci scriviamo,
+     ci sentiamo" (tre tasti: Contatta MONO / Salva il contatto / Dove
+     siamo) manca il canale social. Ne aggiungiamo un QUARTO che apre le
+     tre icone, invece di mandare fuori pagina.
+     E accanto ai tasti un telefono vecchio ANIMATO — parole sue: "una
+     cosa retro perche' noi siamo tradizionalmente moderni", che salti
+     all'occhio e renda i tasti piu' vivi. La frase e' letteralmente il
+     sottotitolo della home ("Cucina contemporanea. Tradizionalmente
+     moderna"), quindi il disegno e' coerente col sito, non un vezzo.
+
+     Disegnato in SVG a mano: nessuna immagine da scaricare, pesa nulla,
+     e prende il colore dal CSS con `currentColor` come le icone social.
+     ⚠️ Niente `data-reveal` qui: nasce da JS (errore gia' pagato).
+     ============================================================ */
+  var TELEFONO_SVG =
+    '<svg class="mono-telefono" viewBox="0 0 72 48" aria-hidden="true" focusable="false">' +
+      '<g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">' +
+        '<path class="mono-telefono__filo" d="M46 14 C57 12 65 20 63 33"/>' +
+        '<path d="M14 21 H46 C52 21 56 26 56 32 V36 C56 38.5 54 40 52 40 H8 C6 40 4 38.5 4 36 V32 C4 26 8 21 14 21 Z"/>' +
+        '<path class="mono-telefono__cornetta" d="M13 15 C13 7 18 4 24 4 H36 C42 4 47 7 47 15 C47 18 45 19.5 42.5 19.5 H39.5 C37.5 19.5 36.5 18 36.5 16 C36.5 13.5 35 12 32.5 12 H27.5 C25 12 23.5 13.5 23.5 16 C23.5 18 22.5 19.5 20.5 19.5 H17.5 C15 19.5 13 18 13 15 Z"/>' +
+      '</g>' +
+      '<g class="mono-telefono__disco" fill="currentColor">' +
+        '<circle cx="30" cy="32" r="8" fill="none" stroke="currentColor" stroke-width="3"/>' +
+        '<circle cx="30" cy="32" r="2.4"/>' +
+        '<circle cx="30" cy="26.6" r="1.5"/><circle cx="34.7" cy="29.3" r="1.5"/>' +
+        '<circle cx="34.7" cy="34.7" r="1.5"/><circle cx="30" cy="37.4" r="1.5"/>' +
+        '<circle cx="25.3" cy="34.7" r="1.5"/><circle cx="25.3" cy="29.3" r="1.5"/>' +
+      '</g>' +
+    '</svg>';
+
+  function initChiusuraContatti(voci) {
+    var chiusura = document.querySelector(".contacts-page .contacts-closing");
+    if (!chiusura) return;
+    var azioni = chiusura.querySelector(".hero-actions");
+    if (!azioni || chiusura.querySelector(".mono-chiamata")) return;
+
+    /* Il telefono e i tasti vanno messi fianco a fianco: serve un
+       contenitore. `appendChild` SPOSTA i tasti dentro, non li duplica. */
+    var riga = document.createElement("div");
+    riga.className = "mono-chiamata";
+    var disegno = document.createElement("div");
+    disegno.className = "mono-chiamata__disegno";
+    disegno.innerHTML = TELEFONO_SVG;
+    azioni.parentNode.insertBefore(riga, azioni);
+    riga.appendChild(disegno);
+    riga.appendChild(azioni);
+
+    if (!voci.length) return;   // nessun social compilato: niente quarto tasto
+
+    /* Quarto tasto: apre e chiude le tre icone qui sotto. E' un <button>
+       e non un <a> perche' non porta da nessuna parte: comanda e basta. */
+    var tasto = document.createElement("button");
+    tasto.type = "button";
+    tasto.className = "button ghost mono-social-tasto";
+    tasto.textContent = "Seguici";
+    tasto.setAttribute("aria-expanded", "false");
+    tasto.setAttribute("aria-controls", "monoSocialTendina");
+    tasto.dataset.track = "contacts_final_social";
+
+    var tendina = document.createElement("div");
+    tendina.className = "mono-social mono-social--tendina";
+    tendina.id = "monoSocialTendina";
+    tendina.hidden = true;
+    tendina.appendChild(listaSocial(voci, "contatti_tasto"));
+
+    tasto.addEventListener("click", function () {
+      var aperta = tasto.getAttribute("aria-expanded") === "true";
+      tasto.setAttribute("aria-expanded", aperta ? "false" : "true");
+      tendina.hidden = aperta;
+      if (!aperta) {
+        var primo = tendina.querySelector("a");
+        if (primo) primo.focus();   // chi usa la tastiera finisce dentro, non oltre
+      }
+    });
+
+    azioni.appendChild(tasto);
+    riga.insertAdjacentElement("afterend", tendina);
   }
 
   /* Conto alla rovescia per l'apertura (18/7). Sta accanto alla raccolta

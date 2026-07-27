@@ -141,7 +141,10 @@
   min-width: 44px;
   transition: color 160ms ease, background-color 160ms ease;
 }
-.mono-social__lista svg { height: 22px; width: 22px; }
+/* 28/7 — erano 22px e il proprietario sul PC "non le aveva manco viste".
+   Portate a 26 (30 nella home): il tasto resta 44x44, quindi cresce solo
+   il disegno e NON l'ingombro — nella hero ogni pixel era stato sudato. */
+.mono-social__lista svg { height: 26px; width: 26px; }
 .mono-social__lista a:hover,
 .mono-social__lista a:focus-visible {
   background: rgba(255, 249, 238, 0.14);
