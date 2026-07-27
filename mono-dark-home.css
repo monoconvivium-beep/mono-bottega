@@ -1096,51 +1096,61 @@ body.mono-dark-home .mono-chiamata__disegno {
 }
 body.mono-dark-home .mono-telefono {
   height: auto;
-  width: clamp(104px, 13vw, 150px);
+  width: clamp(120px, 14vw, 168px);
 }
 
-/* L'animazione: prima si alza la cornetta, poi gira il disco, poi si
-   riappoggia. Un giro ogni 5,5s con una pausa lunga in mezzo: deve
-   farsi notare, non ipnotizzare chi legge.
+/* L'animazione: il telefono SQUILLA. Il disegno ha gia' la cornetta
+   sollevata (e' la posa pop), quindi il movimento giusto non e' alzarla
+   ma far vibrare l'apparecchio e lampeggiare le saette, come nei fumetti.
+   Due scosse secche, poi 4 secondi di pausa: si fa notare senza diventare
+   un semaforo addosso a chi legge.
    ⚠️ `transform-box: fill-box` e' OBBLIGATORIO: senza, l'origine della
-   rotazione e' l'angolo dell'intera SVG e il disco parte per la tangente. */
+   rotazione e' l'angolo dell'intera SVG e il telefono parte per la tangente. */
+body.mono-dark-home .mono-telefono__squillo,
 body.mono-dark-home .mono-telefono__cornetta,
-body.mono-dark-home .mono-telefono__filo,
-body.mono-dark-home .mono-telefono__disco {
+body.mono-dark-home .mono-telefono__saette {
   transform-box: fill-box;
+}
+body.mono-dark-home .mono-telefono__squillo {
+  animation: mono-squillo 5.5s ease-in-out infinite;
+  transform-origin: 50% 100%;
 }
 body.mono-dark-home .mono-telefono__cornetta {
   animation: mono-cornetta 5.5s ease-in-out infinite;
-  transform-origin: 20% 80%;
+  transform-origin: 50% 100%;
 }
-body.mono-dark-home .mono-telefono__filo {
-  animation: mono-filo 5.5s ease-in-out infinite;
-  transform-origin: 100% 100%;
-}
-body.mono-dark-home .mono-telefono__disco {
-  animation: mono-disco 5.5s ease-in-out infinite;
+body.mono-dark-home .mono-telefono__saette {
+  animation: mono-saette 5.5s steps(1, end) infinite;
   transform-origin: center;
 }
+@keyframes mono-squillo {
+  0%, 5%          { transform: rotate(0deg); }
+  8%              { transform: rotate(-3deg); }
+  11%             { transform: rotate(3deg); }
+  14%             { transform: rotate(-2.4deg); }
+  17%             { transform: rotate(2.4deg); }
+  20%, 100%       { transform: rotate(0deg); }
+}
 @keyframes mono-cornetta {
-  0%, 10%   { transform: translateY(0) rotate(0deg); }
-  18%, 52%  { transform: translateY(-2.5px) rotate(-6deg); }
-  60%, 100% { transform: translateY(0) rotate(0deg); }
+  0%, 5%          { transform: translateY(0) rotate(0deg); }
+  10%             { transform: translateY(-2px) rotate(2deg); }
+  15%             { transform: translateY(-1px) rotate(-2deg); }
+  20%, 100%       { transform: translateY(0) rotate(0deg); }
 }
-@keyframes mono-filo {
-  0%, 10%   { transform: rotate(0deg); }
-  18%, 52%  { transform: rotate(-5deg); }
-  60%, 100% { transform: rotate(0deg); }
+@keyframes mono-saette {
+  0%, 5%    { opacity: 0.35; }
+  8%        { opacity: 1; }
+  12%       { opacity: 0.4; }
+  16%       { opacity: 1; }
+  22%, 100% { opacity: 0.35; }
 }
-@keyframes mono-disco {
-  0%, 24%   { transform: rotate(0deg); }
-  40%       { transform: rotate(150deg); }
-  52%, 100% { transform: rotate(0deg); }
-}
-/* Chi ha chiesto meno movimento al sistema operativo lo vede fermo. */
+/* Chi ha chiesto meno movimento al sistema operativo lo vede fermo,
+   e con le saette PIENE (non a mezza trasparenza, che sarebbe un difetto). */
 @media (prefers-reduced-motion: reduce) {
+  body.mono-dark-home .mono-telefono__squillo,
   body.mono-dark-home .mono-telefono__cornetta,
-  body.mono-dark-home .mono-telefono__filo,
-  body.mono-dark-home .mono-telefono__disco { animation: none; }
+  body.mono-dark-home .mono-telefono__saette { animation: none; }
+  body.mono-dark-home .mono-telefono__saette { opacity: 1; }
 }
 
 /* La tendina che si apre dal tasto "Seguici" */
@@ -1160,9 +1170,21 @@ body.mono-dark-home .mono-social--tendina .mono-social__lista a {
 body.mono-dark-home .mono-social--hero .mono-social__lista svg,
 body.mono-dark-home .mono-social--sottohero .mono-social__lista svg,
 body.mono-dark-home .mono-social--tendina .mono-social__lista svg {
-  height: 30px;
-  width: 30px;
+  height: 34px;
+  width: 34px;
 }
+/* Ingrandite ancora il 28/7 ("sono molto belle, ingrandiscile"). Dove c'e'
+   spazio cresce anche il TASTO; nella hero no, resta 44 perche' li' ogni
+   pixel era stato sudato per far entrare il modulo email. */
+body.mono-dark-home .mono-social--sottohero .mono-social__lista a,
+body.mono-dark-home .mono-social--tendina .mono-social__lista a {
+  min-height: 54px;
+  min-width: 54px;
+  height: 54px;
+  width: 54px;
+}
+body.mono-dark-home .mono-social--sottohero .mono-social__lista,
+body.mono-dark-home .mono-social--tendina .mono-social__lista { gap: 8px; }
 body.mono-dark-home .mono-social--hero .mono-social__lista a,
 body.mono-dark-home .mono-social--sottohero .mono-social__lista a,
 body.mono-dark-home .mono-social--tendina .mono-social__lista a {

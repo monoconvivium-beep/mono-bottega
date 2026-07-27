@@ -151,15 +151,10 @@
   color: var(--mono-cream);
 }
 
-/* Scheda "Seguici" nella pagina Contatti: fondo chiaro, quindi
-   l'icona va scura. Terracotta scura = stessa usata per gli avvisi. */
-.mono-social-card .mono-social__lista { margin-top: 14px; }
-.mono-social-card .mono-social__lista a { color: #A83A28; }
-.mono-social-card .mono-social__lista a:hover,
-.mono-social-card .mono-social__lista a:focus-visible {
-  background: rgba(168, 58, 40, 0.1);
-  color: var(--mono-terracotta);
-}
+/* La scheda "Seguici" della pagina Contatti e' stata TOLTA il 28/7
+   ("puliti, lineari e funzionali. Less is more"): con lei se ne vanno
+   anche queste regole, che non avevano piu' niente da vestire.
+   Al suo posto c'e' il tasto "Seguici sui social" nella chiusura. */
 
 /* Telefono: la frase va a capo sopra le icone invece di stringersi. */
 @media (max-width: 560px) {

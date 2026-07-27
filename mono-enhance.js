@@ -345,38 +345,14 @@
       footer.appendChild(blocco);
     }
 
-    // 2) PAGINA CONTATTI — una scheda in piu' nella griglia che c'e' gia',
-    //    con il copy che serve a convincere davvero a premere "segui".
-    var griglia = document.querySelector(".contacts-info .page-grid");
-    if (griglia && !griglia.querySelector(".mono-social-card")) {
-      var card = document.createElement("article");
-      card.className = "page-card mono-social-card";
-      /* ⚠️ NIENTE data-reveal qui, ed e' un errore gia' pagato (26/7).
-         `setupReveals()` in app.js raccoglie gli elementi [data-reveal] UNA
-         VOLTA SOLA all'avvio della pagina; questa scheda nasce dopo, quindi
-         nessuno la registra e resta inchiodata a `opacity: 0` PER SEMPRE
-         (regola `.has-js [data-reveal]` in styles.css:1276).
-         Risultato: la scheda c'era nel DOM ma era invisibile, e il
-         proprietario non la trovava. Regola: mai dare data-reveal a qualcosa
-         che viene creato via JS dopo il caricamento. */
-      var occhiello = document.createElement("span");
-      occhiello.textContent = "Seguici";
-      var titolo = document.createElement("h3");
-      titolo.textContent = "Vieni a vederla nascere.";
-      var testo = document.createElement("p");
-      /* Riscritto il 28/7 su richiesta del proprietario. Due cose sue:
-         (1) mancava FACEBOOK, c'erano solo Instagram e TikTok;
-         (2) "le prove in cucina, quello che riesce e quello che no, le
-             persone che ci lavorano" non gli piaceva -> tolta.
-         Al suo posto le parole che ha scelto lui per i social della home,
-         cosi' il sito parla con una voce sola. */
-      testo.textContent = "Su Instagram, TikTok e Facebook raccontiamo MONO mentre prende forma. Entra a far parte della community e aiutaci a crescere: a settembre, quando apriamo, sarai già dei nostri.";
-      card.appendChild(occhiello);
-      card.appendChild(titolo);
-      card.appendChild(testo);
-      card.appendChild(listaSocial(voci, "contatti"));
-      griglia.appendChild(card);
-    }
+    /* 2) PAGINA CONTATTI — la scheda "Vieni a vederla nascere" NON ESISTE PIU'.
+       TOLTA il 28/7 su decisione del proprietario: "la carta che c'e' la
+       togliamo proprio, cosi' ci togliamo anche il problema del testo e
+       siamo puliti, lineari e funzionali. Less is more."
+       Il canale social su Contatti adesso e' il tasto "Seguici sui social"
+       nella chiusura (vedi initChiusuraContatti): un tasto invece di una
+       scheda con tre paragrafi. ⚠️ NON rimetterla senza che lo chieda lui:
+       era stata scritta e riscritta due volte, e il testo non lo convinceva. */
 
     // 3) HOME — subito sotto il riquadro "Sii tra i primi a entrare in
     //    bottega", in cima alla pagina. La scheda su Contatti sta a 3191px
@@ -436,18 +412,44 @@
      ⚠️ Niente `data-reveal` qui: nasce da JS (errore gia' pagato).
      ============================================================ */
   var TELEFONO_SVG =
-    '<svg class="mono-telefono" viewBox="0 0 72 48" aria-hidden="true" focusable="false">' +
-      '<g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">' +
-        '<path class="mono-telefono__filo" d="M46 14 C57 12 65 20 63 33"/>' +
-        '<path d="M14 21 H46 C52 21 56 26 56 32 V36 C56 38.5 54 40 52 40 H8 C6 40 4 38.5 4 36 V32 C4 26 8 21 14 21 Z"/>' +
-        '<path class="mono-telefono__cornetta" d="M13 15 C13 7 18 4 24 4 H36 C42 4 47 7 47 15 C47 18 45 19.5 42.5 19.5 H39.5 C37.5 19.5 36.5 18 36.5 16 C36.5 13.5 35 12 32.5 12 H27.5 C25 12 23.5 13.5 23.5 16 C23.5 18 22.5 19.5 20.5 19.5 H17.5 C15 19.5 13 18 13 15 Z"/>' +
+    '<svg class="mono-telefono" viewBox="0 0 152 132" aria-hidden="true" focusable="false">' +
+      '<defs>' +
+        '<pattern id="monoPuntini" width="8" height="8" patternUnits="userSpaceOnUse">' +
+          '<circle cx="4" cy="4" r="1.7" fill="#CBA75A"/>' +
+        '</pattern>' +
+        '<clipPath id="monoDisco"><circle cx="76" cy="64" r="52"/></clipPath>' +
+      '</defs>' +
+      /* Saette FUORI dal disco chiaro: sul fondo scuro l'oro pieno si legge
+         da solo, mentre un contorno scuro li' sparirebbe. */
+      '<g class="mono-telefono__saette" fill="#CBA75A">' +
+        '<path d="M22 24 L38 17 L31 31 L43 27 L20 52 L27 34 L14 38 Z"/>' +
+        '<path d="M130 22 L146 15 L139 29 L151 25 L128 50 L135 32 L122 36 Z"/>' +
+        '<path d="M134 74 L148 69 L143 80 L152 77 L133 98 L139 83 L128 86 Z"/>' +
       '</g>' +
-      '<g class="mono-telefono__disco" fill="currentColor">' +
-        '<circle cx="30" cy="32" r="8" fill="none" stroke="currentColor" stroke-width="3"/>' +
-        '<circle cx="30" cy="32" r="2.4"/>' +
-        '<circle cx="30" cy="26.6" r="1.5"/><circle cx="34.7" cy="29.3" r="1.5"/>' +
-        '<circle cx="34.7" cy="34.7" r="1.5"/><circle cx="30" cy="37.4" r="1.5"/>' +
-        '<circle cx="25.3" cy="34.7" r="1.5"/><circle cx="25.3" cy="29.3" r="1.5"/>' +
+      /* Il disco chiaro a pallini e' quello che rende la cosa POP: senza,
+         i contorni scuri sul fondo notturno sparivano e le forme
+         galleggiavano (provato e scartato). */
+      '<circle cx="76" cy="64" r="52" fill="#EFE3C8"/>' +
+      '<g clip-path="url(#monoDisco)">' +
+        '<rect x="24" y="12" width="104" height="104" fill="url(#monoPuntini)" opacity="0.85"/>' +
+      '</g>' +
+      '<g class="mono-telefono__squillo" stroke="#241a14" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round">' +
+        '<path d="M44 58 C30 62 30 70 44 74 C58 78 58 86 46 89" fill="none" stroke="#241a14" stroke-width="6.4"/>' +
+        '<path d="M44 58 C30 62 30 70 44 74 C58 78 58 86 46 89" fill="none" stroke="#B85C38" stroke-width="3"/>' +
+        '<path fill="#B85C38" d="M48 80 H104 C113 80 118 89 118 99 V106 C118 109.5 115.5 112 112 112 H40 C36.5 112 34 109.5 34 106 V99 C34 89 39 80 48 80 Z"/>' +
+        '<circle cx="76" cy="97" r="12.5" fill="#F4ECDD"/>' +
+        '<circle cx="76" cy="97" r="3.4" fill="#B85C38" stroke="none"/>' +
+        '<g class="mono-telefono__cornetta" transform="rotate(-13 76 46)">' +
+          '<rect x="50" y="40" width="52" height="12" rx="6" fill="#B85C38"/>' +
+          '<ellipse cx="47" cy="46" rx="12" ry="13" fill="#B85C38"/>' +
+          '<ellipse cx="105" cy="46" rx="12" ry="13" fill="#B85C38"/>' +
+        '</g>' +
+        '<g fill="#241a14" stroke="none">' +
+          '<circle cx="76" cy="89" r="1.9"/><circle cx="83" cy="92" r="1.9"/>' +
+          '<circle cx="84" cy="99.5" r="1.9"/><circle cx="78.5" cy="104.5" r="1.9"/>' +
+          '<circle cx="71" cy="104" r="1.9"/><circle cx="67" cy="98" r="1.9"/>' +
+          '<circle cx="69" cy="91" r="1.9"/>' +
+        '</g>' +
       '</g>' +
     '</svg>';
 
@@ -475,7 +477,7 @@
     var tasto = document.createElement("button");
     tasto.type = "button";
     tasto.className = "button ghost mono-social-tasto";
-    tasto.textContent = "Seguici";
+    tasto.textContent = "Seguici sui social";   // testo scelto dal proprietario (28/7)
     tasto.setAttribute("aria-expanded", "false");
     tasto.setAttribute("aria-controls", "monoSocialTendina");
     tasto.dataset.track = "contacts_final_social";
