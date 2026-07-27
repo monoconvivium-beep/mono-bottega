@@ -351,7 +351,14 @@
     if (griglia && !griglia.querySelector(".mono-social-card")) {
       var card = document.createElement("article");
       card.className = "page-card mono-social-card";
-      card.setAttribute("data-reveal", "");
+      /* ⚠️ NIENTE data-reveal qui, ed e' un errore gia' pagato (26/7).
+         `setupReveals()` in app.js raccoglie gli elementi [data-reveal] UNA
+         VOLTA SOLA all'avvio della pagina; questa scheda nasce dopo, quindi
+         nessuno la registra e resta inchiodata a `opacity: 0` PER SEMPRE
+         (regola `.has-js [data-reveal]` in styles.css:1276).
+         Risultato: la scheda c'era nel DOM ma era invisibile, e il
+         proprietario non la trovava. Regola: mai dare data-reveal a qualcosa
+         che viene creato via JS dopo il caricamento. */
       var occhiello = document.createElement("span");
       occhiello.textContent = "Seguici";
       var titolo = document.createElement("h3");
