@@ -388,7 +388,10 @@
       fila.className = "mono-social mono-social--" + variante;
       var invito = document.createElement("p");
       invito.className = "mono-social__frase";
-      invito.textContent = "Oppure seguici: qui la bottega si vede nascere.";
+      /* Frase scritta dal proprietario il 28/7, parola per parola. Aveva
+         bocciato la mia ("Oppure seguici: qui la bottega si vede nascere"):
+         non aggiungere niente e non "migliorarla", ha detto FINE TESTO. */
+      invito.textContent = "Entra a far parte della community, aiutaci a crescere.";
       fila.appendChild(invito);
       fila.appendChild(listaSocial(voci, dove));
       return fila;
