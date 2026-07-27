@@ -371,6 +371,40 @@
       card.appendChild(listaSocial(voci, "contatti"));
       griglia.appendChild(card);
     }
+
+    // 3) HOME — subito sotto il riquadro "Sii tra i primi a entrare in
+    //    bottega", in cima alla pagina. La scheda su Contatti sta a 3191px
+    //    di scorrimento e non la trovava nessuno: qui invece si incontra
+    //    per forza. Ed e' il punto giusto anche come senso: chi non lascia
+    //    l'email puo' comunque seguire, invece di andarsene e basta.
+    //    ⚠️ Anche qui NIENTE data-reveal, per il motivo scritto sopra.
+    //    Su TELEFONO pero' la hero e' piena fino all'orlo (misurato): per
+    //    farci stare anche i social bisognerebbe togliere data e indirizzo,
+    //    che il proprietario ha scelto di tenere. Quindi si disegnano DUE
+    //    file e il CSS ne mostra una sola: dentro la hero su computer,
+    //    subito SOTTO il film sul telefono. Il data-track le distingue.
+    function filaSocial(variante, dove) {
+      var fila = document.createElement("div");
+      fila.className = "mono-social mono-social--" + variante;
+      var invito = document.createElement("p");
+      invito.className = "mono-social__frase";
+      invito.textContent = "Oppure seguici: qui la bottega si vede nascere.";
+      fila.appendChild(invito);
+      fila.appendChild(listaSocial(voci, dove));
+      return fila;
+    }
+
+    var formHero = document.querySelector(".cinema-hero .cinema-group.sg-3 .cinema-signup");
+    if (formHero && formHero.parentNode && !formHero.parentNode.querySelector(".mono-social--hero")) {
+      formHero.insertAdjacentElement("afterend", filaSocial("hero", "home"));
+    }
+
+    var sezioneHero = document.querySelector(".cinema-hero");
+    if (sezioneHero) sezioneHero = sezioneHero.closest("section") || sezioneHero;
+    if (sezioneHero && sezioneHero.parentNode &&
+        !sezioneHero.parentNode.querySelector(".mono-social--sottohero")) {
+      sezioneHero.insertAdjacentElement("afterend", filaSocial("sottohero", "home_telefono"));
+    }
   }
 
   /* Conto alla rovescia per l'apertura (18/7). Sta accanto alla raccolta

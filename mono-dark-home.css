@@ -921,3 +921,146 @@ body.mono-dark-home .cinema-cinematic-controls {
   align-items: flex-end;
   gap: 8px;
 }
+
+/* ============================================================
+   HERO HOME — IL MODULO EMAIL ERA TAGLIATO VIA (28/7)
+   Difetto PREESISTENTE trovato misurando, non segnalato da nessuno.
+
+   Il capitolo finale della hero (`.cinema-group.sg-3`) e' un riquadro
+   ad altezza FISSA e ritagliata: `top` + `bottom` + `overflow:hidden`
+   (styles.css:2544). Dentro ci stanno titolo, occhiello, testo, due
+   bottoni, la riga apertura/indirizzo E il modulo "Sii tra i primi a
+   entrare in bottega".
+   Il titolo pero' e' passato da `clamp(24px,3.2vw,46px)` (styles.css)
+   a `--mono-type-hero: clamp(58px,7vw,112px)` (mono-engineering.css:13,
+   file di Codex): PIU' CHE RADDOPPIATO, e legato SOLO alla larghezza.
+   Su uno schermo largo ma BASSO (un portatile qualunque) il titolo
+   esplode a 96-107px e spinge il modulo fuori dal ritaglio.
+
+   MISURATO sul sito vero, con la pagina reale (non a occhio):
+     1366x658 -> campo email e bottone "Avvisami all'apertura"
+                 COMPLETAMENTE invisibili, del riquadro si vedevano 5px
+     1536x754 -> 216px fuori     1440x790 -> 156px fuori
+     1280x690 ->  89px fuori     1920x970 ->  53px fuori
+   Cioe': su quasi tutti i portatili la raccolta email in cima alla
+   home NON ESISTEVA. E' il punto di conversione principale del sito.
+
+   RIMEDIO (due leve, la meno distruttiva che passa la prova):
+   1. il titolo ora guarda anche l'ALTEZZA: `min(--mono-type-hero, 9vh)`.
+      Su schermi alti resta identico a prima (9vh > 112px), si stringe
+      solo dove serve. E' la causa vera, quindi si corregge li'.
+   2. su finestre basse sparisce SOLO la frase d'aiuto del modulo
+      ("Lascia la tua email: ti avvisiamo..."): e' ripetuta PAROLA PER
+      PAROLA nel riquadro in fondo alla pagina, quindi non si perde
+      niente. La riga con data di apertura e indirizzo RESTA.
+   Provato con la fila social gia' dentro: entra su 1920x970, 1536x754,
+   1366x658, 1280x690.
+
+   ⚠️ Agisco qui e non in mono-engineering.css: quello e' di Codex e
+   il patto e' non toccarlo (layer isolato e reversibile).
+   ============================================================ */
+body.mono-dark-home .cinema-hero .cinema-claim {
+  font-size: min(var(--mono-type-hero), 9vh);
+}
+@media (max-height: 820px) {
+  body.mono-dark-home .cinema-hero .sg-3 .cinema-signup small { display: none; }
+  body.mono-dark-home .cinema-hero .sg-3 .cinema-lead { margin-bottom: 14px; }
+  body.mono-dark-home .cinema-hero .sg-3 .cinema-actions { margin-bottom: 12px; }
+  body.mono-dark-home .cinema-hero .sg-3 .cinema-note { margin-bottom: 12px; }
+}
+
+/* ---------- TELEFONO: stesso difetto, ma qui lo spazio non basta ----------
+   Sul telefono il palco NON e' appiccicato in alto: l'header sta nel flusso
+   (68px misurati) e il palco vale 86svh, cioe' header + palco = uno schermo.
+   Per questo alzarlo a 100svh NON serve: spingerebbe solo il fondo sotto il
+   bordo. L'unica strada e' far stare il contenuto in meno spazio.
+
+   Scelta dell'UTENTE (28/7), messa davanti a un aut-aut misurato: sparisce
+   la frase di descrizione ("Gastronomia, dolci e aperitivo a Santa Rita...")
+   e RESTA la riga con data di apertura e indirizzo, che su un telefono e'
+   l'informazione piu' utile. La descrizione non si perde: e' il testo della
+   sezione prodotti poco piu' sotto.
+   Il resto e' solo compattamento, senza togliere nulla: bottoni affiancati
+   invece che impilati (114px -> 50), riquadro email piu' stretto, e la riga
+   di stato vuota che non occupa piu' spazio finche' non dice qualcosa.
+   Poi due gradini, solo per schermi via via piu' bassi.
+
+   MISURATO col criterio giusto ("si vede senza scorrere", non "entra nel
+   riquadro"): bottone "Avvisami all'apertura" VISIBILE su 430x745, 414x700,
+   390x664, 360x560. Su iPhone SE (375x553) e sui vecchi 320x480 sta dentro
+   il riquadro ma un dito sotto il bordo: prima era irraggiungibile. */
+@media (max-width: 820px) {
+  body.mono-dark-home .cinema-hero .sg-3 { top: 74px; bottom: 12px; }
+  body.mono-dark-home .cinema-hero .sg-3 .cinema-signup small { display: none; }
+  body.mono-dark-home .cinema-hero .sg-3 .cinema-lead { display: none; }
+  body.mono-dark-home .cinema-hero .sg-3 .cinema-eyebrow { margin-bottom: 10px; }
+  body.mono-dark-home .cinema-hero .sg-3 .cinema-note { margin-bottom: 10px; }
+  body.mono-dark-home .cinema-hero .sg-3 .cinema-actions {
+    margin-bottom: 10px;
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+  body.mono-dark-home .cinema-hero .sg-3 .cinema-actions .button {
+    flex: 1 1 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    white-space: nowrap;
+    font-size: 14px;
+  }
+  body.mono-dark-home .cinema-hero .sg-3 .cinema-signup { gap: 8px; padding: 12px 14px; }
+  body.mono-dark-home .cinema-hero .sg-3 .cinema-signup-status:empty { display: none; }
+}
+/* schermi bassi: via l'occhiello (lo ripete il titolo subito sotto) */
+@media (max-width: 820px) and (max-height: 760px) {
+  body.mono-dark-home .cinema-hero .sg-3 .cinema-eyebrow { display: none; }
+}
+/* schermi bassissimi (iPhone SE e simili): ultima rete, o il bottone sparisce */
+@media (max-width: 820px) and (max-height: 610px) {
+  body.mono-dark-home .cinema-hero .sg-3 .cinema-note { display: none; }
+  body.mono-dark-home .cinema-hero .cinema-claim { font-size: min(var(--mono-type-hero), 7.4vh); }
+}
+
+/* ---------- Fila social nella hero (28/7) ----------
+   Sta SOTTO il riquadro dell'email: chi non lascia l'indirizzo puo'
+   comunque seguire. In cima alla home invece che solo nel footer e
+   nella scheda Contatti (che sta a 3191px di scorrimento).
+   Colori: nessuno nuovo. Crema come `.cinema-note` qui accanto, un
+   filo piu' acceso perche' sopra c'e' il video e non un fondo pieno.
+   ⚠️ Il blocco nasce da JS: NIENTE `data-reveal` (resterebbe a
+   opacity 0 per sempre, errore gia' pagato il 26/7). */
+body.mono-dark-home .mono-social--hero { margin-top: 12px; }
+body.mono-dark-home .mono-social--hero .mono-social__frase,
+body.mono-dark-home .mono-social--hero .mono-social__lista a,
+body.mono-dark-home .mono-social--sottohero .mono-social__frase,
+body.mono-dark-home .mono-social--sottohero .mono-social__lista a {
+  color: rgba(255, 249, 238, 0.92);
+}
+body.mono-dark-home .mono-social--hero .mono-social__lista a:hover,
+body.mono-dark-home .mono-social--hero .mono-social__lista a:focus-visible,
+body.mono-dark-home .mono-social--sottohero .mono-social__lista a:hover,
+body.mono-dark-home .mono-social--sottohero .mono-social__lista a:focus-visible {
+  background: rgba(255, 249, 238, 0.16);
+  color: var(--mono-cream);
+}
+
+/* ---------- Le due case della fila social, una per volta ----------
+   Sul TELEFONO la hero e' gia' piena fino all'orlo: infilarci anche i social
+   avrebbe voluto dire sacrificare pure data e indirizzo, che l'utente ha
+   scelto di tenere. Quindi li' la fila esce dal film e si mette SUBITO SOTTO,
+   prima cosa che si incontra dopo l'apertura: nessun contenuto sacrificato e
+   comunque lontanissimo dai 3191px della scheda su Contatti.
+   Su COMPUTER resta dentro la hero, accanto al riquadro dell'email, dove e'
+   stato verificato che ci sta (1920x970, 1536x754, 1366x658, 1280x690).
+   Nel DOM ci sono tutte e due, ma ne vive sempre e solo UNA: `display:none`
+   la toglie anche ai lettori di schermo, quindi niente doppioni letti a voce. */
+body.mono-dark-home .mono-social--sottohero {
+  justify-content: center;
+  padding: 18px clamp(18px, 6vw, 40px) 4px;
+  text-align: center;
+}
+@media (min-width: 821px) {
+  body.mono-dark-home .mono-social--sottohero { display: none; }
+}
+@media (max-width: 820px) {
+  body.mono-dark-home .mono-social--hero { display: none; }
+}

@@ -18,10 +18,17 @@
    sostituisci con  https://www.facebook.com/mono.bottega  :
    piu' corto, piu' bello da dire a voce, e continua a funzionare.
 
-   ⚠️ ATTENZIONE (26/7): l'APP punta a una pagina Facebook DIVERSA
-   (id 61589555374985). Sono due indirizzi diversi: uno dei due
-   porta le persone nel posto sbagliato. Da chiarire con il
-   proprietario e allineare.
+   ✅ RISOLTO (28/7): fino al 26/7 l'APP puntava a una pagina Facebook
+   DIVERSA (id 61589555374985) e una delle due mandava le persone nel
+   posto sbagliato. L'app e' stata allineata a QUESTA pagina con la
+   sua versione v166: adesso sito e app portano allo stesso posto.
+
+   ⚠️ UNICA ECCEZIONE al "punto unico": gli stessi tre indirizzi sono
+   ripetuti in `index.html`, nel blocco dati per Google, sotto la voce
+   "sameAs" (serve a dire a Google che quei profili sono ufficialmente
+   di MONO). Quel blocco deve stare scritto nella pagina, altrimenti
+   Google rischia di non leggerlo. Se cambi un indirizzo qui, cambialo
+   anche li': sono le uniche due righe da tenere insieme.
    ------------------------------------------------------------ */
 window.MONO_SOCIAL = {
   instagram: "https://www.instagram.com/mono.bottega/",
