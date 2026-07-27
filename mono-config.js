@@ -7,6 +7,29 @@
    ============================================================ */
 
 /* ------------------------------------------------------------
+   0) SOCIAL — ⭐ IL PUNTO UNICO: si cambia SOLO qui
+
+   Regola: compare SOLTANTO quello che ha un indirizzo scritto.
+   Se lasci le virgolette vuote "", quell'icona NON si vede da
+   nessuna parte del sito. Non devi toccare altro.
+
+   ➡️ FACEBOOK usa l'indirizzo lungo con il numero perche' la
+   pagina non ha ancora un nome utente. Quando l'avrai impostato,
+   sostituisci con  https://www.facebook.com/mono.bottega  :
+   piu' corto, piu' bello da dire a voce, e continua a funzionare.
+
+   ⚠️ ATTENZIONE (26/7): l'APP punta a una pagina Facebook DIVERSA
+   (id 61589555374985). Sono due indirizzi diversi: uno dei due
+   porta le persone nel posto sbagliato. Da chiarire con il
+   proprietario e allineare.
+   ------------------------------------------------------------ */
+window.MONO_SOCIAL = {
+  instagram: "https://www.instagram.com/mono.bottega/",
+  tiktok: "https://www.tiktok.com/@mono.bottega",
+  facebook: "https://www.facebook.com/profile.php?id=61592176965719"
+};
+
+/* ------------------------------------------------------------
    1) FORMSPREE — 🔌 NON SERVE PIU', lasciare vuoto
 
    ⚠️ Superato dal 24/7: la raccolta email ora la fa l'APP (vedi

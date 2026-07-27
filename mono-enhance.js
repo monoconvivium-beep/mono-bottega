@@ -276,6 +276,94 @@
     initQrSblocco();
     initBadgeProdotti();
     initContoApertura();
+    initSocial();
+  }
+
+  /* ============================================================
+     SOCIAL (26/7) — footer di tutte le pagine + scheda su Contatti
+
+     UN SOLO punto di configurazione: window.MONO_SOCIAL in
+     mono-config.js. Qui non ci sono indirizzi scritti a mano.
+     Chi ha l'indirizzo vuoto NON viene disegnato: cosi' Facebook
+     resta invisibile finche' il proprietario non lo compila, senza
+     che nessuno debba toccare il codice.
+
+     Disegnato via JS e non a mano nelle 12 pagine: un punto solo da
+     mantenere, e il giorno che si aggiunge un social compare
+     ovunque da solo. Stessa scelta gia' fatta per i cartellini UTM.
+     ============================================================ */
+  var SOCIAL_ORDINE = [
+    { chiave: "instagram", nome: "Instagram", icona: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5.2" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="12" cy="12" r="4.1" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="17.3" cy="6.7" r="1.25" fill="currentColor"/></svg>' },
+    { chiave: "tiktok", nome: "TikTok", icona: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M16.4 2.8h-2.9v12.3c0 1.3-1 2.3-2.3 2.3s-2.3-1-2.3-2.3 1-2.3 2.3-2.3c.2 0 .4 0 .6.1V9.9c-.2 0-.4-.1-.6-.1-2.9 0-5.2 2.3-5.2 5.2s2.3 5.2 5.2 5.2 5.2-2.3 5.2-5.2V8.6c1.1.8 2.4 1.2 3.8 1.2V6.9c-2.1 0-3.8-1.7-3.8-3.8v-.3z"/></svg>' },
+    { chiave: "facebook", nome: "Facebook", icona: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5H16.5V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.5V21h3.2z"/></svg>' }
+  ];
+
+  function socialAttivi() {
+    var cfg = window.MONO_SOCIAL || {};
+    return SOCIAL_ORDINE.filter(function (s) {
+      var url = cfg[s.chiave];
+      return typeof url === "string" && url.trim().length > 0;
+    }).map(function (s) {
+      return { nome: s.nome, icona: s.icona, chiave: s.chiave, url: cfg[s.chiave].trim() };
+    });
+  }
+
+  /* Costruisce la fila di icone. `dove` finisce nel data-track, cosi' si
+     distingue un clic dal footer da uno dalla pagina Contatti. */
+  function listaSocial(voci, dove) {
+    var ul = document.createElement("ul");
+    ul.className = "mono-social__lista";
+    voci.forEach(function (v) {
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = v.url;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.setAttribute("aria-label", "MONO su " + v.nome);
+      a.dataset.track = "social_" + v.chiave + "_" + dove;
+      a.innerHTML = v.icona;
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+    return ul;
+  }
+
+  function initSocial() {
+    var voci = socialAttivi();
+    if (!voci.length) return;   // nessun indirizzo compilato: non si disegna niente
+
+    // 1) FOOTER — su tutte le pagine
+    var footer = document.querySelector(".site-footer");
+    if (footer && !footer.querySelector(".mono-social")) {
+      var blocco = document.createElement("div");
+      blocco.className = "mono-social";
+      var frase = document.createElement("p");
+      frase.className = "mono-social__frase";
+      frase.textContent = "Seguici. A settembre si comincia.";
+      blocco.appendChild(frase);
+      blocco.appendChild(listaSocial(voci, "footer"));
+      footer.appendChild(blocco);
+    }
+
+    // 2) PAGINA CONTATTI — una scheda in piu' nella griglia che c'e' gia',
+    //    con il copy che serve a convincere davvero a premere "segui".
+    var griglia = document.querySelector(".contacts-info .page-grid");
+    if (griglia && !griglia.querySelector(".mono-social-card")) {
+      var card = document.createElement("article");
+      card.className = "page-card mono-social-card";
+      card.setAttribute("data-reveal", "");
+      var occhiello = document.createElement("span");
+      occhiello.textContent = "Seguici";
+      var titolo = document.createElement("h3");
+      titolo.textContent = "Vieni a vederla nascere.";
+      var testo = document.createElement("p");
+      testo.textContent = "Su Instagram e TikTok raccontiamo MONO mentre prende forma: le prove in cucina, quello che riesce e quello che no, le persone che ci lavorano. Seguici adesso e a settembre sarai già dei nostri — e sì, ci sarà da divertirsi.";
+      card.appendChild(occhiello);
+      card.appendChild(titolo);
+      card.appendChild(testo);
+      card.appendChild(listaSocial(voci, "contatti"));
+      griglia.appendChild(card);
+    }
   }
 
   /* Conto alla rovescia per l'apertura (18/7). Sta accanto alla raccolta

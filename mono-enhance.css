@@ -97,6 +97,73 @@
 /* Doppia classe di proposito: la scheda (.page-card span / simili) colora
    TUTTI gli span di terracotta e scavalcava il singolo .mono-req — misurato
    live: usciva #B85C38 invece del rosso. Con .mono-form davanti si vince. */
+/* ============================================================
+   SOCIAL (26/7) — footer + scheda Contatti
+
+   Nessun colore nuovo: nel footer si usa la stessa crema dei link
+   che ci sono gia' (.site-footer a), sulla scheda chiara la
+   terracotta scura del marchio. L'icona prende il colore dal testo
+   (currentColor), quindi segue da sola il contesto in cui sta.
+   Area di tocco 44px come chiede l'accessibilita', anche se
+   l'icona disegnata dentro e' piu' piccola.
+   ============================================================ */
+.mono-social {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+}
+.mono-social__frase {
+  color: rgba(255, 249, 238, 0.74);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  margin: 0;
+}
+.mono-social__lista {
+  align-items: center;
+  display: flex;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.mono-social__lista a {
+  align-items: center;
+  border-radius: 12px;
+  /* box-sizing + min-*: senza, l'arrotondamento dei sub-pixel faceva uscire
+     43px misurati e si scendeva sotto il minimo di 44 dell'accessibilita'. */
+  box-sizing: border-box;
+  color: rgba(255, 249, 238, 0.74);
+  display: inline-flex;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  transition: color 160ms ease, background-color 160ms ease;
+}
+.mono-social__lista svg { height: 22px; width: 22px; }
+.mono-social__lista a:hover,
+.mono-social__lista a:focus-visible {
+  background: rgba(255, 249, 238, 0.14);
+  color: var(--mono-cream);
+}
+
+/* Scheda "Seguici" nella pagina Contatti: fondo chiaro, quindi
+   l'icona va scura. Terracotta scura = stessa usata per gli avvisi. */
+.mono-social-card .mono-social__lista { margin-top: 14px; }
+.mono-social-card .mono-social__lista a { color: #A83A28; }
+.mono-social-card .mono-social__lista a:hover,
+.mono-social-card .mono-social__lista a:focus-visible {
+  background: rgba(168, 58, 40, 0.1);
+  color: var(--mono-terracotta);
+}
+
+/* Telefono: la frase va a capo sopra le icone invece di stringersi. */
+@media (max-width: 560px) {
+  .mono-social { gap: 8px 12px; }
+  .mono-social__frase { flex-basis: 100%; }
+}
+
 .mono-form .mono-req,
 .mono-form-card .mono-req { color: #A83A28; font-weight: 800; }
 .mono-form-actions small .mono-req { font-size: 1.1em; }
