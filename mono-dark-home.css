@@ -1084,11 +1084,25 @@ body.mono-dark-home .mono-chiamata {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  gap: clamp(14px, 3vw, 34px);
+  gap: clamp(12px, 2.4vw, 26px);
   justify-content: center;
   margin-top: 30px;
 }
-body.mono-dark-home .mono-chiamata .hero-actions { margin-top: 0; }
+/* Due tasti, il telefono, due tasti (28/7). I lati sono contenitori miei:
+   `.hero-actions` originale viene svuotato e buttato, cosi' non eredito
+   i suoi margini e non dipendo da un file che non e' mio. */
+body.mono-dark-home .mono-chiamata__lato {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+}
+/* Sul telefono va tutto in colonna: il disegno sale in cima, se no
+   spezzerebbe i tasti in due gruppi lontani. */
+@media (max-width: 720px) {
+  body.mono-dark-home .mono-chiamata { flex-direction: column; }
+  body.mono-dark-home .mono-chiamata__disegno { order: -1; }
+}
 body.mono-dark-home .mono-chiamata__disegno {
   color: var(--mono-champagne);
   flex: 0 0 auto;
@@ -1111,38 +1125,44 @@ body.mono-dark-home .mono-telefono__cornetta,
 body.mono-dark-home .mono-telefono__saette {
   transform-box: fill-box;
 }
+/* 28/7 — "squilla troppo poco, bisogna velocizzarlo": il ciclo passa da
+   5,5s a 3s e la scossa diventa piu' fitta (sei colpi invece di quattro).
+   Risultato: squilla il doppio delle volte e piu' nervoso, ma resta una
+   pausa di ~2s per non diventare un semaforo addosso a chi legge. */
 body.mono-dark-home .mono-telefono__squillo {
-  animation: mono-squillo 5.5s ease-in-out infinite;
+  animation: mono-squillo 3s ease-in-out infinite;
   transform-origin: 50% 100%;
 }
 body.mono-dark-home .mono-telefono__cornetta {
-  animation: mono-cornetta 5.5s ease-in-out infinite;
+  animation: mono-cornetta 3s ease-in-out infinite;
   transform-origin: 50% 100%;
 }
 body.mono-dark-home .mono-telefono__saette {
-  animation: mono-saette 5.5s steps(1, end) infinite;
+  animation: mono-saette 3s steps(1, end) infinite;
   transform-origin: center;
 }
 @keyframes mono-squillo {
-  0%, 5%          { transform: rotate(0deg); }
-  8%              { transform: rotate(-3deg); }
-  11%             { transform: rotate(3deg); }
-  14%             { transform: rotate(-2.4deg); }
-  17%             { transform: rotate(2.4deg); }
-  20%, 100%       { transform: rotate(0deg); }
+  0%, 4%          { transform: rotate(0deg); }
+  8%              { transform: rotate(-3.5deg); }
+  12%             { transform: rotate(3.5deg); }
+  16%             { transform: rotate(-3deg); }
+  20%             { transform: rotate(3deg); }
+  24%             { transform: rotate(-2deg); }
+  28%, 100%       { transform: rotate(0deg); }
 }
 @keyframes mono-cornetta {
-  0%, 5%          { transform: translateY(0) rotate(0deg); }
-  10%             { transform: translateY(-2px) rotate(2deg); }
-  15%             { transform: translateY(-1px) rotate(-2deg); }
-  20%, 100%       { transform: translateY(0) rotate(0deg); }
+  0%, 4%          { transform: translateY(0) rotate(0deg); }
+  10%             { transform: translateY(-2.5px) rotate(2.5deg); }
+  18%             { transform: translateY(-1px) rotate(-2.5deg); }
+  28%, 100%       { transform: translateY(0) rotate(0deg); }
 }
 @keyframes mono-saette {
-  0%, 5%    { opacity: 0.35; }
+  0%, 4%    { opacity: 0.35; }
   8%        { opacity: 1; }
-  12%       { opacity: 0.4; }
-  16%       { opacity: 1; }
-  22%, 100% { opacity: 0.35; }
+  13%       { opacity: 0.4; }
+  18%       { opacity: 1; }
+  23%       { opacity: 0.4; }
+  28%, 100% { opacity: 0.35; }
 }
 /* Chi ha chiesto meno movimento al sistema operativo lo vede fermo,
    e con le saette PIENE (non a mezza trasparenza, che sarebbe un difetto). */
@@ -1153,11 +1173,23 @@ body.mono-dark-home .mono-telefono__saette {
   body.mono-dark-home .mono-telefono__saette { opacity: 1; }
 }
 
-/* La tendina che si apre dal tasto "Seguici" */
-body.mono-dark-home .mono-social--tendina {
-  justify-content: center;
-  margin-top: 14px;
+/* Il pannello che si apre dal tasto "Social".
+   ⚠️ REGOLA DIFENSIVA, costata un bug il 28/7: una regola d'autore con
+   `display` SCAVALCA l'attributo `hidden`, e il pannello restava sempre
+   aperto ("clicco e non succede niente"). Il contenitore ora e' un div
+   normale, ma questa riga fa da rete se un domani diventasse flex. */
+body.mono-dark-home .mono-social-pannello[hidden] { display: none; }
+body.mono-dark-home .mono-social-pannello {
+  margin: 18px auto 0;
+  max-width: 560px;
+  text-align: center;
 }
+body.mono-dark-home .mono-social-pannello__frase {
+  color: rgba(244, 236, 221, 0.86);
+  font-size: clamp(15px, 1.3vw, 17px);
+  margin: 0 0 16px;
+}
+body.mono-dark-home .mono-social--tendina { justify-content: center; }
 body.mono-dark-home .mono-social--tendina .mono-social__lista a {
   color: var(--mono-champagne);
 }
@@ -1170,21 +1202,28 @@ body.mono-dark-home .mono-social--tendina .mono-social__lista a {
 body.mono-dark-home .mono-social--hero .mono-social__lista svg,
 body.mono-dark-home .mono-social--sottohero .mono-social__lista svg,
 body.mono-dark-home .mono-social--tendina .mono-social__lista svg {
+  height: 40px;
+  width: 40px;
+}
+/* Ingrandite due volte il 28/7. Dove c'e' spazio cresce anche il TASTO
+   (64px) e soprattutto lo SPAZIO fra un'icona e l'altra: prima erano 8px,
+   troppo vicine, e il dito rischiava di prendere quella sbagliata.
+   Nella hero il tasto resta 44: li' ogni pixel era stato sudato per far
+   entrare il modulo email, e allargarlo lo farebbe tagliare di nuovo. */
+body.mono-dark-home .mono-social--sottohero .mono-social__lista a,
+body.mono-dark-home .mono-social--tendina .mono-social__lista a {
+  min-height: 64px;
+  min-width: 64px;
+  height: 64px;
+  width: 64px;
+}
+body.mono-dark-home .mono-social--sottohero .mono-social__lista,
+body.mono-dark-home .mono-social--tendina .mono-social__lista { gap: 20px; }
+/* Nella hero il tasto resta 44, quindi li' il disegno non puo' fare 40 */
+body.mono-dark-home .mono-social--hero .mono-social__lista svg {
   height: 34px;
   width: 34px;
 }
-/* Ingrandite ancora il 28/7 ("sono molto belle, ingrandiscile"). Dove c'e'
-   spazio cresce anche il TASTO; nella hero no, resta 44 perche' li' ogni
-   pixel era stato sudato per far entrare il modulo email. */
-body.mono-dark-home .mono-social--sottohero .mono-social__lista a,
-body.mono-dark-home .mono-social--tendina .mono-social__lista a {
-  min-height: 54px;
-  min-width: 54px;
-  height: 54px;
-  width: 54px;
-}
-body.mono-dark-home .mono-social--sottohero .mono-social__lista,
-body.mono-dark-home .mono-social--tendina .mono-social__lista { gap: 8px; }
 body.mono-dark-home .mono-social--hero .mono-social__lista a,
 body.mono-dark-home .mono-social--sottohero .mono-social__lista a,
 body.mono-dark-home .mono-social--tendina .mono-social__lista a {

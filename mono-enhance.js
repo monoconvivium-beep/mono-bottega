@@ -461,45 +461,80 @@
 
     /* Il telefono e i tasti vanno messi fianco a fianco: serve un
        contenitore. `appendChild` SPOSTA i tasti dentro, non li duplica. */
+    var tendina = null;
+
+    if (voci.length) {
+      /* Il tasto si chiama "Social" e basta (28/7): "togli il seguici",
+         il resto lo dice il pannello che apre. E' un <button> e non un
+         <a> perche' non porta da nessuna parte: comanda e basta. */
+      var tasto = document.createElement("button");
+      tasto.type = "button";
+      tasto.className = "button ghost mono-social-tasto";
+      tasto.textContent = "Social";
+      tasto.setAttribute("aria-expanded", "false");
+      tasto.setAttribute("aria-controls", "monoSocialTendina");
+      tasto.dataset.track = "contacts_final_social";
+
+      /* ⚠️ BUG PAGATO IL 28/7 — il pannello e' un DIV NORMALE, non un
+         `.mono-social` (che e' `display:flex`). Una regola d'autore con
+         `display` SCAVALCA l'attributo `hidden`: la prima versione era
+         quindi SEMPRE aperta, e premendo il tasto "non succedeva niente".
+         Se un domani questo contenitore diventa flex, serve anche la
+         regola `[hidden]{display:none}` che sta nel CSS. */
+      tendina = document.createElement("div");
+      tendina.className = "mono-social-pannello";
+      tendina.id = "monoSocialTendina";
+      tendina.hidden = true;
+
+      var frase = document.createElement("p");
+      frase.className = "mono-social-pannello__frase";
+      frase.textContent = "Scopri le novità e i post attraverso i nostri canali social. Stay tuned.";
+      tendina.appendChild(frase);
+
+      var fila = document.createElement("div");
+      fila.className = "mono-social mono-social--tendina";
+      fila.appendChild(listaSocial(voci, "contatti_tasto"));
+      tendina.appendChild(fila);
+
+      tasto.addEventListener("click", function () {
+        var aperta = tasto.getAttribute("aria-expanded") === "true";
+        tasto.setAttribute("aria-expanded", aperta ? "false" : "true");
+        tendina.hidden = aperta;
+        if (!aperta) {
+          var primo = tendina.querySelector("a");
+          if (primo) primo.focus();   // chi usa la tastiera finisce dentro, non oltre
+        }
+      });
+
+      azioni.appendChild(tasto);
+    }
+
+    /* Il telefono va IN MEZZO ai tasti (28/7): due a sinistra, il telefono,
+       due a destra. Quindi il quarto tasto va creato PRIMA di dividerli. */
+    var tasti = Array.prototype.slice.call(azioni.children);
+    var meta = Math.ceil(tasti.length / 2);
+
     var riga = document.createElement("div");
     riga.className = "mono-chiamata";
+    var sinistra = document.createElement("div");
+    sinistra.className = "mono-chiamata__lato";
+    var destra = document.createElement("div");
+    destra.className = "mono-chiamata__lato";
     var disegno = document.createElement("div");
     disegno.className = "mono-chiamata__disegno";
     disegno.innerHTML = TELEFONO_SVG;
-    azioni.parentNode.insertBefore(riga, azioni);
-    riga.appendChild(disegno);
-    riga.appendChild(azioni);
 
-    if (!voci.length) return;   // nessun social compilato: niente quarto tasto
-
-    /* Quarto tasto: apre e chiude le tre icone qui sotto. E' un <button>
-       e non un <a> perche' non porta da nessuna parte: comanda e basta. */
-    var tasto = document.createElement("button");
-    tasto.type = "button";
-    tasto.className = "button ghost mono-social-tasto";
-    tasto.textContent = "Seguici sui social";   // testo scelto dal proprietario (28/7)
-    tasto.setAttribute("aria-expanded", "false");
-    tasto.setAttribute("aria-controls", "monoSocialTendina");
-    tasto.dataset.track = "contacts_final_social";
-
-    var tendina = document.createElement("div");
-    tendina.className = "mono-social mono-social--tendina";
-    tendina.id = "monoSocialTendina";
-    tendina.hidden = true;
-    tendina.appendChild(listaSocial(voci, "contatti_tasto"));
-
-    tasto.addEventListener("click", function () {
-      var aperta = tasto.getAttribute("aria-expanded") === "true";
-      tasto.setAttribute("aria-expanded", aperta ? "false" : "true");
-      tendina.hidden = aperta;
-      if (!aperta) {
-        var primo = tendina.querySelector("a");
-        if (primo) primo.focus();   // chi usa la tastiera finisce dentro, non oltre
-      }
+    tasti.forEach(function (t, i) {
+      (i < meta ? sinistra : destra).appendChild(t);   // appendChild SPOSTA
     });
 
-    azioni.appendChild(tasto);
-    riga.insertAdjacentElement("afterend", tendina);
+    riga.appendChild(sinistra);
+    riga.appendChild(disegno);
+    riga.appendChild(destra);
+    azioni.parentNode.insertBefore(riga, azioni);
+    azioni.remove();   // il contenitore originale e' rimasto vuoto
+
+    if (tendina) riga.insertAdjacentElement("afterend", tendina);
   }
 
   /* Conto alla rovescia per l'apertura (18/7). Sta accanto alla raccolta
