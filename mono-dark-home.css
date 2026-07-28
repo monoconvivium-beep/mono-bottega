@@ -1259,3 +1259,71 @@ body.mono-dark-home .mono-social--tendina .mono-social__lista a {
 body.mono-dark-home .mono-social--tendina .mono-social__lista a {
   border-color: rgba(203, 167, 90, 0.5);
 }
+
+/* ============================================================
+   PAGINA /social/ — ILLUSTRAZIONE LIKE / CUORE / COMMENTI (28/7)
+
+   Sostituisce il MEGAFONO, che `data-mono-world="jobs"` portava qui ma e'
+   gia' l'illustrazione di "Lavora con noi" (doppione segnalato da lui).
+   Stile chiesto da lui: piatto, contorni spessi scuri, tondi che si
+   sovrappongono. Disegno ORIGINALE (il riferimento che ha mandato e'
+   un'icona d'archivio di terzi), nei colori MONO: terracotta, oro, oliva,
+   crema, corallo. Stessa famiglia visiva del telefono di Contatti.
+
+   ⚠️⚠️ LA REGOLA PIU' IMPORTANTE DI QUESTO BLOCCO
+   `.mono-page-scene` nasce con `opacity: 0` (experience.css:318) e viene
+   accesa da `.is-scene-awake`, che pero' la mette `setupPageScene()` —
+   la stessa funzione che noi facciamo USCIRE SUBITO col segnaposto.
+   Quindi la classe non arriva mai e senza queste due righe l'illustrazione
+   resterebbe INVISIBILE PER SEMPRE. E' la terza volta che incontro questa
+   trappola (data-reveal 26/7, scheda social 26/7): elemento nel DOM, a
+   opacita' zero, e per l'utente semplicemente non esiste.
+   ============================================================ */
+body.mono-dark-home.social-page .page-hero .mono-page-scene--social {
+  opacity: 1;
+  transform: translate3d(var(--scene-x), calc(-50% + var(--scene-y)), 0) scale(1);
+}
+body.mono-dark-home .mono-social-scena svg { height: auto; width: 100%; }
+
+/* L'animazione: batte il cuore, si preme il like, spunta il commento.
+   Sfalsati dentro un giro di 4s, cosi' sembra una conversazione e non
+   tre cose che pulsano insieme. */
+body.mono-dark-home .mono-social-scena__cuore,
+body.mono-dark-home .mono-social-scena__like,
+body.mono-dark-home .mono-social-scena__commento {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+body.mono-dark-home .mono-social-scena__cuore {
+  animation: mono-batte 4s ease-in-out infinite;
+}
+body.mono-dark-home .mono-social-scena__like {
+  animation: mono-premi 4s ease-in-out infinite;
+}
+body.mono-dark-home .mono-social-scena__commento {
+  animation: mono-spunta 4s ease-in-out infinite;
+}
+@keyframes mono-batte {
+  0%, 8%    { transform: scale(1); }
+  14%       { transform: scale(1.09); }
+  20%       { transform: scale(1); }
+  26%       { transform: scale(1.05); }
+  32%, 100% { transform: scale(1); }
+}
+@keyframes mono-premi {
+  0%, 36%   { transform: rotate(0deg) translateY(0); }
+  44%       { transform: rotate(-9deg) translateY(3px); }
+  52%       { transform: rotate(3deg) translateY(-1px); }
+  60%, 100% { transform: rotate(0deg) translateY(0); }
+}
+@keyframes mono-spunta {
+  0%, 62%   { transform: scale(1); }
+  70%       { transform: scale(1.08); }
+  78%       { transform: scale(0.98); }
+  86%, 100% { transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.mono-dark-home .mono-social-scena__cuore,
+  body.mono-dark-home .mono-social-scena__like,
+  body.mono-dark-home .mono-social-scena__commento { animation: none; }
+}

@@ -28,9 +28,9 @@
     <link rel="stylesheet" href="../styles.css?v=20260716-fonts-v1">
     <link rel="stylesheet" href="../experience.css?v=20260716-fonts-v1">
     <link rel="stylesheet" href="../mono-engineering.css?v=20260716-fonts-v1">
-    <link rel="stylesheet" href="../mono-enhance.css?v=20260728-family-v38">
-    <link rel="stylesheet" href="../mono-dark-home.css?v=20260728-family-v38">
-    <script defer src="../mono-enhance.js?v=20260728-family-v38"></script>
+    <link rel="stylesheet" href="../mono-enhance.css?v=20260728-like-cuore-v39">
+    <link rel="stylesheet" href="../mono-dark-home.css?v=20260728-like-cuore-v39">
+    <script defer src="../mono-enhance.js?v=20260728-like-cuore-v39"></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -66,7 +66,7 @@
         ]
       }
     </script>
-    <script src="../mono-config.js?v=20260728-family-v38"></script>
+    <script src="../mono-config.js?v=20260728-like-cuore-v39"></script>
 </head>
   <body class="mono-world contacts-page social-page mono-dark-home" data-mono-world="jobs">
     <a class="skip-link" href="#main">Vai al contenuto</a>
@@ -80,6 +80,46 @@
     </header>
     <main id="main">
       <section class="page-hero contacts-hero">
+        <!-- ILLUSTRAZIONE DELLA PAGINA — like, cuore e commenti.
+             ⚠️ Sta QUI, scritta a mano, per DUE motivi:
+             1. `data-mono-world="jobs"` faceva comparire il MEGAFONO, che e'
+                gia' l'illustrazione di "Lavora con noi": un doppione.
+             2. `setupPageScene()` in experience.js (file di Codex, non
+                toccato) si ferma se trova gia' un `.mono-page-scene` dentro
+                la hero. Mettendo il nostro, il megafono non viene mai
+                iniettato. Stessa tecnica del segnaposto gia' usata altrove.
+             ⚠️ Ma proprio perche' quella funzione esce subito, NON aggiunge
+             `.is-scene-awake` alla hero: senza la regola apposta in
+             mono-dark-home.css questa scena resterebbe a `opacity: 0` PER
+             SEMPRE (è la trappola gia' pagata due volte). -->
+        <div class="mono-page-scene mono-page-scene--social mono-social-scena" aria-hidden="true">
+          <svg viewBox="0 0 210 190" focusable="false" aria-hidden="true">
+            <defs>
+              <pattern id="monoSocialPuntini" width="9" height="9" patternUnits="userSpaceOnUse">
+                <circle cx="4.5" cy="4.5" r="1.7" fill="#CBA75A" opacity="0.55"/>
+              </pattern>
+            </defs>
+            <circle cx="105" cy="95" r="88" fill="url(#monoSocialPuntini)"/>
+            <g stroke="#241a14" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+              <g class="mono-social-scena__cuore">
+                <circle cx="62" cy="108" r="45" fill="#B85C38"/>
+                <path fill="#F4ECDD" d="M62 129 C40 114 33 105 33 95 C33 86 40 80 48 80 C54 80 59 83 62 88 C65 83 70 80 76 80 C84 80 91 86 91 95 C91 105 84 114 62 129 Z"/>
+              </g>
+              <g class="mono-social-scena__commento">
+                <circle cx="146" cy="132" r="43" fill="#6E6A3C"/>
+                <path fill="#F4ECDD" d="M124 112 H168 C173 112 176 115 176 120 V138 C176 143 173 146 168 146 H142 L128 157 L131 146 H124 C119 146 116 143 116 138 V120 C116 115 119 112 124 112 Z"/>
+                <g stroke-width="4.6">
+                  <path d="M127 123 H165"/><path d="M127 131 H165"/><path d="M127 139 H150"/>
+                </g>
+              </g>
+              <g class="mono-social-scena__like">
+                <circle cx="139" cy="58" r="47" fill="#CBA75A"/>
+                <rect x="110" y="55" width="17" height="34" rx="5" fill="#E27A60"/>
+                <path fill="#F4ECDD" d="M132 60 C137 57 140 51 141 45 C142 39 141 34 145 33 C151 32 155 37 155 44 C155 49 154 53 152 57 H166 C171 57 174 60 174 64 C174 67 172 69 170 70 C172 71 173 73 173 75 C173 78 171 80 169 81 C170 82 171 84 171 85 C171 88 169 90 166 90 C167 91 167 92 167 93 C167 96 164 89.5 161 89.5 H132 Z"/>
+              </g>
+            </g>
+          </svg>
+        </div>
         <p class="eyebrow">MONO Family</p>
         <h1 class="contacts-hero-title"><span>Entra nella</span><span>MONO Family.</span></h1>
         <p>MONO non è solo un brand: è una community fatta di persone, idee, stile e voglia di crescere insieme.</p>
@@ -119,7 +159,7 @@
     <script src="../mono-cinematic.js?v=20260725-fluido-v8"></script>
     <script src="../mono-navigation.js?v=20260714-engineering-master-v1"></script>
     <script src="../mono-signature.js?v=20260714-engineering-master-v1"></script>
-    <script src="../app.js?v=20260728-family-v38"></script>
+    <script src="../app.js?v=20260728-like-cuore-v39"></script>
     <script src="../experience.js?v=20260715-contacts-architecture-v1"></script>
   </body>
 </html>
