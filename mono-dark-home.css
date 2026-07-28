@@ -492,7 +492,18 @@ body.mono-dark-home .jobs-hero-title span + span {
 body.mono-dark-home .product-system .product-system-title {
   color: var(--mono-oro-luminoso);
 }
-body.mono-dark-home .product-system .product-system-title span,
+/* 28/7 — il titolo era CREMA, non oro, e non per scelta: tutto il testo
+   sta dentro gli <span>, e questa regola li dipingeva di crema, quindi
+   l'oro dichiarato sull'h2 qui sopra non si vedeva MAI. Il proprietario
+   l'ha notato: "lo vorrei dorato come gli altri titoli".
+   ⚠️ MA non e' il champagne degli altri titoli: MISURATO sul verde vero
+   (sage #4e6b47 → olive #6e6a3c) il champagne #cba75a fa 2,43-2,62,
+   sotto il minimo di 3 previsto anche per i titoli grandi. L'oro
+   luminoso fa 3,60-3,88: stesso oro di famiglia, ma leggibile qui.
+   La parola-accento "amore" resta crema (5,08) per staccare. */
+body.mono-dark-home .product-system .product-system-title span {
+  color: var(--mono-oro-luminoso);
+}
 body.mono-dark-home .product-system .product-system-title em {
   color: var(--mono-cream);
 }
