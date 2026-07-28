@@ -1383,3 +1383,14 @@ body.mono-dark-home .mono-frusta__panna {
 @media (prefers-reduced-motion: reduce) {
   body.mono-dark-home .mono-frusta__panna { animation: none; }
 }
+
+/* La firma rossa dentro una card crema (28/7).
+   #A83A28 e' la terracotta SCURA gia' in uso sulle card chiare: la
+   terracotta di marchio su crema non tiene il contrasto, questa si'.
+   ⚠️ E' un <p> con una classe, NON uno <span>: dentro `.page-card` uno
+   <span> sciolto e' l'OCCHIELLO, e finirebbe in alto in maiuscoletto. */
+body.mono-dark-home .page-card .mono-card-firma {
+  color: #A83A28;
+  font-weight: 800;
+  margin-top: 10px;
+}
