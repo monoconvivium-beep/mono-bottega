@@ -454,6 +454,14 @@ body.mono-dark-home {
      testo piccolo — se serve un accento su testo minuto, usare l'oro. */
   --mono-brace: var(--mono-terracotta);
   --mono-oro-luminoso: #ebce7c; /* per l'OLIVA: l'oro normale li' sparisce (2.56) */
+  /* 28/7 sera — stessa idea dell'oro luminoso, ma per il ROSSO, e SOLO
+     per la parola "amore" sull'isola verde. La terracotta del sito li'
+     fa 1,07: lui l'ha vista pubblicata e ha detto "avevi ragione, si
+     vede poco". Questo e' il rosso piu' acceso che resta rosso: sotto
+     l'ha vinta la salita di luminosita', sopra vira al salmone sbiadito.
+     ⚠️ NON usarlo altrove: sul fondo scuro del resto del sito e' troppo
+     chiaro e rompe il sistema, dove il rosso e' uno solo (--accento). */
+  --mono-rosso-brillante: #ff8360;
   --mono-oro-pallido: #f2dfa0;  /* per la TERRACOTTA */
   --titolo: var(--mono-champagne);
   --accento: var(--mono-brace);
@@ -504,15 +512,26 @@ body.mono-dark-home .product-system .product-system-title {
 body.mono-dark-home .product-system .product-system-title span {
   color: var(--mono-oro-luminoso);
 }
-/* 28/7 sera — "amore" ora e' ROSSO, scelta esplicita del proprietario:
-   "voglio sbatterci la testa, voglio vederlo io rosso su verde se rimane
-   o meno". Era crema con la pennellata terracotta sotto (vedi il blocco
-   in fondo al file). ⚠️ MISURATO: terracotta su questo verde = 1,22 di
-   contrasto, sotto ogni soglia. Se decide di tornare indietro bastano
-   due mosse: qui var(--mono-cream), e rimettere il ::after della
-   pennellata (il codice SVG e' conservato nel blocco in fondo). */
+/* 28/7 sera — "amore" e' ROSSO, e in DUE tempi, tutti e due voluti da lui.
+   1) Prima l'ha chiesto nella terracotta del sito, sapendo cosa avevo
+      misurato: "voglio sbatterci la testa, voglio vederlo io rosso su
+      verde se rimane o meno". Pubblicato.
+   2) L'ha guardato online e ha deciso: "avevi ragione, si vede poco.
+      Aumenta, fai solo per quell'eccezione li' un rosso piu' brillante
+      che stia bene col verde". Da qui --mono-rosso-brillante.
+   ⚠️ Sul verde nemmeno questo arriva alla soglia 3 (fa 2,01 nel punto
+   peggiore, contro 1,07 della terracotta): per superarla un rosso deve
+   sbiadire fino al 29% di saturazione, e li' non e' piu' rosso. E' una
+   scelta di gusto FATTA A OCCHIO SU UN PROVINO, non un numero raggiunto.
+   Regge perche' e' una parola da 84px (42 sul telefono).
+   ➡️ Se un giorno chiede piu' leggibilita' SENZA perdere il rosso,
+   l'unica strada vera e' ridargli il BORDO che il verde gli toglie:
+   -webkit-text-stroke: 2.5px #2b3a26 (provato, funziona, fa 4,03 fra
+   lettera e contorno). Provino in scratchpad/provino.js.
+   ➡️ Per tornare a com'era: qui var(--mono-cream) + rimettere il
+   ::after della pennellata, conservato in fondo al file. */
 body.mono-dark-home .product-system .product-system-title em {
-  color: var(--accento);
+  color: var(--mono-rosso-brillante);
 }
 /* TERRACOTTA (firma/signup): titolo oro pallido */
 body.mono-dark-home .opening-signup h2,
