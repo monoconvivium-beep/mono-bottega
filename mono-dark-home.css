@@ -1420,3 +1420,33 @@ body.mono-dark-home.aperitivo-page .aperitivo-rito-title span { display: block; 
 body.mono-dark-home.aperitivo-page .aperitivo-rito-title span + span {
   color: var(--accento);
 }
+
+/* ============================================================
+   "amore" con la PENNELLATA TERRACOTTA sotto (28/7)
+
+   Il proprietario voleva "amore" in rosso mattone. MISURATO: la
+   terracotta su quel verde fa 1,22 -> come TESTO sparisce, le lettere
+   non hanno piu' bordo. Ma come MACCHIA PIENA si vede benissimo: rosso
+   e verde hanno luminosita' simile e tinte opposte, e su una forma
+   spessa l'occhio stacca la tinta anche senza stacco di luce.
+   Verificato renderizzando un provino e guardandolo, non a naso.
+   Quindi: la parola resta CREMA (4,72 = leggibile) e il rosso entra
+   come segno grafico sotto. Il carattere c'e', la leggibilita' pure.
+
+   ⚠️ La pennellata e' un SVG scritto dentro il CSS: nessun file da
+   scaricare. `preserveAspectRatio='none'` la fa allungare quanto la
+   parola, cosi' vale anche se un domani il testo cambia.
+   ============================================================ */
+body.mono-dark-home .product-system .product-system-title em {
+  position: relative;
+}
+body.mono-dark-home .product-system .product-system-title em::after {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 22' preserveAspectRatio='none'%3E%3Cpath d='M2 6 C42 1 84 13 124 5 C152 0 176 8 198 3 L198 15 C176 21 152 13 124 18 C84 26 42 15 2 20 Z' fill='%23B85C38'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+  bottom: -0.04em;
+  content: "";
+  height: 0.17em;
+  left: -1.5%;
+  pointer-events: none;
+  position: absolute;
+  right: -1.5%;
+}
