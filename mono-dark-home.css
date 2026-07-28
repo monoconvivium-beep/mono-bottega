@@ -1450,3 +1450,46 @@ body.mono-dark-home .product-system .product-system-title em::after {
   position: absolute;
   right: -1.5%;
 }
+
+/* ============================================================
+   SEZIONE APP DELLA HOME — rimessa in ordine (28/7)
+
+   Richiesta sua: "la trovo disordinata". Tolta la card "Ordina. Paga.
+   Torna." (diceva a parole quello che i tre riquadri rossi dicono gia')
+   e al suo posto, nella colonna di destra, e' salito il QR, che prima
+   stava schiacciato in fondo alla colonna sinistra.
+   Risultato: una cosa sola per lato. A sinistra si legge, a destra si fa.
+   ============================================================ */
+body.mono-dark-home .app-gateway > .app-qr--colonna {
+  align-self: center;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 0;
+  max-width: none;
+  padding: clamp(22px, 3vw, 34px);
+  text-align: center;
+  width: 100%;
+}
+body.mono-dark-home .app-qr--colonna img {
+  height: auto;
+  padding: 12px;
+  width: min(260px, 52vw);
+}
+body.mono-dark-home .app-qr--colonna span {
+  font-size: clamp(15px, 1.3vw, 17px);
+  font-weight: 700;
+}
+/* Sotto i 900px la griglia va in colonna: il QR non deve diventare
+   un lenzuolo largo quanto lo schermo. */
+@media (max-width: 900px) {
+  body.mono-dark-home .app-gateway > .app-qr--colonna {
+    justify-self: center;
+    max-width: 380px;
+  }
+}
+
+/* Titolo della sezione app su due righe (28/7): prima "Tutto in un tap"
+   restava attaccato e la sezione sembrava sbilanciata. */
+body.mono-dark-home .app-gateway-title span { display: block; }
+body.mono-dark-home .app-gateway-title span + span { color: var(--accento); }
