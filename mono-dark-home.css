@@ -1211,14 +1211,41 @@ body.mono-dark-home .mono-social--tendina .mono-social__lista svg {
    Nella hero il tasto resta 44: li' ogni pixel era stato sudato per far
    entrare il modulo email, e allargarlo lo farebbe tagliare di nuovo. */
 body.mono-dark-home .mono-social--sottohero .mono-social__lista a,
-body.mono-dark-home .mono-social--tendina .mono-social__lista a {
+body.mono-dark-home .mono-social--tendina .mono-social__lista a,
+body.mono-dark-home .mono-social--pagina .mono-social__lista a {
   min-height: 64px;
   min-width: 64px;
   height: 64px;
   width: 64px;
 }
 body.mono-dark-home .mono-social--sottohero .mono-social__lista,
-body.mono-dark-home .mono-social--tendina .mono-social__lista { gap: 20px; }
+body.mono-dark-home .mono-social--tendina .mono-social__lista,
+body.mono-dark-home .mono-social--pagina .mono-social__lista { gap: 20px; }
+
+/* ---------- Pagina /social/ "Entra nella MONO Family" (28/7) ----------
+   Le icone compaiono due volte: in cima sotto il titolo e in fondo, dopo
+   l'invito. Sono il motivo per cui la pagina esiste, quindi grandi e in
+   chiaro sul buio; nessun colore nuovo. */
+body.mono-dark-home .mono-social--pagina {
+  justify-content: flex-start;
+  margin-top: 26px;
+}
+body.mono-dark-home .mono-social--pagina .mono-social__lista svg {
+  height: 40px;
+  width: 40px;
+}
+body.mono-dark-home .mono-social--pagina .mono-social__lista a {
+  border: 1px solid rgba(203, 167, 90, 0.5);
+  color: var(--mono-champagne);
+}
+body.mono-dark-home .mono-social--pagina .mono-social__lista a:hover,
+body.mono-dark-home .mono-social--pagina .mono-social__lista a:focus-visible {
+  background: rgba(203, 167, 90, 0.14);
+  color: var(--mono-cream);
+}
+/* Nella chiusura il testo e' centrato: le icone lo seguono */
+body.mono-dark-home .social-closing .mono-social--pagina { justify-content: center; }
+body.mono-dark-home .social-closing .hero-actions { margin-top: 26px; }
 /* Nella hero il tasto resta 44, quindi li' il disegno non puo' fare 40 */
 body.mono-dark-home .mono-social--hero .mono-social__lista svg {
   height: 34px;

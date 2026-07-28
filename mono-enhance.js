@@ -391,6 +391,14 @@
       sezioneHero.insertAdjacentElement("afterend", filaSocial("sottohero", "home_telefono"));
     }
 
+    /* 4) PAGINA /social/ — il segnaposto nell'HTML si riempie da qui, cosi'
+       gli indirizzi restano scritti in un posto solo (mono-config.js). */
+    var segnaposti = document.querySelectorAll("[data-social-pagina]");
+    Array.prototype.forEach.call(segnaposti, function (posto, i) {
+      if (posto.querySelector(".mono-social__lista")) return;
+      posto.appendChild(listaSocial(voci, i === 0 ? "pagina_social_alto" : "pagina_social_fondo"));
+    });
+
     initChiusuraContatti(voci);
   }
 
@@ -454,7 +462,11 @@
     '</svg>';
 
   function initChiusuraContatti(voci) {
-    var chiusura = document.querySelector(".contacts-page .contacts-closing");
+    /* ⚠️ Contrassegno esplicito, non una classe di stile. `.contacts-page
+       .contacts-closing` sembrava identificare Contatti, ma quelle classi
+       ce l'hanno anche Dove siamo e la pagina Social: il telefono e il
+       tasto Social spuntavano anche li' (bug del 28/7, era gia' online). */
+    var chiusura = document.querySelector("[data-mono-chiamata]");
     if (!chiusura) return;
     var azioni = chiusura.querySelector(".hero-actions");
     if (!azioni || chiusura.querySelector(".mono-chiamata")) return;
@@ -464,27 +476,21 @@
     var tendina = null;
 
     if (voci.length) {
-      /* Il tasto si chiama "Social" e basta (28/7): "togli il seguici",
-         il resto lo dice il pannello che apre. E' un <button> e non un
-         <a> perche' non porta da nessuna parte: comanda e basta. */
-      var tasto = document.createElement("button");
-      tasto.type = "button";
+      /* 28/7, seconda versione. Prima il tasto apriva e chiudeva il blocco
+         qui sotto; il proprietario ha deciso il contrario:
+         "voglio che la pagina stia fissa cosi'... non voglio che quando si
+         schiaccia social esce cosi'. Quello li' deve rimanere fisso."
+         Quindi: il blocco frase+icone e' SEMPRE visibile (niente piu'
+         apri/chiudi), e il tasto "Social" e' tornato a essere un LINK, che
+         porta alla pagina nuova /social/ con il testo della MONO Family. */
+      var tasto = document.createElement("a");
       tasto.className = "button ghost mono-social-tasto";
       tasto.textContent = "Social";
-      tasto.setAttribute("aria-expanded", "false");
-      tasto.setAttribute("aria-controls", "monoSocialTendina");
+      tasto.href = "../social/";
       tasto.dataset.track = "contacts_final_social";
 
-      /* ⚠️ BUG PAGATO IL 28/7 — il pannello e' un DIV NORMALE, non un
-         `.mono-social` (che e' `display:flex`). Una regola d'autore con
-         `display` SCAVALCA l'attributo `hidden`: la prima versione era
-         quindi SEMPRE aperta, e premendo il tasto "non succedeva niente".
-         Se un domani questo contenitore diventa flex, serve anche la
-         regola `[hidden]{display:none}` che sta nel CSS. */
       tendina = document.createElement("div");
       tendina.className = "mono-social-pannello";
-      tendina.id = "monoSocialTendina";
-      tendina.hidden = true;
 
       var frase = document.createElement("p");
       frase.className = "mono-social-pannello__frase";
@@ -493,18 +499,8 @@
 
       var fila = document.createElement("div");
       fila.className = "mono-social mono-social--tendina";
-      fila.appendChild(listaSocial(voci, "contatti_tasto"));
+      fila.appendChild(listaSocial(voci, "contatti_fisso"));
       tendina.appendChild(fila);
-
-      tasto.addEventListener("click", function () {
-        var aperta = tasto.getAttribute("aria-expanded") === "true";
-        tasto.setAttribute("aria-expanded", aperta ? "false" : "true");
-        tendina.hidden = aperta;
-        if (!aperta) {
-          var primo = tendina.querySelector("a");
-          if (primo) primo.focus();   // chi usa la tastiera finisce dentro, non oltre
-        }
-      });
 
       azioni.appendChild(tasto);
     }
