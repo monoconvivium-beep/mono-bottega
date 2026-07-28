@@ -1394,3 +1394,18 @@ body.mono-dark-home .page-card .mono-card-firma {
   font-weight: 800;
   margin-top: 10px;
 }
+
+/* Titolo della fascia serale su /aperitivo/ (28/7).
+   ⚠️ COLORI INVERTITI di proposito rispetto al sistema: qui la PRIMA riga
+   e' terracotta e la SECONDA oro, mentre sulle pagine prodotto la regola
+   generale vuole titolo oro e accento terracotta. E' una scelta sua fatta
+   guardando la pagina, non una svista: se un domani sembra un errore,
+   e' voluta. Terracotta sul buio fa ~3,97 -> regge SOLO perche' e' un
+   titolo grande, non replicare su testo piccolo. */
+body.mono-dark-home.aperitivo-page .aperitivo-section-title span {
+  color: var(--accento);
+  display: block;
+}
+body.mono-dark-home.aperitivo-page .aperitivo-section-title span + span {
+  color: var(--titolo);
+}
