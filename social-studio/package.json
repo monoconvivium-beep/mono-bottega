@@ -1,6 +1,7 @@
 {
-  "name": "mono-social-studio",
-  "version": "1.0.0",
+  "name": "mono-ai",
+  "version": "2.0.0",
+  "description": "Agente social pragmatico: GPT pensa, Gemini crea.",
   "private": true,
   "type": "module",
   "scripts": {

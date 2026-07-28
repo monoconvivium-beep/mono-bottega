@@ -40,6 +40,8 @@ jobs:
             --exclude='.git' \
             --exclude='.github' \
             --exclude='_site' \
+            --exclude='mono-custode' \
+            --exclude='ceo-engine' \
             --exclude='security-audit' \
             ./ _site/
           touch _site/.nojekyll

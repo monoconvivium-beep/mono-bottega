@@ -500,12 +500,19 @@ body.mono-dark-home .product-system .product-system-title {
    (sage #4e6b47 → olive #6e6a3c) il champagne #cba75a fa 2,43-2,62,
    sotto il minimo di 3 previsto anche per i titoli grandi. L'oro
    luminoso fa 3,60-3,88: stesso oro di famiglia, ma leggibile qui.
-   La parola-accento "amore" resta crema (5,08) per staccare. */
+   La parola-accento "amore" — vedi il blocco dedicato piu' sotto. */
 body.mono-dark-home .product-system .product-system-title span {
   color: var(--mono-oro-luminoso);
 }
+/* 28/7 sera — "amore" ora e' ROSSO, scelta esplicita del proprietario:
+   "voglio sbatterci la testa, voglio vederlo io rosso su verde se rimane
+   o meno". Era crema con la pennellata terracotta sotto (vedi il blocco
+   in fondo al file). ⚠️ MISURATO: terracotta su questo verde = 1,22 di
+   contrasto, sotto ogni soglia. Se decide di tornare indietro bastano
+   due mosse: qui var(--mono-cream), e rimettere il ::after della
+   pennellata (il codice SVG e' conservato nel blocco in fondo). */
 body.mono-dark-home .product-system .product-system-title em {
-  color: var(--mono-cream);
+  color: var(--accento);
 }
 /* TERRACOTTA (firma/signup): titolo oro pallido */
 body.mono-dark-home .opening-signup h2,
@@ -1422,21 +1429,23 @@ body.mono-dark-home.aperitivo-page .aperitivo-rito-title span + span {
 }
 
 /* ============================================================
-   "amore" con la PENNELLATA TERRACOTTA sotto (28/7)
+   "amore": la PENNELLATA E' STATA TOLTA (28/7 sera)
 
-   Il proprietario voleva "amore" in rosso mattone. MISURATO: la
-   terracotta su quel verde fa 1,22 -> come TESTO sparisce, le lettere
-   non hanno piu' bordo. Ma come MACCHIA PIENA si vede benissimo: rosso
-   e verde hanno luminosita' simile e tinte opposte, e su una forma
-   spessa l'occhio stacca la tinta anche senza stacco di luce.
-   Verificato renderizzando un provino e guardandolo, non a naso.
-   Quindi: la parola resta CREMA (4,72 = leggibile) e il rosso entra
-   come segno grafico sotto. Il carattere c'e', la leggibilita' pure.
+   STORIA, perche' serve se un domani si torna indietro.
+   Il 28/7 mattina il proprietario voleva "amore" in rosso mattone.
+   MISURATO: la terracotta su quel verde fa 1,22 -> come TESTO le
+   lettere perdono il bordo. Ma come MACCHIA PIENA si vede benissimo
+   (rosso e verde hanno luminosita' simile e tinte opposte), quindi la
+   parola era rimasta CREMA con la pennellata rossa sotto.
+   La sera ha chiesto il contrario, e a ragion veduta: "voglio
+   sbatterci la testa, voglio vederlo io rosso su verde se rimane o
+   meno". Fatto: parola rossa (regola piu' sopra), pennellata via.
 
-   ⚠️ La pennellata e' un SVG scritto dentro il CSS: nessun file da
-   scaricare. `preserveAspectRatio='none'` la fa allungare quanto la
-   parola, cosi' vale anche se un domani il testo cambia.
-   ============================================================ */
+   ⚠️ PER TORNARE INDIETRO basta rimettere le due regole qui sotto e
+   riportare l'`em` a var(--mono-cream). La pennellata e' un SVG
+   scritto dentro il CSS, nessun file da scaricare;
+   `preserveAspectRatio='none'` la allunga quanto la parola.
+
 body.mono-dark-home .product-system .product-system-title em {
   position: relative;
 }
@@ -1449,6 +1458,25 @@ body.mono-dark-home .product-system .product-system-title em::after {
   pointer-events: none;
   position: absolute;
   right: -1.5%;
+}
+   ============================================================ */
+
+/* ============================================================
+   ALTRI DUE ROSSI CHIESTI IL 28/7 SERA (fondo scuro, non verde:
+   qui la terracotta fa 3,93, sopra la soglia 3 dei titoli grandi)
+
+   1. "Trasparenza al banco. Semplice a casa." — titolo INTERO rosso.
+   2. "La strada per qualcosa di buono porta qui." — rosso SOLO su
+      "porta qui" (suo: "lo scrivi solo porta qui in rosso"), che in
+      `index.html` e' avvolto in uno <span>. Il resto resta oro perche'
+      e' testo sciolto dell'h2. ⚠️ Uno span SOLO: la regola generica
+      `main h2 span + span` colpisce il SECONDO span e qui non entra.
+   ============================================================ */
+body.mono-dark-home .value-section h2 {
+  color: var(--accento);
+}
+body.mono-dark-home .local-info-section h2 span {
+  color: var(--accento);
 }
 
 /* ============================================================

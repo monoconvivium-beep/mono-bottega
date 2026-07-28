@@ -3,76 +3,96 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#262321">
+    <meta name="theme-color" content="#f7f4ee">
+    <meta name="description" content="MONO AI: pensa con GPT, crea immagini e video con Gemini.">
     <meta
-      name="description"
-      content="MONO Social Studio 1.0: studio AI per strategia social, contenuti, calendario, campagne, ADV e crescita locale a Torino."
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' data: blob:; media-src 'self' data: blob:; connect-src 'self'; style-src 'self'; script-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"
     >
-    <title>MONO Social Studio 1.0</title>
-    <link rel="icon" href="../icons/icon-192.svg" type="image/svg+xml">
+    <title>MONO AI</title>
     <link rel="stylesheet" href="styles.css">
     <script src="app.js" defer></script>
   </head>
   <body>
-    <a class="skip-link" href="#workspace">Vai allo studio</a>
+    <div class="app-shell">
+      <header class="topbar">
+        <button class="brand" type="button" data-action="new-chat" aria-label="Nuova conversazione">
+          MONO <span>AI</span>
+        </button>
 
-    <div class="studio-shell">
-      <aside class="studio-sidebar" aria-label="Navigazione MONO Social Studio">
-        <a class="studio-brand" href="../" aria-label="Torna al sito MONO">
-          <img src="../assets/brand/mono-logo-primary.svg" alt="MONO">
-          <span>Social Studio 1.0</span>
-        </a>
+        <div class="engines" aria-label="Motori AI">
+          <span class="engine" data-engine="openai"><i></i>GPT</span>
+          <small>pensa</small>
+          <span class="engine" data-engine="gemini"><i></i>Gemini</span>
+          <small>crea</small>
+        </div>
 
-        <div class="nav-scroll" data-nav></div>
-      </aside>
+        <div class="topbar-actions">
+          <button class="icon-button" type="button" data-action="new-chat" aria-label="Nuova conversazione" title="Nuova conversazione">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <button class="icon-button" type="button" data-action="settings" aria-label="Configura GPT e Gemini" title="Configura GPT e Gemini">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21H9.6v-.09A1.7 1.7 0 0 0 8.5 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H3V9.6h.09A1.7 1.7 0 0 0 4.6 8.5a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1V3h4v.09A1.7 1.7 0 0 0 15.5 4.6a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.4 9c.13.38.34.72.6 1 .3.28.68.42 1.1.4h.09v4h-.09a1.7 1.7 0 0 0-1.7.6Z"/></svg>
+          </button>
+        </div>
+      </header>
 
-      <main class="studio-main" id="workspace">
-        <header class="studio-topbar">
-          <div>
-            <p class="eyebrow">Studio AI per crescita locale</p>
-            <h1 data-view-title>Dashboard</h1>
-          </div>
-          <div class="topbar-actions">
-            <button class="icon-button" type="button" data-action="generate-today" aria-label="Genera piano di oggi">
-              <span>Oggi</span>
-            </button>
-            <button class="button primary" type="button" data-action="calendar-week">Genera settimana</button>
-          </div>
-        </header>
-
-        <section class="signal-strip" aria-label="Stato operativo">
-          <article>
-            <span>Obiettivo</span>
-            <strong data-signal="objective">Visite in bottega e download app</strong>
-          </article>
-          <article>
-            <span>Area</span>
-            <strong>Torino, Santa Rita</strong>
-          </article>
-          <article>
-            <span>Fase</span>
-            <strong data-signal="phase">Apertura / crescita</strong>
-          </article>
-          <article>
-            <span>Output pronti</span>
-            <strong data-signal="ready">0</strong>
-          </article>
-          <article>
-            <span>Motore</span>
-            <strong data-signal="engine">Verifica AI</strong>
-          </article>
+      <main class="conversation" data-conversation aria-live="polite">
+        <section class="welcome" data-welcome>
+          <p>Il tuo social media manager AI</p>
+          <h1>Cosa vuoi creare?</h1>
+          <span>Scrivilo come ti viene. Al resto pensiamo noi.</span>
         </section>
-
-        <section class="workspace" data-view-root aria-live="polite"></section>
       </main>
+
+      <form class="composer" data-composer>
+        <div class="composer-box">
+          <textarea
+            data-prompt
+            rows="1"
+            maxlength="6000"
+            aria-label="Scrivi a MONO AI"
+            placeholder="Es. Fammi un reel sul tiramisù di oggi"
+          ></textarea>
+          <button class="send-button" type="submit" aria-label="Invia">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 7-7 7 7M12 5v14"/></svg>
+          </button>
+        </div>
+      </form>
     </div>
 
-    <div class="toast" data-toast role="status" aria-live="polite"></div>
+    <dialog class="settings-dialog" data-settings-dialog>
+      <form class="settings-panel" data-settings-form>
+        <div class="settings-head">
+          <div>
+            <p>Connessioni</p>
+            <h2>GPT + Gemini</h2>
+          </div>
+          <button class="icon-button" type="button" data-action="close-settings" aria-label="Chiudi">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+          </button>
+        </div>
 
-    <noscript>
-      <div class="noscript">
-        MONO Social Studio richiede JavaScript per generare calendari, script, task ed esportazioni.
-      </div>
-    </noscript>
+        <p class="privacy-note">Le chiavi restano nel file locale protetto dell’app e non vengono mai mostrate dopo il salvataggio.</p>
+
+        <label class="key-field">
+          <span>OpenAI API key <small data-key-state="openai"></small></span>
+          <input type="password" name="openaiKey" autocomplete="off" placeholder="sk-…">
+          <em>Serve per brainstorming, testi e strategia.</em>
+        </label>
+
+        <label class="key-field">
+          <span>Gemini API key <small data-key-state="gemini"></small></span>
+          <input type="password" name="geminiKey" autocomplete="off" placeholder="AIza…">
+          <em>Serve per immagini e video.</em>
+        </label>
+
+        <p class="settings-error" data-settings-error role="alert"></p>
+        <button class="save-button" type="submit">Salva in sicurezza</button>
+        <small class="cost-note">Le API possono consumare credito del tuo account. MONO AI non applica costi aggiuntivi.</small>
+      </form>
+    </dialog>
+
+    <div class="toast" data-toast role="status" aria-live="polite"></div>
   </body>
 </html>

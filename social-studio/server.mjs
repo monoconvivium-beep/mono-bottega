@@ -1,750 +1,838 @@
 import { createServer } from "node:http";
 import { readFile, writeFile } from "node:fs/promises";
 import { existsSync, readFileSync } from "node:fs";
-import { extname, join, normalize, resolve } from "node:path";
+import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const __dirname = fileURLToPath(new URL(".", import.meta.url));
-const ROOT = resolve(__dirname);
-const MAX_BODY_BYTES = 180_000;
+const ROOT = fileURLToPath(new URL(".", import.meta.url));
+const MAX_BODY_BYTES = 80_000;
+const MAX_MEDIA_BYTES = 40 * 1024 * 1024;
 const RATE_LIMIT_WINDOW_MS = 60_000;
-const RATE_LIMIT_MAX = 36;
+const RATE_LIMIT_MAX = 24;
 const requestBuckets = new Map();
 
 loadEnvFile(".env");
 loadEnvFile(".env.local");
 
 const PORT = Number(process.env.PORT || 4177);
+const STATIC_FILES = new Map([
+  ["/", "index.html"],
+  ["/index.html", "index.html"],
+  ["/app.js", "app.js"],
+  ["/styles.css", "styles.css"]
+]);
 
 const MIME_TYPES = {
-  ".html": "text/html; charset=utf-8",
-  ".css": "text/css; charset=utf-8",
-  ".js": "text/javascript; charset=utf-8",
-  ".mjs": "text/javascript; charset=utf-8",
-  ".json": "application/json; charset=utf-8",
-  ".svg": "image/svg+xml",
-  ".webp": "image/webp",
-  ".png": "image/png",
-  ".ico": "image/x-icon",
-  ".txt": "text/plain; charset=utf-8",
-  ".md": "text/markdown; charset=utf-8"
+  "index.html": "text/html; charset=utf-8",
+  "app.js": "text/javascript; charset=utf-8",
+  "styles.css": "text/css; charset=utf-8"
 };
 
-const MODULE_BRIEFS = {
-  content: "Genera una proposta completa per un contenuto social MONO.",
-  reel: "Genera uno script Reel/TikTok con hook, scene, copy, CTA, rischio e priorita.",
-  carousel: "Genera un carousel Instagram slide-by-slide.",
-  stories: "Genera una sequenza Stories interattiva con sticker e CTA.",
-  image: "Genera un'immagine reale o un prompt immagine originale, coerente con food branding premium.",
-  video: "Genera prompt video e guida di produzione manuale.",
-  viral: "Genera opportunita organiche locali per Torino e Santa Rita.",
-  campaign: "Genera una campagna completa con piano contenuti, Stories, offline e metriche.",
-  adv: "Valuta se sponsorizzare un contenuto e crea raccomandazione ADV.",
-  critic: "Valuta brutalmente una bozza e riscrivila in tono MONO.",
-  feed: "Suggerisci ritmo feed, cover, colori e regole visuali.",
-  analytics: "Analizza metriche social manuali e suggerisci la prossima decisione.",
-  agent: "Agisci come direttore operativo social e decidi cosa fare ora."
+const FORMAT_PRESETS = {
+  reel: { platform: "Instagram + TikTok", aspectRatio: "9:16", visualType: "video" },
+  stories: { platform: "Instagram", aspectRatio: "9:16", visualType: "image" },
+  carousel: { platform: "Instagram", aspectRatio: "4:5", visualType: "image" },
+  post: { platform: "Instagram", aspectRatio: "4:5", visualType: "image" }
 };
 
 const server = createServer(async (request, response) => {
   try {
-    if (request.url === "/api/health" && request.method === "GET") {
-      const openAiConfigured = isValidOpenAiKey(process.env.OPENAI_API_KEY || "");
-      const geminiConfigured = isValidGeminiKey(process.env.GEMINI_API_KEY || "");
-      return sendJson(response, 200, {
-        ok: true,
-        aiConfigured: openAiConfigured || geminiConfigured,
-        providers: {
-          openai: {
-            configured: openAiConfigured,
-            model: getOpenAiModelName()
-          },
-          gemini: {
-            configured: geminiConfigured,
-            textModel: getGeminiTextModelName(),
-            imageModel: getGeminiImageModelName()
-          }
-        },
-        model: openAiConfigured ? getOpenAiModelName() : getGeminiTextModelName(),
-        retention: "no_prompt_logging"
-      });
+    const path = new URL(request.url || "/", `http://127.0.0.1:${PORT}`).pathname;
+
+    if (path.startsWith("/api/") && !isTrustedOrigin(request)) {
+      return sendJson(response, 403, { error: "Richiesta non autorizzata." });
     }
 
-    if (request.url === "/api/agent" && request.method === "POST") {
-      return handleAgentRequest(request, response);
+    if (path === "/api/health" && request.method === "GET") {
+      return sendJson(response, 200, getHealth());
     }
 
-    if (request.url === "/api/setup-key" && request.method === "POST") {
-      return handleSetupKeyRequest(request, response);
+    if (path === "/api/brainstorm" && request.method === "POST") {
+      return handleBrainstorm(request, response);
+    }
+
+    if (path === "/api/visual" && request.method === "POST") {
+      return handleVisual(request, response);
+    }
+
+    if (path === "/api/setup" && request.method === "POST") {
+      return handleSetup(request, response);
     }
 
     if (request.method !== "GET" && request.method !== "HEAD") {
       return sendJson(response, 405, { error: "Metodo non consentito." });
     }
 
-    return serveStatic(request, response);
-  } catch {
-    return sendJson(response, 500, { error: "Errore interno del server." });
+    return serveStatic(path, request, response);
+  } catch (error) {
+    const status = Number(error?.statusCode || 500);
+    const payload = {
+      error: error?.publicMessage || "Errore interno del server."
+    };
+    if (error?.code) payload.code = error.code;
+    return sendJson(response, status, payload);
   }
 });
 
 server.listen(PORT, "127.0.0.1", () => {
-  const activeProviders = [
-    isValidOpenAiKey(process.env.OPENAI_API_KEY || "") ? "OpenAI" : "",
-    isValidGeminiKey(process.env.GEMINI_API_KEY || "") ? "Gemini" : ""
-  ].filter(Boolean);
-
-  console.info(`MONO Social Studio AI attivo su http://127.0.0.1:${PORT}`);
-  console.info(activeProviders.length ? `AI reale configurata: ${activeProviders.join(" + ")}.` : "AI reale non configurata: uso fallback demo nel browser.");
+  const health = getHealth();
+  const active = [health.providers.openai ? "GPT" : "", health.providers.gemini ? "Gemini" : ""].filter(Boolean);
+  console.info(`MONO AI attivo su http://127.0.0.1:${PORT}/`);
+  console.info(active.length ? `Motori connessi: ${active.join(" + ")}.` : "Nessuna chiave configurata: bozza locale disponibile.");
 });
 
-async function handleAgentRequest(request, response) {
-  const clientId = request.socket.remoteAddress || "local";
-  if (!withinRateLimit(clientId)) {
-    return sendJson(response, 429, { error: "Troppe richieste. Riprova tra poco." });
+function getHealth() {
+  return {
+    ok: true,
+    providers: {
+      openai: isValidOpenAiKey(process.env.OPENAI_API_KEY || ""),
+      gemini: isValidGeminiKey(process.env.GEMINI_API_KEY || "")
+    },
+    models: {
+      openai: getOpenAiModelName(),
+      image: getGeminiImageModelName(),
+      video: getGeminiVideoModelName()
+    },
+    privacy: {
+      localOnly: true,
+      promptLogging: false,
+      openAiStore: false
+    }
+  };
+}
+
+async function handleBrainstorm(request, response) {
+  enforceRateLimit(request, "brainstorm");
+  const payload = await readJsonBody(request);
+  const message = sanitizeText(payload.message, 6000);
+  const history = sanitizeHistory(payload.history);
+
+  if (!message) {
+    return sendJson(response, 400, { error: "Scrivi cosa vuoi creare." });
   }
 
-  const payload = await readJsonBody(request);
-  const cleanPayload = sanitizePayload(payload);
-  const selectedProvider = selectProvider(cleanPayload);
-
-  if (selectedProvider === "none") {
-    return sendJson(response, 503, {
-      error: "Nessun provider AI configurato. Aggiungi OpenAI o Gemini.",
-      code: "AI_NOT_CONFIGURED"
-    });
+  if (!isValidOpenAiKey(process.env.OPENAI_API_KEY || "")) {
+    return sendJson(response, 200, createFallbackResult(message));
   }
 
   try {
-    const aiResponse = await callSelectedProvider(selectedProvider, cleanPayload);
-    return sendJson(response, 200, aiResponse);
+    const result = await callOpenAi(message, history);
+    return sendJson(response, 200, { ...result, mode: "ai", provider: "openai" });
   } catch {
-    return sendJson(response, 502, {
-      mode: "fallback",
-      error: "Provider AI non raggiungibile. Verifica connessione, chiave e modello.",
-      code: "AI_PROVIDER_UNREACHABLE"
+    return sendJson(response, 200, createFallbackResult(message));
+  }
+}
+
+async function handleVisual(request, response) {
+  enforceRateLimit(request, "visual");
+
+  if (!isValidGeminiKey(process.env.GEMINI_API_KEY || "")) {
+    return sendJson(response, 503, {
+      error: "Collega Gemini per creare immagini e video.",
+      code: "GEMINI_NOT_CONFIGURED"
+    });
+  }
+
+  const payload = await readJsonBody(request);
+  const type = payload.type === "video" ? "video" : "image";
+  const prompt = sanitizeText(payload.prompt, 5000);
+  const aspectRatio = sanitizeAspectRatio(payload.aspectRatio, type);
+
+  if (!prompt) {
+    return sendJson(response, 400, { error: "Manca la direzione visuale." });
+  }
+
+  try {
+    const result = type === "video"
+      ? await callGeminiVideo(prompt, aspectRatio)
+      : await callGeminiImage(prompt, aspectRatio);
+    return sendJson(response, 200, { ok: true, type, ...result });
+  } catch (error) {
+    const authError = error?.statusCode === 401 || error?.statusCode === 403;
+    return sendJson(response, authError ? 401 : 502, {
+      error: authError
+        ? "La chiave Gemini non è accettata. Apri le impostazioni e sostituiscila."
+        : "Gemini non ha completato il visual. Riprova tra poco.",
+      code: authError ? "GEMINI_AUTH_ERROR" : "GEMINI_UNAVAILABLE"
     });
   }
 }
 
-async function handleSetupKeyRequest(request, response) {
-  const clientId = request.socket.remoteAddress || "local";
-  if (!isLoopbackClient(clientId)) {
-    return sendJson(response, 403, { error: "Setup consentito solo da questo computer." });
-  }
+async function handleSetup(request, response) {
+  enforceRateLimit(request, "setup");
 
-  if (!withinRateLimit(`setup:${clientId}`)) {
-    return sendJson(response, 429, { error: "Troppe richieste. Riprova tra poco." });
+  if (!isLoopbackClient(request.socket.remoteAddress || "")) {
+    return sendJson(response, 403, { error: "Configurazione consentita solo da questo computer." });
   }
 
   const payload = await readJsonBody(request);
-  const provider = sanitizeProvider(payload.provider || "openai");
-  const apiKey = normalizeSecretValue(payload.apiKey || "");
-  const model = sanitizeModelName(
-    payload.model || (provider === "gemini" ? getGeminiTextModelName() : getOpenAiModelName()),
-    provider === "gemini" ? "gemini-3.5-flash" : "gpt-5.5"
-  );
-  const imageModel = sanitizeModelName(payload.imageModel || getGeminiImageModelName(), "gemini-3.1-flash-image");
+  const openaiKey = normalizeSecretValue(payload.openaiKey || "");
+  const geminiKey = normalizeSecretValue(payload.geminiKey || "");
 
-  if (provider === "openai" && !isValidOpenAiKey(apiKey)) {
-    return sendJson(response, 400, { error: "Chiave OpenAI non valida. Deve iniziare con sk-." });
+  if (!openaiKey && !geminiKey) {
+    return sendJson(response, 400, { error: "Incolla almeno una chiave nuova." });
   }
 
-  if (provider === "gemini" && !isValidGeminiKey(apiKey)) {
-    return sendJson(response, 400, { error: "Chiave Gemini non valida. Incolla una API key di Google AI Studio." });
+  if (openaiKey && !isValidOpenAiKey(openaiKey)) {
+    return sendJson(response, 400, { error: "La chiave OpenAI non ha un formato valido." });
   }
 
-  const envUpdates = provider === "gemini"
-    ? { GEMINI_API_KEY: apiKey, GEMINI_TEXT_MODEL: model, GEMINI_IMAGE_MODEL: imageModel, PORT: String(PORT) }
-    : { OPENAI_API_KEY: apiKey, OPENAI_MODEL: model, PORT: String(PORT) };
+  if (geminiKey && !isValidGeminiKey(geminiKey)) {
+    return sendJson(response, 400, { error: "La chiave Gemini non ha un formato valido." });
+  }
 
-  await updateEnvLocal(envUpdates);
-  Object.assign(process.env, envUpdates);
+  const checks = await Promise.all([
+    openaiKey ? verifyOpenAiKey(openaiKey) : Promise.resolve({ valid: true }),
+    geminiKey ? verifyGeminiKey(geminiKey) : Promise.resolve({ valid: true })
+  ]);
+
+  if (!checks[0].valid) {
+    return sendJson(response, 400, { error: "OpenAI ha rifiutato questa chiave. Creane una nuova dalla piattaforma OpenAI." });
+  }
+
+  if (!checks[1].valid) {
+    return sendJson(response, 400, { error: "Google ha rifiutato questa chiave. Creane una nuova in Google AI Studio." });
+  }
+
+  const updates = { PORT: String(PORT) };
+  if (openaiKey) {
+    updates.OPENAI_API_KEY = openaiKey;
+    updates.OPENAI_MODEL = getOpenAiModelName();
+  }
+  if (geminiKey) {
+    updates.GEMINI_API_KEY = geminiKey;
+    updates.GEMINI_IMAGE_MODEL = getGeminiImageModelName();
+    updates.GEMINI_VIDEO_MODEL = getGeminiVideoModelName();
+  }
+
+  await updateEnvLocal(updates);
+  Object.assign(process.env, updates);
+
+  const warning = checks.some((check) => check.unverified)
+    ? "Chiavi salvate localmente; la rete non ha permesso la verifica completa."
+    : "Connessioni verificate e salvate localmente.";
 
   return sendJson(response, 200, {
     ok: true,
-    aiConfigured: true,
-    provider,
-    model,
-    imageModel: provider === "gemini" ? imageModel : undefined,
-    message: "Chiave salvata localmente in .env.local."
+    providers: getHealth().providers,
+    warning
   });
 }
 
-async function callSelectedProvider(provider, payload) {
-  if (provider === "gemini") {
-    return callGemini(payload);
+async function callOpenAi(message, history) {
+  const models = [...new Set([getOpenAiModelName(), "gpt-5.4-mini", "gpt-5-mini"])];
+  let lastError = null;
+
+  for (const model of models) {
+    const upstream = await fetchWithTimeout("https://api.openai.com/v1/responses", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model,
+        store: false,
+        instructions: buildOpenAiInstructions(),
+        input: buildConversationInput(message, history),
+        max_output_tokens: 2600
+      })
+    }, 90_000);
+
+    const data = await upstream.json().catch(() => ({}));
+    if (upstream.ok) {
+      const text = extractOpenAiText(data);
+      const parsed = parseJsonObject(text);
+      return normalizeAgentResult(parsed, text, message);
+    }
+
+    lastError = providerError(upstream.status, data?.error?.message || "OpenAI non disponibile.");
+    if (upstream.status === 401 || upstream.status === 403 || upstream.status === 429) break;
+    if (upstream.status !== 400 && upstream.status !== 404) break;
   }
 
-  if (provider === "both") {
-    return callBothProviders(payload);
-  }
-
-  return callOpenAi(payload);
+  throw lastError || providerError(502, "OpenAI non disponibile.");
 }
 
-async function callBothProviders(payload) {
-  const [openAiResult, geminiResult] = await Promise.allSettled([
-    callOpenAi(payload),
-    callGemini(payload)
-  ]);
-
-  const openAiValue = openAiResult.status === "fulfilled" ? openAiResult.value : { mode: "fallback", error: "OpenAI non disponibile." };
-  const geminiValue = geminiResult.status === "fulfilled" ? geminiResult.value : { mode: "fallback", error: "Gemini non disponibile." };
-
-  const comparison = {
-    title: "Risposta doppio motore",
-    summary: "Confronto tra OpenAI e Gemini per scegliere il contenuto piu forte.",
-    sections: [
-      { titolo: "OpenAI", punti: [openAiValue.text || openAiValue.error || "Nessun output"] },
-      { titolo: "Gemini", punti: [geminiValue.text || geminiValue.error || "Nessun output"] }
-    ],
-    tasks: ["Scegliere la versione piu coerente con MONO", "Rifinire CTA e asset prima della pubblicazione"],
-    guardrails: ["Non pubblicare claim non verificati", "Non usare immagini di persone senza consenso"],
-    priorityScore: 82
-  };
-
-  return {
-    mode: "ai",
-    provider: "both",
-    model: `${getOpenAiModelName()} + ${getGeminiTextModelName()}`,
-    text: JSON.stringify(comparison),
-    object: comparison
-  };
+function buildOpenAiInstructions() {
+  return [
+    "Sei MONO AI, un social media manager pragmatico per una bottega gastronomica contemporanea italiana.",
+    "Il tuo compito è pensare, fare brainstorming e scrivere. Un secondo motore Gemini creerà immagini e video.",
+    "Parla in italiano naturale, diretto, caldo. Niente gergo marketing, niente spiegazioni tecniche.",
+    "Se l'utente sta esplorando idee, usa intent brainstorm, resta entro 120 parole e fai al massimo una domanda utile.",
+    "Se l'utente chiede di creare, usa intent create e consegna subito senza chiedere piattaforma o misure se puoi inferirle.",
+    "Formati fissi: reel = Instagram e TikTok, verticale 9:16, 5 scene, visual video; stories = Instagram 9:16, 3 stories, visual immagine; carousel = Instagram 4:5, 6 slide, visual immagine; post = Instagram 4:5, visual immagine.",
+    "Se il formato non è indicato, scegli reel. Non inventare prezzi, disponibilità, sconti, ingredienti o claim salutistici.",
+    "Il prompt visual deve essere in inglese, specifico, senza testo grafico nell'immagine, coerente con food branding italiano premium e realistico.",
+    "Rispondi esclusivamente con JSON valido, senza markdown, con questa forma:",
+    '{"intent":"brainstorm|create","reply":"massimo due frasi","deliverable":null oppure {"format":"reel|stories|carousel|post","title":"...","platform":"...","aspectRatio":"9:16|4:5","hook":"...","body":["..."],"caption":"...","cta":"...","visual":{"type":"video|image|none","prompt":"..."}}}'
+  ].join("\n");
 }
 
-async function callOpenAi(payload) {
-  const body = {
-    model: getOpenAiModelName(),
-    store: false,
-    instructions: buildDeveloperInstructions(payload),
-    input: buildUserInput(payload),
-    max_output_tokens: 2400
-  };
+function buildConversationInput(message, history) {
+  const transcript = history
+    .slice(-10)
+    .map((item) => `${item.role === "assistant" ? "MONO AI" : "UTENTE"}: ${item.text}`)
+    .join("\n");
+  return `${transcript}\nUTENTE: ${message}`.trim();
+}
 
-  const upstream = await fetch("https://api.openai.com/v1/responses", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(body)
-  });
-
-  const data = await upstream.json().catch(() => ({}));
-
-  if (!upstream.ok) {
+function normalizeAgentResult(value, rawText, originalMessage) {
+  if (!value || typeof value !== "object") {
     return {
-      mode: "fallback",
-      error: data?.error?.message || "Errore dal provider AI.",
-      status: upstream.status
+      intent: "brainstorm",
+      reply: sanitizeText(rawText, 1600) || "Dimmi cosa vuoi ottenere e lo trasformo in un contenuto.",
+      deliverable: null
     };
   }
 
-  const text = extractResponseText(data);
-  const object = parseJsonObject(text);
+  const intent = value.intent === "create" ? "create" : "brainstorm";
+  const reply = sanitizeText(value.reply, 1600) || (intent === "create" ? "Fatto." : "Ragioniamoci insieme.");
+  const deliverable = intent === "create" ? normalizeDeliverable(value.deliverable, originalMessage) : null;
+  return { intent, reply, deliverable };
+}
+
+function normalizeDeliverable(value, originalMessage) {
+  if (!value || typeof value !== "object") return createFallbackDeliverable(originalMessage, detectFormat(originalMessage));
+
+  const format = FORMAT_PRESETS[value.format] ? value.format : detectFormat(originalMessage);
+  const preset = FORMAT_PRESETS[format];
+  const visualValue = value.visual && typeof value.visual === "object" ? value.visual : {};
+  const visualType = visualValue.type === "none" ? "none" : preset.visualType;
 
   return {
-    mode: "ai",
-    provider: "openai",
-    model: data.model || getOpenAiModelName(),
-    text,
-    object
+    format,
+    title: sanitizeText(value.title, 180) || fallbackTitle(format),
+    platform: sanitizeText(value.platform, 80) || preset.platform,
+    aspectRatio: sanitizeAspectRatio(value.aspectRatio, visualType),
+    hook: sanitizeText(value.hook, 500),
+    body: sanitizeStringArray(value.body, 8, 700),
+    caption: sanitizeText(value.caption, 1800),
+    cta: sanitizeText(value.cta, 400),
+    visual: {
+      type: visualType,
+      prompt: sanitizeText(visualValue.prompt, 5000) || buildFallbackVisualPrompt(originalMessage, format)
+    }
   };
 }
 
-async function callGemini(payload) {
-  const isImageRequest = payload.kind === "image";
-  const body = isImageRequest
-    ? buildGeminiImageBody(payload)
-    : buildGeminiTextBody(payload);
+async function callGeminiImage(prompt, aspectRatio) {
+  const model = getGeminiImageModelName();
+  const upstream = await fetchWithTimeout(
+    `https://generativelanguage.googleapis.com/v1/models/${encodeURIComponent(model)}:generateContent`,
+    {
+      method: "POST",
+      headers: {
+        "x-goog-api-key": process.env.GEMINI_API_KEY,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: {
+          responseModalities: ["IMAGE"],
+          responseFormat: {
+            image: {
+              aspectRatio,
+              imageSize: "1K"
+            }
+          }
+        }
+      })
+    },
+    120_000
+  );
 
-  const upstream = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
+  const data = await upstream.json().catch(() => ({}));
+  if (!upstream.ok) throw providerError(upstream.status, data?.error?.message || "Gemini immagine non disponibile.");
+
+  const image = extractGeminiImage(data);
+  if (!image) throw providerError(502, "Gemini non ha restituito un'immagine.");
+  ensureMediaSize(image.data);
+
+  return {
+    model,
+    mimeType: image.mimeType || "image/png",
+    data: image.data
+  };
+}
+
+async function callGeminiVideo(prompt, aspectRatio) {
+  const model = getGeminiVideoModelName();
+  const upstream = await fetchWithTimeout("https://generativelanguage.googleapis.com/v1beta/interactions", {
     method: "POST",
     headers: {
       "x-goog-api-key": process.env.GEMINI_API_KEY,
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(body)
-  });
+    body: JSON.stringify({
+      model,
+      input: prompt,
+      response_format: {
+        type: "video",
+        aspect_ratio: aspectRatio === "16:9" ? "16:9" : "9:16",
+        delivery: "uri"
+      },
+      store: false,
+      background: false,
+      stream: false
+    })
+  }, 240_000);
 
-  const data = await upstream.json().catch(() => ({}));
+  let data = await upstream.json().catch(() => ({}));
+  if (!upstream.ok) throw providerError(upstream.status, data?.error?.message || "Gemini video non disponibile.");
 
-  if (!upstream.ok) {
-    return {
-      mode: "fallback",
-      provider: "gemini",
-      error: data?.error?.message || "Errore dal provider Gemini.",
-      status: upstream.status
-    };
+  let video = extractGeminiVideo(data);
+  if (!video && data.id) {
+    data = await pollGeminiInteraction(data.id);
+    video = extractGeminiVideo(data);
   }
 
-  if (isImageRequest) {
-    const image = extractGeminiImage(data);
-    const text = extractGeminiText(data) || "Immagine generata da Gemini.";
-    const object = {
-      title: "Immagine MONO generata con Gemini",
-      summary: text,
-      generatedImage: image,
-      prompt: buildGeminiImagePrompt(payload),
-      sections: [
-        {
-          titolo: "Uso consigliato",
-          punti: ["Reel cover", "Story verticale", "Carousel slide", "App promo"]
-        }
-      ],
-      tasks: ["Verificare coerenza con Brand Brain", "Non pubblicare se compaiono volti senza consenso", "Salvare asset e creare caption"],
-      guardrails: ["No prezzi inventati", "No claim nutrizionali non verificati", "No copia di artisti o competitor"],
-      priorityScore: image ? 88 : 65
-    };
+  if (!video) throw providerError(502, "Gemini non ha restituito un video.");
 
-    return {
-      mode: image ? "ai" : "fallback",
-      provider: "gemini",
-      model: getGeminiImageModelName(),
-      text,
-      object
-    };
+  if (video.data) {
+    ensureMediaSize(video.data);
+    return { model, mimeType: video.mimeType || "video/mp4", data: video.data };
   }
 
-  const text = extractGeminiText(data);
-  const object = parseJsonObject(text);
-
-  return {
-    mode: "ai",
-    provider: "gemini",
-    model: data.model || getGeminiTextModelName(),
-    text,
-    object
-  };
+  const downloaded = await downloadGeminiMedia(video.uri);
+  ensureMediaSize(downloaded.data);
+  return { model, mimeType: downloaded.mimeType || video.mimeType || "video/mp4", data: downloaded.data };
 }
 
-function buildGeminiTextBody(payload) {
-  return {
-    model: getGeminiTextModelName(),
-    system_instruction: buildDeveloperInstructions(payload),
-    input: buildUserInput(payload),
-    generation_config: {
-      temperature: 0.8
+async function pollGeminiInteraction(id) {
+  const safeId = encodeURIComponent(String(id));
+  for (let attempt = 0; attempt < 20; attempt += 1) {
+    await delay(3000);
+    const response = await fetchWithTimeout(`https://generativelanguage.googleapis.com/v1beta/interactions/${safeId}`, {
+      headers: { "x-goog-api-key": process.env.GEMINI_API_KEY }
+    }, 30_000);
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw providerError(response.status, data?.error?.message || "Video non disponibile.");
+    if (extractGeminiVideo(data) || data.status === "completed") return data;
+    if (data.status === "failed" || data.status === "cancelled") throw providerError(502, "Generazione video non riuscita.");
+  }
+  throw providerError(504, "Generazione video troppo lenta.");
+}
+
+async function downloadGeminiMedia(uri) {
+  const url = new URL(uri);
+  if (url.hostname !== "generativelanguage.googleapis.com") {
+    throw providerError(502, "Indirizzo media non riconosciuto.");
+  }
+
+  for (let attempt = 0; attempt < 16; attempt += 1) {
+    const response = await fetchWithTimeout(url, {
+      headers: { "x-goog-api-key": process.env.GEMINI_API_KEY },
+      redirect: "follow"
+    }, 45_000);
+
+    if (response.ok) {
+      const bytes = Buffer.from(await response.arrayBuffer());
+      return {
+        mimeType: response.headers.get("content-type")?.split(";")[0] || "video/mp4",
+        data: bytes.toString("base64")
+      };
     }
-  };
-}
 
-function buildGeminiImageBody(payload) {
-  return {
-    model: getGeminiImageModelName(),
-    input: buildGeminiImagePrompt(payload),
-    response_format: {
-      type: "image",
-      aspect_ratio: getImageAspectRatio(payload),
-      image_size: process.env.GEMINI_IMAGE_SIZE || "1K"
+    if (![400, 404, 409, 425, 503].includes(response.status)) {
+      throw providerError(response.status, "Download video non riuscito.");
     }
-  };
-}
 
-function buildGeminiImagePrompt(payload) {
-  const input = payload.input || {};
-  const subject = input.subject || "piatto MONO nel packaging";
-  const usage = input.usage || "vertical story";
-  const mood = input.mood || "premium accessibile";
-
-  return [
-    `Crea un'immagine originale per MONO Bottega Gastronomica a Torino.`,
-    `Soggetto: ${subject}.`,
-    `Uso: ${usage}.`,
-    `Mood: ${mood}.`,
-    "Direzione: food branding italiano contemporaneo, premium ma accessibile, caldo, umano, locale.",
-    "Palette: cashmere white, warm butter, ivory, terracotta, burnt olive, anthracite, accenti acciaio e noce.",
-    "Composizione: cibo reale al centro, luce calda laterale, materiali tattili, packaging curato, niente estetica fast food.",
-    "Vincoli: nessun logo inventato, nessun prezzo, nessun claim nutrizionale, nessun volto riconoscibile, nessuna copia di artisti o competitor."
-  ].join("\n");
-}
-
-function getImageAspectRatio(payload) {
-  const usage = String(payload.input?.usage || "").toLowerCase();
-  if (usage.includes("story") || usage.includes("reel") || usage.includes("vertical")) {
-    return "9:16";
-  }
-  if (usage.includes("poster")) {
-    return "4:5";
-  }
-  if (usage.includes("app")) {
-    return "1:1";
-  }
-  return "1:1";
-}
-
-function buildDeveloperInstructions(payload) {
-  return [
-    "Sei MONO Social Studio 1.0, un agente AI operativo per crescita Instagram e TikTok di MONO Bottega Gastronomica a Torino.",
-    "Rispondi sempre e solo in italiano.",
-    "Agisci come team senior: product manager AI, social strategist food, TikTok/Instagram strategist, local marketer, creative director, copywriter, ADV specialist, data analyst e community manager.",
-    "Non sembrare ChatGPT: produci output pronti da usare, con critica, decisioni e priorita.",
-    "Rispetta il Brand Brain, la palette, il tono caldo e contemporaneo, la localita Torino/Santa Rita e il funnel Followers -> Fiducia -> Desiderio -> Visita -> App -> Acquisto -> Fedelta -> Passaparola.",
-    "Non inventare prezzi, certificazioni, allergeni, nutrizione, disponibilita, risultati o dati non forniti.",
-    "Non sfruttare storie di fragilita, inclusione o disabilita. Non usare volti senza consenso. Non copiare competitor, creator o artisti.",
-    "Se mancano dati, dichiara cosa serve verificare ma consegna comunque la migliore proposta utilizzabile.",
-    "Restituisci SOLO JSON valido, senza Markdown fuori dal JSON.",
-    "Schema libero ma stabile: usa sempre almeno title, summary, sections, tasks, guardrails, priorityScore. sections e tasks devono essere array."
-  ].join("\n");
-}
-
-function buildUserInput(payload) {
-  return JSON.stringify(
-    {
-      module: payload.kind,
-      moduleBrief: MODULE_BRIEFS[payload.kind] || MODULE_BRIEFS.agent,
-      input: payload.input,
-      brandBrain: payload.brandBrain,
-      metrics: payload.metrics,
-      recentCalendar: payload.calendar,
-      recentTasks: payload.tasks,
-      requiredOutput: "JSON operativo pronto da mostrare nell'app. Niente testo generico."
-    },
-    null,
-    2
-  );
-}
-
-function sanitizePayload(payload) {
-  const value = payload && typeof payload === "object" ? payload : {};
-
-  return {
-    kind: sanitizeText(value.kind || "agent", 40),
-    provider: sanitizeProvider(value.provider || "auto"),
-    imageProvider: sanitizeProvider(value.imageProvider || "gemini"),
-    input: sanitizeObject(value.input, 8000),
-    brandBrain: sanitizeObject(value.brandBrain, 16_000),
-    metrics: sanitizeObject(value.metrics, 6000),
-    calendar: sanitizeArray(value.calendar, 5, 16_000),
-    tasks: sanitizeArray(value.tasks, 8, 16_000)
-  };
-}
-
-function sanitizeObject(value, maxChars) {
-  if (!value || typeof value !== "object") {
-    return {};
+    await delay(3000);
   }
 
-  return truncateJson(value, maxChars);
+  throw providerError(504, "Il video non è ancora pronto.");
 }
 
-function sanitizeArray(value, maxItems, maxChars) {
-  if (!Array.isArray(value)) {
-    return [];
-  }
-
-  return truncateJson(value.slice(0, maxItems), maxChars);
-}
-
-function truncateJson(value, maxChars) {
-  const json = JSON.stringify(value);
-  const truncated = json.length > maxChars ? json.slice(0, maxChars) : json;
-  try {
-    return JSON.parse(truncated);
-  } catch {
-    return { text: truncated };
-  }
-}
-
-function sanitizeText(value, maxChars) {
-  return String(value || "").replace(/[^\w-]/g, "").slice(0, maxChars);
-}
-
-function sanitizeProvider(value) {
-  const provider = String(value || "").trim().toLowerCase();
-  return ["auto", "openai", "gemini", "both"].includes(provider) ? provider : "auto";
-}
-
-function selectProvider(payload) {
-  const openAiConfigured = isValidOpenAiKey(process.env.OPENAI_API_KEY || "");
-  const geminiConfigured = isValidGeminiKey(process.env.GEMINI_API_KEY || "");
-  const requestedProvider = payload.kind === "image" ? payload.imageProvider : payload.provider;
-
-  if (requestedProvider === "both") {
-    if (openAiConfigured && geminiConfigured) return "both";
-    if (geminiConfigured) return "gemini";
-    if (openAiConfigured) return "openai";
-    return "none";
-  }
-
-  if (requestedProvider === "gemini") {
-    return geminiConfigured ? "gemini" : "none";
-  }
-
-  if (requestedProvider === "openai") {
-    return openAiConfigured ? "openai" : "none";
-  }
-
-  if (payload.kind === "image") {
-    if (geminiConfigured) return "gemini";
-    if (openAiConfigured) return "openai";
-    return "none";
-  }
-
-  if (openAiConfigured) return "openai";
-  if (geminiConfigured) return "gemini";
-  return "none";
-}
-
-function extractResponseText(data) {
-  if (typeof data.output_text === "string" && data.output_text.trim()) {
-    return data.output_text.trim();
-  }
-
-  const chunks = [];
-  for (const item of data.output || []) {
-    for (const content of item.content || []) {
-      if (content.type === "output_text" && content.text) {
-        chunks.push(content.text);
-      }
+function extractOpenAiText(data) {
+  if (typeof data?.output_text === "string") return data.output_text;
+  const parts = [];
+  for (const item of Array.isArray(data?.output) ? data.output : []) {
+    for (const content of Array.isArray(item?.content) ? item.content : []) {
+      if (typeof content?.text === "string") parts.push(content.text);
+      if (typeof content?.output_text === "string") parts.push(content.output_text);
     }
   }
-
-  return chunks.join("\n").trim();
-}
-
-function extractGeminiText(data) {
-  if (typeof data?.output_text === "string" && data.output_text.trim()) {
-    return data.output_text.trim();
-  }
-
-  const chunks = [];
-  for (const step of data?.steps || []) {
-    for (const content of step.content || []) {
-      if (content?.type === "text" && content.text) {
-        chunks.push(content.text);
-      }
-    }
-  }
-
-  for (const item of data?.output || []) {
-    for (const content of item.content || []) {
-      if (content?.type === "text" && content.text) {
-        chunks.push(content.text);
-      }
-    }
-  }
-
-  return chunks.join("\n").trim();
+  return parts.join("\n").trim();
 }
 
 function extractGeminiImage(data) {
-  if (data?.output_image?.data) {
-    return toGeneratedImage(data.output_image);
+  for (const candidate of Array.isArray(data?.candidates) ? data.candidates : []) {
+    for (const part of Array.isArray(candidate?.content?.parts) ? candidate.content.parts : []) {
+      const inline = part?.inlineData || part?.inline_data;
+      if (typeof inline?.data === "string") {
+        return {
+          data: inline.data,
+          mimeType: inline.mimeType || inline.mime_type || "image/png"
+        };
+      }
+    }
   }
+  return null;
+}
 
-  const stack = [data];
-  const seen = new Set();
-
-  while (stack.length) {
-    const current = stack.pop();
-    if (!current || typeof current !== "object" || seen.has(current)) {
-      continue;
-    }
-    seen.add(current);
-
-    if (current.type === "image" && typeof current.data === "string") {
-      return toGeneratedImage(current);
-    }
-
-    if (current.inline_data?.data && String(current.inline_data.mime_type || "").startsWith("image/")) {
-      return toGeneratedImage(current.inline_data);
-    }
-
-    for (const value of Object.values(current)) {
-      if (value && typeof value === "object") {
-        stack.push(value);
+function extractGeminiVideo(data) {
+  for (const step of Array.isArray(data?.steps) ? data.steps : []) {
+    for (const content of Array.isArray(step?.content) ? step.content : []) {
+      if (content?.type === "video" && (content.data || content.uri)) {
+        return {
+          data: content.data || "",
+          uri: content.uri || "",
+          mimeType: content.mime_type || content.mimeType || "video/mp4"
+        };
       }
     }
   }
 
+  const output = data?.output_video || data?.outputVideo;
+  if (output?.data || output?.uri) {
+    return {
+      data: output.data || "",
+      uri: output.uri || "",
+      mimeType: output.mime_type || output.mimeType || "video/mp4"
+    };
+  }
   return null;
 }
 
-function toGeneratedImage(value) {
-  const mimeType = value.mime_type || value.mimeType || "image/png";
+function createFallbackResult(message) {
+  const wantsBrainstorm = /brainstorm|idee|idea|consiglio|che ne pensi|come potrei|ragioniamo|aiutami a pensare/i.test(message);
+  if (wantsBrainstorm) {
+    return {
+      mode: "demo",
+      intent: "brainstorm",
+      reply: "Tre strade semplici: mostrare il prodotto in modo irresistibile, raccontare il gesto dietro la preparazione, oppure legarlo a un momento reale della giornata. Quale delle tre vuoi trasformare in contenuto?",
+      deliverable: null
+    };
+  }
+
+  const format = detectFormat(message);
   return {
-    provider: "gemini",
-    mimeType,
-    dataUrl: `data:${mimeType};base64,${value.data}`
+    mode: "demo",
+    intent: "create",
+    reply: `Ti preparo subito ${format === "reel" ? "un Reel valido anche per TikTok" : format === "carousel" ? "un carosello" : format === "stories" ? "una sequenza Stories" : "un post"}.`,
+    deliverable: createFallbackDeliverable(message, format)
   };
 }
 
-function parseJsonObject(text) {
-  if (!text) {
-    return null;
-  }
+function createFallbackDeliverable(message, format) {
+  const preset = FORMAT_PRESETS[format];
+  const topic = extractTopic(message);
+  const bodies = {
+    reel: [
+      `Apertura ravvicinata: ${topic}.`,
+      "Dettaglio del gesto che rende il prodotto desiderabile.",
+      "Cambio rapido: consistenza, taglio o servizio.",
+      "Inquadratura pulita del risultato finale.",
+      "Chiusura con MONO e invito a passare in bottega."
+    ],
+    stories: [
+      `Story 1 — Fermati qui: ${topic}.`,
+      "Story 2 — Mostra il dettaglio più goloso e racconta perché conta.",
+      "Story 3 — Invito semplice: passa da MONO e scoprilo dal vivo."
+    ],
+    carousel: [
+      `Cover — ${topic}.`,
+      "Il dettaglio che attira subito l'occhio.",
+      "Il gesto o la lavorazione dietro il risultato.",
+      "La consistenza raccontata senza esagerazioni.",
+      "Il momento perfetto per sceglierlo.",
+      "Chiusura — Vieni a scoprirlo da MONO."
+    ],
+    post: [
+      `Protagonista assoluto: ${topic}.`,
+      "Visual pulito, luce calda, nessun elemento superfluo.",
+      "Caption breve e invito concreto alla visita."
+    ]
+  };
 
+  return {
+    format,
+    title: fallbackTitle(format),
+    platform: preset.platform,
+    aspectRatio: preset.aspectRatio,
+    hook: `Oggi c'è un solo protagonista: ${topic}.`,
+    body: bodies[format],
+    caption: "Pochi discorsi, il dettaglio giusto e tutta la cura MONO. Lo prepariamo per rendere speciale anche una giornata normale.",
+    cta: "Passa da MONO e scoprilo dal vivo.",
+    visual: {
+      type: preset.visualType,
+      prompt: buildFallbackVisualPrompt(topic, format)
+    }
+  };
+}
+
+function detectFormat(text) {
+  const value = String(text || "").toLowerCase();
+  if (/carosell|carousel/.test(value)) return "carousel";
+  if (/storie|stories|story/.test(value)) return "stories";
+  if (/post|foto|immagine/.test(value)) return "post";
+  return "reel";
+}
+
+function extractTopic(message) {
+  const cleaned = String(message || "")
+    .replace(/\b(fammi|crea|genera|prepara|vorrei|voglio|mi serve|facciamo|un|una|del|della|per|su|sul|sulla|sullo|sui|sulle|riguardo|reel|tiktok|video|storie|stories|story|carosello|carousel|post|foto|immagine)\b/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/^[,.:;\-\s]+|[,.:;\-\s]+$/g, "");
+  return sanitizeText(cleaned, 180) || "la novità di oggi";
+}
+
+function fallbackTitle(format) {
+  const titles = {
+    reel: "Il dettaglio che fa fermare lo scroll",
+    stories: "Tre Stories, un solo desiderio",
+    carousel: "Da vedere. Da capire. Da assaggiare.",
+    post: "La semplicità fatta bene"
+  };
+  return titles[format];
+}
+
+function buildFallbackVisualPrompt(topic, format) {
+  const motion = format === "reel"
+    ? "Vertical cinematic food video, one continuous 8-second shot, slow push-in camera movement, subtle steam and natural hand movement"
+    : "Editorial food photograph";
+  return `${motion} featuring ${topic}. Contemporary Italian gastronomy, warm natural light, tactile ivory and terracotta surfaces, refined but honest styling, realistic ingredients, shallow depth of field, premium local neighborhood brand, no logos, no graphic text, no watermarks, no people faces.`;
+}
+
+async function verifyOpenAiKey(apiKey) {
   try {
-    return JSON.parse(text);
+    const response = await fetchWithTimeout("https://api.openai.com/v1/models", {
+      headers: { Authorization: `Bearer ${apiKey}` }
+    }, 15_000);
+    return { valid: response.status !== 401 && response.status !== 403 };
   } catch {
-    const match = text.match(/\{[\s\S]*\}/);
-    if (!match) {
-      return null;
-    }
+    return { valid: true, unverified: true };
+  }
+}
 
-    try {
-      return JSON.parse(match[0]);
-    } catch {
-      return null;
-    }
+async function verifyGeminiKey(apiKey) {
+  try {
+    const response = await fetchWithTimeout("https://generativelanguage.googleapis.com/v1beta/models", {
+      headers: { "x-goog-api-key": apiKey }
+    }, 15_000);
+    return { valid: response.status !== 400 && response.status !== 401 && response.status !== 403 };
+  } catch {
+    return { valid: true, unverified: true };
+  }
+}
+
+function enforceRateLimit(request, scope) {
+  const client = request.socket.remoteAddress || "local";
+  const key = `${scope}:${client}`;
+  const now = Date.now();
+  const recent = (requestBuckets.get(key) || []).filter((time) => now - time < RATE_LIMIT_WINDOW_MS);
+  if (recent.length >= RATE_LIMIT_MAX) {
+    throw httpError(429, "Troppe richieste. Aspetta qualche secondo.");
+  }
+  recent.push(now);
+  requestBuckets.set(key, recent);
+}
+
+function sanitizeHistory(value) {
+  if (!Array.isArray(value)) return [];
+  return value.slice(-10).map((item) => ({
+    role: item?.role === "assistant" ? "assistant" : "user",
+    text: sanitizeText(item?.text, 1800)
+  })).filter((item) => item.text);
+}
+
+function sanitizeStringArray(value, maxItems, maxChars) {
+  if (!Array.isArray(value)) return [];
+  return value.slice(0, maxItems).map((item) => sanitizeText(item, maxChars)).filter(Boolean);
+}
+
+function sanitizeText(value, maxChars) {
+  return String(value ?? "")
+    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "")
+    .trim()
+    .slice(0, maxChars);
+}
+
+function sanitizeAspectRatio(value, type) {
+  const allowed = type === "video" ? ["9:16", "16:9"] : ["1:1", "4:5", "9:16", "16:9"];
+  return allowed.includes(value) ? value : type === "video" ? "9:16" : "4:5";
+}
+
+function parseJsonObject(text) {
+  if (!text) return null;
+  const cleaned = String(text).replace(/^```(?:json)?/i, "").replace(/```$/i, "").trim();
+  const start = cleaned.indexOf("{");
+  const end = cleaned.lastIndexOf("}");
+  if (start < 0 || end <= start) return null;
+  try {
+    return JSON.parse(cleaned.slice(start, end + 1));
+  } catch {
+    return null;
   }
 }
 
 function getOpenAiModelName() {
-  return process.env.OPENAI_MODEL || "gpt-5.5";
-}
-
-function getGeminiTextModelName() {
-  return process.env.GEMINI_TEXT_MODEL || "gemini-3.5-flash";
+  return sanitizeModelName(process.env.OPENAI_MODEL, "gpt-5.4-mini");
 }
 
 function getGeminiImageModelName() {
-  return process.env.GEMINI_IMAGE_MODEL || "gemini-3.1-flash-image";
+  return sanitizeModelName(process.env.GEMINI_IMAGE_MODEL, "gemini-3.1-flash-image");
+}
+
+function getGeminiVideoModelName() {
+  return sanitizeModelName(process.env.GEMINI_VIDEO_MODEL, "gemini-omni-flash-preview");
+}
+
+function sanitizeModelName(value, fallback) {
+  const model = String(value || "").trim();
+  return /^[a-zA-Z0-9._:-]{3,100}$/.test(model) ? model : fallback;
 }
 
 function isValidOpenAiKey(value) {
-  return value.startsWith("sk-") && value.length > 30 && !value.toLowerCase().includes("inserisci");
+  const key = normalizeSecretValue(value);
+  return key.startsWith("sk-") && key.length >= 24 && key.length <= 300 && !/\s/.test(key);
 }
 
 function isValidGeminiKey(value) {
-  const secret = normalizeSecretValue(value);
-  return secret.length >= 20 && secret.length <= 300 && /^[^\s"'<>]+$/.test(secret) && !secret.toLowerCase().includes("inserisci");
+  const key = normalizeSecretValue(value);
+  return key.length >= 20 && key.length <= 300 && !/[\s'"<>]/.test(key);
 }
 
 function normalizeSecretValue(value) {
   let secret = String(value || "").trim();
-  const assignmentMatch = secret.match(/^(?:GEMINI_API_KEY|GOOGLE_API_KEY|OPENAI_API_KEY)\s*=\s*(.+)$/i);
-  if (assignmentMatch) {
-    secret = assignmentMatch[1].trim();
+  secret = secret.replace(/^(OPENAI_API_KEY|GEMINI_API_KEY|GOOGLE_API_KEY)\s*=\s*/i, "").trim();
+  if ((secret.startsWith('"') && secret.endsWith('"')) || (secret.startsWith("'") && secret.endsWith("'"))) {
+    secret = secret.slice(1, -1).trim();
   }
-
-  return secret.replace(/^["']|["']$/g, "").trim();
+  return secret;
 }
 
-function sanitizeModelName(value, fallback = "gpt-5.5") {
-  const model = String(value || "").trim();
-  return /^[a-zA-Z0-9._-]{2,80}$/.test(model) ? model : fallback;
+function isTrustedOrigin(request) {
+  const origin = String(request.headers.origin || "");
+  if (!origin) return true;
+  return origin === `http://127.0.0.1:${PORT}` || origin === `http://localhost:${PORT}`;
 }
 
 function isLoopbackClient(value) {
-  return ["127.0.0.1", "::1", "::ffff:127.0.0.1"].includes(value);
-}
-
-function withinRateLimit(clientId) {
-  const now = Date.now();
-  const bucket = requestBuckets.get(clientId) || [];
-  const active = bucket.filter((timestamp) => now - timestamp < RATE_LIMIT_WINDOW_MS);
-  active.push(now);
-  requestBuckets.set(clientId, active);
-  return active.length <= RATE_LIMIT_MAX;
+  return value === "127.0.0.1" || value === "::1" || value === "::ffff:127.0.0.1";
 }
 
 async function readJsonBody(request) {
-  const chunks = [];
-  let size = 0;
+  const contentType = String(request.headers["content-type"] || "");
+  if (!contentType.includes("application/json")) throw httpError(415, "Formato richiesta non valido.");
 
+  const chunks = [];
+  let total = 0;
   for await (const chunk of request) {
-    size += chunk.length;
-    if (size > MAX_BODY_BYTES) {
-      throw new Error("Request body too large");
-    }
+    total += chunk.length;
+    if (total > MAX_BODY_BYTES) throw httpError(413, "Richiesta troppo grande.");
     chunks.push(chunk);
   }
 
-  const raw = Buffer.concat(chunks).toString("utf8");
-  return raw ? JSON.parse(raw) : {};
-}
-
-async function serveStatic(request, response) {
-  const url = new URL(request.url || "/", `http://${request.headers.host || "127.0.0.1"}`);
-  const requestedPath = decodeURIComponent(url.pathname === "/" ? "/index.html" : url.pathname);
-  const filePath = safeResolve(requestedPath);
-
-  if (!filePath) {
-    return sendJson(response, 403, { error: "Percorso non consentito." });
-  }
-
   try {
-    const content = await readFile(filePath);
-    response.writeHead(200, securityHeaders(MIME_TYPES[extname(filePath).toLowerCase()] || "application/octet-stream"));
-    if (request.method !== "HEAD") {
-      response.end(content);
-    } else {
-      response.end();
-    }
+    return JSON.parse(Buffer.concat(chunks).toString("utf8") || "{}");
   } catch {
-    sendJson(response, 404, { error: "File non trovato." });
+    throw httpError(400, "Dati non validi.");
   }
 }
 
-function safeResolve(requestedPath) {
-  const normalized = normalize(requestedPath).replace(/^(\.\.[/\\])+/, "");
-  const filePath = resolve(join(ROOT, normalized));
-  return filePath.startsWith(ROOT) ? filePath : null;
+async function serveStatic(path, request, response) {
+  const fileName = STATIC_FILES.get(path);
+  if (!fileName) return sendJson(response, 404, { error: "Pagina non trovata." });
+
+  const content = await readFile(resolve(ROOT, fileName));
+  response.writeHead(200, {
+    "Content-Type": MIME_TYPES[fileName],
+    "Content-Length": content.length,
+    "Cache-Control": fileName === "index.html" ? "no-store" : "no-cache",
+    ...securityHeaders()
+  });
+  response.end(request.method === "HEAD" ? undefined : content);
 }
 
 function sendJson(response, status, body) {
-  response.writeHead(status, securityHeaders("application/json; charset=utf-8"));
-  response.end(JSON.stringify(body));
+  const payload = Buffer.from(JSON.stringify(body));
+  response.writeHead(status, {
+    "Content-Type": "application/json; charset=utf-8",
+    "Content-Length": payload.length,
+    "Cache-Control": "no-store",
+    ...securityHeaders()
+  });
+  response.end(payload);
 }
 
-function securityHeaders(contentType) {
+function securityHeaders() {
   return {
-    "Content-Type": contentType,
-    "Cache-Control": "no-store",
-    "Cross-Origin-Opener-Policy": "same-origin",
-    "Referrer-Policy": "no-referrer",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data: blob:; media-src 'self' data: blob:; connect-src 'self'; style-src 'self'; script-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'",
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
-    "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=()",
-    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+    "Referrer-Policy": "no-referrer",
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+    "Cross-Origin-Resource-Policy": "same-origin"
   };
 }
 
 async function updateEnvLocal(updates) {
-  const path = join(ROOT, ".env.local");
-  const existingLines = existsSync(path) ? readFileSync(path, "utf8").split(/\r?\n/) : [];
-  const pendingKeys = new Set(Object.keys(updates));
-  const lines = [];
+  const envPath = resolve(ROOT, ".env.local");
+  const values = new Map();
 
-  for (const line of existingLines) {
-    const match = line.match(/^\s*([A-Z0-9_]+)\s*=/);
-    const key = match?.[1];
-    if (key && Object.prototype.hasOwnProperty.call(updates, key)) {
-      lines.push(`${key}=${updates[key]}`);
-      pendingKeys.delete(key);
-    } else if (line.trim()) {
-      lines.push(line);
+  if (existsSync(envPath)) {
+    const current = await readFile(envPath, "utf8");
+    for (const rawLine of current.split(/\r?\n/)) {
+      const line = rawLine.trim();
+      if (!line || line.startsWith("#")) continue;
+      const separator = line.indexOf("=");
+      if (separator <= 0) continue;
+      values.set(line.slice(0, separator).trim(), line.slice(separator + 1).trim());
     }
   }
 
-  for (const key of pendingKeys) {
-    lines.push(`${key}=${updates[key]}`);
-  }
-
-  await writeFile(path, `${lines.join("\n")}\n`, "utf8");
+  for (const [key, value] of Object.entries(updates)) values.set(key, String(value));
+  const output = [...values.entries()].map(([key, value]) => `${key}=${value}`).join("\r\n");
+  await writeFile(envPath, `${output}\r\n`, { encoding: "utf8", mode: 0o600 });
 }
 
 function loadEnvFile(filename) {
-  const path = join(ROOT, filename);
-  if (!existsSync(path)) {
-    return;
-  }
+  const envPath = resolve(ROOT, filename);
+  if (!existsSync(envPath)) return;
 
-  const lines = readFileSync(path, "utf8").split(/\r?\n/);
-  for (const line of lines) {
-    const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith("#") || !trimmed.includes("=")) {
-      continue;
-    }
-
-    const index = trimmed.indexOf("=");
-    const key = trimmed.slice(0, index).trim();
-    const value = trimmed.slice(index + 1).trim().replace(/^["']|["']$/g, "");
-    if (key && process.env[key] === undefined) {
-      process.env[key] = value;
-    }
+  for (const rawLine of readFileSync(envPath, "utf8").split(/\r?\n/)) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith("#")) continue;
+    const separator = line.indexOf("=");
+    if (separator <= 0) continue;
+    const key = line.slice(0, separator).trim();
+    const value = normalizeSecretValue(line.slice(separator + 1));
+    if (!process.env[key]) process.env[key] = value;
   }
+}
+
+async function fetchWithTimeout(url, options, timeoutMs) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function ensureMediaSize(base64Data) {
+  const estimatedBytes = Math.ceil((String(base64Data).length * 3) / 4);
+  if (estimatedBytes > MAX_MEDIA_BYTES) throw providerError(413, "Media troppo grande.");
+}
+
+function providerError(statusCode, message) {
+  const error = new Error(message);
+  error.statusCode = statusCode;
+  return error;
+}
+
+function httpError(statusCode, publicMessage, code) {
+  const error = new Error(publicMessage);
+  error.statusCode = statusCode;
+  error.publicMessage = publicMessage;
+  error.code = code;
+  return error;
+}
+
+function delay(ms) {
+  return new Promise((resolveDelay) => setTimeout(resolveDelay, ms));
 }

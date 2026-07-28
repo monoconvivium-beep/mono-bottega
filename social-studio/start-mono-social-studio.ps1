@@ -41,16 +41,15 @@ function Test-Health {
 }
 
 Write-Host ""
-Write-Host "MONO Social Studio 1.0" -ForegroundColor DarkYellow
-Write-Host "Avvio agente AI locale sicuro..." -ForegroundColor DarkYellow
+Write-Host "MONO AI" -ForegroundColor DarkYellow
+Write-Host "Avvio agente locale sicuro..." -ForegroundColor DarkYellow
 Write-Host "Link corretto: $url" -ForegroundColor Green
 Write-Host "Non usare 127.001.477: serve 127.0.0.1:4177 con i due punti prima della porta." -ForegroundColor Yellow
 Write-Host ""
 
 if (-not (Test-AiProviderConfigured)) {
-  Write-Host "Nessuna chiave AI ancora configurata." -ForegroundColor Yellow
-  Write-Host "Apro comunque l'app. Dentro MONO Social Studio vai su Impostazioni e salva Gemini, OpenAI o entrambi."
-  Write-Host "La chiave resta solo in .env.local su questo computer e non viene salvata in Git."
+  Write-Host "Apro l'app in modalita bozza locale." -ForegroundColor Yellow
+  Write-Host "Per collegare GPT e Gemini usa l'ingranaggio in alto."
   Write-Host ""
 }
 
@@ -70,9 +69,9 @@ Start-Process -FilePath powershell.exe -WindowStyle Hidden -ArgumentList @(
   "Start-Sleep -Seconds 2; Start-Process '$url'"
 )
 
-Write-Host "App pronta: $url" -ForegroundColor Green
+Write-Host "MONO AI pronto: $url" -ForegroundColor Green
 Write-Host ""
-Write-Host "Lascia aperta questa finestra mentre usi MONO Social Studio."
+Write-Host "Lascia aperta questa finestra mentre usi MONO AI."
 Write-Host "Per spegnere il server: chiudi questa finestra o premi CTRL+C."
 Write-Host ""
 

@@ -90,14 +90,14 @@ function Send-KeyToLocalServer {
   )
 
   try {
-    $body = @{
-      provider = $Provider
-      apiKey = $ApiKey
-      model = $Model
-      imageModel = $ImageModel
-    } | ConvertTo-Json -Depth 4
+    $body = if ($Provider -eq "gemini") {
+      @{ geminiKey = $ApiKey; openaiKey = "" }
+    } else {
+      @{ openaiKey = $ApiKey; geminiKey = "" }
+    }
+    $body = $body | ConvertTo-Json -Depth 4
 
-    Invoke-RestMethod -Uri "http://127.0.0.1:$port/api/setup-key" -Method Post -ContentType "application/json" -Body $body -TimeoutSec 8 | Out-Null
+    Invoke-RestMethod -Uri "http://127.0.0.1:$port/api/setup" -Method Post -ContentType "application/json" -Body $body -TimeoutSec 20 | Out-Null
     return $true
   } catch {
     return $false
@@ -105,7 +105,7 @@ function Send-KeyToLocalServer {
 }
 
 Clear-Host
-Write-Host "MONO Social Studio - setup chiavi AI" -ForegroundColor DarkYellow
+Write-Host "MONO AI - setup chiavi" -ForegroundColor DarkYellow
 Write-Host ""
 Write-Host "Sicurezza:" -ForegroundColor DarkYellow
 Write-Host "- Le chiavi non vengono mostrate a schermo."
@@ -125,9 +125,8 @@ if ($geminiKey) {
     Write-Host "Gemini non salvata: formato chiave non valido." -ForegroundColor Red
   } else {
     $updates["GEMINI_API_KEY"] = $geminiKey
-    $updates["GEMINI_TEXT_MODEL"] = "gemini-3.5-flash"
     $updates["GEMINI_IMAGE_MODEL"] = "gemini-3.1-flash-image"
-    $updates["GEMINI_IMAGE_SIZE"] = "1K"
+    $updates["GEMINI_VIDEO_MODEL"] = "gemini-omni-flash-preview"
   }
 }
 
@@ -136,7 +135,7 @@ if ($openAiKey) {
     Write-Host "OpenAI non salvata: la chiave deve iniziare con sk-." -ForegroundColor Red
   } else {
     $updates["OPENAI_API_KEY"] = $openAiKey
-    $updates["OPENAI_MODEL"] = "gpt-5.5"
+    $updates["OPENAI_MODEL"] = "gpt-5.4-mini"
   }
 }
 
@@ -153,7 +152,7 @@ Update-EnvLocal -Updates $updates
 $geminiServerUpdated = $false
 $openAiServerUpdated = $false
 if ($updates.Contains("GEMINI_API_KEY")) {
-  $geminiServerUpdated = Send-KeyToLocalServer -Provider "gemini" -ApiKey $updates["GEMINI_API_KEY"] -Model $updates["GEMINI_TEXT_MODEL"] -ImageModel $updates["GEMINI_IMAGE_MODEL"]
+  $geminiServerUpdated = Send-KeyToLocalServer -Provider "gemini" -ApiKey $updates["GEMINI_API_KEY"] -Model "" -ImageModel $updates["GEMINI_IMAGE_MODEL"]
 }
 
 if ($updates.Contains("OPENAI_API_KEY")) {
