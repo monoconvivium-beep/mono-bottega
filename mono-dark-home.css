@@ -1286,7 +1286,7 @@ body.mono-dark-home.social-page .page-hero .mono-page-scene--social {
 body.mono-dark-home .mono-social-scena svg { height: auto; width: 100%; }
 
 /* L'animazione: batte il cuore, si preme il like, spunta il commento.
-   Sfalsati dentro un giro di 4s, cosi' sembra una conversazione e non
+   Sfalsati dentro un giro di 3,2s (portato da 4s il 28/7, "un pelo piu' veloce"), cosi' sembra una conversazione e non
    tre cose che pulsano insieme. */
 body.mono-dark-home .mono-social-scena__cuore,
 body.mono-dark-home .mono-social-scena__like,
@@ -1295,13 +1295,13 @@ body.mono-dark-home .mono-social-scena__commento {
   transform-origin: center;
 }
 body.mono-dark-home .mono-social-scena__cuore {
-  animation: mono-batte 4s ease-in-out infinite;
+  animation: mono-batte 3.2s ease-in-out infinite;
 }
 body.mono-dark-home .mono-social-scena__like {
-  animation: mono-premi 4s ease-in-out infinite;
+  animation: mono-premi 3.2s ease-in-out infinite;
 }
 body.mono-dark-home .mono-social-scena__commento {
-  animation: mono-spunta 4s ease-in-out infinite;
+  animation: mono-spunta 3.2s ease-in-out infinite;
 }
 @keyframes mono-batte {
   0%, 8%    { transform: scale(1); }
