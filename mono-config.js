@@ -37,6 +37,32 @@ window.MONO_SOCIAL = {
 };
 
 /* ------------------------------------------------------------
+   0-BIS) SCHEDA GOOGLE (Google Business) — ⭐ PUNTO UNICO
+
+   Questo e' l'indirizzo della tua scheda su Google Maps. Tutti i
+   tasti del sito che dicono "Apri Google Maps" o "Portami da MONO"
+   (sono 9, su home, Contatti, Dove siamo e Social) puntano qui.
+   Si cambia SOLO in questa riga: non c'e' nessun indirizzo scritto
+   a mano nelle pagine.
+
+   Cosa cambia per chi clicca: prima si apriva Maps su una RICERCA
+   dell'indirizzo (uno spillo e basta). Ora si apre la SCHEDA DI
+   MONO: nome, orari, foto, recensioni e il tasto per le indicazioni.
+
+   ⚠️ Se lasci le virgolette vuote "", i tasti tornano da soli alla
+   ricerca per indirizzo che c'era prima: il sito non si rompe mai.
+
+   ⚠️ Deve essere un indirizzo che contiene  google.com/maps  :
+   NON usare la versione corta  maps.app.goo.gl , perche' il sito
+   riconosce i link della mappa da quel pezzo di testo (serve anche
+   per la scritta "PORTAMI" che segue il dito sul tasto).
+
+   Come ritrovarlo: apri la tua scheda su Google Maps dal computer e
+   copia l'indirizzo dalla barra del browser.
+   ------------------------------------------------------------ */
+window.MONO_MAPS_PLACE = "https://www.google.com/maps/place/Mono+Bottega+Gastronomica/@45.0479235,7.6432628,17z/data=!4m6!3m5!1s0x47886d97e18937fd:0x1f3f57a595a94021!8m2!3d45.0479235!4d7.6432628!16s%2Fg%2F11ntg6mdfk";
+
+/* ------------------------------------------------------------
    1) FORMSPREE — 🔌 NON SERVE PIU', lasciare vuoto
 
    ⚠️ Superato dal 24/7: la raccolta email ora la fa l'APP (vedi

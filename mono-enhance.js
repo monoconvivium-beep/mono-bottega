@@ -277,6 +277,41 @@
     initBadgeProdotti();
     initContoApertura();
     initSocial();
+    initMappa();
+  }
+
+  /* ============================================================
+     SCHEDA GOOGLE SULLA MAPPA (28/7 sera)
+
+     I 9 tasti "Apri Google Maps" / "Portami da MONO" (home, Contatti,
+     Dove siamo, Social) puntavano a una RICERCA per indirizzo. Ora che
+     la scheda Google Business esiste, portano alla scheda vera: nome,
+     orari, foto, recensioni, tasto indicazioni.
+
+     UN SOLO punto di configurazione: window.MONO_MAPS_PLACE in
+     mono-config.js. Stessa scelta di social e cartellini UTM: nessun
+     indirizzo scritto a mano nelle pagine, e un tasto nuovo aggiunto
+     domani si aggancia da solo.
+
+     ⚠️ L'href scritto nell'HTML resta la RICERCA PER INDIRIZZO, ed e'
+     voluto: e' la rete per chi ha il JavaScript spento. Quel link
+     funziona comunque, porta solo a uno spillo invece che alla scheda.
+     Quindi NON e' una dimenticanza se un grep sulle pagine trova
+     ancora /maps/search: e' il ripiego.
+
+     ⚠️ Non toccare `data-track`: le etichette dei tasti servono alle
+     statistiche e ai cartellini, e restano quelle di prima.
+     ============================================================ */
+  function initMappa() {
+    var place = (window.MONO_MAPS_PLACE || "").trim();
+    /* vuoto o indirizzo non-Maps => si lascia tutto com'era.
+       Il controllo su google.com/maps serve anche a mono-signature.js,
+       che riconosce i link della mappa da quel pezzo di testo per
+       mettere la scritta "PORTAMI" sul cursore. */
+    if (!place || place.indexOf("google.com/maps") === -1) return;
+    document.querySelectorAll('a[href*="google.com/maps/search"]').forEach(function (link) {
+      link.setAttribute("href", place);
+    });
   }
 
   /* ============================================================
