@@ -1338,3 +1338,48 @@ body.mono-dark-home .mono-social-scena__commento {
   body.mono-dark-home .mono-social-scena__like,
   body.mono-dark-home .mono-social-scena__commento { animation: none; }
 }
+
+/* ============================================================
+   PASTICCERIA (28/7) — frusta con la panna + titolo su due righe
+
+   1. L'ILLUSTRAZIONE. Sostituisce la "scena pastry" di experience.js
+      (piatto + dolce + glassa costruiti con <span> e bordi), che il
+      proprietario non riconosceva: "quella roba strana che non si
+      capisce". Stessa famiglia visiva del telefono di Contatti e dei
+      like di /social/: piatto, contorni scuri spessi, disco crema a
+      pallini, colori MONO.
+      ⚠️⚠️ Come sulla pagina /social/: bloccando `setupPageScene()` col
+      segnaposto NON arriva `.is-scene-awake`, quindi senza le due righe
+      qui sotto l'illustrazione resterebbe a `opacity: 0` PER SEMPRE.
+      E' la QUARTA volta che questa trappola si presenta in questo sito.
+
+   2. IL TITOLO. "Si ricorda." va a capo e prende `--accento`, che sulle
+      pagine PRODOTTO e' la terracotta: esattamente il sistema di colori
+      gia' in uso sui titoli a due righe delle altre pagine. Terracotta
+      sul buio fa 3,97 -> va bene SOLO perche' e' un titolo grande.
+   ============================================================ */
+body.mono-dark-home.pasticceria-page .page-hero .mono-page-scene--frusta {
+  opacity: 1;
+  transform: translate3d(var(--scene-x), calc(-50% + var(--scene-y)), 0) scale(1);
+}
+body.mono-dark-home .mono-frusta svg { height: auto; width: 100%; }
+
+body.mono-dark-home.pasticceria-page .pastry-hero-title span { display: block; }
+body.mono-dark-home.pasticceria-page .pastry-hero-title span + span {
+  color: var(--accento);
+}
+
+/* Un filo di movimento: la panna "monta" appena, la gabbia resta ferma.
+   Lento e piccolo: e' una pagina di prodotto, non deve rubare la scena. */
+body.mono-dark-home .mono-frusta__panna {
+  animation: mono-monta 4.5s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+@keyframes mono-monta {
+  0%, 100% { transform: translateY(0) scale(1); }
+  45%      { transform: translateY(-2px) scale(1.03); }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.mono-dark-home .mono-frusta__panna { animation: none; }
+}

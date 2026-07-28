@@ -28,9 +28,9 @@
     <link rel="stylesheet" href="../styles.css?v=20260716-fonts-v1">
 <link rel="stylesheet" href="../experience.css?v=20260716-fonts-v1">
 <link rel="stylesheet" href="../mono-engineering.css?v=20260716-fonts-v1">
-      <link rel="stylesheet" href="../mono-enhance.css?v=20260728-testi-oro-v41">
-    <link rel="stylesheet" href="../mono-dark-home.css?v=20260728-testi-oro-v41">
-      <script defer src="../mono-enhance.js?v=20260728-testi-oro-v41"></script>
+      <link rel="stylesheet" href="../mono-enhance.css?v=20260728-frusta-v42">
+    <link rel="stylesheet" href="../mono-dark-home.css?v=20260728-frusta-v42">
+      <script defer src="../mono-enhance.js?v=20260728-frusta-v42"></script>
       <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -66,7 +66,7 @@
         ]
       }
     </script>
-    <script src="../mono-config.js?v=20260728-testi-oro-v41"></script>
+    <script src="../mono-config.js?v=20260728-frusta-v42"></script>
 </head>
   <body class="mono-world pasticceria-page mono-dark-home" data-mono-world="products">
     <a class="skip-link" href="#main">Vai al contenuto</a>
@@ -80,8 +80,51 @@
     </header>
     <main id="main">
       <section class="page-hero">
+        <!-- ILLUSTRAZIONE — frusta con la panna montata.
+             ⚠️ Sta QUI per due motivi, gli stessi della pagina /social/:
+             1. sostituisce la "scena pastry" di experience.js (piatto +
+                dolce + glassa fatti di rettangoli), che il proprietario
+                non riusciva a riconoscere;
+             2. `setupPageScene()` si ferma se trova gia' un
+                `.mono-page-scene` nella hero, quindi la sua non nasce.
+             ⚠️ Ma cosi' non arriva nemmeno `.is-scene-awake`, che e' quella
+             che porta l'illustrazione da opacity 0 a visibile: la regola
+             che l'accende sta in mono-dark-home.css. Senza, sparirebbe. -->
+        <div class="mono-page-scene mono-page-scene--frusta mono-frusta" aria-hidden="true">
+          <svg viewBox="0 0 200 200" focusable="false" aria-hidden="true">
+            <defs>
+              <pattern id="monoFrustaPuntini" width="9" height="9" patternUnits="userSpaceOnUse">
+                <circle cx="4.5" cy="4.5" r="1.7" fill="#CBA75A" opacity="0.55"/>
+              </pattern>
+              <clipPath id="monoFrustaDisco"><circle cx="100" cy="98" r="84"/></clipPath>
+            </defs>
+            <circle cx="100" cy="98" r="84" fill="#EFE3C8"/>
+            <g clip-path="url(#monoFrustaDisco)"><rect x="16" y="14" width="168" height="168" fill="url(#monoFrustaPuntini)"/></g>
+            <g stroke="#241a14" stroke-width="5.5" stroke-linejoin="round" stroke-linecap="round">
+              <rect x="90" y="162" width="20" height="30" rx="10" fill="#B85C38"/>
+              <rect x="86" y="146" width="28" height="18" rx="5" fill="#CBA75A"/>
+              <g class="mono-frusta__gabbia">
+                <g fill="none" stroke="#6E6A3C" stroke-width="6">
+                  <path d="M74 92 C60 108 60 132 82 146"/><path d="M88 92 C80 108 80 132 92 146"/>
+                  <path d="M112 92 C120 108 120 132 108 146"/><path d="M126 92 C140 108 140 132 118 146"/>
+                </g>
+                <g fill="none" stroke="#241a14" stroke-width="2.4">
+                  <path d="M74 92 C60 108 60 132 82 146"/><path d="M88 92 C80 108 80 132 92 146"/>
+                  <path d="M112 92 C120 108 120 132 108 146"/><path d="M126 92 C140 108 140 132 118 146"/>
+                </g>
+              </g>
+              <g class="mono-frusta__panna">
+                <path fill="#F4ECDD" d="M62 96 C48 88 48 68 62 62 C55 47 66 33 82 36 C80 20 95 9 108 15 C104 4 114 -4 124 3 C130 15 124 29 115 34 C132 34 145 46 141 61 C154 69 155 88 143 96 Z"/>
+                <path fill="none" stroke-width="4.4" d="M92 86 C100 76 98 62 108 54"/>
+              </g>
+            </g>
+          </svg>
+        </div>
         <p class="eyebrow">Pasticceria Torino · Santa Rita</p>
-        <h1>Il dolce non chiude. Si ricorda.</h1>
+        <!-- 28/7 — "Si ricorda." va a capo e in terracotta, come i titoli a
+             due righe delle altre pagine: piu' ordinato. Il colore non e'
+             scritto qui ma preso dal sistema del sito (--accento). -->
+        <h1 class="pastry-hero-title"><span>Il dolce non chiude.</span><span>Si ricorda.</span></h1>
         <p>Monoporzioni, torte, creme e piccoli regali gastronomici: dolci chiari, curati nella forma e pensati per diventare un gesto.</p>
       </section>
       <section class="page-section">
@@ -128,7 +171,7 @@
 <script src="../mono-cinematic.js?v=20260725-fluido-v8"></script>
     <script src="../mono-navigation.js?v=20260714-engineering-master-v1"></script>
     <script src="../mono-signature.js?v=20260714-engineering-master-v1"></script>
-    <script src="../app.js?v=20260728-testi-oro-v41"></script>
+    <script src="../app.js?v=20260728-frusta-v42"></script>
 <script src="../experience.js?v=20260714-shared-colors-v1"></script>
   </body>
 </html>
