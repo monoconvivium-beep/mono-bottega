@@ -1409,3 +1409,14 @@ body.mono-dark-home.aperitivo-page .aperitivo-section-title span {
 body.mono-dark-home.aperitivo-page .aperitivo-section-title span + span {
   color: var(--titolo);
 }
+
+/* "Rito contemporaneo" su /aperitivo/ (28/7): "Resti per un bicchiere."
+   ORO, "Torni per il resto." TERRACOTTA.
+   Qui i colori seguono il sistema NORMALE del sito (titolo = --titolo,
+   accento = --accento), al contrario della fascia serale qui sopra dove
+   sono invertiti di proposito. Serve una regola esplicita perche' la
+   regola generica `main h2 span + span` farebbe oro anche il secondo. */
+body.mono-dark-home.aperitivo-page .aperitivo-rito-title span { display: block; }
+body.mono-dark-home.aperitivo-page .aperitivo-rito-title span + span {
+  color: var(--accento);
+}
