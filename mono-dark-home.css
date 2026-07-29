@@ -1607,7 +1607,12 @@ body.mono-dark-home.about-page .about-convivium-cuore {
     margin: 0;
     max-width: none;
     position: absolute;
-    right: clamp(24px, 3vw, 60px);
+    /* ⚠️ Il margine destro e' stretto di proposito. A 570px di larghezza
+       il bordo sinistro del cuore arrivava a 12px sopra la riga "Un
+       lavoro che conta, dentro una squadra vera." (misurato dopo la
+       pubblicazione). Invece di rimpicciolirlo, si sposta verso il bordo:
+       cosi' resta della misura che ha chiesto. */
+    right: clamp(14px, 1.7vw, 34px);
     top: clamp(180px, 21vw, 320px);
     width: min(42vw, 570px);
   }
