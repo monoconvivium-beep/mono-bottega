@@ -1690,21 +1690,23 @@ body.mono-dark-home.events-page .page-hero .mono-scene-tavolata {
 }
 body.mono-dark-home .mono-scene-tavolata svg { height: auto; width: 100%; }
 
-/* (2) "Facile da organizzare." chiude sul CASHMERE.
-   Storia, perche' spiega la scelta: prima l'aveva chiesta nel rosso
-   #FF8360, poi guardandola non gli e' piaciuta — e aveva ragione.
-   Il motivo e' che erano TRE CALDI VICINI: terracotta, oro e corallo
-   si impastano, e la terza riga sembrava una variante della prima
-   invece di chiudere il discorso.
-   Fra tre mockup provati dal vivo su /prova-colori/ ha scelto il
-   "crescendo verso la luce": terracotta -> oro -> cashmere. Il titolo
-   si schiarisce riga dopo riga e la terza, che e' quella che vende,
-   e' anche quella che brilla di piu'. L'idea del bianco in fondo era
-   sua.
-   Le prime due righe non si toccano: "Buono da mangiare." resta
-   terracotta (--titolo) e "Bello da condividere." resta oro. */
+/* (2) "Facile da organizzare." torna al ROSSO del sito.
+   Storia, perche' spiega la scelta finale ed evita di rifare il giro:
+   - prima l'aveva chiesta in #FF8360 (il rosso di "amore"): guardandola
+     non gli e' piaciuta, e aveva ragione. Erano TRE CALDI VICINI
+     (terracotta, oro, corallo): si impastavano e la terza riga sembrava
+     una variante della prima invece di chiudere;
+   - poi ha provato dal vivo quattro versioni su /prova-colori/,
+     compreso il cashmere in fondo e una col verde oliva;
+   - ha scelto la piu' sobria: "i colori del font, quindi dorato e
+     rosso, nulla di piu'". Nessun colore nuovo nel sistema.
+   Quindi rosso / oro / rosso. Serve la regola esplicita perche' la
+   generica `main h2 span + span` fa oro OGNI span dopo il primo, e la
+   terza riga sarebbe dorata come la seconda.
+   `--titolo` su /eventi/ vale terracotta: le pagine PERSONE hanno i due
+   colori invertiti rispetto a quelle prodotto. */
 body.mono-dark-home.events-page .events-proposal-title span:nth-child(3) {
-  color: var(--mono-cream);
+  color: var(--titolo);
 }
 
 /* 28/7 sera — /gastronomia/, sezione "Disponibilità", riscritta da lui.
