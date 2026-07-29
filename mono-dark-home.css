@@ -1690,14 +1690,21 @@ body.mono-dark-home.events-page .page-hero .mono-scene-tavolata {
 }
 body.mono-dark-home .mono-scene-tavolata svg { height: auto; width: 100%; }
 
-/* (2) "Facile da organizzare." passa dall'oro al ROSSO.
-   ⚠️ E' il rosso PIU' SCARICO, #FF8360 (--mono-rosso-brillante), cioe'
-   quello della parola "amore" sulla home — non il #FF5533 del cuore di
-   Convivium, che e' piu' acceso. Lo ha chiesto lui cosi'.
+/* (2) "Facile da organizzare." chiude sul CASHMERE.
+   Storia, perche' spiega la scelta: prima l'aveva chiesta nel rosso
+   #FF8360, poi guardandola non gli e' piaciuta — e aveva ragione.
+   Il motivo e' che erano TRE CALDI VICINI: terracotta, oro e corallo
+   si impastano, e la terza riga sembrava una variante della prima
+   invece di chiudere il discorso.
+   Fra tre mockup provati dal vivo su /prova-colori/ ha scelto il
+   "crescendo verso la luce": terracotta -> oro -> cashmere. Il titolo
+   si schiarisce riga dopo riga e la terza, che e' quella che vende,
+   e' anche quella che brilla di piu'. L'idea del bianco in fondo era
+   sua.
    Le prime due righe non si toccano: "Buono da mangiare." resta
-   terracotta e "Bello da condividere." resta oro. */
+   terracotta (--titolo) e "Bello da condividere." resta oro. */
 body.mono-dark-home.events-page .events-proposal-title span:nth-child(3) {
-  color: var(--mono-rosso-brillante);
+  color: var(--mono-cream);
 }
 
 /* 28/7 sera — /gastronomia/, sezione "Disponibilità", riscritta da lui.
