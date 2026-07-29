@@ -1447,6 +1447,18 @@ body.mono-dark-home.aperitivo-page .aperitivo-rito-title span + span {
   color: var(--accento);
 }
 
+/* 28/7 sera — /gastronomia/, "Radici vere, / FORMA CONTEMPORANEA.":
+   due righe vere e la seconda in ROSSO, chiesto da lui.
+   ⚠️ Serve la regola esplicita: quella generica `main h2 span + span`
+   farebbe la seconda riga ORO. Stessa avvertenza gia' scritta per i due
+   titoli di /aperitivo/ — se un domani sembra una svista, non lo e'.
+   ⚠️ Rosso normale del sito (--accento = terracotta), NON il rosso
+   brillante, che vive solo sull'isola verde della home. */
+body.mono-dark-home.gastronomia-page .gastronomia-radici-title span { display: block; }
+body.mono-dark-home.gastronomia-page .gastronomia-radici-title span + span {
+  color: var(--accento);
+}
+
 /* 28/7 sera — "Quando la bottega rallenta, resta il GUSTO.": rosso solo
    sull'ultima parola, chiesto da lui. Stessa mossa gia' fatta sulla home
    con "porta qui": uno <span> nel titolo e il resto resta oro.

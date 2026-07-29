@@ -76,6 +76,8 @@
       this.visible = false;
       this.running = false;
       this.currentLabel = "";
+      this.videoInCorso = 0;   /* quanti video stanno suonando adesso */
+      this.sporco = null;      /* il rettangolo da ripulire al prossimo giro */
       this.build();
       this.bind();
     }
@@ -171,6 +173,19 @@
       const spintaX = Math.max(-26, Math.min(26, deltaX));
       const spintaY = Math.max(-26, Math.min(26, deltaY));
 
+      /* ⚠️ MENTRE UN VIDEO SUONA, NIENTE FARINA.
+         Segnalato da lui: "si inceppa il video iniziale". Il film della
+         home e' il momento piu' importante del sito e sta gia' usando
+         scheda grafica e decodifica; aggiungerci una tela ridipinta di
+         continuo e' il carico di troppo. Il corpo del cursore continua
+         a seguire il mouse (e' solo una trasformazione CSS su un
+         elemento piccolo, non costa niente): si ferma solo la scia. */
+      if (this.videoInCorso > 0) {
+        this.lastAngle = angleRadians;   /* lo stato resta coerente per quando il film finisce */
+        this.start();
+        return;
+      }
+
       /* piu' corri, piu' farina sollevi: da 1 granello a 4 per movimento */
       if (this.trailEnabled && distance > 1.4) {
         const quanti = Math.min(4, 1 + Math.floor(distance / 9));
@@ -229,19 +244,47 @@
           this.trail.length = 0;
           this.droplets.length = 0;
           this.lastPhysics = 0;
+          this.sporco = null;
           this.context.clearRect(0, 0, window.innerWidth, window.innerHeight);
         } else if (this.visible) {
           this.start();
         }
       });
-      window.addEventListener("resize", () => this.resize(), { passive: true });
+      /* ⚠️ I video NON fanno risalire i loro eventi (play/pause non
+         "bollono"): per sentirli da document serve la fase di CATTURA,
+         cioe' il terzo argomento a true. Con false non arriverebbe
+         niente e la protezione del film non partirebbe mai. */
+      document.addEventListener("play", () => { this.videoInCorso += 1; }, true);
+      const filmFinito = () => { this.videoInCorso = Math.max(0, this.videoInCorso - 1); };
+      document.addEventListener("pause", filmFinito, true);
+      document.addEventListener("ended", filmFinito, true);
+
+      window.addEventListener("resize", () => {
+        this.resize();
+        this.sporco = null;   /* la tela e' stata azzerata dal ridimensionamento */
+      }, { passive: true });
       window.addEventListener("pagehide", () => this.destroy(), { once: true });
     }
 
     drawTrail(now) {
       const context = this.context;
-      context.clearRect(0, 0, window.innerWidth, window.innerHeight);
-      if (!this.trail.length) return;
+
+      /* ⚠️ SI PULISCE SOLO IL RETTANGOLO SPORCO, non tutto lo schermo.
+         Perche' conta: il costo vero di questa tela non e' il disegno
+         (misurato: 0,041 ms, niente) ma il fatto che una tela grande
+         quanto la finestra, ridipinta a ogni fotogramma, va ricaricata
+         sulla scheda grafica a ogni fotogramma. Sopra il film della
+         home, che sta gia' lavorando, si sente: lui ha segnalato che
+         il video "si inceppa". La farina occupa una macchia di qualche
+         centinaio di pixel, non 1440x900: si tocca solo quella. */
+      const vecchio = this.sporco;
+      if (vecchio) {
+        context.clearRect(vecchio.x0, vecchio.y0, vecchio.x1 - vecchio.x0, vecchio.y1 - vecchio.y0);
+      }
+      if (!this.trail.length) {
+        this.sporco = null;
+        return;
+      }
 
       /* passo di tempo normalizzato a 60 al secondo: cosi' la farina cade
          alla stessa velocita' su uno schermo a 60Hz e su uno a 120Hz.
@@ -254,7 +297,10 @@
       this.trail = this.trail.filter((granello) => now - granello.born < granello.life);
 
       /* 1° passo: l'ombra calda, spostata in basso a destra.
-         Da' rilievo e tiene la farina visibile anche sulle schede crema. */
+         Da' rilievo e tiene la farina visibile anche sulle schede crema.
+         Nello stesso giro si segna il rettangolo da ripulire al
+         prossimo fotogramma. */
+      let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
       context.fillStyle = "rgba(120, 96, 60, 0.85)";
       for (let i = 0; i < this.trail.length; i += 1) {
         const g = this.trail[i];
@@ -269,7 +315,14 @@
         context.beginPath();
         context.arc(g.x + 0.9, g.y + 1.1, g.raggioOra, 0, 6.2832);
         context.fill();
+
+        const bordo = g.raggioOra + 3;   /* margine: ombra spostata + arrotondamenti */
+        if (g.x - bordo < x0) x0 = g.x - bordo;
+        if (g.y - bordo < y0) y0 = g.y - bordo;
+        if (g.x + bordo > x1) x1 = g.x + bordo;
+        if (g.y + bordo > y1) y1 = g.y + bordo;
       }
+      this.sporco = { x0, y0, x1, y1 };
 
       /* 2° passo: il granello chiaro sopra */
       context.fillStyle = "rgba(248, 243, 232, 1)";
