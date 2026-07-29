@@ -1614,7 +1614,12 @@ body.mono-dark-home.about-page .about-convivium-cuore {
        cosi' resta della misura che ha chiesto. */
     right: clamp(14px, 1.7vw, 34px);
     top: clamp(180px, 21vw, 320px);
-    width: min(42vw, 570px);
+    /* ⚠️ 545 e non 570: a 570 restavano 7px fra il cuore e la riga "Un
+       lavoro che conta...". Zero sovrapposizioni sulla carta, ma 7px
+       sono dentro il margine con cui i caratteri rendono diversamente
+       da un computer all'altro: basta poco e si toccano. Con 545 la
+       distanza sale a ~32px e la differenza a occhio non si vede. */
+    width: min(40vw, 545px);
   }
 }
 
