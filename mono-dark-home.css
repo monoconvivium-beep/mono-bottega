@@ -1668,6 +1668,36 @@ body.mono-dark-home.about-page .about-hero-title .about-mono-oro {
 }
 
 /* ============================================================
+   28/7 sera — /app/: due titoli ritoccati da lui
+   ============================================================ */
+
+/* "Meno passaggi." (oro) / "Più tempo per le cose buone." (ROSSO),
+   una riga ciascuna.
+   ⚠️ Serve la regola esplicita per il rosso: la generica
+   `main h2 span + span` fa ORO ogni span dopo il primo, ed erano
+   infatti dorate tutte e due.
+   ⚠️ Sulla riga unica il caso e' curioso e vale la pena saperlo: la
+   frase chiede 919px e il titolo ne aveva 920. Un solo pixel di
+   margine, che gli arrotondamenti del testo si mangiano: bastava
+   niente per mandarla a capo. Alzato a 1000, che e' comodo, contro i
+   1252 di spazio utile della sezione. */
+body.mono-dark-home.app-page .app-meno-title span + span {
+  color: var(--accento);
+}
+@media (min-width: 821px) {
+  body.mono-dark-home.app-page .app-meno-title {
+    max-width: min(1000px, 100%);
+  }
+}
+
+/* "MONO, quando vuoi TU." — rosso solo sull'ultima parola.
+   ⚠️ Uno span SOLO: la regola `main h2 span + span` colpisce il
+   SECONDO span e qui non entra in gioco. */
+body.mono-dark-home.app-page .app-closing-title span {
+  color: var(--accento);
+}
+
+/* ============================================================
    28/7 sera — /eventi/: LA TAVOLATA e la terza riga in rosso
    ============================================================ */
 
