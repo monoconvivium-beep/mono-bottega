@@ -435,14 +435,40 @@ body.qr-dialog-open .app-qr-dialog__close {
   backdrop-filter: none;
 }
 
-/* sopra un link resta la pillola con la scritta, che lui conosce gia'.
-   Qui pero' deve tornare COMPATTA e leggibile: crema piena, non nuvola. */
+/* ------------------------------------------------------------
+   LA PILLOLA CON LA SCRITTA (ENTRA / ASSAGGIA / PORTAMI...)
+
+   🐞 ERRORE MIO, segnalato da lui: l'avevo fatta CREMA lasciando la
+   scritta color crema che arriva da mono-engineering.css. Risultato
+   misurato: 1,06 di contrasto, cioe' scritta bianca su bianco, e sui
+   tasti la parola spariva. Aveva ragione.
+
+   Ha chiesto la scritta DORATA. Misurato prima di sceglierne una:
+     oro su pillola crema ............ 2,06  (10px: serve 4,5 -> NO)
+     oro su pillola scura ............ 6,50  ✅
+   E la pillola stessa deve vedersi su fondi opposti:
+     pillola crema su scheda crema ... 1,03  (spariva anche li')
+     pillola ORO su tasto oro ........ 1,00  (spariva del tutto: il
+        tasto dove l'ha vista, "Scopri come funziona", E' dorato)
+     pillola SCURA su tasto oro ...... 6,50 · su scheda crema 12,95
+
+   ➡️ Percio': pillola scura + scritta oro + BORDO CHIARO. Il bordo
+   non e' un vezzo: sul fondo scuro la pillola scura fa 1,13 e
+   sparirebbe: e' il bordo a darle il contorno (crema su scuro 15,16).
+   Era esattamente il mestiere della goccia d'olio di prima, che il
+   bordo ce l'aveva — togliendolo avevo rotto io una cosa che
+   funzionava.
+   ------------------------------------------------------------ */
 .mono-drop.has-label .mono-drop__lens {
-  background: rgba(248, 243, 232, .96);
+  background: rgba(38, 33, 28, .94);
+  border: 1px solid rgba(244, 236, 221, .78);
   border-radius: 999px;
-  box-shadow: 0 6px 16px rgba(32, 29, 26, .38);
+  box-shadow: 0 6px 16px rgba(32, 29, 26, .42);
   height: 42px;
   min-width: 42px;
+}
+.mono-drop.has-label .mono-drop__label {
+  color: var(--mono-champagne);
 }
 
 /* al clic la nuvola si schiaccia un po' di piu' dell'olio: e' polvere */

@@ -1447,6 +1447,18 @@ body.mono-dark-home.aperitivo-page .aperitivo-rito-title span + span {
   color: var(--accento);
 }
 
+/* 28/7 sera — "Quando la bottega rallenta, resta il GUSTO.": rosso solo
+   sull'ultima parola, chiesto da lui. Stessa mossa gia' fatta sulla home
+   con "porta qui": uno <span> nel titolo e il resto resta oro.
+   ⚠️ Qui va il rosso NORMALE del sito (--accento = terracotta #B85C38,
+   3,93 sul fondo scuro), NON il --mono-rosso-brillante: quello vive solo
+   sull'isola verde della home, dove la terracotta sparirebbe.
+   ⚠️ Uno span SOLO: la regola generica `main h1 span + span` colpisce il
+   SECONDO span e qui non entra in gioco. */
+body.mono-dark-home.aperitivo-page .page-hero h1 span {
+  color: var(--accento);
+}
+
 /* ============================================================
    "amore": la PENNELLATA E' STATA TOLTA (28/7 sera)
 
