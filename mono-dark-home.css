@@ -1489,9 +1489,12 @@ body.mono-dark-home .mono-scene-tavola svg { height: auto; width: 100%; }
    `.page-section > h2 { max-width: 920px }` (styles.css) — ma la
    sezione di spazio ne ha 1252. Quindi basta ALLARGARE il titolo e il
    corpo resta grande. Solo da 821px in su: sotto, andare a capo e'
-   giusto e la riga unica sarebbe illeggibile. */
+   giusto e la riga unica sarebbe illeggibile.
+   Stessa cosa per "Il metodo la rende possibile.", che si spezzava in
+   "Il metodo la / rende possibile." — suo: "non ha senso andare a capo". */
 @media (min-width: 821px) {
-  body.mono-dark-home.about-page .about-scelta-title {
+  body.mono-dark-home.about-page .about-scelta-title,
+  body.mono-dark-home.about-page .about-metodo-title {
     max-width: min(1180px, 100%);
   }
 }
@@ -1509,13 +1512,19 @@ body.mono-dark-home.about-page .about-convivium-cuore {
   width: 58%;
 }
 @media (min-width: 1081px) {
+  /* 28/7 sera, secondo giro — suo: "cosi' tutto a destra diventa un po'
+     anonimo, piu' grosso e piu' centrale".
+     ⚠️ Sale all'altezza del TITOLO, non dei paragrafi: il titolo "Qui ogni
+     scelta / nutre due volte." e' corto e finisce intorno a meta' pagina,
+     quindi li' c'e' spazio vero. Piu' in basso i paragrafi arrivano a
+     920px e il cuore ci finirebbe sopra. */
   body.mono-dark-home.about-page .about-convivium-cuore {
     margin: 0;
     max-width: none;
     position: absolute;
-    right: clamp(24px, 4vw, 76px);
-    top: clamp(96px, 15vh, 210px);
-    width: min(23vw, 290px);
+    right: clamp(40px, 8vw, 170px);
+    top: clamp(34px, 5vh, 80px);
+    width: min(30vw, 390px);
   }
 }
 
