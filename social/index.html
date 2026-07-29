@@ -24,13 +24,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../mono-colors.css?v=20260714-shared-colors-v1">
-    <link rel="stylesheet" href="../styles.css?v=20260716-fonts-v1">
-    <link rel="stylesheet" href="../experience.css?v=20260716-fonts-v1">
-    <link rel="stylesheet" href="../mono-engineering.css?v=20260716-fonts-v1">
-    <link rel="stylesheet" href="../mono-enhance.css?v=20260729-semplice-oro-v71">
-    <link rel="stylesheet" href="../mono-dark-home.css?v=20260729-semplice-oro-v71">
-    <script defer src="../mono-enhance.js?v=20260729-semplice-oro-v71"></script>
+    <link rel="stylesheet" href="../mono-colors.css?v=20260729-audit-v72">
+    <link rel="stylesheet" href="../styles.css?v=20260729-audit-v72">
+    <link rel="stylesheet" href="../experience.css?v=20260729-audit-v72">
+    <link rel="stylesheet" href="../mono-engineering.css?v=20260729-audit-v72">
+    <link rel="stylesheet" href="../mono-enhance.css?v=20260729-audit-v72">
+    <link rel="stylesheet" href="../mono-dark-home.css?v=20260729-audit-v72">
+    <script defer src="../mono-enhance.js?v=20260729-audit-v72"></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -66,7 +66,7 @@
         ]
       }
     </script>
-    <script src="../mono-config.js?v=20260729-semplice-oro-v71"></script>
+    <script src="../mono-config.js?v=20260729-audit-v72"></script>
 </head>
   <body class="mono-world contacts-page social-page mono-dark-home" data-mono-world="jobs">
     <a class="skip-link" href="#main">Vai al contenuto</a>
@@ -74,24 +74,12 @@
       <a class="brand" href="../" aria-label="MONO home"><img class="brand-logo" src="../assets/brand/mono-logo-primary.svg" alt="MONO"><span>Bottega Gastronomica</span></a>
       <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="primaryNav">Menu</button>
       <nav class="nav" id="primaryNav" aria-label="Navigazione principale">
-        <a href="../#bottega">Cos'è MONO</a><a href="../gastronomia/">Prodotti</a><a href="../la-bottega/">Chi siamo</a><a href="../mono-convivium/">Progetto sociale</a><a href="../eventi/">Eventi</a><a href="../app/">App</a><a href="../dove-siamo/">Dove siamo</a><a href="../contatti/">Contatti</a>
+        <a href="../#bottega">Cos’è MONO</a><a href="../gastronomia/">Prodotti</a><a href="../la-bottega/">Chi siamo</a><a href="../mono-convivium/">Progetto sociale</a><a href="../eventi/">Eventi</a><a href="../app/">App</a><a href="../dove-siamo/">Dove siamo</a><a href="../contatti/">Contatti</a>
       </nav>
       <a class="header-action" data-track="header_maps" href="https://www.google.com/maps/search/?api=1&amp;query=Via%20Barletta%2072D%2C%20Torino" target="_blank" rel="noopener">Apri mappa</a>
     </header>
     <main id="main">
       <section class="page-hero contacts-hero">
-        <!-- ILLUSTRAZIONE DELLA PAGINA — like, cuore e commenti.
-             ⚠️ Sta QUI, scritta a mano, per DUE motivi:
-             1. `data-mono-world="jobs"` faceva comparire il MEGAFONO, che e'
-                gia' l'illustrazione di "Lavora con noi": un doppione.
-             2. `setupPageScene()` in experience.js (file di Codex, non
-                toccato) si ferma se trova gia' un `.mono-page-scene` dentro
-                la hero. Mettendo il nostro, il megafono non viene mai
-                iniettato. Stessa tecnica del segnaposto gia' usata altrove.
-             ⚠️ Ma proprio perche' quella funzione esce subito, NON aggiunge
-             `.is-scene-awake` alla hero: senza la regola apposta in
-             mono-dark-home.css questa scena resterebbe a `opacity: 0` PER
-             SEMPRE (è la trappola gia' pagata due volte). -->
         <div class="mono-page-scene mono-page-scene--social mono-social-scena" aria-hidden="true">
           <svg viewBox="0 0 210 190" focusable="false" aria-hidden="true">
             <defs>
@@ -123,8 +111,6 @@
         <p class="eyebrow">MONO Family</p>
         <h1 class="contacts-hero-title"><span>Entra nella</span><span>MONO Family.</span></h1>
         <p>MONO non è solo un brand: è una community fatta di persone, idee, stile e voglia di crescere insieme.</p>
-        <!-- Le tre icone le disegna mono-enhance.js da window.MONO_SOCIAL:
-             gli indirizzi restano scritti in un posto solo. -->
         <div class="mono-social mono-social--pagina" data-social-pagina></div>
       </section>
 
@@ -146,20 +132,43 @@
       <aside class="mono-app-invito" aria-label="Invito all'app MONO">
         <div class="mono-app-invito__testo">
           <span class="mono-app-invito__occhiello">Ancora più vicino</span>
-          <p class="mono-app-invito__frase">Nell'app le novità ti arrivano senza cercarle.</p>
-          <p class="mono-app-invito__nota">Sui social racconti e dietro le quinte, nell'app ordini, orari e vantaggi.</p>
+          <p class="mono-app-invito__frase">Nell’app le novità ti arrivano senza cercarle.</p>
+          <p class="mono-app-invito__nota">Sui social racconti e dietro le quinte, nell’app ordini, orari e vantaggi.</p>
         </div>
-        <a class="button primary" data-track="app_invite_social" href="https://app.monobottega.it/home" target="_blank" rel="noopener">Apri l'app MONO</a>
+        <a class="button primary" data-track="app_invite_social" href="https://app.monobottega.it/home" target="_blank" rel="noopener">Apri l’app MONO</a>
       </aside>
+          <section class="opening-signup-section" data-reveal>
+        <form class="opening-signup opening-signup-footer" action="mailto:monobottega@gmail.com" method="post" enctype="text/plain" data-newsletter-form>
+          <div>
+            <span>STIAMO PER APRIRE</span>
+            <strong>Sii tra i primi a entrare in bottega.</strong>
+            <p class="mono-conto" data-conto-apertura hidden>
+              <span class="mono-conto__numero" data-conto-giorni>—</span>
+              <span class="mono-conto__testo">giorni all’apertura</span>
+            </p>
+            <small>Lascia la tua email: ti avvisiamo il giorno dell’apertura e per le prime novità del banco. Niente spam, solo quando serve.</small>
+          </div>
+          <label class="sr-only" for="footerSignupEmail">La tua email</label>
+          <div class="signup-form-row">
+            <input id="footerSignupEmail" name="email" type="email" autocomplete="email" placeholder="La tua email" required>
+            <button class="button primary" type="submit">Avvisami all’apertura</button>
+          </div>
+          <label class="signup-consenso">
+            <input type="checkbox" name="consenso" required>
+            <span>Ho letto l'<a href="../privacy/">informativa privacy</a> e acconsento a ricevere l’avviso di apertura e le novità del banco.</span>
+          </label>
+          <p class="signup-status" data-newsletter-status role="status" aria-live="polite"></p>
+        </form>
+      </section>
     </main>
-    <footer class="site-footer"><strong>MONO — Bottega Gastronomica</strong><nav aria-label="Navigazione footer"><a href="../">Home</a><a href="../la-bottega/">Chi siamo</a><a href="../gastronomia/">Gastronomia</a><a href="../pasticceria/">Pasticceria</a><a href="../aperitivo/">Aperitivo</a><a href="../eventi/">Eventi</a><a href="../app/">App</a><a href="../dove-siamo/">Dove siamo</a><a href="../contatti/">Contatti</a><a href="./">Social</a></nav></footer>
+    <footer class="site-footer"><strong>MONO — Bottega Gastronomica</strong><nav aria-label="Navigazione footer"><a href="../">Home</a><a href="../la-bottega/">Chi siamo</a><a href="../gastronomia/">Gastronomia</a><a href="../pasticceria/">Pasticceria</a><a href="../aperitivo/">Aperitivo</a><a href="../eventi/">Eventi</a><a href="../app/">App</a><a href="../dove-siamo/">Dove siamo</a><a href="../contatti/">Contatti</a><a href="./">Social</a><a href="../privacy/">Privacy</a></nav><p class="site-footer__legale">MONO-BOTTEGA GASTRONOMICA DI PASCIUCCO FEDERICO · Titolare: Federico Pasciucco<br>Sede legale: Via Frinco 15, 10136 Torino (TO) · P. IVA 13341230012 · REA TO-1356747<br>PEC: <a href="mailto:federico.pasciucco@pec.it">federico.pasciucco@pec.it</a></p></footer>
     <script>window.MONO_EXPERIENCE_OVERRIDES = { flags: { oPortal: false } };try{if(sessionStorage.getItem("monoCurtain")){sessionStorage.removeItem("monoCurtain");document.documentElement.classList.add("mono-curtain-cover");setTimeout(function(){document.documentElement.classList.remove("mono-curtain-cover");},1800);}}catch(e){}</script>
-    <script src="../mono-experience-config.js?v=20260715-contacts-architecture-v1"></script>
-    <script src="../cinematic-assets.js?v=20260718-tavola-eventi-v1"></script>
-    <script src="../mono-cinematic.js?v=20260725-fluido-v8"></script>
-    <script src="../mono-navigation.js?v=20260714-engineering-master-v1"></script>
-    <script src="../mono-signature.js?v=20260729-semplice-oro-v71"></script>
-    <script src="../app.js?v=20260729-semplice-oro-v71"></script>
-    <script src="../experience.js?v=20260715-contacts-architecture-v1"></script>
+    <script src="../mono-experience-config.js?v=20260729-audit-v72"></script>
+    <script src="../cinematic-assets.js?v=20260729-audit-v72"></script>
+    <script src="../mono-cinematic.js?v=20260729-audit-v72"></script>
+    <script src="../mono-navigation.js?v=20260729-audit-v72"></script>
+    <script src="../mono-signature.js?v=20260729-audit-v72"></script>
+    <script src="../app.js?v=20260729-audit-v72"></script>
+    <script src="../experience.js?v=20260729-audit-v72"></script>
   </body>
 </html>

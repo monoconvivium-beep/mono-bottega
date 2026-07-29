@@ -37,6 +37,38 @@ window.MONO_SOCIAL = {
 };
 
 /* ------------------------------------------------------------
+   0-QUATER) L'APERTURA — ⭐ L'INTERRUTTORE (29/7)
+
+   COM'ERA E PERCHE' ERA PERICOLOSO
+   La data stava scritta dentro mono-enhance.js (1 settembre 2026) e il
+   sito faceva tutto da solo: finche' mancavano giorni mostrava il conto
+   alla rovescia, e dal giorno dopo scriveva "La bottega e' aperta."
+   ANCHE SE la bottega non era aperta. Bastava che l'apertura slittasse
+   di una settimana e il sito diceva una bugia a chiunque passasse,
+   senza che nessuno se ne accorgesse.
+
+   COM'E' ADESSO — due manopole, e il calendario NON decide piu' niente
+   di importante:
+
+   1) APERTA — la dichiarazione che la bottega e' aperta la fai TU.
+      Finche' e' false, il sito NON dira' MAI che sei aperto, nemmeno
+      se la data qui sotto e' passata da tre mesi.
+      Il giorno che alzi la serranda: metti true, salva, pubblica.
+
+   2) DATA_PREVISTA — serve solo al conto alla rovescia ("mancano N
+      giorni"), che e' il motivo per lasciare l'email ADESSO invece di
+      rimandare. Formato ANNO-MESE-GIORNO.
+      Se la data passa e APERTA e' ancora false, il conto alla rovescia
+      semplicemente SPARISCE: il sito tace, non mente. E' il modo giusto
+      di sbagliare.
+      Lasciala vuota ("") se non vuoi nessun conto alla rovescia.
+   ------------------------------------------------------------ */
+window.MONO_APERTURA = {
+  APERTA: false,
+  DATA_PREVISTA: "2026-09-15"
+};
+
+/* ------------------------------------------------------------
    0-BIS) SCHEDA GOOGLE (Google Business) — ⭐ PUNTO UNICO
 
    Questo e' l'indirizzo della tua scheda su Google Maps. Tutti i
@@ -105,13 +137,10 @@ window.MONO_APP_WAITLIST_ENDPOINT = "https://app.monobottega.it/api/waitlist";
    link esterno con un altro account, e l'app non poteva essere
    avvisata delle nuove iscrizioni. L'app fa tutto meglio.
 
-   Il modulo esiste ancora ed e' valido. Per riaccenderlo (solo se
-   un giorno l'app non fosse disponibile) rimetti i due valori:
-     ACTION: https://docs.google.com/forms/d/e/1FAIpQLSeVmJIhfb13X6
-             s9Uze1z7sra4oQc5FeIB3LC74j7TCFSQ3LpQ/formResponse
-     FIELD:  entry.570361845
-   Modulo "LISTA EVENTI MONO", proprietario federicopasciucco1989@
-   gmail.com. Verificato con un invio vero il 24/7.
+   Il modulo esiste ancora ed e' valido: si chiama "LISTA EVENTI MONO".
+   Indirizzo, numero del campo e account proprietario NON stanno piu'
+   qui — questo file lo scarica il browser di chiunque apra il sito.
+   (29/7: tolti da qui e messi al sicuro fuori dal sito. Prima c'erano.)
 
    ⚠️ Sotto restano VUOTI di proposito: vuoti = spento.
    Nota storica: il modulo Google era stato scelto al posto di

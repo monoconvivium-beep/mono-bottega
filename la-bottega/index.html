@@ -27,13 +27,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../mono-colors.css?v=20260714-shared-colors-v1">
-    <link rel="stylesheet" href="../styles.css?v=20260716-fonts-v1">
-<link rel="stylesheet" href="../experience.css?v=20260716-fonts-v1">
-<link rel="stylesheet" href="../mono-engineering.css?v=20260716-fonts-v1">
-      <link rel="stylesheet" href="../mono-enhance.css?v=20260729-semplice-oro-v71">
-    <link rel="stylesheet" href="../mono-dark-home.css?v=20260729-semplice-oro-v71">
-      <script defer src="../mono-enhance.js?v=20260729-semplice-oro-v71"></script>
+    <link rel="stylesheet" href="../mono-colors.css?v=20260729-audit-v72">
+    <link rel="stylesheet" href="../styles.css?v=20260729-audit-v72">
+<link rel="stylesheet" href="../experience.css?v=20260729-audit-v72">
+<link rel="stylesheet" href="../mono-engineering.css?v=20260729-audit-v72">
+      <link rel="stylesheet" href="../mono-enhance.css?v=20260729-audit-v72">
+    <link rel="stylesheet" href="../mono-dark-home.css?v=20260729-audit-v72">
+      <script defer src="../mono-enhance.js?v=20260729-audit-v72"></script>
       <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -69,7 +69,7 @@
         ]
       }
     </script>
-    <script src="../mono-config.js?v=20260729-semplice-oro-v71"></script>
+    <script src="../mono-config.js?v=20260729-audit-v72"></script>
 </head>
   <body class="mono-world about-page mono-dark-home" data-mono-world="people">
     <a class="skip-link" href="#main">Vai al contenuto</a>
@@ -77,23 +77,12 @@
       <a class="brand" href="../" aria-label="MONO home"><img class="brand-logo" src="../assets/brand/mono-logo-primary.svg" alt="MONO"><span>Bottega Gastronomica</span></a>
       <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="primaryNav">Menu</button>
       <nav class="nav" id="primaryNav" aria-label="Navigazione principale">
-        <a href="../#bottega">Cos'è MONO</a><a href="../gastronomia/">Prodotti</a><a href="./">Chi siamo</a><a href="../mono-convivium/">Progetto sociale</a><a href="../eventi/">Eventi</a><a href="../app/">App</a><a href="../dove-siamo/">Dove siamo</a><a href="../contatti/">Contatti</a>
+        <a href="../#bottega">Cos’è MONO</a><a href="../gastronomia/">Prodotti</a><a href="./">Chi siamo</a><a href="../mono-convivium/">Progetto sociale</a><a href="../eventi/">Eventi</a><a href="../app/">App</a><a href="../dove-siamo/">Dove siamo</a><a href="../contatti/">Contatti</a>
       </nav>
       <a class="header-action" data-track="header_location" href="../dove-siamo/">Vieni a trovarci</a>
     </header>
     <main id="main">
       <section class="page-hero about-hero">
-        <!-- 28/7 sera - TAVOLA CONDIVISA, disegno originale che sostituisce la
-             "pianta del tavolo" geometrica generata da experience.js (scena
-             "people"). Su sua richiesta, partendo da un riferimento che ha
-             mandato: si e' preso lo STILE (vista dall'alto, schizzo a penna,
-             campiture morbide), mai il disegno, che e' materiale di terzi.
-             ⚠️ Questo segnaposto .mono-page-scene fa uscire subito
-             setupPageScene() (experience.js:427), che quindi NON aggiunge piu'
-             la classe .is-scene-awake: senza di quella il disegno resterebbe a
-             opacity:0 PER SEMPRE. Lo accende una regola CSS dedicata in
-             mono-dark-home.css, come per --social e --frusta.
-             E' la quinta volta che questa trappola si presenta: vedi memoria. -->
         <div class="mono-page-scene mono-page-scene--people mono-scene-tavola" aria-hidden="true">
         <svg class="scene-tavola" viewBox="0 0 520 520" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
         <path d="M512.4,266.0 C511.9,289.5 507.7,313.8 500.6,336.1 C493.5,358.3 482.8,380.3 469.9,399.6 C457.0,418.9 440.8,437.0 423.1,452.0 C405.5,466.9 385.1,479.9 364.0,489.4 C343.0,499.0 319.8,505.8 297.0,509.2 C274.1,512.6 249.9,512.8 227.0,509.7 C204.0,506.6 180.6,500.1 159.4,490.7 C138.1,481.4 117.3,468.6 99.4,453.7 C81.5,438.7 64.9,420.5 51.9,401.1 C38.8,381.6 28.0,359.2 21.2,336.7 C14.3,314.2 10.6,289.5 10.7,266.0 C10.8,242.5 14.7,217.8 21.7,195.4 C28.8,173.1 39.8,150.9 53.0,131.7 C66.2,112.5 83.0,94.7 100.9,80.1 C118.8,65.4 139.5,53.1 160.5,43.8 C181.6,34.6 204.6,28.0 227.3,24.5 C250.0,21.1 274.0,20.6 296.9,23.3 C319.8,26.0 343.4,31.8 364.8,40.8 C386.3,49.8 407.6,62.2 425.7,77.1 C443.8,92.0 460.6,110.4 473.5,130.1 C486.4,149.7 496.8,172.5 503.3,195.1 C509.8,217.8 512.8,242.5 512.4,266.0Z" fill="#e9dfc7"/>
@@ -167,11 +156,6 @@
         </svg>
         </div>
         <p class="eyebrow">UNA VISIONE. MOLTE MANI.</p>
-        <!-- 28/7 sera - su sua indicazione: "MONO" torna DORATO, "nasce dalla
-             cucina." resta rosso, "Cresce intorno alle persone." resta dorata.
-             Lo <span> interno serve solo al colore; va rimesso in linea perche'
-             .about-page .about-hero-title span li' mette display:block e
-             altrimenti "MONO" andrebbe su una riga tutta sua. -->
         <h1 class="about-hero-title"><span><span class="about-mono-oro">MONO</span> nasce dalla cucina.</span><span>Cresce intorno alle persone.</span></h1>
         <p>
           MONO nasce da un’idea semplice: portare nella vita di ogni giorno una cucina curata, accessibile e fatta come si deve.
@@ -193,10 +177,6 @@
       </section>
       <section class="page-section about-method">
         <p class="eyebrow">IL METODO MONO</p>
-        <!-- 28/7 sera - "Il metodo la rende possibile." andava a capo in
-             "Il metodo la / rende possibile.": suo, "non ha senso andare a capo".
-             Stessa cura del titolo "Un prodotto, da solo, non basta.": si
-             ALLARGA il titolo, non si rimpicciolisce il testo. -->
         <h2 class="about-section-title about-metodo-title"><span>La qualità si sente.</span><span>Il metodo la rende possibile.</span></h2>
         <p>
           Ogni dettaglio ha un compito: rendere più semplice scegliere, mangiare bene e tornare volentieri.
@@ -206,20 +186,12 @@
         </p>
         <div class="page-grid">
           <article class="page-card" data-reveal><span>CUCINA VERA</span><h3>Tecnica che rispetta la memoria.</h3><p>Sapori italiani e piemontesi, preparati con competenza e pensati per la vita di ogni giorno.</p></article>
-          <!-- 28/7 sera - testi riscritti da lui. "meno confusione" -> "nessuna
-               confusione"; e nella terza card entrano "ricerca" e "al dettaglio". -->
           <article class="page-card" data-reveal><span>SCELTA SEMPLICE</span><h3>Chiaro da vedere. Facile da scegliere.</h3><p>Prodotti, porzioni e prezzi leggibili: nessuna confusione, più libertà di scegliere bene.</p></article>
           <article class="page-card" data-reveal><span>LAVORO BEN FATTO</span><h3>La qualità non si improvvisa.</h3><p>Organizzazione, ricerca, precisione e attenzione al dettaglio permettono a ogni prodotto di mantenere la stessa cura, ogni giorno.</p></article>
         </div>
       </section>
       <section class="page-section alt about-service">
         <p class="eyebrow">IL NOSTRO MODO DI ACCOGLIERTI</p>
-        <!-- 28/7 sera - "Non passiamo prodotti." non si capiva ("non e' facile
-             da capire", suo). Il senso che voleva: non vendiamo SOLO prodotti.
-             Fra tre proposte ha scelto questa, che dice la stessa cosa parlando
-             del prodotto invece che di noi, e suona meno commerciale.
-             La classe serve a tenere le due righe su UNA RIGA CIASCUNA: vedi
-             mono-dark-home.css, il titolo va allargato oltre i 920px di regola. -->
         <h2 class="about-section-title about-scelta-title"><span>Un prodotto, da solo, non basta.</span><span>Ci prendiamo cura della tua scelta.</span></h2>
         <p>
           Chi lavora in MONO conosce ciò che vende, ascolta ciò che cerchi e ti consiglia con misura.
@@ -249,18 +221,8 @@
         <p>
           Monoconvivium non è un’iniziativa collaterale: vive negli stessi spazi, condivide gli stessi standard e trasforma il potenziale in competenza reale.
         </p>
-        <!-- 28/7 sera - il cuore di posate di Monoconvivium, chiesto da lui:
-             sta a destra della sezione da computer, e scende sotto, centrato,
-             sul telefono. E' decorativo (il testo accanto dice gia' tutto),
-             quindi alt vuoto + aria-hidden: chi usa un lettore di schermo non
-             deve sentirsi leggere un'immagine che non aggiunge niente. -->
         <img class="about-convivium-cuore" src="../assets/brand/mono-convivium-cuore-rosso.svg"
              alt="" aria-hidden="true" width="1122" height="794" loading="lazy" decoding="async">
-        <!-- 28/7 sera - chiusura rifatta su sua indicazione: centrata, con piu'
-             peso, e nel ROSSO BRILLANTE di "amore" (non il rosso dei bottoni).
-             Le due righe devono stare su UNA RIGA CIASCUNA: il <br> le separa,
-             la larghezza la sistema mono-dark-home.css.
-             La frase piccola sotto resta com'era: "va bene anche quella". -->
         <div class="about-impact-closing">
           <p class="about-impact-call">Scegli qualcosa di buono.<br>Contribuisci a costruire qualcosa di importante.</p>
           <p>Ogni acquisto sostiene una cucina fatta bene e un futuro con più possibilità.</p>
@@ -274,20 +236,43 @@
       <aside class="mono-app-invito" aria-label="Invito all'app MONO">
         <div class="mono-app-invito__testo">
           <span class="mono-app-invito__occhiello">La bottega in tasca</span>
-          <p class="mono-app-invito__frase">La bottega continua nell'app.</p>
+          <p class="mono-app-invito__frase">La bottega continua nell’app.</p>
           <p class="mono-app-invito__nota">Ordini, vantaggi e piccole attenzioni: lo stesso modo di fare, sul telefono.</p>
         </div>
-        <a class="button primary" data-track="app_invite_chi_siamo" href="https://app.monobottega.it/home" target="_blank" rel="noopener">Apri l'app MONO</a>
+        <a class="button primary" data-track="app_invite_chi_siamo" href="https://app.monobottega.it/home" target="_blank" rel="noopener">Apri l’app MONO</a>
       </aside>
+          <section class="opening-signup-section" data-reveal>
+        <form class="opening-signup opening-signup-footer" action="mailto:monobottega@gmail.com" method="post" enctype="text/plain" data-newsletter-form>
+          <div>
+            <span>STIAMO PER APRIRE</span>
+            <strong>Sii tra i primi a entrare in bottega.</strong>
+            <p class="mono-conto" data-conto-apertura hidden>
+              <span class="mono-conto__numero" data-conto-giorni>—</span>
+              <span class="mono-conto__testo">giorni all’apertura</span>
+            </p>
+            <small>Lascia la tua email: ti avvisiamo il giorno dell’apertura e per le prime novità del banco. Niente spam, solo quando serve.</small>
+          </div>
+          <label class="sr-only" for="footerSignupEmail">La tua email</label>
+          <div class="signup-form-row">
+            <input id="footerSignupEmail" name="email" type="email" autocomplete="email" placeholder="La tua email" required>
+            <button class="button primary" type="submit">Avvisami all’apertura</button>
+          </div>
+          <label class="signup-consenso">
+            <input type="checkbox" name="consenso" required>
+            <span>Ho letto l'<a href="../privacy/">informativa privacy</a> e acconsento a ricevere l’avviso di apertura e le novità del banco.</span>
+          </label>
+          <p class="signup-status" data-newsletter-status role="status" aria-live="polite"></p>
+        </form>
+      </section>
     </main>
-    <footer class="site-footer"><strong>MONO — Bottega Gastronomica</strong><nav aria-label="Navigazione footer"><a href="../">Home</a><a href="../gastronomia/">Gastronomia</a><a href="../pasticceria/">Pasticceria</a><a href="../aperitivo/">Aperitivo</a><a href="../mono-convivium/">MONO Convivium</a><a href="../eventi/">Eventi</a><a href="../app/">App</a><a href="../dove-siamo/">Dove siamo</a><a href="../contatti/">Contatti</a><a href="../social/">Social</a></nav></footer>
+    <footer class="site-footer"><strong>MONO — Bottega Gastronomica</strong><nav aria-label="Navigazione footer"><a href="../">Home</a><a href="../gastronomia/">Gastronomia</a><a href="../pasticceria/">Pasticceria</a><a href="../aperitivo/">Aperitivo</a><a href="../mono-convivium/">MONO Convivium</a><a href="../eventi/">Eventi</a><a href="../app/">App</a><a href="../dove-siamo/">Dove siamo</a><a href="../contatti/">Contatti</a><a href="../social/">Social</a><a href="../privacy/">Privacy</a></nav><p class="site-footer__legale">MONO-BOTTEGA GASTRONOMICA DI PASCIUCCO FEDERICO · Titolare: Federico Pasciucco<br>Sede legale: Via Frinco 15, 10136 Torino (TO) · P. IVA 13341230012 · REA TO-1356747<br>PEC: <a href="mailto:federico.pasciucco@pec.it">federico.pasciucco@pec.it</a></p></footer>
     <script>window.MONO_EXPERIENCE_OVERRIDES = { flags: { oPortal: false } };try{if(sessionStorage.getItem("monoCurtain")){sessionStorage.removeItem("monoCurtain");document.documentElement.classList.add("mono-curtain-cover");setTimeout(function(){document.documentElement.classList.remove("mono-curtain-cover");},1800);}}catch(e){}</script>
-    <script src="../mono-experience-config.js?v=20260715-short-pages-v1"></script>
-<script src="../cinematic-assets.js?v=20260718-tavola-eventi-v1"></script>
-<script src="../mono-cinematic.js?v=20260725-fluido-v8"></script>
-    <script src="../mono-navigation.js?v=20260714-engineering-master-v1"></script>
-    <script src="../mono-signature.js?v=20260729-semplice-oro-v71"></script>
-    <script src="../app.js?v=20260729-semplice-oro-v71"></script>
-<script src="../experience.js?v=20260715-people-table-v1"></script>
+    <script src="../mono-experience-config.js?v=20260729-audit-v72"></script>
+<script src="../cinematic-assets.js?v=20260729-audit-v72"></script>
+<script src="../mono-cinematic.js?v=20260729-audit-v72"></script>
+    <script src="../mono-navigation.js?v=20260729-audit-v72"></script>
+    <script src="../mono-signature.js?v=20260729-audit-v72"></script>
+    <script src="../app.js?v=20260729-audit-v72"></script>
+<script src="../experience.js?v=20260729-audit-v72"></script>
   </body>
 </html>

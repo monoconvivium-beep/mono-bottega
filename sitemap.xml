@@ -26,11 +26,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://monobottega.it/catering/</loc>
-    <lastmod>2026-07-14</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://monobottega.it/eventi/</loc>
     <lastmod>2026-07-14</lastmod>
     <priority>0.8</priority>
@@ -64,5 +59,10 @@
     <loc>https://monobottega.it/social/</loc>
     <lastmod>2026-07-28</lastmod>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://monobottega.it/privacy/</loc>
+    <lastmod>2026-07-29</lastmod>
+    <priority>0.3</priority>
   </url>
 </urlset>

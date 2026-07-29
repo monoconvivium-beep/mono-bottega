@@ -578,7 +578,22 @@
   /* Conto alla rovescia per l'apertura (18/7). Sta accanto alla raccolta
      email: "mancano N giorni" da' un motivo per lasciare l'indirizzo ADESSO
      invece di rimandare. Resta nascosto finche' il JS non ha un numero vero,
-     cosi' non si vede mai un trattino al posto della cifra. */
+     cosi' non si vede mai un trattino al posto della cifra.
+
+     ⚠️⚠️ RIFATTO IL 29/7 — LA BOMBA A OROLOGERIA.
+     Prima qui c'era scritto `new Date(2026, 8, 1)` e il resto veniva da se':
+     passato il 1 settembre il sito scriveva DA SOLO "La bottega e' aperta.",
+     aperta o no. Se l'apertura slittava di una settimana, il sito mentiva a
+     chiunque passasse e nessuno se ne accorgeva.
+
+     Adesso comandano due manopole in mono-config.js (window.MONO_APERTURA):
+       APERTA        -> la dichiarazione la fa LUI, a mano. Finche' e' false
+                        il sito non dira' MAI di essere aperto.
+       DATA_PREVISTA -> serve SOLO al conto alla rovescia.
+
+     ⚠️ IL PUNTO IMPORTANTE E' COSA SUCCEDE QUANDO LA DATA PASSA e nessuno
+     ha alzato l'interruttore: il blocco resta NASCOSTO. Il sito tace,
+     non mente. Non toccare questo comportamento: e' il motivo del lavoro. */
   function initContoApertura() {
     var blocco = document.querySelector("[data-conto-apertura]");
     if (!blocco) return;
@@ -586,19 +601,38 @@
     var testo = blocco.querySelector(".mono-conto__testo");
     if (!numero) return;
 
-    var apertura = new Date(2026, 8, 1); // 1 settembre 2026 (mese 0-based)
+    var cfg = window.MONO_APERTURA || {};
+
+    /* 1) L'interruttore vince su tutto: se e' alzato, la bottega e' aperta
+          e la data non conta piu' niente. */
+    if (cfg.APERTA === true) {
+      numero.textContent = "";
+      if (testo) testo.textContent = "La bottega è aperta.";
+      blocco.classList.add("is-aperto");
+      blocco.hidden = false;
+      return;
+    }
+
+    /* 2) Niente data (o data scritta male) => niente conto alla rovescia,
+          e il blocco resta nascosto. Meglio muto che sbagliato. */
+    var pezzi = String(cfg.DATA_PREVISTA || "").match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (!pezzi) return;
+
+    /* Costruita pezzo per pezzo e NON con new Date("2026-09-15"): quella
+       forma Safari la legge come UTC e sul fuso italiano puo' spostare il
+       conto di un giorno. Il mese e' 0-based, da qui il -1. */
+    var apertura = new Date(+pezzi[1], +pezzi[2] - 1, +pezzi[3]);
+    if (isNaN(apertura)) return;
+
     var oggi = new Date();
     oggi.setHours(0, 0, 0, 0);
     var giorni = Math.ceil((apertura - oggi) / 86400000);
 
-    if (giorni > 0) {
-      numero.textContent = giorni;
-      if (testo) testo.textContent = giorni === 1 ? "giorno all'apertura" : "giorni all'apertura";
-    } else {
-      numero.textContent = "";
-      if (testo) testo.textContent = "La bottega è aperta.";
-      blocco.classList.add("is-aperto");
-    }
+    /* 3) Data passata ma interruttore ancora abbassato: SILENZIO. */
+    if (giorni <= 0) return;
+
+    numero.textContent = giorni;
+    if (testo) testo.textContent = giorni === 1 ? "giorno all'apertura" : "giorni all'apertura";
     blocco.hidden = false;
   }
 

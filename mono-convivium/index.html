@@ -23,7 +23,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../mono-colors.css?v=20260714-shared-colors-v1">
+<link rel="stylesheet" href="../mono-colors.css?v=20260729-audit-v72">
 <style>
   :root{
     --cashmere:var(--mono-cashmere);
@@ -480,15 +480,31 @@
     font-family:'Sora'; font-size:11.5px; letter-spacing:0.08em;
     color:rgba(244,236,221,0.35);
   }
+  /* 29/7 - dati dell'impresa (P. IVA: obbligo art. 35 DPR 633/1972).
+     Questa pagina ha un CSS suo, tutto dentro il file, quindi la fascia
+     legale va scritta qui e non in mono-dark-home.css.
+     ⚠️ Il footer di questa pagina sta a opacita' 0.35, che per una riga di
+     dati fiscali e' illeggibile: la fascia risale a 0.78 e perde la
+     spaziatura fra le lettere, che serviva alla firma e non a un elenco. */
+  footer .legale{
+    display:block;
+    margin:12px auto 0;
+    max-width:620px;
+    color:rgba(244,236,221,0.78);
+    font-size:11px;
+    letter-spacing:0.01em;
+    line-height:1.75;
+  }
+  footer .legale a{ color:rgba(244,236,221,0.9); }
 
   ::-webkit-scrollbar{ width:9px; }
   ::-webkit-scrollbar-track{ background:var(--cashmere); }
   ::-webkit-scrollbar-thumb{ background:var(--terracotta); border-radius:6px; }
 </style>
-<link rel="stylesheet" href="../experience.css?v=20260716-fonts-v1">
-<link rel="stylesheet" href="../mono-engineering.css?v=20260716-fonts-v1">
-    <link rel="stylesheet" href="../mono-enhance.css?v=20260729-semplice-oro-v71">
-    <link rel="stylesheet" href="../mono-dark-home.css?v=20260729-semplice-oro-v71">
+<link rel="stylesheet" href="../experience.css?v=20260729-audit-v72">
+<link rel="stylesheet" href="../mono-engineering.css?v=20260729-audit-v72">
+    <link rel="stylesheet" href="../mono-enhance.css?v=20260729-audit-v72">
+    <link rel="stylesheet" href="../mono-dark-home.css?v=20260729-audit-v72">
     <style>
       body.convivium-page,
       body.convivium-page p,
@@ -511,7 +527,7 @@
         font-family:'Baskerville','Baskerville Old Face','Libre Baskerville',Georgia,serif;
       }
     </style>
-      <script defer src="../mono-enhance.js?v=20260729-semplice-oro-v71"></script>
+      <script defer src="../mono-enhance.js?v=20260729-audit-v72"></script>
       <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -547,7 +563,7 @@
         ]
       }
     </script>
-    <script src="../mono-config.js?v=20260729-semplice-oro-v71"></script>
+    <script src="../mono-config.js?v=20260729-audit-v72"></script>
 </head>
 <body class="mono-world convivium-page mono-dark-home" data-mono-world="convivium">
 <a class="skip-link" href="#main-content">Vai al contenuto</a>
@@ -556,14 +572,11 @@
 <main id="main-content" tabindex="-1">
 
 <!-- HERO -->
-<!-- Segnaposto voluto (17/7): mountSupportingStill di mono-cinematic.js NON inietta
-     la figura "Molte mani, una sola squadra" se questo elemento esiste gia'.
-     Richiesta: niente video/still nel progetto sociale, si scorre dritti al PDF. -->
 <span data-cinematic-still="mono-hands-team" hidden></span>
 <section class="hero">
   <img class="hero-mark" src="../assets/convivium/convivium-marchio.png" alt="Monoconvivium">
   <h1 class="hero-tagline">Nutriamo il futuro, con arte e cuore</h1>
-  <p class="hero-sub">Il cuore sociale di MONO: formazione, lavoro vero e comunità dentro un'impresa gastronomica reale.</p>
+  <p class="hero-sub">Il cuore sociale di MONO: formazione, lavoro vero e comunità dentro un’impresa gastronomica reale.</p>
   <div class="hero-badge"><span class="dot"></span> Un progetto MONO — Bottega Gastronomica</div>
   <div class="scroll-cue"></div>
 </section>
@@ -574,8 +587,8 @@
   <section class="reveal">
     <div class="eyebrow">Premessa</div>
     <div class="prose">
-      <p class="lede">Monoconvivium nasce come estensione naturale dell'universo MONO — dal lavoro vero, dal cibo e dalla quotidianità di un'azienda reale, prima ancora che da un'intenzione da comunicare.</p>
-      <p>Nasce da un'idea semplice e concreta: trasformare il lavoro vero, il cibo e la quotidianità di un'azienda reale in opportunità autentiche. Non "ospitare fragilità", ma trasformare il potenziale in dignità, le relazioni in crescita, la collaborazione in futuro.</p>
+      <p class="lede">Monoconvivium nasce come estensione naturale dell’universo MONO — dal lavoro vero, dal cibo e dalla quotidianità di un’azienda reale, prima ancora che da un’intenzione da comunicare.</p>
+      <p>Nasce da un’idea semplice e concreta: trasformare il lavoro vero, il cibo e la quotidianità di un’azienda reale in opportunità autentiche. Non "ospitare fragilità", ma trasformare il potenziale in dignità, le relazioni in crescita, la collaborazione in futuro.</p>
     </div>
     <div class="pull">In un tempo in cui molte imprese raccontano valori senza incarnarli, Monoconvivium sceglie <span class="accent">il contrario</span>: prima i fatti, poi il metodo, poi la bellezza. Solo alla fine, il racconto.</div>
     <p class="prose" style="max-width:660px;">Monoconvivium è il cuore sociale di MONO. È il punto in cui impresa, inclusione, formazione e comunità si incontrano attorno alla stessa tavola.</p>
@@ -590,7 +603,7 @@
   <div class="wrap">
     <div class="eyebrow">Perché "Convivium"</div>
     <div class="prose">
-      <p class="lede">Abbiamo scelto questa parola perché richiama l'idea più alta della tavola: non solo il cibo, ma ciò che il cibo rende possibile — incontro, relazione, comunità.</p>
+      <p class="lede">Abbiamo scelto questa parola perché richiama l’idea più alta della tavola: non solo il cibo, ma ciò che il cibo rende possibile — incontro, relazione, comunità.</p>
       <p>È una parola che unisce cultura e umanità, e racconta una visione antica e sempre attuale: la tavola come spazio condiviso in cui le persone non si limitano a mangiare insieme, ma crescono, si riconoscono, costruiscono qualcosa.</p>
     </div>
     <div class="pull">In Monoconvivium, il convivio non è un gesto. È <span class="accent">un modo di creare valore umano</span>.</div>
@@ -606,7 +619,7 @@
       <p>Troppo spesso vengono inserite male, accompagnate senza metodo, o escluse in partenza. Monoconvivium nasce per colmare questa distanza.</p>
     </div>
     <div class="pull">Non crea spazi protetti. Costruisce contesti reali.<br>Non inventa percorsi paralleli. <span class="accent">Apre ingressi possibili.</span></div>
-    <p style="max-width:600px; font-size:17px;">Fare del lavoro un luogo accessibile, senza renderlo artificiale. Trasformare l'accesso al lavoro in un percorso concreto, umano e sostenibile. È per questo che Monoconvivium esiste.</p>
+    <p style="max-width:600px; font-size:17px;">Fare del lavoro un luogo accessibile, senza renderlo artificiale. Trasformare l’accesso al lavoro in un percorso concreto, umano e sostenibile. È per questo che Monoconvivium esiste.</p>
   </div>
 </section>
 
@@ -616,7 +629,7 @@
   <section class="reveal">
     <div class="eyebrow">Il legame con MONO</div>
     <div class="section-head">
-      <p class="lede" style="max-width:640px;">MONO è un progetto gastronomico costruito su identità, qualità e coerenza. Monoconvivium ne è il cuore sociale — non un'aggiunta, ma una parte del sistema. Vive negli stessi spazi, condivide gli stessi standard, si inserisce negli stessi processi.</p>
+      <p class="lede" style="max-width:640px;">MONO è un progetto gastronomico costruito su identità, qualità e coerenza. Monoconvivium ne è il cuore sociale — non un’aggiunta, ma una parte del sistema. Vive negli stessi spazi, condivide gli stessi standard, si inserisce negli stessi processi.</p>
     </div>
     <div class="legame">
       <div class="col" style="--c-accent:var(--terracotta)">
@@ -628,7 +641,7 @@
         <p>Racconta il lavoro come possibilità e costruzione personale. Le stesse regole, la stessa cura, applicate alle persone.</p>
       </div>
     </div>
-    <div class="pull" style="margin-top:44px;">MONO senza Monoconvivium sarebbe solo un progetto ben costruito. Monoconvivium senza MONO resterebbe un'intenzione. <span class="accent">Insieme, diventano un modello.</span></div>
+    <div class="pull" style="margin-top:44px;">MONO senza Monoconvivium sarebbe solo un progetto ben costruito. Monoconvivium senza MONO resterebbe un’intenzione. <span class="accent">Insieme, diventano un modello.</span></div>
   </section>
 
 </div>
@@ -651,8 +664,8 @@
       </div>
       <div class="vm-cell" style="background:linear-gradient(180deg, rgba(110,106,60,0.07), transparent 40%);">
         <div class="eyebrow" style="margin-bottom:14px;">Missione</div>
-        <h3 role="heading" aria-level="2">Dal potenziale all'autonomia</h3>
-        <p>Creare opportunità lavorative e formative concrete dentro l'universo MONO, attraverso inserimento graduale, affiancamento reale e responsabilità proporzionata. Passo dopo passo, senza scorciatoie.</p>
+        <h3 role="heading" aria-level="2">Dal potenziale all’autonomia</h3>
+        <p>Creare opportunità lavorative e formative concrete dentro l’universo MONO, attraverso inserimento graduale, affiancamento reale e responsabilità proporzionata. Passo dopo passo, senza scorciatoie.</p>
       </div>
     </div>
   </section>
@@ -689,7 +702,7 @@
       <div class="photo-copy">
         <div class="eyebrow">In cucina, ogni giorno</div>
         <h2>Un posto vero.<br>Nella squadra.</h2>
-        <p>Chef, baristi, camerieri e operatori formati lavorano fianco a fianco, con la stessa responsabilità e lo stesso rispetto. L'ambiente è esigente, organizzato, autentico — un luogo in cui il lavoro viene fatto bene, ogni giorno. Ed è proprio questo il valore.</p>
+        <p>Chef, baristi, camerieri e operatori formati lavorano fianco a fianco, con la stessa responsabilità e lo stesso rispetto. L’ambiente è esigente, organizzato, autentico — un luogo in cui il lavoro viene fatto bene, ogni giorno. Ed è proprio questo il valore.</p>
       </div>
     </div>
   </div>
@@ -701,15 +714,15 @@
   <section class="reveal">
     <div class="eyebrow">Posizionamento</div>
     <div class="prose">
-      <p class="lede">Monoconvivium nasce dentro un'impresa privata: non una ONLUS, non una fondazione.</p>
+      <p class="lede">Monoconvivium nasce dentro un’impresa privata: non una ONLUS, non una fondazione.</p>
       <p>È un modello che unisce impresa e impatto, dimostrando che il valore sociale può esistere dentro un contesto professionale reale — senza compromessi su qualità, standard e sostenibilità.</p>
     </div>
-    <div class="pull">L'inclusione non avviene in uno spazio semplificato, <span class="accent">ma dentro un sistema vero.</span></div>
+    <div class="pull">L’inclusione non avviene in uno spazio semplificato, <span class="accent">ma dentro un sistema vero.</span></div>
     <p class="prose" style="max-width:660px;">Monoconvivium non sostituisce la professionalità: la rafforza. Il livello resta alto; si costruiscono le condizioni per raggiungerlo.</p>
     <div class="facts">
       <div class="fact" style="--c-accent:var(--terracotta)"><div class="k">Cosa non è</div><div class="v">Uno spazio protetto o semplificato. Non esistono ruoli simbolici.</div></div>
       <div class="fact" style="--c-accent:var(--coral)"><div class="k">Cosa è</div><div class="v">Un sistema vero, dove competenza, ritmo e responsabilità fanno parte del percorso.</div></div>
-      <div class="fact" style="--c-accent:var(--gold)"><div class="k">L'impegno di MONO</div><div class="v">Trasmettere passione, metodo e cultura del lavoro a chi entra nel progetto.</div></div>
+      <div class="fact" style="--c-accent:var(--gold)"><div class="k">L’impegno di MONO</div><div class="v">Trasmettere passione, metodo e cultura del lavoro a chi entra nel progetto.</div></div>
     </div>
   </section>
 
@@ -749,7 +762,7 @@
       <div class="step" style="--c-accent:var(--terracotta)">
         <div class="step-num">5</div>
         <h4 role="heading" aria-level="3">Integrazione</h4>
-        <p>L'obiettivo finale: diventare parte del sistema, in modo stabile e reale. Il cerchio si chiude dove si è aperto.</p>
+        <p>L’obiettivo finale: diventare parte del sistema, in modo stabile e reale. Il cerchio si chiude dove si è aperto.</p>
       </div>
     </div>
 
@@ -808,14 +821,15 @@
       <aside class="mono-app-invito" aria-label="Invito all'app MONO">
         <div class="mono-app-invito__testo">
           <span class="mono-app-invito__occhiello">Il progetto cresce così</span>
-          <p class="mono-app-invito__frase">Ogni ordine dall'app sostiene Monoconvivium.</p>
+          <p class="mono-app-invito__frase">Ogni ordine dall’app sostiene Monoconvivium.</p>
           <p class="mono-app-invito__nota">Mangi bene e finanzi percorsi di lavoro veri. Le due cose insieme.</p>
         </div>
-        <a class="button primary" data-track="app_invite_convivium" href="https://app.monobottega.it/home" target="_blank" rel="noopener">Apri l'app MONO</a>
+        <a class="button primary" data-track="app_invite_convivium" href="https://app.monobottega.it/home" target="_blank" rel="noopener">Apri l’app MONO</a>
       </aside>
     </main>
 
-<footer>MONO — Bottega Gastronomica · Progetto Monoconvivium</footer>
+<footer>MONO — Bottega Gastronomica · Progetto Monoconvivium
+<span class="legale">MONO-BOTTEGA GASTRONOMICA DI PASCIUCCO FEDERICO · Titolare: Federico Pasciucco<br>Via Frinco 15, 10136 Torino (TO) · P. IVA 13341230012 · REA TO-1356747<br><a href="../privacy/">Privacy e dati</a> · PEC: <a href="mailto:federico.pasciucco@pec.it">federico.pasciucco@pec.it</a></span></footer>
 
 <script>
   const items = document.querySelectorAll('.reveal');
@@ -832,13 +846,13 @@
 </script>
 
 <script>window.MONO_EXPERIENCE_OVERRIDES = { flags: { oPortal: false } };try{if(sessionStorage.getItem("monoCurtain")){sessionStorage.removeItem("monoCurtain");document.documentElement.classList.add("mono-curtain-cover");setTimeout(function(){document.documentElement.classList.remove("mono-curtain-cover");},1800);}}catch(e){}</script>
-<script src="../mono-experience-config.js?v=20260715-short-pages-v1"></script>
-<script src="../cinematic-assets.js?v=20260718-tavola-eventi-v1"></script>
-<script src="../mono-cinematic.js?v=20260725-fluido-v8"></script>
-<script src="../mono-navigation.js?v=20260714-engineering-master-v1"></script>
-<script src="../mono-signature.js?v=20260729-semplice-oro-v71"></script>
-<script src="../app.js?v=20260729-semplice-oro-v71"></script>
-<script src="../experience.js?v=20260714-shared-colors-v1"></script>
+<script src="../mono-experience-config.js?v=20260729-audit-v72"></script>
+<script src="../cinematic-assets.js?v=20260729-audit-v72"></script>
+<script src="../mono-cinematic.js?v=20260729-audit-v72"></script>
+<script src="../mono-navigation.js?v=20260729-audit-v72"></script>
+<script src="../mono-signature.js?v=20260729-audit-v72"></script>
+<script src="../app.js?v=20260729-audit-v72"></script>
+<script src="../experience.js?v=20260729-audit-v72"></script>
 
 </body>
 </html>

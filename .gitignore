@@ -5,4 +5,29 @@ server.log
 server.err
 *.tmp
 tmp/
+tmp-*
 .video-tools/
+
+# ── 29/7 — NON PUBBLICARE MAI (rete di sicurezza) ─────────────────────
+# Il README diceva "git add .": bastava seguirlo alla lettera per mandare
+# online 208 file che non c'entrano niente col sito. Ora anche se qualcuno
+# digita "git add ." per distrazione, questa roba resta fuori.
+# ⚠️ Su questo repo lavorano piu' chat in parallelo: questa lista e' l'unica
+#    difesa che non dipende da chi si ricorda di fare attenzione.
+
+# Progetti che vivono nella stessa cartella ma NON sono il sito
+ceo-engine/
+mono-custode/
+conto-casa/
+social-studio/
+
+# Documenti di lavoro: restano sul computer, non sul sito.
+# (Contenevano le pagelle date al sito, i percorsi del computer e la
+#  descrizione dell'app da rivendere.)
+docs/
+MONO_*.md
+MONO_*.txt
+PROMPT_*.txt
+*.zip
+*.docx
+publish-github-pages.ps1

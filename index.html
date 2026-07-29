@@ -34,12 +34,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="mono-colors.css?v=20260714-shared-colors-v1">
-    <link rel="stylesheet" href="styles.css?v=20260716-fonts-v1">
-<link rel="stylesheet" href="experience.css?v=20260716-fonts-v1">
-<link rel="stylesheet" href="mono-engineering.css?v=20260716-fonts-v1">
-    <link rel="stylesheet" href="mono-enhance.css?v=20260729-semplice-oro-v71">
-    <link rel="stylesheet" href="mono-dark-home.css?v=20260729-semplice-oro-v71">
+    <link rel="stylesheet" href="mono-colors.css?v=20260729-audit-v72">
+    <link rel="stylesheet" href="styles.css?v=20260729-audit-v72">
+<link rel="stylesheet" href="experience.css?v=20260729-audit-v72">
+<link rel="stylesheet" href="mono-engineering.css?v=20260729-audit-v72">
+    <link rel="stylesheet" href="mono-enhance.css?v=20260729-audit-v72">
+    <link rel="stylesheet" href="mono-dark-home.css?v=20260729-audit-v72">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -159,8 +159,8 @@
         ]
       }
     </script>
-      <script defer src="mono-enhance.js?v=20260729-semplice-oro-v71"></script>
-      <script src="mono-config.js?v=20260729-semplice-oro-v71"></script>
+      <script defer src="mono-enhance.js?v=20260729-audit-v72"></script>
+      <script src="mono-config.js?v=20260729-audit-v72"></script>
 </head>
   <body class="mono-world home-page mono-dark-home" data-mono-world="home">
     <a class="skip-link" href="#main">Vai al contenuto</a>
@@ -174,7 +174,7 @@
         Menu
       </button>
       <nav class="nav" id="primaryNav" aria-label="Navigazione principale">
-        <a href="#bottega">Cos'è MONO</a>
+        <a href="#bottega">Cos’è MONO</a>
         <a href="gastronomia/">Prodotti</a>
         <a href="la-bottega/">Chi siamo</a>
         <a href="mono-convivium/">Progetto sociale</a>
@@ -222,12 +222,6 @@
               <div class="cinema-group sg-3">
                 <h1 id="heroTitle" class="cinema-claim">Buono come una volta.<br><span class="soft">Pensato per la vita di oggi.</span></h1>
                 <p class="cinema-eyebrow">Cucina contemporanea. Tradizionalmente moderna.</p>
-                <!-- 28/7 — "pensate per tornare" TOLTO su sua indicazione, e il
-                     motivo vale per tutto il sito: non si dice al cliente che
-                     l'abbiamo pensato per farlo tornare, quel pensiero deve
-                     venirgli da solo. Qui la frase si ferma prima: e' la
-                     sottrazione a fare il lavoro. Aggiunta la colazione
-                     domenicale, che prima non era nominata da nessuna parte. -->
                 <p class="cinema-lead">Gastronomia, dolci, aperitivi e colazione domenicale a Santa Rita: poche cose, fatte bene.</p>
                 <div class="cinema-actions">
                   <a class="button primary" data-track="hero_products" href="gastronomia/">Scopri i prodotti</a>
@@ -236,12 +230,16 @@
                 <p class="cinema-note">Apertura prevista: settembre 2026 · Via Barletta 72D, Santa Rita, Torino.</p>
                 <form class="cinema-signup" data-newsletter-form>
                   <strong>Sii tra i primi a entrare in bottega.</strong>
-                  <small>Lascia la tua email: ti avvisiamo il giorno dell'apertura e per le prime novità del banco. Niente spam, solo quando serve.</small>
+                  <small>Lascia la tua email: ti avvisiamo il giorno dell’apertura e per le prime novità del banco. Niente spam, solo quando serve.</small>
                   <label class="sr-only" for="heroSignupEmail">La tua email</label>
                   <div class="cinema-signup-row">
                     <input id="heroSignupEmail" name="email" type="email" autocomplete="email" placeholder="La tua email" required>
-                    <button class="button primary" type="submit">Avvisami all'apertura</button>
+                    <button class="button primary" type="submit">Avvisami all’apertura</button>
                   </div>
+                  <label class="signup-consenso">
+                    <input type="checkbox" name="consenso" required>
+                    <span>Ho letto l'<a href="privacy/">informativa privacy</a> e acconsento a ricevere l’avviso di apertura e le novità del banco.</span>
+                  </label>
                   <p class="cinema-signup-status" data-newsletter-status role="status" aria-live="polite"></p>
                 </form>
               </div>
@@ -291,20 +289,11 @@
           <article class="page-card" data-reveal>
             <span>Aperitivo</span>
             <h3>Quando la giornata rallenta, MONO comincia.</h3>
-            <!-- 28/7 - era "Niente buffet confusi: solo cose buone...".
-                 Tolto su sua indicazione: nominare quello che NON si fa
-                 mette in testa l'immagine sbagliata. Stessa pulizia gia'
-                 fatta su /aperitivo/. Ora la frase AFFERMA e basta. -->
             <p>Vino, cocktail, analcolici e piccoli piatti da condividere. Cose buone scelte una per una, e il piacere di stare bene insieme.</p>
-            <a href="aperitivo/">Scopri l'aperitivo</a>
+            <a href="aperitivo/">Scopri l’aperitivo</a>
           </article>
           </div>
-          <!-- 28/7 — era "il sito ti racconta, l'app te lo fa scegliere".
-               Cambiato su sua indicazione: "te lo fa scegliere e' troppo da
-               compra compra compra". Ora l'app MOSTRA e basta; la scelta
-               resta di chi legge. Stesso principio di "pensate per tornare"
-               tolto dalla home: si induce, non si spinge. -->
-          <p class="product-app-note">Il banco completo, con foto e prezzi, vive nell'app MONO. Il sito racconta, l'app te lo mostra.</p>
+          <p class="product-app-note">Il banco completo, con foto e prezzi, vive nell’app MONO. Il sito racconta, l’app te lo mostra.</p>
         </div>
       </section>
 
@@ -350,15 +339,11 @@
 
       <section class="page-section alt value-section" data-reveal>
         <p class="eyebrow">La differenza MONO</p>
-        <!-- 29/7 - due righe, due colori: "Trasparenza al banco." resta ROSSA,
-             "Semplice a casa." va ORO (suo). I due <span> senza spazio in mezzo
-             sono l'idioma del sito per i titoli a due righe (vedi /eventi/ e
-             /pasticceria/): il CSS li mette a display:block. -->
         <h2><span>Trasparenza al banco.</span><span>Semplice a casa.</span></h2>
         <p>
           MONO supera la confusione della gastronomia tradizionale senza perdere calore:
           offerta leggibile, prezzo chiaro, porzioni calibrate e una cura che continua
-          dopo l'acquisto.
+          dopo l’acquisto.
         </p>
         <div class="local-answer-grid">
           <article class="page-card" data-reveal><span>01</span><h3>Banco leggibile.</h3><p>Poche linee forti, categorie chiare e prodotti che si capiscono prima ancora di assaggiarli.</p></article>
@@ -387,17 +372,13 @@
       <section class="app-gateway" id="app">
         <div data-reveal>
           <p class="eyebrow">App MONO</p>
-          <!-- 28/7 — due righe vere: prima "Tutto in un tap" restava attaccato
-               alla stessa riga e la sezione sembrava disordinata. -->
           <h2 class="app-gateway-title"><span>Il banco, gli ordini e i vantaggi.</span><span>Tutto in un tap.</span></h2>
-          <!-- 28/7 — riscritta con le sue parole: frasi corte al posto di un
-               elenco lungo con "meno rumore, piu' relazione". -->
           <p>
-            Il sito ti fa capire MONO. L'app ti aiuta a viverlo meglio.
+            Il sito ti fa capire MONO. L’app ti aiuta a viverlo meglio.
             Ordini, ritiro, wallet, punti, sconti. E le ultime novità in una
             manciata di click.
           </p>
-          <div class="app-reason-grid" aria-label="Perché scaricare l'app MONO">
+          <div class="app-reason-grid" role="group" aria-label="Perché scaricare l’app MONO">
             <article>
               <span>01</span>
               <strong>Ordini e ritiro</strong>
@@ -411,27 +392,17 @@
             <article>
               <span>03</span>
               <strong>Inviti che hanno senso</strong>
-              <!-- 28/7 — via "quando c'è davvero qualcosa per te": la promessa
-                   di non disturbare e' gia' implicita in "che hanno senso". -->
               <small>Novità e promozioni.</small>
             </article>
           </div>
           <div class="gateway-actions">
             <div class="app-download-wrap">
-              <a class="button primary" data-track="app_gateway_download" data-app-store href="https://app.monobottega.it/home" target="_blank" rel="noopener">Scarica l'app MONO</a>
-              <small>Un tap: si apre MONO, poi "Aggiungi a schermata Home" e ce l'hai sul telefono.</small>
+              <a class="button primary" data-track="app_gateway_download" data-app-store href="https://app.monobottega.it/home" target="_blank" rel="noopener">Scarica l’app MONO</a>
+              <small>Un tap: si apre MONO, poi "Aggiungi a schermata Home" e ce l’hai sul telefono.</small>
             </div>
               <a class="button ghost" data-track="app_gateway_info" href="https://app.monobottega.it/home" target="_blank" rel="noopener">Scopri come funziona</a>
           </div>
         </div>
-        <!-- 28/7 — la card "Ordina. Paga. Torna." e' STATA TOLTA su sua
-             richiesta ("la schermata e' disordinata"): diceva a parole quello
-             che i tre riquadri rossi dicono gia'. Al suo posto, nella colonna
-             di destra, sale il QR - che prima stava schiacciato in fondo alla
-             colonna sinistra. Cosi' la sezione ha una cosa sola per lato:
-             a sinistra si legge, a destra si agisce.
-             ⚠️ NIENTE data-reveal qui: il QR e' il gesto della sezione, non
-             deve dipendere da un'animazione per esistere. -->
         <button class="app-qr app-qr--colonna" type="button" data-qr-open aria-haspopup="dialog" aria-controls="appQrDialog">
           <img src="assets/app/mono-app-qr.svg?v=2" alt="QR code per aprire l'app MONO">
           <span>Clicca per ingrandire e inquadrare.</span>
@@ -445,16 +416,13 @@
           <h2 id="appQrDialogTitle">Porta MONO sul telefono.</h2>
           <p>Inquadra il QR code. Oppure fai uno screenshot dal PC e aprilo sul telefono.</p>
           <img class="app-qr-dialog__image" src="assets/app/mono-app-qr.svg?v=2" alt="QR code ingrandito per aprire l'app MONO">
-          <a class="button primary" data-track="app_qr_dialog_open_app" href="https://app.monobottega.it/home" target="_blank" rel="noopener">Apri l'app MONO</a>
+          <a class="button primary" data-track="app_qr_dialog_open_app" href="https://app.monobottega.it/home" target="_blank" rel="noopener">Apri l’app MONO</a>
         </div>
       </dialog>
 
       <section class="local-info-section" id="dove-siamo" data-reveal>
         <div class="section-heading">
           <p class="eyebrow">Dove siamo</p>
-            <!-- 28/7 sera - "porta qui" in rosso, chiesto da lui: il resto
-                 del titolo resta oro. Lo <span> serve solo a quello, il
-                 colore e' in mono-dark-home.css. -->
             <h2>La strada per qualcosa di buono <span>porta qui</span>.</h2>
           <p>
             MONO nasce in un quartiere vero, vissuto ogni giorno da famiglie,
@@ -470,7 +438,7 @@
           </article>
           <article class="local-info-card">
             <span>Orari</span>
-            <h3>Orari previsti (dall'apertura).</h3>
+            <h3>Orari previsti (dall’apertura).</h3>
             <p>Martedì-sabato 10:30-14:30 e 18:00-22:30.<br>Domenica 9:00-14:00. Lunedì chiuso.</p>
             <a data-track="local_view_location" href="dove-siamo/">Dettagli e mappa</a>
           </article>
@@ -490,11 +458,11 @@
           <article class="page-card" data-reveal>
             <span>APERTURA</span>
             <h3>Quando aprite?</h3>
-            <p>L'apertura è prevista per settembre 2026 in Via Barletta 72D, Santa Rita. Lascia la tua email qui sul sito per essere avvisato il giorno dell'apertura.</p>
+            <p>L’apertura è prevista per settembre 2026 in Via Barletta 72D, Santa Rita. Lascia la tua email qui sul sito per essere avvisato il giorno dell’apertura.</p>
           </article>
           <article class="page-card" data-reveal>
-            <span>Cos'è</span>
-            <h3>Che cos'è MONO?</h3>
+            <span>Cos’è</span>
+            <h3>Che cos’è MONO?</h3>
             <p>Una bottega gastronomica contemporanea: cucina artigianale, pasticceria, aperitivo e prodotti da portare a casa.</p>
           </article>
           <article class="page-card" data-reveal>
@@ -509,7 +477,7 @@
           </article>
           <article class="page-card" data-reveal>
             <span>Sociale</span>
-            <h3>Cos'è MONO Convivium?</h3>
+            <h3>Cos’è MONO Convivium?</h3>
             <p>È il progetto di formazione e inclusione lavorativa di MONO, basato su ruoli reali, affiancamento e autonomia.</p>
           </article>
         </div>
@@ -531,15 +499,19 @@
             <strong>Sii tra i primi a entrare in bottega.</strong>
             <p class="mono-conto" data-conto-apertura hidden>
               <span class="mono-conto__numero" data-conto-giorni>—</span>
-              <span class="mono-conto__testo">giorni all'apertura</span>
+              <span class="mono-conto__testo">giorni all’apertura</span>
             </p>
-            <small>Lascia la tua email: ti avvisiamo il giorno dell'apertura e per le prime novità del banco. Niente spam, solo quando serve.</small>
+            <small>Lascia la tua email: ti avvisiamo il giorno dell’apertura e per le prime novità del banco. Niente spam, solo quando serve.</small>
           </div>
           <label class="sr-only" for="footerSignupEmail">La tua email</label>
           <div class="signup-form-row">
             <input id="footerSignupEmail" name="email" type="email" autocomplete="email" placeholder="La tua email" required>
-            <button class="button primary" type="submit">Avvisami all'apertura</button>
+            <button class="button primary" type="submit">Avvisami all’apertura</button>
           </div>
+          <label class="signup-consenso">
+            <input type="checkbox" name="consenso" required>
+            <span>Ho letto l'<a href="privacy/">informativa privacy</a> e acconsento a ricevere l’avviso di apertura e le novità del banco.</span>
+          </label>
           <p class="signup-status" data-newsletter-status role="status" aria-live="polite"></p>
         </form>
       </section>
@@ -548,7 +520,7 @@
     <footer class="site-footer">
       <strong>MONO — Bottega Gastronomica</strong>
       <nav aria-label="Navigazione footer">
-        <a href="#bottega">Cos'è MONO</a>
+        <a href="#bottega">Cos’è MONO</a>
         <a href="la-bottega/">Chi siamo</a>
         <a href="gastronomia/">Gastronomia</a>
         <a href="pasticceria/">Pasticceria</a>
@@ -559,16 +531,17 @@
         <a href="dove-siamo/">Dove siamo</a>
         <a href="contatti/">Contatti</a>
         <a href="social/">Social</a>
-      </nav>
+      <a href="privacy/">Privacy</a></nav>
+    <p class="site-footer__legale">MONO-BOTTEGA GASTRONOMICA DI PASCIUCCO FEDERICO · Titolare: Federico Pasciucco<br>Sede legale: Via Frinco 15, 10136 Torino (TO) · P. IVA 13341230012 · REA TO-1356747<br>PEC: <a href="mailto:federico.pasciucco@pec.it">federico.pasciucco@pec.it</a></p>
     </footer>
 
     <script>window.MONO_EXPERIENCE_OVERRIDES = { flags: { oPortal: false } };try{if(sessionStorage.getItem("monoCurtain")){sessionStorage.removeItem("monoCurtain");document.documentElement.classList.add("mono-curtain-cover");setTimeout(function(){document.documentElement.classList.remove("mono-curtain-cover");},1800);}}catch(e){}</script>
-    <script src="mono-experience-config.js?v=20260715-short-pages-v1"></script>
-<script src="cinematic-assets.js?v=20260718-tavola-eventi-v1"></script>
-<script src="mono-cinematic.js?v=20260725-fluido-v8"></script>
-    <script src="mono-navigation.js?v=20260714-engineering-master-v1"></script>
-    <script src="mono-signature.js?v=20260729-semplice-oro-v71"></script>
-    <script src="app.js?v=20260729-semplice-oro-v71"></script>
-<script src="experience.js?v=20260715-table-hotspots-v2"></script>
+    <script src="mono-experience-config.js?v=20260729-audit-v72"></script>
+<script src="cinematic-assets.js?v=20260729-audit-v72"></script>
+<script src="mono-cinematic.js?v=20260729-audit-v72"></script>
+    <script src="mono-navigation.js?v=20260729-audit-v72"></script>
+    <script src="mono-signature.js?v=20260729-audit-v72"></script>
+    <script src="app.js?v=20260729-audit-v72"></script>
+<script src="experience.js?v=20260729-audit-v72"></script>
   </body>
 </html>

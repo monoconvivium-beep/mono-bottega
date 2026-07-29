@@ -43,7 +43,19 @@ jobs:
             --exclude='mono-custode' \
             --exclude='ceo-engine' \
             --exclude='security-audit' \
+            --exclude='conto-casa' \
+            --exclude='social-studio' \
+            --exclude='docs' \
+            --exclude='*.md' \
+            --exclude='*.ps1' \
+            --exclude='*.zip' \
+            --exclude='*.docx' \
             ./ _site/
+          # 29/7 - SECONDA RETE. Le esclusioni qui sopra valgono anche se un
+          # domani uno di questi file rientra nel repo per sbaglio: il sito
+          # pubblicato non li conterra' comunque.
+          # ⚠️ '*.md' esclude anche README.md e pdf/README.md: e' voluto,
+          #    nessuna pagina del sito li richiama.
           touch _site/.nojekyll
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

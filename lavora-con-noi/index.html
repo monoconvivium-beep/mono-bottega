@@ -24,13 +24,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../mono-colors.css?v=20260714-shared-colors-v1">
-    <link rel="stylesheet" href="../styles.css?v=20260716-fonts-v1">
-<link rel="stylesheet" href="../experience.css?v=20260716-fonts-v1">
-<link rel="stylesheet" href="../mono-engineering.css?v=20260716-fonts-v1">
-      <link rel="stylesheet" href="../mono-enhance.css?v=20260729-semplice-oro-v71">
-    <link rel="stylesheet" href="../mono-dark-home.css?v=20260729-semplice-oro-v71">
-      <script defer src="../mono-enhance.js?v=20260729-semplice-oro-v71"></script>
+    <link rel="stylesheet" href="../mono-colors.css?v=20260729-audit-v72">
+    <link rel="stylesheet" href="../styles.css?v=20260729-audit-v72">
+<link rel="stylesheet" href="../experience.css?v=20260729-audit-v72">
+<link rel="stylesheet" href="../mono-engineering.css?v=20260729-audit-v72">
+      <link rel="stylesheet" href="../mono-enhance.css?v=20260729-audit-v72">
+    <link rel="stylesheet" href="../mono-dark-home.css?v=20260729-audit-v72">
+      <script defer src="../mono-enhance.js?v=20260729-audit-v72"></script>
       <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -66,7 +66,7 @@
         ]
       }
     </script>
-    <script src="../mono-config.js?v=20260729-semplice-oro-v71"></script>
+    <script src="../mono-config.js?v=20260729-audit-v72"></script>
 </head>
   <body class="mono-world jobs-page mono-dark-home" data-mono-world="jobs">
     <a class="skip-link" href="#main">Vai al contenuto</a>
@@ -74,7 +74,7 @@
       <a class="brand" href="../" aria-label="MONO home"><img class="brand-logo" src="../assets/brand/mono-logo-primary.svg" alt="MONO"><span>Bottega Gastronomica</span></a>
       <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="primaryNav">Menu</button>
       <nav class="nav" id="primaryNav" aria-label="Navigazione principale">
-        <a href="../#bottega">Cos'è MONO</a><a href="../gastronomia/">Prodotti</a><a href="../la-bottega/">Chi siamo</a><a href="../mono-convivium/">Progetto sociale</a><a href="../eventi/">Eventi</a><a href="../app/">App</a><a href="../dove-siamo/">Dove siamo</a><a href="../contatti/">Contatti</a>
+        <a href="../#bottega">Cos’è MONO</a><a href="../gastronomia/">Prodotti</a><a href="../la-bottega/">Chi siamo</a><a href="../mono-convivium/">Progetto sociale</a><a href="../eventi/">Eventi</a><a href="../app/">App</a><a href="../dove-siamo/">Dove siamo</a><a href="../contatti/">Contatti</a>
       </nav>
       <a class="header-action" data-track="header_location" href="../dove-siamo/">Vieni a trovarci</a>
     </header>
@@ -87,11 +87,6 @@
       </section>
       <section class="page-section jobs-paths">
         <p class="eyebrow">Due percorsi. Una sola squadra.</p>
-        <!-- 28/7 sera - "responsabilità vere." in DORATO, chiesto da lui: era
-             rosso come tutto il resto del titolo. Lo <span> serve solo al
-             colore, che sta in mono-dark-home.css. Su questa pagina --accento
-             VALE ORO: le pagine PERSONE hanno i due colori invertiti rispetto
-             a quelle prodotto. -->
         <h2 class="jobs-percorsi-title">Professionisti, formazione, <span>responsabilità vere.</span></h2>
         <p>In cucina, al banco o nell’accoglienza, ognuno entra con un ruolo chiaro e cresce attraverso lavoro, metodo e confronto.</p>
         <div class="page-grid">
@@ -128,20 +123,43 @@
       <aside class="mono-app-invito" aria-label="Invito all'app MONO">
         <div class="mono-app-invito__testo">
           <span class="mono-app-invito__occhiello">Come lavoriamo</span>
-          <p class="mono-app-invito__frase">L'app è il nostro banco, tutti i giorni.</p>
-          <p class="mono-app-invito__nota">Dacci un'occhiata: capisci il metodo MONO prima ancora di candidarti.</p>
+          <p class="mono-app-invito__frase">L’app è il nostro banco, tutti i giorni.</p>
+          <p class="mono-app-invito__nota">Dacci un’occhiata: capisci il metodo MONO prima ancora di candidarti.</p>
         </div>
-        <a class="button primary" data-track="app_invite_lavora_con_noi" href="https://app.monobottega.it/home" target="_blank" rel="noopener">Guarda l'app MONO</a>
+        <a class="button primary" data-track="app_invite_lavora_con_noi" href="https://app.monobottega.it/home" target="_blank" rel="noopener">Guarda l’app MONO</a>
       </aside>
+          <section class="opening-signup-section" data-reveal>
+        <form class="opening-signup opening-signup-footer" action="mailto:monobottega@gmail.com" method="post" enctype="text/plain" data-newsletter-form>
+          <div>
+            <span>STIAMO PER APRIRE</span>
+            <strong>Sii tra i primi a entrare in bottega.</strong>
+            <p class="mono-conto" data-conto-apertura hidden>
+              <span class="mono-conto__numero" data-conto-giorni>—</span>
+              <span class="mono-conto__testo">giorni all’apertura</span>
+            </p>
+            <small>Lascia la tua email: ti avvisiamo il giorno dell’apertura e per le prime novità del banco. Niente spam, solo quando serve.</small>
+          </div>
+          <label class="sr-only" for="footerSignupEmail">La tua email</label>
+          <div class="signup-form-row">
+            <input id="footerSignupEmail" name="email" type="email" autocomplete="email" placeholder="La tua email" required>
+            <button class="button primary" type="submit">Avvisami all’apertura</button>
+          </div>
+          <label class="signup-consenso">
+            <input type="checkbox" name="consenso" required>
+            <span>Ho letto l'<a href="../privacy/">informativa privacy</a> e acconsento a ricevere l’avviso di apertura e le novità del banco.</span>
+          </label>
+          <p class="signup-status" data-newsletter-status role="status" aria-live="polite"></p>
+        </form>
+      </section>
     </main>
-    <footer class="site-footer"><strong>MONO — Bottega Gastronomica</strong><nav aria-label="Navigazione footer"><a href="../">Home</a><a href="../la-bottega/">Chi siamo</a><a href="../gastronomia/">Gastronomia</a><a href="../pasticceria/">Pasticceria</a><a href="../aperitivo/">Aperitivo</a><a href="../eventi/">Eventi</a><a href="../mono-convivium/">MONO Convivium</a><a href="../dove-siamo/">Dove siamo</a><a href="../contatti/">Contatti</a><a href="../social/">Social</a></nav></footer>
+    <footer class="site-footer"><strong>MONO — Bottega Gastronomica</strong><nav aria-label="Navigazione footer"><a href="../">Home</a><a href="../la-bottega/">Chi siamo</a><a href="../gastronomia/">Gastronomia</a><a href="../pasticceria/">Pasticceria</a><a href="../aperitivo/">Aperitivo</a><a href="../eventi/">Eventi</a><a href="../mono-convivium/">MONO Convivium</a><a href="../dove-siamo/">Dove siamo</a><a href="../contatti/">Contatti</a><a href="../social/">Social</a><a href="../privacy/">Privacy</a></nav><p class="site-footer__legale">MONO-BOTTEGA GASTRONOMICA DI PASCIUCCO FEDERICO · Titolare: Federico Pasciucco<br>Sede legale: Via Frinco 15, 10136 Torino (TO) · P. IVA 13341230012 · REA TO-1356747<br>PEC: <a href="mailto:federico.pasciucco@pec.it">federico.pasciucco@pec.it</a></p></footer>
     <script>window.MONO_EXPERIENCE_OVERRIDES = { flags: { oPortal: false } };try{if(sessionStorage.getItem("monoCurtain")){sessionStorage.removeItem("monoCurtain");document.documentElement.classList.add("mono-curtain-cover");setTimeout(function(){document.documentElement.classList.remove("mono-curtain-cover");},1800);}}catch(e){}</script>
-    <script src="../mono-experience-config.js?v=20260715-short-pages-v1"></script>
-<script src="../cinematic-assets.js?v=20260718-tavola-eventi-v1"></script>
-<script src="../mono-cinematic.js?v=20260725-fluido-v8"></script>
-    <script src="../mono-navigation.js?v=20260714-engineering-master-v1"></script>
-    <script src="../mono-signature.js?v=20260729-semplice-oro-v71"></script>
-    <script src="../app.js?v=20260729-semplice-oro-v71"></script>
-<script src="../experience.js?v=20260715-jobs-megaphone-v2"></script>
+    <script src="../mono-experience-config.js?v=20260729-audit-v72"></script>
+<script src="../cinematic-assets.js?v=20260729-audit-v72"></script>
+<script src="../mono-cinematic.js?v=20260729-audit-v72"></script>
+    <script src="../mono-navigation.js?v=20260729-audit-v72"></script>
+    <script src="../mono-signature.js?v=20260729-audit-v72"></script>
+    <script src="../app.js?v=20260729-audit-v72"></script>
+<script src="../experience.js?v=20260729-audit-v72"></script>
   </body>
 </html>

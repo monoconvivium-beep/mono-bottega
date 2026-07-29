@@ -674,9 +674,17 @@ html[data-mono-quality="static"] .mono-oil-surface {
     font-size: 10px;
   }
 
+  /* 29/7 - TOLTO `!important`. Il 18/7 era stata scritta una regola nuova per
+     la misura del bollino, `clamp(46px, 15vw, 74px)` in mono-dark-home.css:677,
+     cioe' proporzionale allo schermo. Non ha mai funzionato: questo `!important`,
+     in un file caricato PRIMA, la batteva su ogni schermo sotto gli 820px e su
+     ogni dispositivo a tocco — cioe' proprio dove serviva.
+     Senza `!important` la regola nuova vince da sola, perche' mono-dark-home.css
+     e' caricato dopo. Se il bollino sembra cambiato di misura sul telefono,
+     e' questo: e' la misura che era stata scelta l'11 giorni fa e mai vista. */
   .chapter-film__badge,
   .cinema-film-badge {
-    --video-badge-size: 50px !important;
+    --video-badge-size: 50px;
   }
 
   .cinema-cinematic-controls {

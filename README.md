@@ -114,10 +114,19 @@ Il repository è pubblicato su GitHub Pages dal branch principale.
 Flusso operativo:
 
 ```bash
-git add .
-git commit -m "Simplify MONO site experience"
+git add <i file che hai toccato>     # MAI "git add ." ne' "git add -u"
+git diff --cached --name-only        # controlla SEMPRE cosa stai per mandare
+git commit -m "..."
 git push
 ```
+
+> ⚠️ **Mai `git add .` e mai `git add -u`.**
+> In questa cartella vivono anche progetti che col sito non c'entrano
+> (ceo-engine, mono-custode, conto-casa, social-studio) e i documenti di
+> lavoro. Un `git add .` li manderebbe tutti online in un colpo solo.
+> `.gitignore` fa da rete, ma la rete non e' il metodo: elenca i file.
+> In piu' su questo repo lavorano piu' sessioni in parallelo: `git add -u`
+> rastrella anche le modifiche di qualcun altro, mezze fatte.
 
 ## Palette MONO
 

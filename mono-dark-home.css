@@ -107,12 +107,23 @@ body.mono-dark-home .page-section h2,
 body.mono-dark-home .page-hero h1 { text-wrap: balance; }
 
 /* ---------- firma / signup: card TERRACOTTA (richiesta 16/7) ---------- */
+/* ⚠️ 29/7 — LEGGIBILITA': il capo chiaro del gradiente era `var(--mono-terracotta)`
+   (#b85c38) e la frase "Lascia la tua email…" faceva 3.47 di contrasto, contro il
+   minimo di 4.5 per il testo piccolo. E' la riga che spiega PERCHE' lasciare
+   l'indirizzo, sul riquadro che raccoglie gli indirizzi: chi ha piu' di
+   cinquant'anni o legge al sole la saltava.
+   Servivano DUE mosse, una non bastava (misurato, non stimato):
+     1. testo a crema PIENO invece che velato all'88%  -> da 3.47 a 4.33
+     2. capo chiaro del gradiente #b85c38 -> #b45733   -> da 4.33 a 4.60 PASSA
+   Il passo 2 e' uno scarto di 4 punti di rosso: la scheda e' la stessa, un
+   soffio piu' scura. ⚠️ NON toccata `--mono-terracotta`: e' il rosso di tutto
+   il sito e va lasciato dov'e'. Qui e' scurito SOLO questo gradiente. */
 body.mono-dark-home .opening-signup {
-  background: linear-gradient(150deg, var(--mono-terracotta), #9d4c2c);
+  background: linear-gradient(150deg, #b45733, #9d4c2c);
   box-shadow: 0 30px 70px -34px rgba(0, 0, 0, 0.85);
 }
 body.mono-dark-home .opening-signup strong { color: var(--mono-cream); }
-body.mono-dark-home .opening-signup small { color: rgba(251, 239, 227, 0.88); }
+body.mono-dark-home .opening-signup small { color: #fff9ee; }
 body.mono-dark-home .opening-signup .button.primary {
   background: var(--mono-champagne);
   border-color: var(--mono-champagne);
@@ -173,14 +184,20 @@ body.mono-dark-home .convivium-mark { color: var(--mono-anthracite); }
 body.mono-dark-home .convivium-mark p { color: rgba(38, 35, 33, 0.78); }
 
 /* App: i 3 step diventano TERRACOTTA (dal prototipo, rendeva benissimo) */
+/* ⚠️ 29/7 — stessa correzione di leggibilita' della card signup qui sopra, e per
+   lo stesso motivo: sono le tre schede "Perche' scaricare l'app MONO", cioe'
+   l'altro punto in cui il sito chiede qualcosa. Le paroline in alto
+   (ORDINA/PAGA/PRENOTA) facevano 3.56 e le righe di spiegazione 3.39.
+   Capo chiaro #b85c38 -> #b45733, testi a crema pieno. Il burro di
+   `--mono-butter` sugli occhielli era la parte peggiore: sostituito. */
 body.mono-dark-home .app-reason-grid article {
-  background: linear-gradient(155deg, var(--mono-terracotta), #9d4c2c);
+  background: linear-gradient(155deg, #b45733, #9d4c2c);
   border-color: rgba(0, 0, 0, 0.16);
   box-shadow: 0 26px 60px -32px rgba(0, 0, 0, 0.85);
 }
-body.mono-dark-home .app-reason-grid article:nth-child(n) span { color: var(--mono-butter); }
+body.mono-dark-home .app-reason-grid article:nth-child(n) span { color: #fff9ee; }
 body.mono-dark-home .app-reason-grid article strong { color: var(--mono-cream); }
-body.mono-dark-home .app-reason-grid article small { color: rgba(251, 239, 227, 0.86); }
+body.mono-dark-home .app-reason-grid article small { color: #fff9ee; }
 
 /* bottoni "ghost" sul buio → CHAMPAGNE pieno (leggibili, eleganti) */
 body.mono-dark-home .button.ghost,
@@ -1906,3 +1923,242 @@ body.mono-dark-home .app-qr--colonna span {
    restava attaccato e la sezione sembrava sbilanciata. */
 body.mono-dark-home .app-gateway-title span { display: block; }
 body.mono-dark-home .app-gateway-title span + span { color: var(--accento); }
+
+/* ============================================================
+   29/7 — LA FASCIA LEGALE DEL FOOTER (P. IVA e dati dell'impresa)
+
+   Obbligo di legge: la partita IVA va sulla home page (art. 35 DPR 633/1972).
+   Serve anche alla fiducia: un ufficio acquisti che deve ordinare un catering
+   cerca la P. IVA prima di scrivere, e se non la trova tu non esisti come
+   fornitore.
+
+   PERCHE' UNA FASCIA SCURA E NON SEMPLICEMENTE UNA RIGA IN PIU'
+   Il footer e' un gradiente terracotta (#a83a28 -> #b85c38). Su quel fondo il
+   testo crema fa 4.33 nel punto piu' chiaro: per un testo di 13px e' sotto la
+   soglia di 4.5. Con la velatura scura il fondo scende a #8f4c32/#843426 e il
+   crema arriva a 6.17-8.01. Misurato, non stimato.
+   In piu' separa i dati burocratici dalla navigazione, che e' il modo in cui
+   li tengono tutti i siti fatti bene: si trovano quando li cerchi e non
+   rubano l'occhio quando non li cerchi.
+
+   ⚠️ `flex-basis: 100%`: il footer e' un flex con `space-between`, senza
+   questa riga la fascia diventerebbe una terza colonna schiacciata accanto
+   al marchio e al menu.
+   ============================================================ */
+body.mono-dark-home .site-footer__legale {
+  background: rgba(38, 35, 33, 0.28);
+  border-radius: 10px;
+  color: #fff9ee;
+  flex-basis: 100%;
+  font-size: 12.5px;
+  line-height: 1.65;
+  margin: 6px 0 0;
+  padding: 12px 16px;
+}
+body.mono-dark-home .site-footer__legale a {
+  color: #fff9ee;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 249, 238, 0.45);
+  text-underline-offset: 2px;
+}
+body.mono-dark-home .site-footer__legale a:hover,
+body.mono-dark-home .site-footer__legale a:focus-visible {
+  text-decoration-color: #fff9ee;
+}
+
+/* ============================================================
+   29/7 — LA PAGINA /privacy/
+
+   Pagina NUOVA, quindi qui non si sta cambiando niente di esistente: sono gli
+   unici stili di elenco del sito, perche' finora nessuna pagina aveva bisogno
+   di elenchi (una pagina di informativa senza elenchi e' illeggibile).
+   Tutto il resto della pagina usa le classi che c'erano gia'
+   (.page-hero, .page-section, .page-section.alt, .eyebrow): il davanti e'
+   identico alle altre 13 pagine, come voluto.
+   ============================================================ */
+body.mono-dark-home.privacy-page .privacy-elenco {
+  list-style: none;
+  margin: 0 0 18px;
+  max-width: 920px;
+  padding: 0;
+}
+body.mono-dark-home.privacy-page .privacy-elenco li {
+  line-height: 1.6;
+  padding: 0 0 10px 26px;
+  position: relative;
+}
+/* Il pallino e' un quadratino ORO, non un bullet di sistema: cosi' l'elenco
+   appartiene al sito invece di sembrare incollato da un modulo. */
+body.mono-dark-home.privacy-page .privacy-elenco li::before {
+  background: var(--mono-champagne);
+  content: "";
+  height: 6px;
+  left: 4px;
+  position: absolute;
+  top: 0.62em;
+  width: 6px;
+}
+body.mono-dark-home.privacy-page .privacy-elenco strong {
+  color: #fff9ee;
+}
+/* Il riquadro coi dati dell'impresa: righe corte, nessun pallino, monospaziato
+   nei numeri no — resta il carattere del sito, ma piu' stretto di riga. */
+body.mono-dark-home.privacy-page .privacy-elenco--dati li {
+  padding-bottom: 2px;
+}
+body.mono-dark-home.privacy-page .privacy-elenco--dati li::before {
+  display: none;
+}
+body.mono-dark-home.privacy-page .privacy-blocco h3 {
+  color: var(--mono-champagne);
+  font-size: clamp(17px, 1.5vw, 21px);
+  margin: 26px 0 10px;
+}
+body.mono-dark-home.privacy-page .privacy-aggiornata {
+  border-top: 1px solid rgba(255, 249, 238, 0.18);
+  font-size: 13.5px;
+  margin-top: 28px;
+  padding-top: 16px;
+}
+
+/* ============================================================
+   29/7 — LA SPUNTA DEL CONSENSO sui due moduli email
+
+   ⚠️⚠️ TRAPPOLA GIA' PAGATA DUE VOLTE SU QUESTO SITO, evitata qui:
+   in `styles.css` esiste `.cinema-signup input { flex: 1 1 200px;
+   border-radius: 999px; background: rgba(255,249,238,.94); padding: 12px 16px }`
+   — una regola pensata per il CAMPO EMAIL che colpisce QUALUNQUE input dentro
+   il modulo. Senza le righe qui sotto la casella del consenso diventava una
+   PILLOLA CREMA larga 200px senza spunta. E' lo stesso difetto del 24/7 sul
+   modulo di /eventi/ (`.mono-form input` con appearance:none), risolto la'
+   nello stesso modo. Se un domani la casella "sembra un campo di testo",
+   e' questa regola che e' saltata.
+
+   Specificita': `.cinema-signup input` vale (0,1,1), questa (0,3,1). Vince.
+   ============================================================ */
+body.mono-dark-home .signup-consenso {
+  align-items: flex-start;
+  color: #fff9ee;
+  cursor: pointer;
+  display: flex;
+  font-size: 12.5px;
+  gap: 9px;
+  line-height: 1.45;
+  /* ⚠️ Il <label> AVVOLGE la casella: si spunta anche toccando il testo.
+     Su un telefono e' la differenza fra un bersaglio da 20px e uno da tutta
+     la riga — e la casella da sola sarebbe sotto il minimo di 24px. */
+  margin: 0;
+  text-align: left;
+  text-transform: none;
+  letter-spacing: normal;
+}
+body.mono-dark-home .signup-consenso input[type="checkbox"] {
+  appearance: auto;
+  -webkit-appearance: checkbox;
+  accent-color: #6e6a3c;
+  background: none;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  flex: none;
+  height: 18px;
+  margin: 1px 0 0;
+  min-height: 0;
+  min-width: 0;
+  padding: 0;
+  width: 18px;
+}
+body.mono-dark-home .signup-consenso a {
+  color: #fff9ee;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+/* Nel riquadro terracotta in fondo alla home il modulo non e' un grid come
+   quello della hero: serve un filo d'aria sopra, se no la riga si incolla
+   al bottone. */
+body.mono-dark-home .opening-signup .signup-consenso {
+  margin-top: 10px;
+}
+/* ⚠️ FINESTRE BASSE — il motivo per cui questa regola esiste.
+   Il 28/7 e' stato corretto il difetto piu' grave del sito: su quasi tutti i
+   portatili il modulo email della hero finiva TAGLIATO fuori dal ritaglio
+   (a 1366x658 se ne vedevano 5px). Il rimedio fu far sparire la frase d'aiuto
+   sotto gli 820px d'altezza. La spunta del consenso e' obbligatoria e NON puo'
+   sparire allo stesso modo: qui si stringe al minimo leggibile invece.
+   Da riverificare sul sito vero a 1366x658, 1280x690, 390x664 e 375x553. */
+@media (max-height: 820px) {
+  body.mono-dark-home .cinema-hero .sg-3 .signup-consenso {
+    font-size: 11.5px;
+    gap: 7px;
+    line-height: 1.35;
+  }
+}
+
+/* ============================================================
+   29/7 — /dove-siamo/: l'avviso dell'apertura e la mappa (voci 13 e 17)
+   ============================================================ */
+/* L'avviso: deve farsi leggere ma non urlare. Oro sul fondo notte fa 7.36. */
+body.mono-dark-home .location-apertura {
+  border-left: 3px solid var(--mono-champagne);
+  color: #fff9ee;
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 22px 0 0;
+  max-width: 720px;
+  padding: 4px 0 4px 16px;
+}
+body.mono-dark-home .location-apertura strong {
+  color: var(--mono-champagne);
+}
+/* La mappa: rapporto 16:9 su computer, piu' alta e stretta sul telefono.
+   `border` chiara perche' la mappa e' un rettangolo BIANCO su fondo notte e
+   senza un bordo sembrerebbe un buco nella pagina. */
+body.mono-dark-home .location-mappa {
+  border: 1px solid rgba(255, 249, 238, 0.22);
+  border-radius: 16px;
+  margin: 0 0 34px;
+  max-width: 920px;
+  overflow: hidden;
+}
+body.mono-dark-home .location-mappa iframe {
+  aspect-ratio: 16 / 9;
+  border: 0;
+  display: block;
+  width: 100%;
+}
+@media (max-width: 700px) {
+  body.mono-dark-home .location-mappa iframe { aspect-ratio: 4 / 3; }
+}
+
+/* ============================================================
+   29/7 — IL QR SULLA PAGINA /app/ (voce 29)
+
+   Sulla home il QR e' un <button> che apre un riquadro ingrandito. Qui e' un
+   <div>: si inquadra e basta.
+   ⚠️ Percio' vanno SPENTE le tre cose che `.app-qr` mette per farsi capire
+   come cliccabile — `cursor: zoom-in`, il sollevamento al passaggio del mouse
+   e l'ombra: un blocco che sembra un tasto e non fa niente e' peggio che non
+   averlo. `:hover` e `:focus-visible` non li ereditera' comunque (non e'
+   focalizzabile), ma il cursore a lente si', e va tolto a mano.
+   ⚠️ NON riusare `.app-qr--colonna` da sola: quelle regole valgono solo come
+   figlio diretto di `.app-gateway`, che su questa pagina non esiste.
+   ============================================================ */
+body.mono-dark-home .app-qr--statico {
+  align-self: center;
+  cursor: default;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 26px;
+  padding: 18px;
+  text-align: center;
+  transform: none;
+}
+body.mono-dark-home .app-qr--statico img {
+  height: auto;
+  padding: 10px;
+  width: min(220px, 60vw);
+}
+body.mono-dark-home .app-qr--statico span {
+  font-size: 14px;
+  font-weight: 600;
+}

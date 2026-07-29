@@ -219,8 +219,16 @@ function setupNewsletterForms() {
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
 
-      if (!emailInput.checkValidity()) {
-        emailInput.reportValidity();
+      /* 29/7 - era `emailInput.checkValidity()`, cioe' controllava SOLO il
+         campo email. Da oggi i due moduli hanno anche la spunta obbligatoria
+         del consenso, e con il vecchio controllo l'iscrizione sarebbe partita
+         comunque a spunta vuota: `event.preventDefault()` ferma il browser,
+         quindi il `required` dell'HTML da solo qui non basta piu'.
+         `form.checkValidity()` guarda TUTTI i campi obbligatori del modulo, e
+         `reportValidity()` apre il fumetto sul primo che manca — email o
+         spunta, quello che e'. ⚠️ Non rimettere emailInput qui. */
+      if (!form.checkValidity()) {
+        form.reportValidity();
         return;
       }
 
@@ -691,9 +699,25 @@ function setupCinematicHero() {
   }
 }
 
+/* 29/7 - voce 19 dell'audit: ASPETTARE `load` PRIMA DI REGISTRARE IL SW.
+   Prima la registrazione partiva subito, appena il browser leggeva questa
+   riga: il service worker cominciava a scaricare la sua lista MENTRE la home
+   si stava ancora aprendo, contendendo la linea al video, ai caratteri e al
+   poster — cioe' a tutto quello che la persona sta aspettando di vedere.
+   Su 4G lenta era quasi un secondo di prima impressione regalato a file che
+   servono soltanto DOPO.
+   `load` scatta a pagina completa: da li' in poi la banda e' libera.
+   ⚠️ `document.currentScript` va letto SUBITO, fuori dal listener: dentro il
+   callback vale null (lo script non e' piu' in esecuzione) e il percorso del
+   service worker si perderebbe. */
 if ("serviceWorker" in navigator) {
   const scriptUrl = new URL(document.currentScript?.src || "app.js", window.location.href);
-  navigator.serviceWorker.register(new URL("service-worker.js", scriptUrl));
+  const swUrl = new URL("service-worker.js", scriptUrl);
+  if (document.readyState === "complete") {
+    navigator.serviceWorker.register(swUrl);
+  } else {
+    window.addEventListener("load", () => navigator.serviceWorker.register(swUrl), { once: true });
+  }
 }
 
 /* La home ha il film "wow" in CIMA: deve aprirsi da lì, non dove il browser

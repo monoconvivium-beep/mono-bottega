@@ -27,13 +27,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../mono-colors.css?v=20260714-shared-colors-v1">
-    <link rel="stylesheet" href="../styles.css?v=20260716-fonts-v1">
-<link rel="stylesheet" href="../experience.css?v=20260716-fonts-v1">
-<link rel="stylesheet" href="../mono-engineering.css?v=20260716-fonts-v1">
-      <link rel="stylesheet" href="../mono-enhance.css?v=20260729-semplice-oro-v71">
-    <link rel="stylesheet" href="../mono-dark-home.css?v=20260729-semplice-oro-v71">
-      <script defer src="../mono-enhance.js?v=20260729-semplice-oro-v71"></script>
+    <link rel="stylesheet" href="../mono-colors.css?v=20260729-audit-v72">
+    <link rel="stylesheet" href="../styles.css?v=20260729-audit-v72">
+<link rel="stylesheet" href="../experience.css?v=20260729-audit-v72">
+<link rel="stylesheet" href="../mono-engineering.css?v=20260729-audit-v72">
+      <link rel="stylesheet" href="../mono-enhance.css?v=20260729-audit-v72">
+    <link rel="stylesheet" href="../mono-dark-home.css?v=20260729-audit-v72">
+      <script defer src="../mono-enhance.js?v=20260729-audit-v72"></script>
       <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -69,7 +69,7 @@
         ]
       }
     </script>
-    <script src="../mono-config.js?v=20260729-semplice-oro-v71"></script>
+    <script src="../mono-config.js?v=20260729-audit-v72"></script>
 </head>
   <body class="mono-world app-page mono-dark-home" data-mono-world="app">
     <a class="skip-link" href="#main">Vai al contenuto</a>
@@ -80,7 +80,7 @@
       </a>
       <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="primaryNav">Menu</button>
       <nav class="nav" id="primaryNav" aria-label="Navigazione principale">
-        <a href="../#bottega">Cos'è MONO</a>
+        <a href="../#bottega">Cos’è MONO</a>
         <a href="../gastronomia/">Prodotti</a>
         <a href="../la-bottega/">Chi siamo</a>
         <a href="../mono-convivium/">Progetto sociale</a>
@@ -99,10 +99,6 @@
         <p>
           L’app MONO mette la bottega nel ritmo delle tue giornate: ordini, ritiro, punti, vantaggi e novità utili, tutto in un unico posto.
         </p>
-        <!-- 28/7 sera - tolta "Meno passaggi, meno attese e più tempo per le
-             cose buone.": suo, "deve sparire, non serve". Diceva la stessa
-             cosa del titolo della sezione qui sotto, con parole quasi
-             identiche. -->
         <div class="hero-actions" id="download">
         <a class="button primary" data-app-store href="https://app.monobottega.it/home" target="_blank" rel="noopener">Apri l’app MONO</a>
           <a class="button ghost" data-track="app_benefits" href="#vantaggi">Scopri i vantaggi</a>
@@ -111,9 +107,6 @@
 
       <section class="page-section app-functions" id="vantaggi">
         <p class="eyebrow">TUTTO IN UN POSTO</p>
-        <!-- 28/7 sera - "Meno passaggi." resta dorata, "Più tempo per le cose
-             buone." diventa ROSSA e sta su UNA RIGA SOLA. Il colore e la
-             larghezza stanno in mono-dark-home.css. -->
         <h2 class="app-section-title app-meno-title"><span>Meno passaggi.</span><span>Più tempo per le cose buone.</span></h2>
         <p>
           Scegli cosa vuoi, ordina, ritira e usa i tuoi vantaggi senza perdere tempo.
@@ -145,7 +138,7 @@
           <article class="page-card" data-reveal>
             <span>NOTIFICHE</span>
             <h3>Solo quando vale la pena.</h3>
-            <p>Novità, disponibilità e occasioni utili. Solo quando c'è qualcosa che vale.</p>
+            <p>Novità, disponibilità e occasioni utili. Solo quando c’è qualcosa che vale.</p>
           </article>
           <article class="page-card" data-reveal>
             <span>IL TUO SPAZIO MONO</span>
@@ -156,14 +149,38 @@
       </section>
 
       <section class="page-section alt app-closing">
-        <!-- 28/7 sera - rosso SOLO sulla parola "tu", chiesto da lui. Stessa
-             mossa gia' fatta con "porta qui" sulla home e "gusto" su
-             /aperitivo/: uno <span> che serve solo al colore. -->
         <h2 class="app-closing-title">MONO, quando vuoi <span>tu</span>.</h2>
         <p>Scegli, ordina e torna con la semplicità che dovrebbe avere ogni cosa fatta bene.</p>
         <div class="hero-actions">
         <a class="button primary" data-track="app_open_final" href="https://app.monobottega.it/home" target="_blank" rel="noopener">Apri l’app MONO</a>
         </div>
+        <div class="app-qr app-qr--colonna app-qr--statico">
+          <img src="../assets/app/mono-app-qr.svg?v=2" alt="QR code per aprire l'app MONO" loading="lazy">
+          <span>Inquadra il codice col telefono.</span>
+        </div>
+      </section>
+          <section class="opening-signup-section" data-reveal>
+        <form class="opening-signup opening-signup-footer" action="mailto:monobottega@gmail.com" method="post" enctype="text/plain" data-newsletter-form>
+          <div>
+            <span>STIAMO PER APRIRE</span>
+            <strong>Sii tra i primi a entrare in bottega.</strong>
+            <p class="mono-conto" data-conto-apertura hidden>
+              <span class="mono-conto__numero" data-conto-giorni>—</span>
+              <span class="mono-conto__testo">giorni all’apertura</span>
+            </p>
+            <small>Lascia la tua email: ti avvisiamo il giorno dell’apertura e per le prime novità del banco. Niente spam, solo quando serve.</small>
+          </div>
+          <label class="sr-only" for="footerSignupEmail">La tua email</label>
+          <div class="signup-form-row">
+            <input id="footerSignupEmail" name="email" type="email" autocomplete="email" placeholder="La tua email" required>
+            <button class="button primary" type="submit">Avvisami all’apertura</button>
+          </div>
+          <label class="signup-consenso">
+            <input type="checkbox" name="consenso" required>
+            <span>Ho letto l'<a href="../privacy/">informativa privacy</a> e acconsento a ricevere l’avviso di apertura e le novità del banco.</span>
+          </label>
+          <p class="signup-status" data-newsletter-status role="status" aria-live="polite"></p>
+        </form>
       </section>
     </main>
 
@@ -180,15 +197,16 @@
         <a href="../dove-siamo/">Dove siamo</a>
         <a href="../contatti/">Contatti</a>
         <a href="../social/">Social</a>
-      </nav>
+      <a href="../privacy/">Privacy</a></nav>
+    <p class="site-footer__legale">MONO-BOTTEGA GASTRONOMICA DI PASCIUCCO FEDERICO · Titolare: Federico Pasciucco<br>Sede legale: Via Frinco 15, 10136 Torino (TO) · P. IVA 13341230012 · REA TO-1356747<br>PEC: <a href="mailto:federico.pasciucco@pec.it">federico.pasciucco@pec.it</a></p>
     </footer>
     <script>window.MONO_EXPERIENCE_OVERRIDES = { flags: { oPortal: false } };try{if(sessionStorage.getItem("monoCurtain")){sessionStorage.removeItem("monoCurtain");document.documentElement.classList.add("mono-curtain-cover");setTimeout(function(){document.documentElement.classList.remove("mono-curtain-cover");},1800);}}catch(e){}</script>
-    <script src="../mono-experience-config.js?v=20260715-short-pages-v1"></script>
-<script src="../cinematic-assets.js?v=20260718-tavola-eventi-v1"></script>
-<script src="../mono-cinematic.js?v=20260725-fluido-v8"></script>
-    <script src="../mono-navigation.js?v=20260714-engineering-master-v1"></script>
-    <script src="../mono-signature.js?v=20260729-semplice-oro-v71"></script>
-    <script src="../app.js?v=20260729-semplice-oro-v71"></script>
-<script src="../experience.js?v=20260714-shared-colors-v1"></script>
+    <script src="../mono-experience-config.js?v=20260729-audit-v72"></script>
+<script src="../cinematic-assets.js?v=20260729-audit-v72"></script>
+<script src="../mono-cinematic.js?v=20260729-audit-v72"></script>
+    <script src="../mono-navigation.js?v=20260729-audit-v72"></script>
+    <script src="../mono-signature.js?v=20260729-audit-v72"></script>
+    <script src="../app.js?v=20260729-audit-v72"></script>
+<script src="../experience.js?v=20260729-audit-v72"></script>
   </body>
 </html>
