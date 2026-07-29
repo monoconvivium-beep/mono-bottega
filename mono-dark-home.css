@@ -284,13 +284,12 @@ body.mono-dark-home.gastronomia-page .gastro-brand-banner .gastronomia-hero-logo
    si stringe e senza diventa un blocco. MISURATO: in maiuscolo la
    frase chiede 632px e ne ha 760, quindi resta su una riga. */
 body.mono-dark-home.gastronomia-page .gastronomia-hero-payoff {
-  /* ⚠️ Oro PRESO DAL FILE DEL LOGO, non scelto a occhio: dentro
-     mono-logo-primary.svg ci sono due soli colori, #262321 e #CBA75A.
-     Il secondo e' esattamente --mono-champagne della palette, quindi
-     qui il colore non "somiglia" a quello del marchio: e' lo stesso.
-     Suo: "lo stesso oro champagne del logo sopra, cosi' e'
-     cromaticamente perfetto". */
-  color: var(--mono-champagne);
+  /* ⚠️ Il COLORE non sta qui ma nella regola piu' sopra (quella con
+     `.page-hero`), che pesa di piu': l'oro messo qui non vinceva.
+     Oro PRESO DAL FILE DEL LOGO, non a occhio: dentro
+     mono-logo-primary.svg ci sono due soli colori, #262321 e #CBA75A,
+     e il secondo e' esattamente --mono-champagne. Quindi non
+     "somiglia" all'oro del marchio: e' lo stesso. */
   letter-spacing: 0.022em;
   text-transform: uppercase;
 }
@@ -319,7 +318,13 @@ body.mono-dark-home.gastronomia-page .gastro-brand-banner .gastronomia-hero-titl
   text-wrap: initial;
 }
 body.mono-dark-home.gastronomia-page .page-hero .gastronomia-hero-payoff {
-  color: var(--mono-cream);
+  /* 28/7 sera — era crema, ora l'ORO DEL MARCHIO. Il colore si cambia
+     QUI e non in una regola nuova piu' sotto: questa ha un `.page-hero`
+     in piu' e vincerebbe comunque. Aggiungere una regola invece di
+     correggere questa avrebbe lasciato due punti che dicono il
+     contrario, e il colore sarebbe rimasto crema (successo davvero,
+     visto pubblicando). */
+  color: var(--mono-champagne);
   margin-top: 28px;
 }
 body.mono-dark-home.gastronomia-page .page-hero .gastronomia-hero-description {
