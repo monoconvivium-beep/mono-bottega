@@ -1447,6 +1447,37 @@ body.mono-dark-home.aperitivo-page .aperitivo-rito-title span + span {
   color: var(--accento);
 }
 
+/* ============================================================
+   28/7 sera — LA TAVOLA CONDIVISA di /la-bottega/ DEVE VEDERSI
+
+   ⚠️ QUINTA VOLTA per la trappola dell'opacita' zero. Il segnaposto
+   `.mono-page-scene` in `la-bottega/index.html` fa uscire subito
+   `setupPageScene()`, che percio' non aggiunge piu' `.is-scene-awake`,
+   e senza quella `.mono-page-scene { opacity: 0 }` (experience.css)
+   terrebbe il disegno NEL DOM E INVISIBILE PER SEMPRE.
+   Rimedio in CSS come per le altre due illustrazioni fatte a mano
+   (--social e --frusta): niente JavaScript, cosi' non c'e' niente che
+   possa non partire. ⚠️ Io avevo scritto una funzione JS con
+   IntersectionObserver ed era SBAGLIATO come metodo: in questo sito la
+   convenzione e' gia' questa, e una regola CSS non puo' fallire.
+
+   ⚠️ DIFFERENZA VOLUTA rispetto alla regola gemella di --frusta:
+   quella impone anche il `transform`, SENZA limite di larghezza. Ma
+   sotto gli 820px `.mono-page-scene` viene centrata con
+   `left: 50%` + `translate3d(-50%, ...)`: imporre li' il transform da
+   computer la sposterebbe di mezza larghezza fuori posto. Qui il
+   transform si tocca SOLO da 821px in su.
+   ============================================================ */
+body.mono-dark-home.about-page .page-hero .mono-scene-tavola {
+  opacity: 1;
+}
+@media (min-width: 821px) {
+  body.mono-dark-home.about-page .page-hero .mono-scene-tavola {
+    transform: translate3d(var(--scene-x), calc(-50% + var(--scene-y)), 0) scale(1);
+  }
+}
+body.mono-dark-home .mono-scene-tavola svg { height: auto; width: 100%; }
+
 /* 28/7 sera — /la-bottega/, titolo hero: "MONO" torna DORATO.
    Prima tutta la prima riga era rossa (il --titolo delle pagine PERSONE).
    Su sua indicazione: MONO oro · "nasce dalla cucina." rosso · "Cresce
