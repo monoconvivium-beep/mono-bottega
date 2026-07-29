@@ -622,6 +622,55 @@
       }, 260 / passi);
     });
 
+    /* ============================================================
+       ⭐ 29/7 — LO SCATTO FRA I DUE VIDEO: la causa e il rimedio
+
+       SEGNALATO DA LUI: «ogni tanto vedo i video quelli all'inizio che ce ne
+       sono due attaccati insieme si impalano».
+       Aveva ragione, e la causa era qui sotto, in una riga.
+
+       COM'ERA: `pastaVideo.preload = "none"` (piu' su, riga ~480) significa
+       che il SECONDO film non veniva scaricato per niente. Le sue sorgenti
+       venivano assegnate dentro `transitionToPasta`, cioe' NELL'ISTANTE dello
+       stacco — e 260 ms dopo (il tempo della dissolvenza audio) si provava
+       gia' a farlo partire.
+       Il secondo film e' il master con l'audio: 2.354.312 byte. In 260 ms, su
+       una 4G lenta, il browser ne ha scaricato quasi niente: `play()` resta
+       in attesa dei primi fotogrammi e la pagina SI IMPALA sulla giuntura.
+       Non era la CPU, non erano le braci, non era la farina: era attesa di
+       RETE, cominciata troppo tardi.
+
+       COM'E' ADESSO: il secondo film si comincia a scaricare MENTRE il primo
+       sta suonando. Il primo dura 10 secondi: e' tutto tempo in cui la rete
+       e' libera e nessuno sta aspettando niente.
+       Si parte a 1,2 secondi dall'inizio del primo — non subito, per non
+       rubargli la banda proprio mentre gli serve per partire.
+
+       ⚠️ `preload = "auto"` DEVE stare PRIMA di setSources: e' setSources che
+       chiama `video.load()`, e con preload="none" quel load non scarica nulla.
+       ⚠️ `setSources` si protegge da sola dalle chiamate doppie (confronta la
+       firma delle sorgenti), quindi la chiamata dentro `transitionToPasta`
+       resta dov'era e non fa ripartire nessuno scaricamento.
+       ⚠️ Si rispetta `saveData`: se la persona ha chiesto al telefono di
+       risparmiare dati, NON si scarica niente in anticipo. Li' lo scatto e'
+       il male minore.
+       ============================================================ */
+    let pastaPreparata = false;
+    const preparaPasta = () => {
+      if (pastaPreparata || transitioned || finished) return;
+      if (runtime.saveData) return;
+      pastaPreparata = true;
+      try { pastaVideo.preload = "auto"; } catch (e) { /* ignora */ }
+      setSources(pastaVideo, pastaSources, pastaHasAudio);
+    };
+    fireVideo.addEventListener("timeupdate", () => {
+      if (fireVideo.currentTime >= 1.2) preparaPasta();
+    });
+    /* Rete di sicurezza: se il primo film e' cortissimo o `timeupdate` non
+       arriva (succede su qualche browser quando la scheda non e' in primo
+       piano), ci si aggancia comunque appena il primo e' pronto. */
+    fireVideo.addEventListener("canplaythrough", preparaPasta, { once: true });
+
     const transitionToPasta = async () => {
       if (transitioned || finished) return;
       transitioned = true;
