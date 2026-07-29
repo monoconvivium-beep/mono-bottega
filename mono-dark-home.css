@@ -284,6 +284,13 @@ body.mono-dark-home.gastronomia-page .gastro-brand-banner .gastronomia-hero-logo
    si stringe e senza diventa un blocco. MISURATO: in maiuscolo la
    frase chiede 632px e ne ha 760, quindi resta su una riga. */
 body.mono-dark-home.gastronomia-page .gastronomia-hero-payoff {
+  /* ⚠️ Oro PRESO DAL FILE DEL LOGO, non scelto a occhio: dentro
+     mono-logo-primary.svg ci sono due soli colori, #262321 e #CBA75A.
+     Il secondo e' esattamente --mono-champagne della palette, quindi
+     qui il colore non "somiglia" a quello del marchio: e' lo stesso.
+     Suo: "lo stesso oro champagne del logo sopra, cosi' e'
+     cromaticamente perfetto". */
+  color: var(--mono-champagne);
   letter-spacing: 0.022em;
   text-transform: uppercase;
 }
@@ -1585,13 +1592,24 @@ body.mono-dark-home.about-page .about-convivium-cuore {
      ⚠️ Piu' in basso di cosi' non si puo' scendere granche': i
      paragrafi arrivano a 920px e il cuore ci finirebbe sopra. Qui la
      riga "formazione, lavoro e autonomia." e' corta e lascia campo. */
+  /* 28/7 sera, QUARTO giro — suo: "ancora leggermente piu' basso, e piu'
+     grosso, tipo il doppio di adesso".
+     ⚠️ IL DOPPIO NON CI STA, ed e' misurato non stimato: 470 x 2 = 940,
+     ma i paragrafi della sezione sono larghi 920px e il cuore ci
+     finirebbe sopra. Il massimo che NON copre una lettera e' 610px in
+     alto e 570 piu' in basso (misurato riga per riga sul sito vero).
+     Preso 570 e sceso a 300: la direzione giusta, al massimo consentito.
+     ➡️ Per andare davvero al doppio l'unica strada e' stringere la
+     colonna di testo di questa sezione (920px sono ~100 battute, una
+     misura di lettura gia' lunga): stringendola a ~620 si libererebbero
+     300px e il cuore potrebbe arrivare a ~780. Da chiedergli. */
   body.mono-dark-home.about-page .about-convivium-cuore {
     margin: 0;
     max-width: none;
     position: absolute;
-    right: clamp(28px, 5vw, 110px);
-    top: clamp(150px, 16vw, 250px);
-    width: min(35vw, 470px);
+    right: clamp(24px, 3vw, 60px);
+    top: clamp(180px, 21vw, 320px);
+    width: min(42vw, 570px);
   }
 }
 
