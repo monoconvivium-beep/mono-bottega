@@ -27,9 +27,38 @@
     });
   };
 
+  /* ============================================================
+     IL CURSORE E' UNA NUVOLA DI FARINA (28/7 sera)
+
+     Scelta del proprietario fra quattro proposte provate dal vivo su
+     /prova-cursore/ (goccia d'olio, impronta nella farina, nuvola,
+     pallina d'impasto): "nuvola di farina e' la mia scelta".
+
+     Cosa cambia rispetto alla goccia d'olio:
+     - le particelle NON vengono piu' tirate verso il cursore (era il
+       comportamento del liquido che si ricompatta). Ognuna ha una
+       velocita' sua: parte all'indietro rispetto al movimento, sale un
+       poco, l'aria la frena, e alla fine il peso la fa posare.
+     - si disegnano CERCHI PIENI invece di gradienti radiali. Sembra un
+       dettaglio ed e' la ragione per cui questa versione costa MENO
+       della precedente: il vecchio codice creava un createRadialGradient
+       PER OGNI particella A OGNI fotogramma. 44 cerchi piatti pesano
+       meno di 18 gradienti.
+     - ogni granello e' disegnato due volte: prima un'ombra calda
+       spostata in basso a destra, poi il granello chiaro. Serve a due
+       cose: dare rilievo, e farlo vedere ANCHE sulle schede crema, dove
+       una farina tutta bianca sparirebbe.
+
+     ⚠️ NON ho toccato il guardiano delle prestazioni (monitorFrame):
+     se la media dei fotogrammi peggiora, spegne da solo prima gli
+     sbuffi e poi la scia. E' la rete che c'era gia'.
+     ⚠️ La fisica e' scalata sul tempo vero (dt), non "a fotogramma":
+     su uno schermo a 120Hz altrimenti la farina volerebbe al doppio.
+     ============================================================ */
   class MonoDrop {
     constructor() {
-      this.maxTrail = runtime.quality === "full" ? 18 : 10;
+      /* granelli, non goccioline: piu' numerosi ma molto piu' leggeri */
+      this.maxTrail = runtime.quality === "full" ? 44 : 22;
       this.trailEnabled = runtime.flags.oilTrail;
       this.dropletsEnabled = runtime.flags.microDroplets;
       this.refractionEnabled = runtime.flags.oilRefraction;
@@ -133,24 +162,41 @@
       this.lens.style.setProperty("--drop-angle", `${angle.toFixed(2)}deg`);
       this.lens.style.setProperty("--drop-stretch", stretch.toFixed(3));
 
-      if (this.trailEnabled && distance > 1.5) {
-        this.trail.push({ x: event.clientX, y: event.clientY, born: now, radius: Math.min(7.5, 2.8 + distance * 0.12) });
+      /* piu' corri, piu' farina sollevi: da 1 granello a 4 per movimento */
+      if (this.trailEnabled && distance > 1.4) {
+        const quanti = Math.min(4, 1 + Math.floor(distance / 9));
+        for (let i = 0; i < quanti; i += 1) this.sollevaFarina(now, deltaX, deltaY, 0.75);
         if (this.trail.length > this.maxTrail) this.trail.splice(0, this.trail.length - this.maxTrail);
       }
 
+      /* nelle curve strette la mano "sbatte" e alza uno sbuffo piu' grosso */
       const sharpTurn = distance > 13 && Math.abs(Math.sin(this.lastAngle - angleRadians)) > 0.55;
-      if (this.dropletsEnabled && sharpTurn && now - this.lastDrop > 420 && this.droplets.length < 2) {
+      if (this.dropletsEnabled && sharpTurn && now - this.lastDrop > 260) {
         this.lastDrop = now;
-        this.droplets.push({
-          x: event.clientX - deltaX * 0.55 + deltaY * 0.12,
-          y: event.clientY - deltaY * 0.55 - deltaX * 0.12,
-          born: now,
-          life: 360 + Math.random() * 120,
-          radius: 1.8 + Math.random() * 1.4
-        });
+        this.sbuffo(now, deltaX, deltaY, 7);
       }
       this.lastAngle = angleRadians;
       this.start();
+    }
+
+    /* un granello solo. `forza` = quanto viene scagliato all'indietro. */
+    sollevaFarina(now, deltaX, deltaY, forza) {
+      const sparpaglio = Math.random() * Math.PI * 2;
+      const spinta = Math.random() * forza;
+      this.trail.push({
+        x: this.target.x + (Math.random() - 0.5) * 7,
+        y: this.target.y + (Math.random() - 0.5) * 7,
+        vx: Math.cos(sparpaglio) * spinta - deltaX * 0.055,
+        vy: Math.sin(sparpaglio) * spinta - deltaY * 0.055 - 0.34, /* -0.34 = la farina SALE, prima di posarsi */
+        born: now,
+        life: 620 + Math.random() * 700,
+        radius: 0.9 + Math.random() * 2.4
+      });
+    }
+
+    sbuffo(now, deltaX, deltaY, quanti) {
+      for (let i = 0; i < quanti; i += 1) this.sollevaFarina(now, deltaX, deltaY, 2.1);
+      if (this.trail.length > this.maxTrail) this.trail.splice(0, this.trail.length - this.maxTrail);
     }
 
     bind() {
@@ -159,13 +205,21 @@
         this.visible = false;
         this.overlay.classList.remove("is-visible");
       });
-      document.addEventListener("pointerdown", () => this.overlay.classList.add("is-pressed"), { passive: true });
+      document.addEventListener("pointerdown", () => {
+        this.overlay.classList.add("is-pressed");
+        /* il clic schiaccia la nuvola e alza una spolverata */
+        if (this.trailEnabled) {
+          this.sbuffo(performance.now(), 0, 0, this.dropletsEnabled ? 12 : 6);
+          this.start();
+        }
+      }, { passive: true });
       document.addEventListener("pointerup", () => this.overlay.classList.remove("is-pressed"), { passive: true });
       document.addEventListener("visibilitychange", () => {
         if (document.hidden) {
           this.running = false;
           this.trail.length = 0;
           this.droplets.length = 0;
+          this.lastPhysics = 0;
           this.context.clearRect(0, 0, window.innerWidth, window.innerHeight);
         } else if (this.visible) {
           this.start();
@@ -176,36 +230,48 @@
     }
 
     drawTrail(now) {
-      this.context.clearRect(0, 0, window.innerWidth, window.innerHeight);
-      this.trail = this.trail.filter((point) => now - point.born < 420);
-      this.trail.forEach((point, index) => {
-        const age = Math.min(1, (now - point.born) / 420);
-        const pull = age * age * (3 - 2 * age);
-        const x = point.x + (this.target.x - point.x) * pull;
-        const y = point.y + (this.target.y - point.y) * pull;
-        const radius = Math.max(0.45, point.radius * (1 - age) * (0.45 + index / Math.max(1, this.trail.length)));
-        const gradient = this.context.createRadialGradient(x - radius * 0.25, y - radius * 0.35, 0, x, y, radius * 1.4);
-        gradient.addColorStop(0, `rgba(244, 236, 221, ${0.52 * (1 - age)})`);
-        gradient.addColorStop(0.3, `rgba(203, 167, 90, ${0.45 * (1 - age)})`);
-        gradient.addColorStop(1, `rgba(110, 106, 60, ${0.08 * (1 - age)})`);
-        this.context.fillStyle = gradient;
-        this.context.beginPath();
-        this.context.ellipse(x, y, radius * 1.55, radius, 0, 0, Math.PI * 2);
-        this.context.fill();
-      });
+      const context = this.context;
+      context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      if (!this.trail.length) return;
 
-      this.droplets = this.droplets.filter((drop) => now - drop.born < drop.life);
-      this.droplets.forEach((drop) => {
-        const age = Math.min(1, (now - drop.born) / drop.life);
-        const pull = age * age;
-        const x = drop.x + (this.target.x - drop.x) * pull;
-        const y = drop.y + (this.target.y - drop.y) * pull;
-        const radius = Math.max(0.2, drop.radius * (1 - age * 0.7));
-        this.context.fillStyle = `rgba(110, 106, 60, ${0.48 * (1 - age)})`;
-        this.context.beginPath();
-        this.context.ellipse(x, y, radius * 1.15, radius, 0, 0, Math.PI * 2);
-        this.context.fill();
-      });
+      /* passo di tempo normalizzato a 60 al secondo: cosi' la farina cade
+         alla stessa velocita' su uno schermo a 60Hz e su uno a 120Hz.
+         Tappato a 3 per non far "saltare" tutto dopo una pausa lunga. */
+      const dt = Math.min(3, this.lastPhysics ? (now - this.lastPhysics) / 16.667 : 1);
+      this.lastPhysics = now;
+      const ARIA = Math.pow(0.955, dt);   /* l'aria frena */
+      const PESO = 0.028 * dt;            /* poi vince il peso */
+
+      this.trail = this.trail.filter((granello) => now - granello.born < granello.life);
+
+      /* 1° passo: l'ombra calda, spostata in basso a destra.
+         Da' rilievo e tiene la farina visibile anche sulle schede crema. */
+      context.fillStyle = "rgba(120, 96, 60, 0.85)";
+      for (let i = 0; i < this.trail.length; i += 1) {
+        const g = this.trail[i];
+        g.x += g.vx * dt;
+        g.y += g.vy * dt;
+        g.vx *= ARIA;
+        g.vy = g.vy * ARIA + PESO;
+        const age = (now - g.born) / g.life;
+        g.raggioOra = Math.max(0.2, g.radius * (1 - age * 0.42));
+        g.opacitaOra = (1 - age) * 0.62;
+        context.globalAlpha = g.opacitaOra * 0.55;
+        context.beginPath();
+        context.arc(g.x + 0.9, g.y + 1.1, g.raggioOra, 0, 6.2832);
+        context.fill();
+      }
+
+      /* 2° passo: il granello chiaro sopra */
+      context.fillStyle = "rgba(248, 243, 232, 1)";
+      for (let i = 0; i < this.trail.length; i += 1) {
+        const g = this.trail[i];
+        context.globalAlpha = g.opacitaOra;
+        context.beginPath();
+        context.arc(g.x, g.y, g.raggioOra, 0, 6.2832);
+        context.fill();
+      }
+      context.globalAlpha = 1;
     }
 
     monitorFrame(now) {
@@ -234,7 +300,19 @@
 
     render(now) {
       if (!this.running) return;
-      this.drawTrail(now);
+      /* RETE DI SICUREZZA (28/7 sera, aggiunta con la nuvola di farina).
+         Il cursore vero e' nascosto da `cursor: none` sulla classe
+         .mono-drop-active, che viene messa PRIMA che questo giro parta.
+         Se qui dentro scoppiasse qualcosa, la freccia resterebbe
+         nascosta e l'utente rimarrebbe senza cursore: il guasto
+         peggiore possibile su ogni pagina del sito. Con destroy() la
+         classe viene tolta e torna il cursore di sistema. */
+      try {
+        this.drawTrail(now);
+      } catch (errore) {
+        this.destroy();
+        return;
+      }
       this.monitorFrame(now);
       const idle = now - this.lastMove > 460;
       if (idle && this.trail.length === 0 && this.droplets.length === 0) {
@@ -249,6 +327,9 @@
       if (this.running || document.hidden) return;
       this.running = true;
       this.lastFrame = 0;
+      /* l'orologio della fisica riparte da zero: se no, dopo una pausa
+         lunga il primo fotogramma farebbe volare via tutta la farina */
+      this.lastPhysics = 0;
       this.frame = window.requestAnimationFrame((time) => this.render(time));
     }
 

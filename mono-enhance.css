@@ -390,3 +390,69 @@ body.qr-dialog-open .app-qr-dialog__close {
   line-height: 1.6;
   opacity: 0.8;
 }
+
+/* ============================================================
+   IL CURSORE E' UNA NUVOLA DI FARINA (28/7 sera)
+
+   Scelta sua fra quattro provate dal vivo su /prova-cursore/:
+   "nuvola di farina e' la mia scelta". Prima era una goccia d'olio
+   (lente oliva con riflesso oro e bordo netto).
+
+   ⚠️ SCRITTO QUI E NON IN mono-engineering.css, che e' di Codex:
+   questo file carica DOPO il suo, quindi vince a parita' di peso
+   senza doverlo modificare. Stessa regola gia' seguita altrove.
+
+   ⚠️ Il corpo deve vedersi su DUE fondi opposti: il buio della home
+   e le schede crema. Per questo non e' bianco e basta, ma ha
+   un'ombra portata scura sotto: gli fa da bordo dove il chiaro
+   sparirebbe. Stessa ragione dell'ombra sui granelli nel JS.
+   ============================================================ */
+.mono-drop__lens {
+  background:
+    radial-gradient(circle at 36% 30%, rgba(255, 255, 255, .97) 0 16%,
+                    rgba(248, 243, 232, .78) 40%,
+                    rgba(244, 236, 221, .26) 66%,
+                    transparent 80%);
+  border: none;
+  /* forma morbida e un po' irregolare: una nuvoletta, non un cerchio */
+  border-radius: 52% 48% 44% 56% / 50% 56% 44% 50%;
+  box-shadow:
+    0 0 16px rgba(244, 236, 221, .34),
+    0 3px 9px rgba(32, 29, 26, .34);
+  height: 24px;
+  min-width: 24px;
+}
+
+/* il rilievo a scodella della goccia d'olio qui non c'entra: la farina
+   non ha una superficie lucida. Lasciato nel DOM (lo crea il JS di
+   Codex) ma reso innocuo. */
+.mono-drop__highlight {
+  box-shadow: none;
+}
+
+/* niente vetro: la farina non rifrange */
+.mono-drop.has-refraction .mono-drop__lens {
+  backdrop-filter: none;
+}
+
+/* sopra un link resta la pillola con la scritta, che lui conosce gia'.
+   Qui pero' deve tornare COMPATTA e leggibile: crema piena, non nuvola. */
+.mono-drop.has-label .mono-drop__lens {
+  background: rgba(248, 243, 232, .96);
+  border-radius: 999px;
+  box-shadow: 0 6px 16px rgba(32, 29, 26, .38);
+  height: 42px;
+  min-width: 42px;
+}
+
+/* al clic la nuvola si schiaccia un po' di piu' dell'olio: e' polvere */
+.mono-drop.is-pressed .mono-drop__lens {
+  filter: none;
+  scale: 0.82;
+}
+
+/* chi ha chiesto meno animazioni: nuvola ferma e nessuna scia
+   (la scia la spegne gia' il JS, questa e' la rete dello stile) */
+@media (prefers-reduced-motion: reduce) {
+  .mono-drop__trail { display: none; }
+}
