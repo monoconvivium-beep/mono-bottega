@@ -162,10 +162,19 @@
       this.lens.style.setProperty("--drop-angle", `${angle.toFixed(2)}deg`);
       this.lens.style.setProperty("--drop-stretch", stretch.toFixed(3));
 
+      /* ⚠️ TETTO ALLO SPOSTAMENTO, e non e' teoria: misurato il 28/7.
+         Senza, al PRIMO movimento della sessione (e ogni volta che il
+         mouse rientra dal bordo della finestra) lo scarto vale
+         centinaia di pixel, e la farina partiva a razzo fuori dallo
+         schermo invece di restare una nuvoletta. Il motore gia' tappa
+         a 28 la sua `velocity.speed`: qui si usa lo stesso metro. */
+      const spintaX = Math.max(-26, Math.min(26, deltaX));
+      const spintaY = Math.max(-26, Math.min(26, deltaY));
+
       /* piu' corri, piu' farina sollevi: da 1 granello a 4 per movimento */
       if (this.trailEnabled && distance > 1.4) {
         const quanti = Math.min(4, 1 + Math.floor(distance / 9));
-        for (let i = 0; i < quanti; i += 1) this.sollevaFarina(now, deltaX, deltaY, 0.75);
+        for (let i = 0; i < quanti; i += 1) this.sollevaFarina(now, spintaX, spintaY, 0.75);
         if (this.trail.length > this.maxTrail) this.trail.splice(0, this.trail.length - this.maxTrail);
       }
 
@@ -173,7 +182,7 @@
       const sharpTurn = distance > 13 && Math.abs(Math.sin(this.lastAngle - angleRadians)) > 0.55;
       if (this.dropletsEnabled && sharpTurn && now - this.lastDrop > 260) {
         this.lastDrop = now;
-        this.sbuffo(now, deltaX, deltaY, 7);
+        this.sbuffo(now, spintaX, spintaY, 7);
       }
       this.lastAngle = angleRadians;
       this.start();
