@@ -278,6 +278,44 @@
     initContoApertura();
     initSocial();
     initMappa();
+    risvegliaScene();
+  }
+
+  /* ============================================================
+     RISVEGLIO DELLE ILLUSTRAZIONI FATTE A MANO (28/7 sera)
+
+     ⚠️ QUESTA E' LA TRAPPOLA PIU' COSTOSA DEL PROGETTO: presa cinque
+     volte. Quando mettiamo una nostra illustrazione nella hero come
+     segnaposto `.mono-page-scene`, `setupPageScene()` (experience.js)
+     la vede ed ESCE SUBITO — che e' quello che vogliamo, cosi' non
+     disegna la sua. MA proprio perche' esce subito non aggiunge piu'
+     `.is-scene-awake` alla hero, e senza quella classe la regola
+     `.mono-page-scene { opacity: 0 }` (experience.css:318) lascia il
+     disegno NEL DOM E INVISIBILE PER SEMPRE.
+
+     REGOLA GENERALE: quando si blocca una funzione altrui con un
+     segnaposto, guardare COS'ALTRO faceva quella funzione (accendere,
+     registrare, osservare) e rifarlo. Qui rifacciamo il risveglio,
+     con lo stesso IntersectionObserver e la stessa soglia, cosi' la
+     dissolvenza in entrata resta identica a quella delle altre pagine.
+     ============================================================ */
+  function risvegliaScene() {
+    var scene = document.querySelectorAll(".mono-scene-tavola");
+    for (var i = 0; i < scene.length; i += 1) {
+      (function (nostra) {
+        var hero = nostra.closest(".page-hero, .hero");
+        if (!hero || hero.classList.contains("is-scene-awake")) return;
+        var accendi = function () { hero.classList.add("is-scene-awake"); };
+        var fermo = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (fermo || !("IntersectionObserver" in window)) { accendi(); return; }
+        var occhio = new IntersectionObserver(function (voci) {
+          for (var k = 0; k < voci.length; k += 1) {
+            if (voci[k].isIntersecting) { accendi(); occhio.disconnect(); return; }
+          }
+        }, { threshold: 0.12 });
+        occhio.observe(hero);
+      })(scene[i]);
+    }
   }
 
   /* ============================================================

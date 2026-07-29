@@ -1447,6 +1447,20 @@ body.mono-dark-home.aperitivo-page .aperitivo-rito-title span + span {
   color: var(--accento);
 }
 
+/* 28/7 sera — /la-bottega/, titolo hero: "MONO" torna DORATO.
+   Prima tutta la prima riga era rossa (il --titolo delle pagine PERSONE).
+   Su sua indicazione: MONO oro · "nasce dalla cucina." rosso · "Cresce
+   intorno alle persone." oro (quella era gia' cosi').
+   Qui --accento VALE ORO, non rosso: su about/jobs/convivium/events i
+   due colori sono invertiti rispetto alle pagine prodotto.
+   ⚠️ `display: inline` obbligatorio: `.about-page .about-hero-title span`
+   (styles.css:1384) mette display:block su OGNI span discendente, anche
+   quelli annidati, e senza questa riga "MONO" finirebbe su una riga sua. */
+body.mono-dark-home.about-page .about-hero-title .about-mono-oro {
+  color: var(--accento);
+  display: inline;
+}
+
 /* 28/7 sera — /gastronomia/, "Radici vere, / FORMA CONTEMPORANEA.":
    due righe vere e la seconda in ROSSO, chiesto da lui.
    ⚠️ Serve la regola esplicita: quella generica `main h2 span + span`
