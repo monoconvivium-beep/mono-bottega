@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- PAGINA DI PROVA, NON FA PARTE DEL SITO.
+     Non e' nel menu, non e' nel footer, non e' nella sitemap, non e' nel
+     service-worker: ci si arriva solo con l'indirizzo diretto.
+     noindex+nofollow: Google non deve nemmeno vederla.
+     ⚠️ DA CANCELLARE quando il proprietario ha scelto il cursore. -->
+<meta name="robots" content="noindex, nofollow">
+<title>MONO — prova cursori di farina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,400&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cashmere:#f4ecdd; --butter:#efe3c8; --terracotta:#b85c38; --coral:#e27a60;
+    --olive:#6e6a3c; --gold:#cba75a; --sage:#4e6b47; --brick:#a83a28; --oro-luminoso:#ebce7c;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; min-height:100%;
+    background:
+      radial-gradient(circle at 82% 10%, rgba(203,167,90,.10), transparent 38%),
+      radial-gradient(circle at 8% 76%, rgba(184,92,56,.12), transparent 42%),
+      #201d1a;
+    color:var(--cashmere);
+    font-family:"Bricolage Grotesque",system-ui,-apple-system,Segoe UI,sans-serif;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:1020px;margin:0 auto;padding:32px 24px 90px}
+  h1{font-family:Fraunces,Georgia,serif;font-size:clamp(26px,4vw,40px);margin:0 0 8px;color:var(--oro-luminoso)}
+  .sub{color:rgba(244,236,221,.68);font-size:15.5px;margin:0 0 8px;line-height:1.6;max-width:64ch}
+  .stato{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:600;letter-spacing:.06em;
+    text-transform:uppercase;padding:8px 14px;border-radius:999px;margin:14px 0 22px;
+    background:rgba(126,146,71,.20);border:1px solid rgba(126,146,71,.55);color:#cfe0a8}
+  .stato.ko{background:rgba(184,92,56,.20);border-color:var(--terracotta);color:#f0b9a4}
+  .stato i{width:9px;height:9px;border-radius:50%;background:currentColor;display:block}
+
+  .scelte{display:grid;grid-template-columns:repeat(auto-fit,minmax(224px,1fr));gap:12px;margin-bottom:16px}
+  .scelta{display:flex;align-items:center;gap:14px;text-align:left;
+    background:rgba(244,236,221,.06); color:var(--cashmere); border:1px solid rgba(244,236,221,.20);
+    border-radius:14px; padding:14px 16px; font:inherit; cursor:pointer; transition:background 150ms,border-color 150ms}
+  .scelta:hover{background:rgba(244,236,221,.12)}
+  .scelta[aria-pressed="true"]{background:rgba(184,92,56,.26);border-color:var(--terracotta)}
+  .scelta b{display:block;font-size:14.5px;font-weight:700;margin-bottom:2px}
+  .scelta small{display:block;font-size:12px;color:rgba(244,236,221,.6)}
+  /* campione fermo: la FORMA si vede senza dover muovere niente */
+  .campione{flex:0 0 58px;height:58px;border-radius:12px;background:rgba(0,0,0,.26);
+    display:flex;align-items:center;justify-content:center}
+  .campione span{display:block}
+
+  .nota{font-size:14px;color:rgba(244,236,221,.78);background:rgba(244,236,221,.05);
+    border-left:3px solid var(--gold);padding:14px 17px;border-radius:0 10px 10px 0;margin:4px 0 28px;line-height:1.65}
+  .verde{background:linear-gradient(145deg,#4e6b47,#6e6a3c);border-radius:18px;padding:34px 30px;margin-bottom:22px}
+  .verde h2{font-family:Fraunces,Georgia,serif;font-size:clamp(24px,3.4vw,38px);margin:0;color:var(--oro-luminoso);line-height:1.12}
+  .verde h2 em{color:#ff8360}
+  .fila{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+  .fila a{padding:12px 20px;border-radius:999px;background:var(--terracotta);color:#fff;text-decoration:none;font-weight:600;font-size:14.5px}
+  .fila a.vuoto{background:transparent;border:1px solid rgba(244,236,221,.42);color:var(--cashmere)}
+  .griglia{display:grid;grid-template-columns:repeat(auto-fit,minmax(228px,1fr));gap:16px;margin-bottom:22px}
+  .carta{background:linear-gradient(150deg,#f6efe2,#eadfc9);color:#2b2724;border-radius:16px;padding:22px}
+  .carta i{font-style:normal;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--brick);font-weight:700}
+  .carta h3{font-family:Fraunces,Georgia,serif;font-size:21px;margin:8px 0}
+  .carta p{font-size:14px;line-height:1.55;margin:0 0 14px;color:#4a443e}
+  .carta a{color:var(--brick);font-weight:700;text-decoration:none;border-bottom:2px solid rgba(168,58,40,.34)}
+  .pista{height:210px;border:1px dashed rgba(244,236,221,.26);border-radius:16px;display:flex;align-items:center;
+    justify-content:center;color:rgba(244,236,221,.52);font-size:14px;text-align:center;padding:22px;line-height:1.7}
+  footer{margin-top:28px;font-size:13px;color:rgba(244,236,221,.45);line-height:1.65}
+
+  #velo{position:fixed;inset:0;pointer-events:none;z-index:1100}
+  #corpo{position:fixed;left:0;top:0;pointer-events:none;z-index:1101;display:flex;align-items:center;
+    justify-content:center;transform:translate3d(-200px,-200px,0);will-change:transform}
+  #etichetta{font-size:0;opacity:0;font-weight:800;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;
+    transition:font-size 140ms ease,opacity 140ms ease;position:relative;z-index:2;color:#2b2724}
+  body.ha-etichetta #etichetta{font-size:10px;opacity:1}
+  @media (hover:hover) and (pointer:fine){ body.vivo, body.vivo *{cursor:none !important} }
+  #soloMouse{display:none;background:rgba(184,92,56,.20);border:1px solid var(--terracotta);
+    padding:15px 17px;border-radius:12px;font-size:14.5px;margin-bottom:20px;line-height:1.6}
+  @media (hover:none),(pointer:coarse){ #soloMouse{display:block} #velo,#corpo{display:none} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Quattro cursori a confronto</h1>
+  <p class="sub">Il quadratino accanto a ogni nome è il <b>campione fermo</b>: la forma si vede subito. Poi clicca e muovi il mouse sulla pagina — veloce, lento, curve strette. Passa sopra i tasti e le schede, e prova a cliccare.</p>
+
+  <div id="soloMouse">⚠️ Sei su un telefono o tablet: il cursore non esiste, serve il mouse. Apri questo stesso indirizzo dal computer.</div>
+  <div class="stato" id="stato"><i></i><span>cursore attivo</span></div>
+
+  <div class="scelte" id="scelte">
+    <button class="scelta" data-c="olio" aria-pressed="true">
+      <span class="campione" data-camp="olio"><span></span></span>
+      <span><b>0 · Goccia d'olio</b><small>quella di adesso — per confronto</small></span></button>
+    <button class="scelta" data-c="impronta" aria-pressed="false">
+      <span class="campione" data-camp="impronta"><span></span></span>
+      <span><b>1 · Impronta nella farina</b><small>lascia il segno, non la scia</small></span></button>
+    <button class="scelta" data-c="nuvola" aria-pressed="false">
+      <span class="campione" data-camp="nuvola"><span></span></span>
+      <span><b>2 · Nuvola di farina</b><small>sbuffa e si posa</small></span></button>
+    <button class="scelta" data-c="impasto" aria-pressed="false">
+      <span class="campione" data-camp="impasto"><span></span></span>
+      <span><b>3 · Pallina d'impasto</b><small>ha peso, si schiaccia</small></span></button>
+  </div>
+  <p class="nota" id="nota"></p>
+
+  <div class="verde"><h2>Tutto quello che ami.<br>Fatto con <em>amore</em>.</h2>
+    <div class="fila"><a href="#" data-eti="ORDINA">Ordina dall'app</a><a href="#" class="vuoto" data-eti="PORTAMI">Apri Google Maps</a></div>
+  </div>
+
+  <div class="griglia">
+    <div class="carta"><i>Gastronomia</i><h3>La cucina di casa.</h3><p>Piatti pronti, ricette vere, porzioni giuste.</p><a href="#" data-eti="ASSAGGIA">Scopri</a></div>
+    <div class="carta"><i>Pasticceria</i><h3>Il dolce che scegli.</h3><p>Monoporzioni, torte e piccoli piaceri.</p><a href="#" data-eti="ASSAGGIA">Scopri</a></div>
+    <div class="carta"><i>Aperitivo</i><h3>Quando rallenta.</h3><p>Vino, cocktail e piccoli piatti.</p><a href="#" data-eti="ASSAGGIA">Scopri</a></div>
+  </div>
+
+  <div class="pista">Spazio libero: qui la scia si vede meglio.<br>Prova un movimento veloce a zig-zag, poi fermati di colpo.</div>
+
+  <footer>Pagina di prova, non fa parte del sito: non è nel menu né su Google. Si cancella appena hai scelto.</footer>
+</div>
+
+<canvas id="velo"></canvas>
+<div id="corpo"><span id="etichetta"></span></div>
+
+<script>
+(function(){
+  "use strict";
+  var velo = document.getElementById('velo');
+  var ctx = velo.getContext('2d');
+  var corpo = document.getElementById('corpo');
+  var etich = document.getElementById('etichetta');
+  var nota = document.getElementById('nota');
+  var stato = document.getElementById('stato');
+
+  var NOTE = {
+    olio: "Com'e' adesso: una lente d'olio che si stira nella direzione in cui vai, con una scia lucida. E' il riferimento per confrontare le altre tre.",
+    impronta: "Il cursore non e' un oggetto che galleggia: e' il tuo dito che passa sul banco infarinato. Scopre il legno scuro sotto e spinge la farina ai lati, che resta li' e si posa piano. E' l'unico che lascia un SEGNO invece di una scia: dopo un po' lo schermo racconta dove sei passato.",
+    nuvola: "Una nuvoletta di farina sospesa. Piu' corri, piu' sbuffa: le particelle salgono un poco, rallentano e cadono. Nelle curve strette fa uno sbuffo piu' grosso, al clic una nuvola. E' la parente diretta della goccia d'olio, ma d'aria invece che di liquido.",
+    impasto: "Una pallina di impasto: opaca, morbida, con luce vera addosso e ombra sotto. Si schiaccia quando accelera e si riappallottola quando ti fermi. Al clic si appiattisce. Niente scia: tutto il carattere sta nel corpo."
+  };
+
+  var ASPETTI = {
+    olio: { w:16,h:16, r:'46% 54% 52% 48% / 58% 44% 56% 42%',
+      bg:'radial-gradient(circle at 31% 24%, rgba(244,236,221,.94) 0 7%, transparent 20%),radial-gradient(circle at 68% 72%, rgba(203,167,90,.42), transparent 54%), rgba(110,106,60,.78)',
+      bordo:'1px solid rgba(244,236,221,.78)', ombra:'inset 0 0 8px rgba(244,236,221,.34), 0 6px 14px rgba(0,0,0,.34)' },
+    impronta: { w:20,h:24, r:'50% 50% 48% 48% / 44% 44% 56% 56%',
+      bg:'radial-gradient(circle at 38% 26%, rgba(255,252,246,.96) 0 14%, rgba(244,236,221,.55) 34%, transparent 62%), radial-gradient(circle at 62% 82%, rgba(38,32,28,.34), transparent 60%), rgba(233,220,198,.92)',
+      bordo:'1px solid rgba(255,255,255,.5)', ombra:'0 4px 12px rgba(0,0,0,.42), inset 0 -3px 6px rgba(38,32,28,.20)' },
+    nuvola: { w:26,h:26, r:'52% 48% 44% 56% / 50% 56% 44% 50%',
+      bg:'radial-gradient(circle at 36% 30%, rgba(255,255,255,.96) 0 18%, rgba(244,236,221,.72) 42%, rgba(244,236,221,.20) 68%, transparent 82%)',
+      bordo:'none', ombra:'0 0 18px rgba(244,236,221,.30)' },
+    impasto: { w:22,h:22, r:'50%',
+      bg:'radial-gradient(circle at 33% 27%, #fffaf0 0 10%, #f0e4cc 30%, #d9c9a8 62%, #b9a684 88%)',
+      bordo:'none', ombra:'0 7px 16px rgba(0,0,0,.46), inset -4px -5px 9px rgba(120,100,70,.42), inset 3px 3px 7px rgba(255,255,255,.55)' }
+  };
+
+  /* i campioni fermi accanto ai tasti: ingranditi 1.9x per vedere la forma */
+  Object.keys(ASPETTI).forEach(function(k){
+    var host = document.querySelector('[data-camp="' + k + '"] span');
+    if (!host) return;
+    var a = ASPETTI[k], f = 1.9;
+    host.style.cssText = 'width:' + (a.w*f) + 'px;height:' + (a.h*f) + 'px;border-radius:' + a.r +
+      ';background:' + a.bg + ';box-shadow:' + a.ombra + (a.bordo === 'none' ? '' : ';border:' + a.bordo);
+  });
+
+  var modo = 'olio', W=0, H=0, DPR=1;
+  var mouse = {x:-300,y:-300,px:-300,py:-300,vx:0,vy:0,v:0,ang:0};
+  var particelle = [], segni = [], scia = [];
+  var premuto = false, ultimoSbuffo = 0, etichettaOra = '';
+
+  function dimensiona(){
+    DPR = Math.min(2, window.devicePixelRatio || 1);
+    velo.width  = Math.floor(innerWidth  * DPR);
+    velo.height = Math.floor(innerHeight * DPR);
+    velo.style.width  = innerWidth + 'px';
+    velo.style.height = innerHeight + 'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    W = innerWidth; H = innerHeight;
+  }
+  dimensiona();
+  addEventListener('resize', dimensiona);
+
+  addEventListener('pointermove', function(e){
+    if (e.pointerType === 'touch') return;
+    mouse.px = mouse.x; mouse.py = mouse.y;
+    mouse.x = e.clientX; mouse.y = e.clientY;
+    mouse.vx = mouse.x - mouse.px; mouse.vy = mouse.y - mouse.py;
+    var v = Math.hypot(mouse.vx, mouse.vy);
+    if (v < 400) mouse.v = v;                 /* il primo salto non conta */
+    if (v > 0.6 && v < 400) mouse.ang = Math.atan2(mouse.vy, mouse.vx);
+    document.body.classList.add('vivo');
+
+    var t = e.target && e.target.closest ? e.target.closest('a,button') : null;
+    var et = t ? (t.dataset.eti || (t.tagName === 'BUTTON' ? 'SCEGLI' : 'ENTRA')) : '';
+    if (et !== etichettaOra){
+      etichettaOra = et;
+      etich.textContent = et;
+      document.body.classList.toggle('ha-etichetta', !!et);
+      vesti(modo);
+    }
+    genera(mouse.v);
+  }, {passive:true});
+
+  addEventListener('pointerdown', function(){ premuto = true; if (modo === 'nuvola') sbuffo(16, 2.4); });
+  addEventListener('pointerup',   function(){ premuto = false; });
+
+  function sbuffo(n, forza){
+    var ora = performance.now();
+    for (var i=0;i<n;i++){
+      var a = Math.random()*Math.PI*2, s = Math.random()*forza;
+      particelle.push({ x: mouse.x + (Math.random()-.5)*8, y: mouse.y + (Math.random()-.5)*8,
+        vx: Math.cos(a)*s - mouse.vx*0.06, vy: Math.sin(a)*s - mouse.vy*0.06 - 0.35,
+        r: 1 + Math.random()*2.6, vita: 620 + Math.random()*700, nato: ora });
+    }
+    if (particelle.length > 300) particelle.splice(0, particelle.length - 300);
+  }
+
+  function genera(v){
+    var ora = performance.now();
+    if (modo === 'olio'){
+      scia.push({x:mouse.x,y:mouse.y,nato:ora,r:Math.min(9,3+v*0.16)});
+      if (scia.length > 18) scia.shift();
+    } else if (modo === 'impronta'){
+      if (v > 0.8){
+        segni.push({x:mouse.x,y:mouse.y,px:mouse.px,py:mouse.py,nato:ora,largh:Math.min(17,7+v*0.22),ang:mouse.ang});
+        if (segni.length > 620) segni.splice(0, segni.length-620);
+      }
+    } else if (modo === 'nuvola'){
+      if (v > 1.4 && ora-ultimoSbuffo > 16){ ultimoSbuffo = ora; sbuffo(Math.min(5,1+Math.floor(v/9)), 0.7); }
+    }
+  }
+
+  function vesti(m){
+    if (document.body.classList.contains('ha-etichetta')){
+      corpo.style.width='auto'; corpo.style.height='42px'; corpo.style.minWidth='42px';
+      corpo.style.padding='0 15px'; corpo.style.borderRadius='999px'; corpo.style.border='none';
+      corpo.style.boxShadow='0 6px 16px rgba(0,0,0,.38)';
+      corpo.style.background = (m === 'impasto')
+        ? 'radial-gradient(circle at 30% 25%, #fffaf0, #e8d9ba)' : 'rgba(244,236,221,.94)';
+      return;
+    }
+    var a = ASPETTI[m];
+    corpo.style.width=a.w+'px'; corpo.style.height=a.h+'px'; corpo.style.minWidth='0'; corpo.style.padding='0';
+    corpo.style.borderRadius=a.r; corpo.style.background=a.bg;
+    corpo.style.border = (a.bordo === 'none') ? 'none' : a.bordo;
+    corpo.style.boxShadow=a.ombra;
+  }
+
+  function disegna(ora){
+    ctx.clearRect(0,0,W,H);
+
+    if (modo === 'olio'){
+      for (var i=0;i<scia.length;i++){
+        var p = scia[i], eta = (ora-p.nato)/560;
+        if (eta>=1) continue;
+        ctx.globalAlpha = (1-eta)*0.5*(i/scia.length);
+        ctx.fillStyle = 'rgba(126,146,71,.85)';
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r*(1-eta*.5),0,6.29); ctx.fill();
+      }
+      scia = scia.filter(function(p){ return ora-p.nato < 560; });
+    }
+
+    if (modo === 'impronta'){
+      segni = segni.filter(function(s){ return ora-s.nato < 5200; });
+      ctx.lineCap = 'round';
+      for (var j=0;j<segni.length;j++){
+        var s = segni[j], e2 = (ora-s.nato)/5200;
+        var sp = Math.sin(s.ang), cp = -Math.cos(s.ang);
+        ctx.globalAlpha = (1-e2)*0.52;
+        ctx.strokeStyle = '#f7f1e4'; ctx.lineWidth = s.largh*0.30;
+        ctx.beginPath();
+        ctx.moveTo(s.px + sp*s.largh*0.52, s.py + cp*s.largh*0.52);
+        ctx.lineTo(s.x  + sp*s.largh*0.52, s.y  + cp*s.largh*0.52); ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(s.px - sp*s.largh*0.52, s.py - cp*s.largh*0.52);
+        ctx.lineTo(s.x  - sp*s.largh*0.52, s.y  - cp*s.largh*0.52); ctx.stroke();
+        ctx.globalAlpha = (1-e2)*0.44;
+        ctx.strokeStyle = 'rgba(32,29,26,.95)'; ctx.lineWidth = s.largh*0.72;
+        ctx.beginPath(); ctx.moveTo(s.px,s.py); ctx.lineTo(s.x,s.y); ctx.stroke();
+      }
+    }
+
+    if (modo === 'nuvola'){
+      ctx.fillStyle = '#f4ecdd';
+      for (var k=0;k<particelle.length;k++){
+        var q = particelle[k], e3 = (ora-q.nato)/q.vita;
+        if (e3>=1) continue;
+        q.x += q.vx; q.y += q.vy;
+        q.vx *= 0.955; q.vy = q.vy*0.955 + 0.028;
+        ctx.globalAlpha = (1-e3)*0.62;
+        ctx.beginPath(); ctx.arc(q.x,q.y,q.r*(1-e3*0.42),0,6.29); ctx.fill();
+      }
+      particelle = particelle.filter(function(p){ return ora-p.nato < p.vita; });
+    }
+    ctx.globalAlpha = 1;
+
+    var stiro = 0, ang = 0;
+    if (modo !== 'impronta'){ stiro = Math.min(.40, mouse.v*0.011); ang = mouse.ang; }
+    else { ang = mouse.ang; }
+    var premi = premuto ? (modo === 'impasto' ? 0.70 : 0.86) : 1;
+    corpo.style.transform = 'translate3d(' + mouse.x + 'px,' + mouse.y + 'px,0) translate(-50%,-50%) rotate(' +
+      ang + 'rad) scale(' + ((1+stiro)*premi).toFixed(3) + ',' + ((1-stiro*0.36)*premi).toFixed(3) + ')';
+    etich.style.transform = 'rotate(' + (-ang) + 'rad)';
+
+    mouse.v *= 0.86;
+    requestAnimationFrame(disegna);
+  }
+  requestAnimationFrame(disegna);
+
+  document.getElementById('scelte').addEventListener('click', function(e){
+    var b = e.target.closest('button.scelta'); if (!b) return;
+    modo = b.dataset.c;
+    var tasti = this.querySelectorAll('button.scelta');
+    for (var i=0;i<tasti.length;i++) tasti[i].setAttribute('aria-pressed', String(tasti[i] === b));
+    particelle = []; segni = []; scia = [];
+    nota.textContent = NOTE[modo];
+    vesti(modo);
+  });
+
+  nota.textContent = NOTE.olio;
+  vesti('olio');
+
+  /* dice a voce se il cursore finto e' davvero acceso */
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches){
+    stato.className = 'stato ko';
+    stato.querySelector('span').textContent = 'niente mouse: il cursore resta quello di sistema';
+  }
+})();
+</script>
+</body>
+</html>
