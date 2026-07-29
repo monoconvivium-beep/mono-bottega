@@ -1667,6 +1667,18 @@ body.mono-dark-home.about-page .about-hero-title .about-mono-oro {
   display: inline;
 }
 
+/* 28/7 sera — /lavora-con-noi/: "responsabilità vere." in DORATO.
+   Era rosso come tutto il resto del titolo.
+   ⚠️ Qui `--accento` VALE ORO: le pagine PERSONE (about, jobs,
+   convivium, events) hanno i due colori invertiti rispetto a quelle
+   prodotto. Scrivere `var(--accento)` e non `#CBA75A` a mano e' quello
+   che tiene in piedi il sistema.
+   ⚠️ Uno span SOLO: la regola `main h2 span + span` colpisce il
+   SECONDO span e qui non entra in gioco. */
+body.mono-dark-home.jobs-page .jobs-percorsi-title span {
+  color: var(--accento);
+}
+
 /* ============================================================
    28/7 sera — /app/: due titoli ritoccati da lui
    ============================================================ */
