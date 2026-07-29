@@ -1667,6 +1667,39 @@ body.mono-dark-home.about-page .about-hero-title .about-mono-oro {
   display: inline;
 }
 
+/* ============================================================
+   28/7 sera — /eventi/: LA TAVOLATA e la terza riga in rosso
+   ============================================================ */
+
+/* (1) L'illustrazione deve VEDERSI. ⚠️ Sesta volta per la trappola
+   dell'opacita' zero: il segnaposto fa uscire subito setupPageScene(),
+   che percio' non aggiunge piu' `.is-scene-awake`, e senza quella
+   `.mono-page-scene { opacity: 0 }` la terrebbe invisibile per sempre.
+   Regola CSS come per --social, --frusta e la tavola di /la-bottega/:
+   niente JavaScript, cosi' non c'e' niente che possa non partire.
+   ⚠️ Il `transform` si tocca SOLO da 821px in su: sotto, la scena e'
+   centrata con left:50% + translate(-50%) e imporre qui la posa da
+   computer la sposterebbe di mezza larghezza. */
+body.mono-dark-home.events-page .page-hero .mono-scene-tavolata {
+  opacity: 1;
+}
+@media (min-width: 821px) {
+  body.mono-dark-home.events-page .page-hero .mono-scene-tavolata {
+    transform: translate3d(var(--scene-x), calc(-50% + var(--scene-y)), 0) scale(1);
+  }
+}
+body.mono-dark-home .mono-scene-tavolata svg { height: auto; width: 100%; }
+
+/* (2) "Facile da organizzare." passa dall'oro al ROSSO.
+   ⚠️ E' il rosso PIU' SCARICO, #FF8360 (--mono-rosso-brillante), cioe'
+   quello della parola "amore" sulla home — non il #FF5533 del cuore di
+   Convivium, che e' piu' acceso. Lo ha chiesto lui cosi'.
+   Le prime due righe non si toccano: "Buono da mangiare." resta
+   terracotta e "Bello da condividere." resta oro. */
+body.mono-dark-home.events-page .events-proposal-title span:nth-child(3) {
+  color: var(--mono-rosso-brillante);
+}
+
 /* 28/7 sera — /gastronomia/, sezione "Disponibilità", riscritta da lui.
    "La cucina è all'opera." (oro) / "E presto saprai cosa assaggiare
    oggi." (ROSSO), su due righe, una riga ciascuna.
