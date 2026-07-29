@@ -31,9 +31,9 @@
     <link rel="stylesheet" href="../styles.css?v=20260716-fonts-v1">
 <link rel="stylesheet" href="../experience.css?v=20260716-fonts-v1">
 <link rel="stylesheet" href="../mono-engineering.css?v=20260716-fonts-v1">
-      <link rel="stylesheet" href="../mono-enhance.css?v=20260728-tavola-visibile-v56">
-    <link rel="stylesheet" href="../mono-dark-home.css?v=20260728-tavola-visibile-v56">
-      <script defer src="../mono-enhance.js?v=20260728-tavola-visibile-v56"></script>
+      <link rel="stylesheet" href="../mono-enhance.css?v=20260728-chisiamo-chiusura-v57">
+    <link rel="stylesheet" href="../mono-dark-home.css?v=20260728-chisiamo-chiusura-v57">
+      <script defer src="../mono-enhance.js?v=20260728-chisiamo-chiusura-v57"></script>
       <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -69,7 +69,7 @@
         ]
       }
     </script>
-    <script src="../mono-config.js?v=20260728-tavola-visibile-v56"></script>
+    <script src="../mono-config.js?v=20260728-chisiamo-chiusura-v57"></script>
 </head>
   <body class="mono-world about-page mono-dark-home" data-mono-world="people">
     <a class="skip-link" href="#main">Vai al contenuto</a>
@@ -210,7 +210,13 @@
       </section>
       <section class="page-section alt about-service">
         <p class="eyebrow">IL NOSTRO MODO DI ACCOGLIERTI</p>
-        <h2 class="about-section-title"><span>Non passiamo prodotti.</span><span>Ci prendiamo cura della tua scelta.</span></h2>
+        <!-- 28/7 sera - "Non passiamo prodotti." non si capiva ("non e' facile
+             da capire", suo). Il senso che voleva: non vendiamo SOLO prodotti.
+             Fra tre proposte ha scelto questa, che dice la stessa cosa parlando
+             del prodotto invece che di noi, e suona meno commerciale.
+             La classe serve a tenere le due righe su UNA RIGA CIASCUNA: vedi
+             mono-dark-home.css, il titolo va allargato oltre i 920px di regola. -->
+        <h2 class="about-section-title about-scelta-title"><span>Un prodotto, da solo, non basta.</span><span>Ci prendiamo cura della tua scelta.</span></h2>
         <p>
           Chi lavora in MONO conosce ciò che vende, ascolta ciò che cerchi e ti consiglia con misura.
         </p>
@@ -239,6 +245,18 @@
         <p>
           Monoconvivium non è un’iniziativa collaterale: vive negli stessi spazi, condivide gli stessi standard e trasforma il potenziale in competenza reale.
         </p>
+        <!-- 28/7 sera - il cuore di posate di Monoconvivium, chiesto da lui:
+             sta a destra della sezione da computer, e scende sotto, centrato,
+             sul telefono. E' decorativo (il testo accanto dice gia' tutto),
+             quindi alt vuoto + aria-hidden: chi usa un lettore di schermo non
+             deve sentirsi leggere un'immagine che non aggiunge niente. -->
+        <img class="about-convivium-cuore" src="../assets/brand/mono-convivium-light.svg"
+             alt="" aria-hidden="true" width="1122" height="794" loading="lazy" decoding="async">
+        <!-- 28/7 sera - chiusura rifatta su sua indicazione: centrata, con piu'
+             peso, e nel ROSSO BRILLANTE di "amore" (non il rosso dei bottoni).
+             Le due righe devono stare su UNA RIGA CIASCUNA: il <br> le separa,
+             la larghezza la sistema mono-dark-home.css.
+             La frase piccola sotto resta com'era: "va bene anche quella". -->
         <div class="about-impact-closing">
           <p class="about-impact-call">Scegli qualcosa di buono.<br>Contribuisci a costruire qualcosa di importante.</p>
           <p>Ogni acquisto sostiene una cucina fatta bene e un futuro con più possibilità.</p>
@@ -264,8 +282,8 @@
 <script src="../cinematic-assets.js?v=20260718-tavola-eventi-v1"></script>
 <script src="../mono-cinematic.js?v=20260725-fluido-v8"></script>
     <script src="../mono-navigation.js?v=20260714-engineering-master-v1"></script>
-    <script src="../mono-signature.js?v=20260728-tavola-visibile-v56"></script>
-    <script src="../app.js?v=20260728-tavola-visibile-v56"></script>
+    <script src="../mono-signature.js?v=20260728-chisiamo-chiusura-v57"></script>
+    <script src="../app.js?v=20260728-chisiamo-chiusura-v57"></script>
 <script src="../experience.js?v=20260715-people-table-v1"></script>
   </body>
 </html>

@@ -1478,6 +1478,72 @@ body.mono-dark-home.about-page .page-hero .mono-scene-tavola {
 }
 body.mono-dark-home .mono-scene-tavola svg { height: auto; width: 100%; }
 
+/* ============================================================
+   28/7 sera — /la-bottega/, TRE RITOCCHI CHIESTI DA LUI
+   ============================================================ */
+
+/* (1) "Un prodotto, da solo, non basta. / Ci prendiamo cura della tua
+   scelta." — voleva la seconda riga su UNA RIGA SOLA.
+   ⚠️ Non si e' rimpicciolito il testo: MISURATO, la riga e' larga
+   1112px mentre il titolo era chiuso in 920 da
+   `.page-section > h2 { max-width: 920px }` (styles.css) — ma la
+   sezione di spazio ne ha 1252. Quindi basta ALLARGARE il titolo e il
+   corpo resta grande. Solo da 821px in su: sotto, andare a capo e'
+   giusto e la riga unica sarebbe illeggibile. */
+@media (min-width: 821px) {
+  body.mono-dark-home.about-page .about-scelta-title {
+    max-width: min(1180px, 100%);
+  }
+}
+
+/* (2) Il cuore di posate di Monoconvivium.
+   Sul telefono: sotto, centrato, piccolo. Da computer: a destra, nello
+   spazio libero accanto al testo (che si ferma a 920px). */
+body.mono-dark-home.about-page .about-impact { position: relative; }
+body.mono-dark-home.about-page .about-convivium-cuore {
+  display: block;
+  height: auto;
+  margin: 34px auto 6px;
+  max-width: 230px;
+  opacity: 0.9;
+  width: 58%;
+}
+@media (min-width: 1081px) {
+  body.mono-dark-home.about-page .about-convivium-cuore {
+    margin: 0;
+    max-width: none;
+    position: absolute;
+    right: clamp(24px, 4vw, 76px);
+    top: clamp(96px, 15vh, 210px);
+    width: min(23vw, 290px);
+  }
+}
+
+/* (3) La chiusura: centrata, piu' importante, nel ROSSO BRILLANTE.
+   ⚠️ Questa e' la SECONDA e ULTIMA eccezione a --mono-rosso-brillante,
+   che era nato solo per "amore" sull'isola verde della home. L'ha
+   chiesto lui proprio per distinguerla dal rosso dei bottoni e darle
+   piu' peso. Qui il fondo e' scuro, quindi si legge senza problemi:
+   il limite dell'altro rosso valeva sul verde, non sul buio.
+   ⚠️ Anche qui la larghezza va oltre i 920px di regola, se no
+   "Contribuisci a costruire qualcosa di importante." va a capo. */
+body.mono-dark-home.about-page .about-impact-closing {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: min(1240px, 100%);
+  text-align: center;
+}
+body.mono-dark-home.about-page .about-impact-call {
+  color: var(--mono-rosso-brillante);
+  letter-spacing: -0.01em;
+  margin-bottom: 18px;
+}
+body.mono-dark-home.about-page .about-impact-closing > p:last-child {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 62ch;
+}
+
 /* 28/7 sera — /la-bottega/, titolo hero: "MONO" torna DORATO.
    Prima tutta la prima riga era rossa (il --titolo delle pagine PERSONE).
    Su sua indicazione: MONO oro · "nasce dalla cucina." rosso · "Cresce
