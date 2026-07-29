@@ -275,6 +275,28 @@ body.mono-dark-home.gastronomia-page .gastro-brand-banner .gastronomia-hero-logo
   width: min(520px, 74vw);
   margin: clamp(8px, 1.4vw, 20px) auto clamp(20px, 2.4vw, 32px);
 }
+
+/* 28/7 sera — la frase sotto la vetrina va in STAMPATELLO (suo).
+   Il maiuscolo si fa qui e non riscrivendo il testo in pagina: nel
+   sorgente resta la frase normale, che e' quella che leggono i lettori
+   di schermo, e se cambia idea si tocca una riga sola.
+   ⚠️ Un filo di spaziatura fra le lettere: in maiuscolo il Fraunces
+   si stringe e senza diventa un blocco. MISURATO: in maiuscolo la
+   frase chiede 632px e ne ha 760, quindi resta su una riga. */
+body.mono-dark-home.gastronomia-page .gastronomia-hero-payoff {
+  letter-spacing: 0.022em;
+  text-transform: uppercase;
+}
+
+/* 28/7 sera — la descrizione: due righe, UNA RIGA CIASCUNA (suo).
+   ⚠️ Il `<br>` da solo non bastava: la regola `max-width: 64ch`
+   (experience.css) chiudeva il testo in 693px e la prima riga, che ne
+   chiede 828, andava a capo lo stesso. Qui lo spazio utile e' 1252px,
+   quindi basta alzare il tetto. Sotto i 900px torna ad andare a capo
+   da sola, ed e' giusto cosi'. */
+body.mono-dark-home.gastronomia-page .gastronomia-hero-description {
+  max-width: min(900px, 100%);
+}
 body.mono-dark-home.gastronomia-page .gastro-brand-banner .gastronomia-hero-title {
   color: var(--mono-anthracite);
   font-size: clamp(22px, 2.6vw, 36px);
