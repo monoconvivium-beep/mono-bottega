@@ -1,4 +1,4 @@
-const CACHE_NAME = "mono-site-v156";
+const CACHE_NAME = "mono-site-v157";
 const ASSETS = [
   "./",
   "./index.html",

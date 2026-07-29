@@ -236,9 +236,44 @@ body.mono-dark-home.gastronomia-page .page-hero .chapter-film {
   position: relative;
   z-index: 2;
 }
+/* ============================================================
+   28/7 sera — VETRINA GASTRONOMIA: "LA LUCE" (sua scelta)
+
+   Fra tre proposte provate dal vivo su /prova-gastronomia/ (Il sigillo ·
+   La luce · La targa) ha scelto questa: «la luce vince nettamente su
+   tutte le altre». Motivo del lavoro: il logo MONO e' il marchio di
+   TUTTO il brand e li' era piccolo rispetto allo spazio — voleva
+   «piu' importanza e sacralita'».
+
+   Due mosse sole: il marchio molto piu' grande, e un alone caldo
+   dietro che lo fa sembrare illuminato invece che appoggiato.
+   ⚠️ `overflow: hidden` sulla carta serve a tenere l'alone dentro gli
+   angoli arrotondati, se no sborda dai 30px di raggio.
+   ⚠️ I figli vanno alzati a z-index 1: l'alone e' un ::before e
+   altrimenti coprirebbe logo e titolo.
+   ============================================================ */
+body.mono-dark-home.gastronomia-page .gastro-brand-banner {
+  overflow: hidden;
+}
+body.mono-dark-home.gastronomia-page .gastro-brand-banner::before {
+  aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(203, 167, 90, 0.38), rgba(203, 167, 90, 0) 62%);
+  content: "";
+  left: 50%;
+  pointer-events: none;
+  position: absolute;
+  top: clamp(-70px, -4vw, -20px);
+  transform: translateX(-50%);
+  width: min(124%, 920px);
+  z-index: 0;
+}
+body.mono-dark-home.gastronomia-page .gastro-brand-banner > * {
+  position: relative;
+  z-index: 1;
+}
 body.mono-dark-home.gastronomia-page .gastro-brand-banner .gastronomia-hero-logo {
-  width: min(400px, 66vw);
-  margin: 0 auto 16px;
+  width: min(520px, 74vw);
+  margin: clamp(8px, 1.4vw, 20px) auto clamp(20px, 2.4vw, 32px);
 }
 body.mono-dark-home.gastronomia-page .gastro-brand-banner .gastronomia-hero-title {
   color: var(--mono-anthracite);
@@ -1518,13 +1553,23 @@ body.mono-dark-home.about-page .about-convivium-cuore {
      scelta / nutre due volte." e' corto e finisce intorno a meta' pagina,
      quindi li' c'e' spazio vero. Piu' in basso i paragrafi arrivano a
      920px e il cuore ci finirebbe sopra. */
+  /* 28/7 sera, TERZO giro — non ci siamo ancora, suo: "lo voglio piu'
+     grosso, al centro di quel pezzo li', all'altezza della riga dove
+     dice «E nutre il futuro, sostenendo Monoconvivium»".
+     ⚠️ Il `top` e' misurato: quella riga cade a ~390px dall'inizio
+     della sezione, quindi il cuore (alto ~330) parte a ~225 per
+     restarci centrato. Legato a vw e non a vh: l'altezza della
+     finestra non c'entra niente con dove cade il testo.
+     ⚠️ Piu' in basso di cosi' non si puo' scendere granche': i
+     paragrafi arrivano a 920px e il cuore ci finirebbe sopra. Qui la
+     riga "formazione, lavoro e autonomia." e' corta e lascia campo. */
   body.mono-dark-home.about-page .about-convivium-cuore {
     margin: 0;
     max-width: none;
     position: absolute;
-    right: clamp(40px, 8vw, 170px);
-    top: clamp(34px, 5vh, 80px);
-    width: min(30vw, 390px);
+    right: clamp(28px, 5vw, 110px);
+    top: clamp(150px, 16vw, 250px);
+    width: min(35vw, 470px);
   }
 }
 
