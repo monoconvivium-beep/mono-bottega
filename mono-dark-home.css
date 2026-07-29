@@ -1667,6 +1667,29 @@ body.mono-dark-home.about-page .about-hero-title .about-mono-oro {
   display: inline;
 }
 
+/* 28/7 sera — /gastronomia/, sezione "Disponibilità", riscritta da lui.
+   "La cucina è all'opera." (oro) / "E presto saprai cosa assaggiare
+   oggi." (ROSSO), su due righe, una riga ciascuna.
+   ⚠️ Regola esplicita obbligatoria: la generica `main h2 span + span`
+   farebbe la seconda riga ORO. Stessa avvertenza dei titoli gemelli.
+   ⚠️ MISURATO a 1440: la riga rossa chiede 1175px e il titolo era
+   chiuso in 920 da `.page-section > h2`; lo spazio utile della sezione
+   e' 1252, quindi basta allargare. Il paragrafo: la seconda frase
+   chiede 851px contro i 715 del suo max-width, stessa cura.
+   Sotto gli 821px tutto torna ad andare a capo da solo, ed e' giusto. */
+body.mono-dark-home.gastronomia-page .gastronomia-banco-title span { display: block; }
+body.mono-dark-home.gastronomia-page .gastronomia-banco-title span + span {
+  color: var(--accento);
+}
+@media (min-width: 821px) {
+  body.mono-dark-home.gastronomia-page .gastronomia-banco-title {
+    max-width: min(1220px, 100%);
+  }
+  body.mono-dark-home.gastronomia-page .gastronomia-banco-testo {
+    max-width: min(890px, 100%);
+  }
+}
+
 /* 28/7 sera — /gastronomia/, "Radici vere, / FORMA CONTEMPORANEA.":
    due righe vere e la seconda in ROSSO, chiesto da lui.
    ⚠️ Serve la regola esplicita: quella generica `main h2 span + span`
