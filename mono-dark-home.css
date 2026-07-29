@@ -1835,7 +1835,16 @@ body.mono-dark-home .product-system .product-system-title em::after {
    ALTRI DUE ROSSI CHIESTI IL 28/7 SERA (fondo scuro, non verde:
    qui la terracotta fa 3,93, sopra la soglia 3 dei titoli grandi)
 
-   1. "Trasparenza al banco. Semplice a casa." — titolo INTERO rosso.
+   1. "Trasparenza al banco. Semplice a casa." — titolo su DUE RIGHE,
+      DUE COLORI (aggiornato il 29/7: prima era tutto rosso).
+      1a riga ROSSA, 2a riga ORO — richiesta sua guardando la pagina.
+      La 1a riga eredita il rosso dall'h2; la 2a lo scavalca con
+      `var(--titolo)`, che sulla home vale ORO (le pagine PRODOTTO hanno
+      i due colori invertiti rispetto a quelle PERSONE, riga 535/542).
+      ⚠️ La regola esplicita e' voluta anche se la generica
+      `main h2 span + span` farebbe gia' oro: qui l'h2 e' rosso per
+      conto suo e senza una regola SULLO span la seconda riga
+      erediterebbe il rosso.
    2. "La strada per qualcosa di buono porta qui." — rosso SOLO su
       "porta qui" (suo: "lo scrivi solo porta qui in rosso"), che in
       `index.html` e' avvolto in uno <span>. Il resto resta oro perche'
@@ -1844,6 +1853,12 @@ body.mono-dark-home .product-system .product-system-title em::after {
    ============================================================ */
 body.mono-dark-home .value-section h2 {
   color: var(--accento);
+}
+body.mono-dark-home .value-section h2 span {
+  display: block;
+}
+body.mono-dark-home .value-section h2 span + span {
+  color: var(--titolo);
 }
 body.mono-dark-home .local-info-section h2 span {
   color: var(--accento);
