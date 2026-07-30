@@ -599,8 +599,15 @@
     };
     // Se il fuoco viene interrotto mentre suona ancora (rete di sicurezza,
     // "Salta", scorrimento veloce su desktop), tagliare l'audio di netto fa
-    // un tonfo. Sfuma in 260ms e poi mette in pausa. Se il video e' gia'
-    // finito da solo non c'e' niente da sfumare e si esce subito.
+    // un tonfo. Sfuma e poi mette in pausa. Se il video e' gia' finito da
+    // solo non c'e' niente da sfumare e si esce subito.
+    // ⚠️ 30/7 - DA 260 A 160ms. Non e' un dettaglio audio: questa attesa sta
+    // PRIMA della dissolvenza (transitionToPasta fa `await sfumaEPausa`),
+    // quindi si somma al passaggio che si vede. Fa parte dell'opzione B
+    // scelta guardando il provino: 160 + 450 di dissolvenza = ~0,6s in tutto,
+    // contro gli ~1,3s di prima. Gli altri due numeri stanno in styles.css
+    // (SONO TRE, si muovono insieme).
+    const SFUMATURA_AUDIO = 160;
     const sfumaEPausa = (video) => new Promise((resolve) => {
       if (!video || video.paused || video.muted || video.ended || !video.volume) {
         video?.pause();
@@ -619,7 +626,7 @@
           try { video.volume = partenza; } catch (e) { /* ignora */ }
           resolve();
         }
-      }, 260 / passi);
+      }, SFUMATURA_AUDIO / passi);
     });
 
     /* ============================================================
@@ -756,11 +763,16 @@
     // 22/7 - PORTATO DA 6,4 A 5,0. L'utente ha riferito che 6,4 era
     // diventato troppo lungo (dopo che 1,8 era troppo corto).
     // ⚠️ IL MOTIVO VERO, che a luglio non avevamo considerato: lo stacco
-    // NON e' istantaneo. .cinema-video--fire/--pasta hanno
-    // "transition: opacity 1000ms" (styles.css:2482-2493) + il lampo
-    // .cinema-bridge da 1500ms. Quindi il fuoco resta in scena fino a
-    // STACCO_MOBILE + ~1s: con 6,4 il pentolino si vedeva fino a ~7,4s.
-    // Alla durata scelta va SEMPRE sommato 1s di dissolvenza.
+    // NON e' istantaneo. .cinema-video--fire/--pasta hanno una dissolvenza
+    // (styles.css) + il lampo .cinema-bridge. Quindi il fuoco resta in
+    // scena fino a STACCO_MOBILE + la dissolvenza: con 6,4 e la dissolvenza
+    // di allora (1s) il pentolino si vedeva fino a ~7,4s.
+    // ⚠️⚠️ 30/7 - LA DISSOLVENZA ORA E' 450ms, NON PIU' 1000ms (opzione B,
+    // scelta guardando un provino). Quindi oggi il fuoco sparisce verso i
+    // 5,45s, non piu' verso i 6,0s. Il film mostrato non cambia - restano
+    // i 5,0s pieni con fiammata e picco di luce - si accorcia solo la coda.
+    // ⚠️ Se un domani lo si vuole piu' lungo, si alza QUESTO numero, non la
+    // dissolvenza: quella la ha scelta lui guardando.
     // 5,0 tiene tutto cio' che racconta qualcosa - la fiammata (1,4-2,4)
     // e il picco di luce completo (3,4-4,4) - piu' 0,6s di respiro, e
     // taglia solo la coda che si stava gia' spegnendo. Il fuoco sparisce

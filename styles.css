@@ -2510,15 +2510,28 @@ body.qr-dialog-open {
   object-position: center 42%;
   display: block;
 }
+/* ⚠️ 30/7 — IL PASSAGGIO FRA I DUE FILM: DA ~1,3s A ~0,6s (opzione B).
+   Scelto da lui guardando un provino con tre velocita' affiancate.
+   I numeri sono TRE e vanno mossi INSIEME, se no il passaggio si sfalsa:
+     1) questa dissolvenza, 1000ms -> 450ms (due volte, fuoco e pasta);
+     2) il lampo .cinema-bridge, 1500ms -> 700ms (poco piu' sotto);
+     3) la sfumatura dell'audio in mono-cinematic.js (SFUMATURA_AUDIO),
+        260ms -> 160ms, che sta PRIMA della dissolvenza e si somma.
+   ⚠️ Conseguenza su TELEFONO, da sapere: il fuoco resta in scena fino a
+   STACCO_MOBILE + la dissolvenza. Prima erano 5,0 + 1,0 = 6,0s, ora sono
+   5,0 + 0,45 = ~5,45s. Il film mostrato e' sempre lo stesso (5,0s pieni,
+   fiammata e picco di luce compresi): si accorcia solo la coda che
+   sfumava. Se un domani sembra troppo corto, si alza STACCO_MOBILE, NON
+   questa dissolvenza. */
 .cinema-video--fire {
   filter: saturate(1.5) contrast(1.08) brightness(1.12);
   opacity: 1;
-  transition: opacity 1000ms ease;
+  transition: opacity 450ms ease;
 }
 .cinema-video--pasta {
   filter: saturate(1.16) contrast(1.04) brightness(1.06);
   opacity: 0;
-  transition: opacity 1000ms ease;
+  transition: opacity 450ms ease;
 }
 .cinema-hero.is-transitioned.pasta-ready .cinema-video--fire { opacity: 0; }
 .cinema-hero.is-transitioned.pasta-ready .cinema-video--pasta { opacity: 1; }
@@ -2534,7 +2547,8 @@ body.qr-dialog-open {
   mix-blend-mode: screen;
 }
 .cinema-hero.is-transitioned.pasta-ready .cinema-bridge {
-  animation: cinema-bridge-bloom 1500ms ease forwards;
+  /* 30/7: 1500ms -> 700ms, numero 2 dei tre del passaggio (vedi sopra). */
+  animation: cinema-bridge-bloom 700ms ease forwards;
 }
 @keyframes cinema-bridge-bloom {
   0% { opacity: 0; }
