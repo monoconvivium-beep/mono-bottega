@@ -5,7 +5,7 @@
    ⚠️ DUE COSE DA SAPERE PRIMA DI TOCCARLO
 
    1) LA SIGLA `?v=` QUI DENTRO DEVE ESSERE LA STESSA DELLE PAGINE.
-      Le pagine chiedono `styles.css?v=20260730-glutine-v78`. Per il browser
+      Le pagine chiedono `styles.css?v=20260730-mappa-v79`. Per il browser
       quello e' l'indirizzo del file: se qui lo precarico senza la sigla,
       metto in cache un indirizzo che nessuno chiedera' MAI, e il file viene
       scaricato due volte. Dal 29/7 la sigla e' UNA SOLA per tutto il sito
@@ -15,8 +15,8 @@
    2) SI BUMPA `CACHE_NAME` A OGNI PUBBLICAZIONE.
       E' la chiave della dispensa: se non cambia, la roba vecchia resta.
    ============================================================ */
-const VERSIONE = "20260730-glutine-v78";
-const CACHE_NAME = "mono-site-v177";
+const VERSIONE = "20260730-mappa-v79";
+const CACHE_NAME = "mono-site-v178";
 
 /* ------------------------------------------------------------
    COSA SI PRECARICA — e cosa NON si precarica piu'

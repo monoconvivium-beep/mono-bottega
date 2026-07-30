@@ -2162,9 +2162,36 @@ body.mono-dark-home .location-apertura {
 body.mono-dark-home .location-apertura strong {
   color: var(--mono-champagne);
 }
-/* La mappa: rapporto 16:9 su computer, piu' alta e stretta sul telefono.
+/* ============================================================
+   LA MAPPA di /dove-siamo/ — GOOGLE MAPS (30/7)
+
+   ⚠️⚠️ CORREZIONE DI UNA MIA AFFERMAZIONE SBAGLIATA DEL 29/7.
+   Il 29/7 avevo messo OpenStreetMap scrivendo che la mappa di Google
+   "avrebbe messo i suoi cookie, e allora sarebbe servito il banner".
+   Il 30/7 l'ho VERIFICATO invece di darlo per buono, ed e' falso:
+   l'incorporamento di Google Maps non manda NESSUN `Set-Cookie` al
+   caricamento (controllate le intestazioni della risposta) e nel browser
+   `document.cookie` resta vuoto. Il banner non serve comunque.
+   Quello che resta vero: l'incorporamento manda l'indirizzo IP del
+   visitatore a Google — ma il sito lo fa GIA' su tutte e 16 le pagine con i
+   caratteri di Google, quindi qui non si aggiunge nessuna esposizione nuova.
+   E' dichiarato sull'informativa privacy, voce per voce.
+   Passata a Google su sua richiesta: "mi piace di piu'". E ha ragione anche
+   funzionalmente: la gente sa gia' usarla, e ci trova dentro le indicazioni
+   stradali e Street View senza uscire dalla pagina.
+
+   ⚠️ LA QUERY E' COL NOME DELLA BOTTEGA, non col solo indirizzo.
+   Verificato: con "Mono Bottega Gastronomica, Via Barletta 72D, Torino"
+   Google trova la SCHEDA e restituisce 45.0479235,7.6432628 — le stesse
+   coordinate del blocco dati della home. Col solo indirizzo il pin sarebbe
+   anonimo e a 45.0477415,7.6430286, cioe' una ventina di metri piu' in la'.
+   Se un domani il pin perde il nome della bottega, e' questa query che e'
+   stata cambiata.
+
    `border` chiara perche' la mappa e' un rettangolo BIANCO su fondo notte e
-   senza un bordo sembrerebbe un buco nella pagina. */
+   senza un bordo sembrerebbe un buco nella pagina.
+   Rapporto 16:9 su computer, piu' alta e stretta sul telefono.
+   ============================================================ */
 body.mono-dark-home .location-mappa {
   border: 1px solid rgba(255, 249, 238, 0.22);
   border-radius: 16px;
