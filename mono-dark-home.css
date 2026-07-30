@@ -2225,6 +2225,28 @@ body.mono-dark-home .location-mappa iframe {
 }
 
 /* ============================================================
+   30/7 — «COS'E' UNA BOTTEGA GASTRONOMICA» sulla home
+
+   Sua osservazione, ed era un buco vero: il sito diceva «MONO e' una bottega
+   gastronomica contemporanea» ma non diceva MAI cosa c'e' dentro. Il nome e'
+   nato proprio perche' chiamarla gastronomia, o ristorante, o pasticceria era
+   riduttivo: e' un formato che le tiene tutte insieme.
+   Servono anche a Google: la scheda dell'attivita' dichiara hamburger,
+   cocktail, pasta fresca e pasticceria, e Google confronta scheda e sito. Se
+   il sito non li nomina, i due segnali tirano in direzioni diverse.
+
+   La riga dell'elenco e' piu' piccola e piu' fitta del paragrafo: e' un
+   inventario, non un pensiero. Il filetto oro a sinistra la lega al testo
+   sopra senza farne un riquadro a se'.
+   ============================================================ */
+body.mono-dark-home .definition-elenco {
+  border-left: 2px solid rgba(203, 167, 90, 0.4);
+  font-size: 0.94em;
+  line-height: 1.62;
+  padding-left: 16px;
+}
+
+/* ============================================================
    30/7 — LE CINQUE DOMANDE PRATICHE su /dove-siamo/ (voce 17, 2a parte)
 
    Cercando nel testo di tutte le pagine non compariva MAI: posti a sedere,
