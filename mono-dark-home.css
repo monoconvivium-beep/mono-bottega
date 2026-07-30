@@ -56,7 +56,22 @@ body.mono-dark-home .site-header .nav a::after {
 /* logo piu' grande: deve spiccare (36→46px; da scrollato 30→38px) */
 body.mono-dark-home .site-header .brand-logo { height: 46px; width: 120px; }
 body.mono-dark-home .site-header.is-scrolled .brand-logo { height: 38px; }
-body.mono-dark-home .mobile-menu-toggle { color: var(--mono-cream); border-color: rgba(251, 239, 227, 0.5); }
+/* ⚠️ 30/7 — LA SCRITTA "MENU" ERA QUASI INVISIBILE (segnalato da lui).
+   Era `color: var(--mono-cream)`: crema su un tasto che ha il fondo
+   `rgba(255,249,238,0.42)`, cioe' crema al 42% sopra il terracotta
+   dell'intestazione. Il tasto diventa #d69e84 e il crema sopra fa **1.97**
+   di contrasto (2.38 nel punto piu' scuro): un minimo di 4.5 e' richiesto,
+   quindi era fuori di piu' del doppio. Praticamente si intuiva, non si
+   leggeva.
+   Adesso NERO — `--mono-anthracite` #262321, che e' il nero del sito e uno
+   dei due colori del logo, non un nero qualsiasi: **6.75** (5.59 nel punto
+   piu' scuro). Misurato, non stimato.
+   Anche il bordo passa da crema a scuro: con la scritta nera un bordo chiaro
+   faceva sembrare il tasto spento.
+   ⚠️ Questo tasto ESISTE SOLO SU TELEFONO (`display: none` di regola,
+   `inline-flex` sotto gli 820px in styles.css:2137), quindi qui non serve
+   una media query: e' gia' solo mobile per costruzione. */
+body.mono-dark-home .mobile-menu-toggle { color: var(--mono-anthracite); border-color: rgba(38, 35, 33, 0.35); }
 body.mono-dark-home .header-action {
   background: rgba(21, 15, 10, 0.28);
   border-color: rgba(251, 239, 227, 0.55);
