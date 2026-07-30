@@ -16,7 +16,7 @@
       E' la chiave della dispensa: se non cambia, la roba vecchia resta.
    ============================================================ */
 const VERSIONE = "20260730-bottega-v81";
-const CACHE_NAME = "mono-site-v181";
+const CACHE_NAME = "mono-site-v182";
 
 /* ------------------------------------------------------------
    COSA SI PRECARICA — e cosa NON si precarica piu'
@@ -49,6 +49,13 @@ const ASSETS = [
   "./404.html",
   "./manifest.webmanifest",
 
+  /* Dal 30/7 i caratteri sono nostri (voce 23): questo foglio serve a
+     QUALUNQUE pagina, quindi sta nell'ossatura come gli altri CSS.
+     ⚠️ I .woff2 NON si precaricano di proposito: sono 144 kB che la prima
+     pagina chiede comunque da sola, e li mette in dispensa la regola 3.
+     Precaricarli qui non li farebbe arrivare prima — ruberebbe solo banda
+     alla prima impressione, che e' esattamente il problema risolto il 29/7. */
+  "./mono-fonts.css?v=" + VERSIONE,
   "./mono-colors.css?v=" + VERSIONE,
   "./styles.css?v=" + VERSIONE,
   "./experience.css?v=" + VERSIONE,
@@ -111,7 +118,10 @@ self.addEventListener("activate", (event) => {
    ⚠️ Prima si metteva in cache qualunque cosa tornasse, ERRORI COMPRESI: una
    pagina 404 poteva restare in cache e continuare a essere servita al posto
    di quella vera. `type === "basic"` esclude le risposte da altri domini
-   (i caratteri di Google, la mappa): non sono roba nostra e non le teniamo. */
+   (la mappa di Google): non sono roba nostra e non le teniamo.
+   ⚠️ I CARATTERI NON SONO PIU' UN'ECCEZIONE: dal 30/7 stanno sul nostro
+   dominio, quindi sono `basic` e finalmente entrano in dispensa. Prima
+   venivano da fonts.gstatic.com e questa riga li buttava via ogni volta. */
 function daTenere(risposta) {
   return risposta && risposta.ok && risposta.type === "basic";
 }
@@ -132,7 +142,7 @@ self.addEventListener("fetch", (event) => {
   if (richiesta.destination === "video") return;
 
   const url = new URL(richiesta.url);
-  /* Altri domini (caratteri di Google, mappa OpenStreetMap, statistiche):
+  /* Altri domini (la mappa di Google su /dove-siamo/, le statistiche):
      lasciati passare senza toccarli. */
   if (url.origin !== self.location.origin) return;
 
