@@ -1585,7 +1585,7 @@ body.mono-dark-home .mono-scene-tavola svg { height: auto; width: 100%; }
   }
 }
 
-/* (2) Il cuore di posate di Monoconvivium.
+/* (2) Il cuore di posate di MonoConvivium.
    Sul telefono: sotto, centrato, piccolo. Da computer: a destra, nello
    spazio libero accanto al testo (che si ferma a 920px). */
 body.mono-dark-home.about-page .about-impact { position: relative; }
@@ -1606,7 +1606,7 @@ body.mono-dark-home.about-page .about-convivium-cuore {
      920px e il cuore ci finirebbe sopra. */
   /* 28/7 sera, TERZO giro — non ci siamo ancora, suo: "lo voglio piu'
      grosso, al centro di quel pezzo li', all'altezza della riga dove
-     dice «E nutre il futuro, sostenendo Monoconvivium»".
+     dice «E nutre il futuro, sostenendo MonoConvivium»".
      ⚠️ Il `top` e' misurato: quella riga cade a ~390px dall'inizio
      della sezione, quindi il cuore (alto ~330) parte a ~225 per
      restarci centrato. Legato a vw e non a vh: l'altezza della
@@ -1945,15 +1945,26 @@ body.mono-dark-home .app-gateway-title span + span { color: var(--accento); }
    questa riga la fascia diventerebbe una terza colonna schiacciata accanto
    al marchio e al menu.
    ============================================================ */
+/* ⚠️ 30/7 — RIDOTTA A UNA RIGA, e non e' una svista.
+   Sua richiesta: nel footer resta SOLO la partita IVA. Sede legale, ragione
+   sociale (che contiene nome e cognome), REA e PEC sono suoi dati privati e
+   NON c'e' nessun obbligo di pubblicarli: l'art. 2250 c.c. che li impone vale
+   per le societa', e MONO e' una ditta individuale. Obbligatoria e' solo la
+   P. IVA (art. 35 DPR 633/1972).
+   Essendo una riga sola, la fascia scura di prima sarebbe stata una scatola
+   vuota: adesso e' discreta, allineata a destra accanto al menu del footer.
+   ⚠️ Il fondo terracotta piu' chiaro fa 4.33 col crema pieno: per un testo
+   cosi' piccolo si tiene la velatura scura, che lo porta a 6.17. */
 body.mono-dark-home .site-footer__legale {
   background: rgba(38, 35, 33, 0.28);
-  border-radius: 10px;
+  border-radius: 999px;
   color: #fff9ee;
-  flex-basis: 100%;
-  font-size: 12.5px;
-  line-height: 1.65;
-  margin: 6px 0 0;
-  padding: 12px 16px;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  margin: 0;
+  padding: 6px 14px;
+  white-space: nowrap;
 }
 body.mono-dark-home .site-footer__legale a {
   color: #fff9ee;
@@ -2169,6 +2180,40 @@ body.mono-dark-home .location-mappa iframe {
 }
 @media (max-width: 700px) {
   body.mono-dark-home .location-mappa iframe { aspect-ratio: 4 / 3; }
+}
+
+/* ============================================================
+   30/7 — LE CINQUE DOMANDE PRATICHE su /dove-siamo/ (voce 17, 2a parte)
+
+   Cercando nel testo di tutte le pagine non compariva MAI: posti a sedere,
+   parcheggio, carrozzina, carta, bancomat, glutine. Sono le domande che una
+   persona si fa PRIMA di uscire di casa: se non le trova qui, le chiede
+   altrove o non viene. Risposte dettate da lui.
+
+   E' una <dl>, non una griglia di schede: domanda e risposta sono legate, e
+   per un lettore di schermo `dt`/`dd` dicono esattamente questo. Una scheda
+   non lo direbbe.
+   ============================================================ */
+body.mono-dark-home .location-pratiche {
+  display: grid;
+  gap: 0;
+  margin: 6px 0 0;
+  max-width: 760px;
+}
+body.mono-dark-home .location-pratiche dt {
+  color: var(--mono-champagne);
+  font-size: clamp(15px, 1.3vw, 17px);
+  font-weight: 700;
+  margin-top: 22px;
+}
+body.mono-dark-home .location-pratiche dt:first-of-type { margin-top: 8px; }
+body.mono-dark-home .location-pratiche dd {
+  color: #fff9ee;
+  line-height: 1.6;
+  margin: 5px 0 0;
+  /* la stanghetta oro lega visivamente la risposta alla sua domanda */
+  border-left: 2px solid rgba(203, 167, 90, 0.35);
+  padding-left: 14px;
 }
 
 /* ============================================================

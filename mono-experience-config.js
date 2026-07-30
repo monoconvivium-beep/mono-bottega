@@ -78,7 +78,7 @@
     },
     {
       id: "convivium",
-      title: "MONO Convivium",
+      title: "MonoConvivium",
       eyebrow: "Formazione, lavoro, autonomia",
       preview: "Il cuore sociale lavora nella stessa squadra.",
       href: "mono-convivium/",
