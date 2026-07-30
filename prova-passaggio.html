@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>MONO — il passaggio fra i due film</title>
+<link rel="stylesheet" href="mono-fonts.css?v=20260730-bottega-v81">
+<style>
+  :root {
+    --crema: #F4ECDD;
+    --scuro: #262321;
+    --oro: #CBA75A;
+    --terracotta: #B85C38;
+    /* i due numeri che cambiano fra un provino e l'altro */
+    --dissolvenza: 1000ms;
+    --lampo: 1500ms;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--scuro);
+    color: var(--crema);
+    font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+    padding: 24px 16px 64px;
+  }
+  .foglio { max-width: 980px; margin: 0 auto; }
+  h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(28px, 5vw, 44px);
+    line-height: 1.05;
+    margin: 0 0 6px;
+  }
+  h1 span { display: block; color: var(--oro); }
+  .sottotitolo { color: #cbbfa9; margin: 0 0 26px; max-width: 60ch; line-height: 1.5; }
+
+  /* ---- il palco: stesse classi e stessi filtri della home ---- */
+  .palco {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: 14px;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--terracotta), var(--scuro) 72%);
+  }
+  .strato { position: absolute; inset: 0; }
+  .strato video { width: 100%; height: 100%; object-fit: cover; object-position: center 42%; display: block; }
+  .fuoco {
+    filter: saturate(1.5) contrast(1.08) brightness(1.12);
+    opacity: 1;
+    transition: opacity var(--dissolvenza) ease;
+  }
+  .pasta {
+    filter: saturate(1.16) contrast(1.04) brightness(1.06);
+    opacity: 0;
+    transition: opacity var(--dissolvenza) ease;
+  }
+  .palco.passato .fuoco { opacity: 0; }
+  .palco.passato .pasta { opacity: 1; }
+  .lampo {
+    position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0;
+    background:
+      radial-gradient(ellipse at 50% 44%, rgba(244, 236, 221, 0.55), transparent 44%),
+      radial-gradient(ellipse at 44% 58%, rgba(255, 249, 238, 0.32), transparent 42%);
+    mix-blend-mode: screen;
+  }
+  .palco.passato .lampo { animation: lampo-bloom var(--lampo) ease forwards; }
+  @keyframes lampo-bloom { 0% { opacity: 0; } 36% { opacity: 1; } 100% { opacity: 0; } }
+
+  .stato {
+    position: absolute; left: 12px; bottom: 12px; z-index: 4;
+    background: rgba(38, 35, 33, 0.82);
+    border: 1px solid rgba(244, 236, 221, 0.35);
+    color: var(--crema);
+    padding: 7px 13px; border-radius: 999px;
+    font-size: 13px; letter-spacing: 0.04em;
+  }
+
+  /* ---- i tre bottoni ---- */
+  .scelte { display: grid; gap: 12px; margin: 22px 0 0; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .scelta {
+    display: block; width: 100%; text-align: left; cursor: pointer;
+    background: rgba(244, 236, 221, 0.06);
+    border: 1px solid rgba(244, 236, 221, 0.28);
+    color: var(--crema);
+    border-radius: 12px; padding: 16px 18px;
+    font-family: inherit; font-size: 16px;
+    transition: border-color 160ms ease, background 160ms ease;
+  }
+  .scelta:hover, .scelta:focus-visible { border-color: var(--oro); background: rgba(203, 167, 90, 0.12); }
+  .scelta strong { display: block; font-size: 19px; margin-bottom: 5px; color: var(--oro); }
+  .scelta.attuale strong { color: var(--crema); }
+  .scelta small { display: block; color: #cbbfa9; line-height: 1.45; font-size: 13.5px; }
+  .lettera {
+    display: inline-block; min-width: 26px; height: 26px; line-height: 26px;
+    text-align: center; border-radius: 50%; margin-right: 8px;
+    background: var(--oro); color: var(--scuro); font-weight: 700; font-size: 14px;
+  }
+  .scelta.attuale .lettera { background: rgba(244, 236, 221, 0.35); color: var(--crema); }
+  .nota {
+    margin-top: 26px; padding: 16px 18px; border-radius: 12px;
+    background: rgba(184, 92, 56, 0.14); border: 1px solid rgba(184, 92, 56, 0.5);
+    line-height: 1.55;
+  }
+  .nota strong { color: var(--oro); }
+  @media (max-width: 600px) { body { padding: 18px 12px 48px; } }
+</style>
+</head>
+<body>
+<div class="foglio">
+  <h1>Il passaggio fra i due film.<span>Guarda e scegli una lettera.</span></h1>
+  <p class="sottotitolo">
+    Ogni bottone fa partire il pentolino un attimo prima dello stacco e poi passa
+    agli agnolotti. Sono i due film veri della home. Premi lo stesso bottone
+    più volte se vuoi rivedere il passaggio.
+  </p>
+
+  <div class="palco" id="palco">
+    <div class="strato fuoco">
+      <video id="fuoco" muted playsinline preload="auto" poster="assets/cinematic/web/mono-01-fuoco-ravioli-poster.webp">
+        <source src="assets/cinematic/web/mono-01-fuoco-ravioli-desktop.webm" type="video/webm">
+        <source src="assets/cinematic/web/mono-01-fuoco-ravioli-desktop.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="strato pasta">
+      <video id="pasta" muted playsinline preload="auto" poster="assets/cinematic/web/mono-01-ravioli-cut-poster.webp">
+        <source src="assets/cinematic/web/mono-01-ravioli-cut-desktop.webm" type="video/webm">
+        <source src="assets/cinematic/web/mono-01-ravioli-cut-desktop.mp4" type="video/mp4">
+      </video>
+    </div>
+    <span class="lampo"></span>
+    <span class="stato" id="stato">Premi una lettera qui sotto</span>
+  </div>
+
+  <div class="scelte">
+    <button class="scelta attuale" data-dissolvenza="1000" data-lampo="1500" data-sfumatura="260">
+      <strong><span class="lettera">A</span>Com'è adesso</strong>
+      <small>Dissolvenza 1 secondo, lampo di luce 1,5 secondi, più 0,26 s di sfumatura prima di partire. In tutto il passaggio dura circa 1,3 secondi.</small>
+    </button>
+    <button class="scelta" data-dissolvenza="450" data-lampo="700" data-sfumatura="160">
+      <strong><span class="lettera">B</span>Svelta</strong>
+      <small>Dissolvenza 0,45 s, lampo 0,7 s, sfumatura 0,16 s. Si sente ancora il passaggio, ma non si aspetta: circa 0,6 secondi in tutto.</small>
+    </button>
+    <button class="scelta" data-dissolvenza="200" data-lampo="380" data-sfumatura="90">
+      <strong><span class="lettera">C</span>Secca</strong>
+      <small>Dissolvenza 0,2 s, lampo 0,38 s, sfumatura 0,09 s. Quasi uno stacco di montaggio: cambia scena e basta.</small>
+    </button>
+  </div>
+
+  <div class="nota">
+    <strong>C'è anche un'altra cosa, e non è la stessa.</strong><br>
+    Qui sopra scegli <em>quanto dura</em> il passaggio. Ma c'è pure <em>quando</em> avviene:
+    su telefono lo stacco è a 5 secondi, mentre <strong>su computer lo decide lo scorrimento</strong> —
+    se resti fermo senza scorrere, il pentolino va avanti <strong>10 secondi interi</strong> prima di
+    passare agli agnolotti. Se ti sembra lungo anche quello, dimmelo e lo accorcio: è un numero a parte.
+  </div>
+</div>
+
+<script>
+(function () {
+  var palco = document.getElementById("palco");
+  var fuoco = document.getElementById("fuoco");
+  var pasta = document.getElementById("pasta");
+  var stato = document.getElementById("stato");
+  var timer = null;
+
+  function scrivi(t) { stato.textContent = t; }
+
+  function riparti() {
+    window.clearTimeout(timer);
+    palco.classList.remove("passato");
+    try { fuoco.currentTime = 3.4; } catch (e) {}
+    try { pasta.currentTime = 0; } catch (e) {}
+    pasta.pause();
+  }
+
+  function guarda(dissolvenza, lampo, sfumatura) {
+    riparti();
+    palco.style.setProperty("--dissolvenza", dissolvenza + "ms");
+    palco.style.setProperty("--lampo", lampo + "ms");
+    scrivi("il pentolino…");
+    var p = fuoco.play();
+    if (p && p.catch) p.catch(function () {});
+    // 1,6 s di pentolino, poi la sfumatura, poi il passaggio: come sulla home
+    timer = window.setTimeout(function () {
+      scrivi("passaggio");
+      timer = window.setTimeout(function () {
+        fuoco.pause();
+        palco.classList.add("passato");
+        var q = pasta.play();
+        if (q && q.catch) q.catch(function () {});
+        timer = window.setTimeout(function () { scrivi("gli agnolotti"); }, dissolvenza);
+      }, sfumatura);
+    }, 1600);
+  }
+
+  var bottoni = document.querySelectorAll(".scelta");
+  for (var i = 0; i < bottoni.length; i++) {
+    bottoni[i].addEventListener("click", function () {
+      guarda(
+        Number(this.getAttribute("data-dissolvenza")),
+        Number(this.getAttribute("data-lampo")),
+        Number(this.getAttribute("data-sfumatura"))
+      );
+    });
+  }
+
+  // il primo fotogramma pronto, senza far partire niente
+  try { fuoco.currentTime = 3.4; } catch (e) {}
+})();
+</script>
+</body>
+</html>
