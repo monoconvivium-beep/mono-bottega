@@ -35,19 +35,32 @@ Esempi:
 - Derivati: `web/mono-02-cucina-magica-desktop.*`
 - Uso: Prodotti/Gastronomia.
 
-### 03 — Molte mani
+### 03 — Molte mani — TOLTO IL 30/7
 
-- Master: `source/mono-03-molte-mani-master.mp4`
-- Derivati: `web/mono-03-molte-mani-desktop.*`
-- Uso principale: Chi siamo.
-- Uso secondario: solo poster/still in Convivium.
+Non c'e' piu' in questa cartella. Era un film **vero e diverso** dagli altri
+(non un doppione), ma **non e' mai stato pubblicato**: dal 18/7 su Chi siamo va
+il film 04, e `cinematic-assets.js` non lo nominava piu' da nessuna parte.
+Erano 8 MB fermi online che nessuno chiedeva.
+⚠️ Sta nella storia di git e torna indietro quando si vuole:
+`git log --all -- assets/cinematic/source/mono-03-molte-mani-master.mp4`,
+poi `git checkout <commit> -- <percorso>`.
 
-### 04 — Tavola Eventi
+### 04 — Chi siamo
 
-- Master atteso: `source/mono-04-tavola-eventi-master.mp4`
-- Stato: non ricevuto.
-- Uso futuro: Eventi.
+- Master: `source/mono-04-chi-siamo-master.mp4`
+- Derivati: `web/mono-04-chi-siamo-desktop.*`
+- Uso: Chi siamo (`la-bottega`), + poster/still in Convivium.
+- ⚠️ Il titolo dice "la brigata al passe": **ha preso il posto del film 03**,
+  che raccontava un'altra cosa. Il commento in `cinematic-assets.js` lo spiega.
+
+### 05 — Tavola Eventi
+
+- Master: `source/mono-05-tavola-eventi-master.mp4`
+- Uso: Eventi.
 - Non viene sostituito con stock o film non approvati.
+
+⚠️ **La numerazione qui sopra e' cambiata il 18/7**: quello che questo file
+chiamava "04 — Tavola Eventi, non ricevuto" oggi e' il **05**, ed e' arrivato.
 
 ## Badge
 

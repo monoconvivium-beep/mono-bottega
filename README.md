@@ -39,14 +39,22 @@ solo con GLB reali, compressi e caricati dopo LCP.
 
 ## Asset Principali
 
-- `assets/hero/mono-kitchen-fire-desktop.mp4`
-- `assets/hero/mono-kitchen-fire-poster.jpg`
-- `assets/hero/mono-kitchen-fire-og.jpg`
+- `assets/hero/mono-kitchen-fire-poster.jpg` — il poster della home.
+- `assets/hero/mono-kitchen-fire-og.jpg` — l'anteprima social di tutte le pagine.
 - `assets/mono-table/mono-table-ritual-desktop.webp`
 - `assets/mono-table/mono-table-ritual-mobile.webp`
-- `assets/mono-table/mono-table-ritual-og.webp`
+- `assets/cinematic/` — i film veri della home e delle interne, elencati uno per
+  uno in `cinematic-assets.js`. Il README della cartella li descrive.
+- `assets/fonts/` — i caratteri, dal 30/7 ospitati in casa (vedi `mono-fonts.css`).
 - `assets/brand/` per il sistema logo operativo.
 - `icons/` per icone PWA MONO.
+
+⚠️ **30/7 — questo elenco era in parte falso** e mi ha fatto credere vivi due
+video da 4,7 MB: `mono-kitchen-fire-desktop.mp4` e `mono-table-ritual-og.webp`
+erano citati qui e in nessun altro posto. Citare un file in un documento non lo
+rende usato: la hero della home passa dal sistema cinematografico, e l'attributo
+`data-hero-video` che il vecchio codice cercava non esiste in nessuna pagina.
+Tolti insieme agli altri file morti.
 
 ## Brand System
 

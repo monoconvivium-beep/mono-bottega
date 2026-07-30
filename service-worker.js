@@ -16,7 +16,7 @@
       E' la chiave della dispensa: se non cambia, la roba vecchia resta.
    ============================================================ */
 const VERSIONE = "20260730-bottega-v81";
-const CACHE_NAME = "mono-site-v182";
+const CACHE_NAME = "mono-site-v183";
 
 /* ------------------------------------------------------------
    COSA SI PRECARICA — e cosa NON si precarica piu'
@@ -30,6 +30,10 @@ const CACHE_NAME = "mono-site-v182";
      - 515 kB di loghi che NESSUNA pagina usa (mono-logo-light/mono/champagne,
        mono-loghissimo-light, mono-loghissimo.svg, mono-convivium-light/warm,
        mono-convivium.svg) — verificato uno per uno;
+       ⚠️ il 30/7 quei file sono stati TOLTI dal repo, non solo dal precarico:
+       stavano online e nessuno li chiedeva. Stessa sorte per il film mono-03,
+       i due vecchi video della hero e le immagini della scena mono-table:
+       23 file, 14 MB. Tutto recuperabile dalla storia di git;
      - le 13 pagine elencate DUE VOLTE, come "./eventi/" e come
        "./eventi/index.html": 71.174 byte scaricati per niente;
      - la stessa identica icona tre volte con tre nomi (icon-192.svg,
@@ -74,7 +78,7 @@ const ASSETS = [
   "./experience.js?v=" + VERSIONE,
 
   /* L'unico logo che le pagine usano davvero (verificato: 15 pagine su 15).
-     Gli altri sei colori restano online, ma non li precarica piu' nessuno. */
+     Gli altri sei colori dal 30/7 non esistono piu': tolti dal repo. */
   "./assets/brand/mono-logo-primary.svg",
   "./icons/mono-favicon.svg?v=20260718-favicon-v2"
 ];
