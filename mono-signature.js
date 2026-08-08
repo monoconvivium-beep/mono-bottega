@@ -27,6 +27,13 @@
     });
   };
 
+  /* Le due manopole della farina MENTRE UN FILM SUONA (vedi il commento
+     lungo dentro onMove). Sono qui in alto perche' sono l'unica cosa da
+     toccare se il video della home tornasse a scattare:
+     GRANELLI_CON_VIDEO a 0 rimette esattamente il comportamento del 28/7. */
+  const GRANELLI_CON_VIDEO = 1;   /* granelli per movimento, invece di 1-4 */
+  const TETTO_CON_VIDEO = 12;     /* granelli in aria insieme, invece di 44 */
+
   /* ============================================================
      IL CURSORE E' UNA NUVOLA DI FARINA (28/7 sera)
 
@@ -173,29 +180,37 @@
       const spintaX = Math.max(-26, Math.min(26, deltaX));
       const spintaY = Math.max(-26, Math.min(26, deltaY));
 
-      /* ⚠️ MENTRE UN VIDEO SUONA, NIENTE FARINA.
-         Segnalato da lui: "si inceppa il video iniziale". Il film della
-         home e' il momento piu' importante del sito e sta gia' usando
-         scheda grafica e decodifica; aggiungerci una tela ridipinta di
-         continuo e' il carico di troppo. Il corpo del cursore continua
-         a seguire il mouse (e' solo una trasformazione CSS su un
-         elemento piccolo, non costa niente): si ferma solo la scia. */
-      if (this.videoInCorso > 0) {
-        this.lastAngle = angleRadians;   /* lo stato resta coerente per quando il film finisce */
-        this.start();
-        return;
-      }
+      /* ⚠️⚠️ MENTRE UN FILM SUONA LA FARINA SI ALLEGGERISCE — NON SI SPEGNE.
+         COM'ERA (28/7 sera): qui c'era un `return` secco, cioe' ZERO farina
+         finche' un video suonava. Serviva a togliere carico, perche' lui
+         aveva segnalato "si inceppa il video iniziale".
+         IL PREZZO, capito solo il 30/7 quando me l'ha detto lui: sulla home
+         partono DUE film da 10 secondi l'uno, quindi per una VENTINA DI
+         SECONDI il cursore era una pallina nuda senza scia — cioe' sembrava
+         rotto, proprio nei primi secondi in cui una persona guarda la home.
+         ADESSO pesa circa un quarto: un granello per movimento invece di
+         quattro, dodici granelli in aria invece di quarantaquattro, e
+         niente sbuffi nelle curve (sono il pezzo piu' caro, sette granelli
+         in un colpo). Sommato al fatto che si ridipinge SOLO il rettangolo
+         sporco - l'altro rimedio del 28/7, e quasi certamente quello che
+         contava davvero - il carico resta molto sotto a quello che aveva
+         fatto inceppare il film.
+         ⚠️ SE IL FILM DELLA HOME TORNA A SCATTARE: la manopola e'
+         GRANELLI_CON_VIDEO qui sopra. Portalo a 0 e si torna esattamente
+         al comportamento del 28/7, senza toccare altro. */
+      const conFilm = this.videoInCorso > 0;
 
       /* piu' corri, piu' farina sollevi: da 1 granello a 4 per movimento */
       if (this.trailEnabled && distance > 1.4) {
-        const quanti = Math.min(4, 1 + Math.floor(distance / 9));
+        const quanti = conFilm ? GRANELLI_CON_VIDEO : Math.min(4, 1 + Math.floor(distance / 9));
         for (let i = 0; i < quanti; i += 1) this.sollevaFarina(now, spintaX, spintaY, 0.75);
-        if (this.trail.length > this.maxTrail) this.trail.splice(0, this.trail.length - this.maxTrail);
+        const tetto = conFilm ? TETTO_CON_VIDEO : this.maxTrail;
+        if (this.trail.length > tetto) this.trail.splice(0, this.trail.length - tetto);
       }
 
       /* nelle curve strette la mano "sbatte" e alza uno sbuffo piu' grosso */
       const sharpTurn = distance > 13 && Math.abs(Math.sin(this.lastAngle - angleRadians)) > 0.55;
-      if (this.dropletsEnabled && sharpTurn && now - this.lastDrop > 260) {
+      if (!conFilm && this.dropletsEnabled && sharpTurn && now - this.lastDrop > 260) {
         this.lastDrop = now;
         this.sbuffo(now, spintaX, spintaY, 7);
       }
@@ -254,10 +269,25 @@
          "bollono"): per sentirli da document serve la fase di CATTURA,
          cioe' il terzo argomento a true. Con false non arriverebbe
          niente e la protezione del film non partirebbe mai. */
-      document.addEventListener("play", () => { this.videoInCorso += 1; }, true);
-      const filmFinito = () => { this.videoInCorso = Math.max(0, this.videoInCorso - 1); };
-      document.addEventListener("pause", filmFinito, true);
-      document.addEventListener("ended", filmFinito, true);
+      /* ⚠️ I film si CONTANO dal DOM, non a colpi di +1 e -1.
+         Col contatore bastava un evento perso - un video tolto dalla
+         pagina mentre suona, un `pause` che non arriva perche' la scheda
+         era in secondo piano - e restava per sempre sopra zero: la farina
+         sarebbe rimasta leggera per tutta la visita e nessuno avrebbe
+         capito perche'. I video in pagina sono due o tre: contarli non
+         costa niente, e il numero e' sempre quello vero.
+         ⚠️ Fase di CATTURA (il terzo argomento `true`): play/pause/ended
+         non risalgono il DOM, da `document` non si sentirebbero. */
+      const contaFilm = () => {
+        let quanti = 0;
+        document.querySelectorAll("video").forEach((film) => {
+          if (!film.paused && !film.ended) quanti += 1;
+        });
+        this.videoInCorso = quanti;
+      };
+      document.addEventListener("play", contaFilm, true);
+      document.addEventListener("pause", contaFilm, true);
+      document.addEventListener("ended", contaFilm, true);
 
       window.addEventListener("resize", () => {
         this.resize();

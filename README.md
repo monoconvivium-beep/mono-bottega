@@ -39,8 +39,12 @@ solo con GLB reali, compressi e caricati dopo LCP.
 
 ## Asset Principali
 
-- `assets/hero/mono-kitchen-fire-poster.jpg` — il poster della home.
 - `assets/hero/mono-kitchen-fire-og.jpg` — l'anteprima social di tutte le pagine.
+- `assets/cinematic/web/mono-01-fuoco-ravioli-poster.webp` — il fotogramma
+  fermo che si vede per primo sulla home. ⚠️ **E' l'elemento piu' grande
+  della pagina**, cioe' quello su cui Google misura il punteggio: lo dicono
+  i dati veri dei visitatori (Cloudflare, vista «Elemento»). Per questo e'
+  lui, e non altro, ad avere il `preload` con priorita' alta in `index.html`.
 - `assets/mono-table/mono-table-ritual-desktop.webp`
 - `assets/mono-table/mono-table-ritual-mobile.webp`
 - `assets/cinematic/` — i film veri della home e delle interne, elencati uno per

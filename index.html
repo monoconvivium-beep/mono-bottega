@@ -29,15 +29,26 @@
     <link rel="icon" href="icons/mono-favicon-192.png?v=20260718-favicon-v2" type="image/png" sizes="192x192">
     <link rel="icon" href="icons/mono-favicon.svg?v=20260718-favicon-v2" type="image/svg+xml">
     <link rel="apple-touch-icon" href="icons/mono-favicon-180.png?v=20260718-favicon-v2">
-    <link rel="preload" as="image" href="assets/hero/mono-kitchen-fire-poster.jpg" fetchpriority="high">
+    <!-- 30/7 - CORRETTO, e non era un dettaglio.
+         Qui c'era mono-kitchen-fire-poster.jpg: 92 kB scaricati PRIMA DI
+         TUTTO IL RESTO, a priorita' massima... per un'immagine che nessuna
+         pagina, nessun foglio di stile e nessun codice mostrano. Avanzo
+         della vecchia hero, quella dei due video tolti il 30/7.
+         L'immagine che si vede DAVVERO nel primo istante e' il fotogramma
+         fermo del pentolino, e i dati veri dei visitatori (Cloudflare, vista
+         "Elemento") dicono che e' proprio LEI l'elemento piu' grande della
+         pagina, cioe' quello su cui Google misura il punteggio.
+         Quindi la precedenza assoluta ce l'aveva la cosa sbagliata, e per
+         di piu' rubava la corsia a quella giusta. 36 kB invece di 92. -->
+    <link rel="preload" as="image" href="assets/cinematic/web/mono-01-fuoco-ravioli-poster.webp" fetchpriority="high" type="image/webp">
     <script>document.documentElement.classList.add("has-js");</script>
-    <link rel="stylesheet" href="mono-fonts.css?v=20260730-bottega-v82">
-    <link rel="stylesheet" href="mono-colors.css?v=20260730-bottega-v82">
-    <link rel="stylesheet" href="styles.css?v=20260730-bottega-v82">
-<link rel="stylesheet" href="experience.css?v=20260730-bottega-v82">
-<link rel="stylesheet" href="mono-engineering.css?v=20260730-bottega-v82">
-    <link rel="stylesheet" href="mono-enhance.css?v=20260730-bottega-v82">
-    <link rel="stylesheet" href="mono-dark-home.css?v=20260730-bottega-v82">
+    <link rel="stylesheet" href="mono-fonts.css?v=20260730-bottega-v83">
+    <link rel="stylesheet" href="mono-colors.css?v=20260730-bottega-v83">
+    <link rel="stylesheet" href="styles.css?v=20260730-bottega-v83">
+<link rel="stylesheet" href="experience.css?v=20260730-bottega-v83">
+<link rel="stylesheet" href="mono-engineering.css?v=20260730-bottega-v83">
+    <link rel="stylesheet" href="mono-enhance.css?v=20260730-bottega-v83">
+    <link rel="stylesheet" href="mono-dark-home.css?v=20260730-bottega-v83">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -183,8 +194,8 @@
         ]
       }
     </script>
-      <script defer src="mono-enhance.js?v=20260730-bottega-v82"></script>
-      <script src="mono-config.js?v=20260730-bottega-v82"></script>
+      <script defer src="mono-enhance.js?v=20260730-bottega-v83"></script>
+      <script src="mono-config.js?v=20260730-bottega-v83"></script>
 </head>
   <body class="mono-world home-page mono-dark-home" data-mono-world="home">
     <a class="skip-link" href="#main">Vai al contenuto</a>
@@ -569,12 +580,12 @@
     </footer>
 
     <script>window.MONO_EXPERIENCE_OVERRIDES = { flags: { oPortal: false } };try{if(sessionStorage.getItem("monoCurtain")){sessionStorage.removeItem("monoCurtain");document.documentElement.classList.add("mono-curtain-cover");setTimeout(function(){document.documentElement.classList.remove("mono-curtain-cover");},1800);}}catch(e){}</script>
-    <script src="mono-experience-config.js?v=20260730-bottega-v82"></script>
-<script src="cinematic-assets.js?v=20260730-bottega-v82"></script>
-<script src="mono-cinematic.js?v=20260730-bottega-v82"></script>
-    <script src="mono-navigation.js?v=20260730-bottega-v82"></script>
-    <script src="mono-signature.js?v=20260730-bottega-v82"></script>
-    <script src="app.js?v=20260730-bottega-v82"></script>
-<script src="experience.js?v=20260730-bottega-v82"></script>
+    <script src="mono-experience-config.js?v=20260730-bottega-v83"></script>
+<script src="cinematic-assets.js?v=20260730-bottega-v83"></script>
+<script src="mono-cinematic.js?v=20260730-bottega-v83"></script>
+    <script src="mono-navigation.js?v=20260730-bottega-v83"></script>
+    <script src="mono-signature.js?v=20260730-bottega-v83"></script>
+    <script src="app.js?v=20260730-bottega-v83"></script>
+<script src="experience.js?v=20260730-bottega-v83"></script>
   </body>
 </html>
