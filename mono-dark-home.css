@@ -32,6 +32,63 @@ body.mono-dark-home .site-footer {
   z-index: 1;
 }
 
+/* ⚠️⚠️ 30/7 — LA PAGINA SI TRASCINAVA DI LATO DI 10 px SU OGNI PAGINA.
+   Trovato col collaudo finale, misurato a 375 px: `scrollWidth` superava
+   di 10 px la larghezza dello schermo. NON era la barra di scorrimento
+   (provato con e senza, restavano 10): sporgeva l'intestazione.
+
+   LA CAUSA, ed e' proprio la riga qui sopra.
+   In styles.css:120 l'intestazione e' `position: fixed` con
+   `left: 18px; right: 18px` (10px sotto gli 820, riga 2120). Su un
+   elemento FISSO quei due valori lo DIMENSIONANO, e funziona.
+   La regola qui sopra pero' lo riporta a `position: relative`, e su un
+   elemento relativo **`right` viene ignorato**: resta solo `left`, che
+   non stringe niente e diventa una spinta verso destra su una barra
+   larga quanto tutta la pagina. Risultato: sporge esattamente di quanto
+   vale `left`, e con lei si trascina tutta la pagina.
+   Da qui anche i "3 px preesistenti su .site-header" annotati a luglio:
+   stesso elemento, stessa causa, misurata a una larghezza diversa.
+
+   IL RIMEDIO: su un elemento relativo il rientro si fa col MARGINE, che
+   stringe davvero. Stessi identici valori di styles.css, cosi' l'aspetto
+   voluto (barra staccata dai due bordi, angoli tondi da tutte e due le
+   parti) e' finalmente quello che si vede.
+   ⚠️ Vanno trattati ANCHE i valori di `.is-scrolled` (experience.css:265
+   e 1627): la classe la mette app.js:54 appena si scorre di 24 px, e se
+   si lasciassero left/right li' il difetto tornerebbe appena scrolli.
+   ⚠️ La transizione e' ricopiata da experience.css:255 cambiando solo
+   left/right in margin: se no il passaggio a scrollato diventa a scatto.
+   ⚠️ Approvato da lui il 30/7 guardando un confronto affiancato del sito
+   vero dentro uno schermo da 375 px. E' l'UNICA cosa che si vede,
+   cambiata in tutta la serata. */
+body.mono-dark-home .site-header {
+  left: auto;
+  right: auto;
+  margin-left: 18px;
+  margin-right: 18px;
+  transition:
+    background-color var(--mono-duration-fast) ease,
+    box-shadow var(--mono-duration-fast) ease,
+    padding var(--mono-duration-fast) var(--mono-ease-out),
+    top var(--mono-duration-fast) var(--mono-ease-out),
+    margin-left var(--mono-duration-fast) var(--mono-ease-out),
+    margin-right var(--mono-duration-fast) var(--mono-ease-out);
+}
+body.mono-dark-home .site-header.is-scrolled {
+  margin-left: 28px;
+  margin-right: 28px;
+}
+@media (max-width: 820px) {
+  body.mono-dark-home .site-header {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  body.mono-dark-home .site-header.is-scrolled {
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+}
+
 /* ---------- header terracotta (dal prototipo approvato) ---------- */
 body.mono-dark-home .site-header {
   background: linear-gradient(180deg, var(--mono-terracotta), #a95232);
