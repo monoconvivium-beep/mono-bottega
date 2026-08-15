@@ -278,6 +278,7 @@
     initContoApertura();
     initSocial();
     initTelefono();
+    initWhatsAppChiusura();
     initMappa();
   }
 
@@ -546,6 +547,36 @@
       riga.appendChild(wa);
     }
     scheda.appendChild(riga);
+  }
+
+  /* Il tasto WhatsApp anche nella fila in fondo a /contatti/.
+     ⚠️ VA CHIAMATA DOPO initChiusuraContatti: quella SPOSTA i tasti in un
+     altro contenitore, quindi prima di lei la scatola di partenza e' vuota
+     e l'aggancio fallirebbe in silenzio (mi e' successo nel provino).
+     Per questo ci si aggancia al tasto "Contatta MONO" e non al suo
+     contenitore: cosi' funziona ovunque finisca.
+     ⚠️ Sta SECONDO, subito dopo "Contatta MONO": e' la stessa intenzione
+     (voglio scrivervi), e i tre di servizio - Salva il contatto, Dove
+     siamo, Social - restano in coda nell'ordine scelto da lui.
+     📐 Misurato prima di pubblicare: a 1262 e 1422 px la fila resta su UNA
+     riga come adesso; sotto i ~1100 va su due (prima riga i tre per
+     contattare, seconda Dove siamo e Social) e il telefono disegnato si
+     sposta a destra. Nessuno sbordo a nessuna larghezza. */
+  function initWhatsAppChiusura() {
+    var cfg = window.MONO_TELEFONO || {};
+    var chiusura = document.querySelector("[data-mono-chiamata]");
+    if (!chiusura || !cfg.whatsapp || chiusura.querySelector(".mono-tasto-whatsapp")) return;
+    var primo = chiusura.querySelector("a.button.primary");
+    if (!primo) return;
+
+    var tasto = document.createElement("a");
+    tasto.className = "button ghost mono-tasto-whatsapp";
+    tasto.href = "https://wa.me/" + cfg.whatsapp;
+    tasto.target = "_blank";
+    tasto.rel = "noopener";
+    tasto.dataset.track = "contacts_final_whatsapp";
+    tasto.innerHTML = ICONA_WHATSAPP + "WhatsApp";
+    primo.parentNode.insertBefore(tasto, primo.nextSibling);
   }
 
   function initChiusuraContatti(voci) {

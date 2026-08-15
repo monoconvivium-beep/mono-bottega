@@ -524,3 +524,8 @@ body.qr-dialog-open .app-qr-dialog__close {
    a colpo d'occhio. Sta solo dentro questo bollino, non entra nel
    sistema di colori del sito. */
 .mono-whatsapp__segno { fill: #25D366; height: 20px; width: 20px; }
+
+/* Il tasto WhatsApp nella fila in fondo a /contatti/: e' un `.button ghost`
+   come gli altri, gli si aggiunge solo il simbolo verde davanti. */
+.mono-tasto-whatsapp { align-items: center; display: inline-flex; gap: 8px; }
+.mono-tasto-whatsapp .mono-whatsapp__segno { height: 17px; width: 17px; }
