@@ -520,10 +520,19 @@ body.qr-dialog-open .app-qr-dialog__close {
 }
 .mono-whatsapp:hover,
 .mono-whatsapp:focus-visible { background: rgba(37, 211, 102, 0.12); border-color: #25D366; }
-/* ⚠️ Il verde e' quello di WhatsApp: e' il segno che lo fa riconoscere
-   a colpo d'occhio. Sta solo dentro questo bollino, non entra nel
-   sistema di colori del sito. */
-.mono-whatsapp__segno { fill: #25D366; height: 20px; width: 20px; }
+/* ⚠️⚠️ 15/8 - IL VERDE DI WHATSAPP E' STATO TOLTO, segnalato da lui:
+   «sul dorato non sta bene». Aveva ragione, e i numeri lo dicono forte:
+   sul tasto oro #CBA75A il verde #25D366 fa **1,15** di contrasto, cioe'
+   sparisce (ne serve almeno 3 perche' una forma piena si stacchi).
+   ⚠️ Anche il verde «tipo Brasile» #009C3B fa 1,58: non basta. Il verde
+   comincia a funzionare solo da #0B5D2E (3,52) in giu', ma li' sembra
+   nero, quindi tanto vale l'antracite - verificato renderizzando i
+   quattro colori affiancati alla misura vera.
+   ➡️ `currentColor`: il segno prende il colore del TESTO del contenitore
+   in cui si trova. Sul tasto oro viene antracite (6,85, come le scritte);
+   dentro il bollino della scheda, dove il testo e' crema, viene crema.
+   Una riga sola e sta sempre bene, ovunque lo si metta. */
+.mono-whatsapp__segno { fill: currentColor; height: 20px; width: 20px; }
 
 /* Il tasto WhatsApp nella fila in fondo a /contatti/: e' un `.button ghost`
    come gli altri, gli si aggiunge solo il simbolo verde davanti. */

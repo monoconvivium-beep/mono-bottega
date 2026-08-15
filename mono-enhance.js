@@ -564,19 +564,25 @@
      sposta a destra. Nessuno sbordo a nessuna larghezza. */
   function initWhatsAppChiusura() {
     var cfg = window.MONO_TELEFONO || {};
-    var chiusura = document.querySelector("[data-mono-chiamata]");
-    if (!chiusura || !cfg.whatsapp || chiusura.querySelector(".mono-tasto-whatsapp")) return;
-    var primo = chiusura.querySelector("a.button.primary");
-    if (!primo) return;
+    if (!cfg.whatsapp) return;
+    /* Ogni sezione contrassegnata `data-mono-whatsapp` riceve il tasto:
+       oggi la chiusura di /contatti/ e quella di /dove-siamo/. Per
+       aggiungerne un'altra basta il contrassegno nell'HTML, qui non si
+       tocca niente. */
+    document.querySelectorAll("[data-mono-whatsapp]").forEach(function (sezione) {
+      if (sezione.querySelector(".mono-tasto-whatsapp")) return;
+      var primo = sezione.querySelector("a.button.primary");
+      if (!primo) return;
 
-    var tasto = document.createElement("a");
-    tasto.className = "button ghost mono-tasto-whatsapp";
-    tasto.href = "https://wa.me/" + cfg.whatsapp;
-    tasto.target = "_blank";
-    tasto.rel = "noopener";
-    tasto.dataset.track = "contacts_final_whatsapp";
-    tasto.innerHTML = ICONA_WHATSAPP + "WhatsApp";
-    primo.parentNode.insertBefore(tasto, primo.nextSibling);
+      var tasto = document.createElement("a");
+      tasto.className = "button ghost mono-tasto-whatsapp";
+      tasto.href = "https://wa.me/" + cfg.whatsapp;
+      tasto.target = "_blank";
+      tasto.rel = "noopener";
+      tasto.dataset.track = "contacts_final_whatsapp";
+      tasto.innerHTML = ICONA_WHATSAPP + "WhatsApp";
+      primo.parentNode.insertBefore(tasto, primo.nextSibling);
+    });
   }
 
   function initChiusuraContatti(voci) {
