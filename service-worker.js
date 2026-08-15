@@ -16,7 +16,7 @@
       E' la chiave della dispensa: se non cambia, la roba vecchia resta.
    ============================================================ */
 const VERSIONE = "20260730-bottega-v87";
-const CACHE_NAME = "mono-site-v191";
+const CACHE_NAME = "mono-site-v192";
 
 /* ------------------------------------------------------------
    COSA SI PRECARICA — e cosa NON si precarica piu'

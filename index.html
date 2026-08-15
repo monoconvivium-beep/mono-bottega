@@ -528,7 +528,13 @@
         </div>
       </section>
 
-      <section class="contact-strip" id="contatti" data-reveal>
+      <!-- `data-mono-whatsapp` (15/8): terza pagina dopo Contatti e Dove
+           siamo. Il tasto si infila dopo quello primario, quindi qui viene
+           [Apri Google Maps][WhatsApp][Scopri app MONO].
+           ⚠️ Il contenitore qui e' `.contact-actions`, non `.hero-actions`
+           come nelle altre due: funziona lo stesso perche' il codice si
+           aggancia al TASTO primario, non al contenitore. -->
+      <section class="contact-strip" id="contatti" data-reveal data-mono-whatsapp>
         <p class="eyebrow">Santa Rita, Torino</p>
         <h2>Semplice. Buono. MONO.</h2>
         <div class="contact-actions">
