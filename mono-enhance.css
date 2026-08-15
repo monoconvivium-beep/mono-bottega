@@ -482,3 +482,45 @@ body.qr-dialog-open .app-qr-dialog__close {
 @media (prefers-reduced-motion: reduce) {
   .mono-drop__trail { display: none; }
 }
+
+/* ============================================================
+   ☎️ IL RECAPITO NELLA SCHEDA CONTATTI (15/8/2026)
+   Il numero e il tasto WhatsApp, dentro la scheda "Telefono" di
+   /contatti/. Li scrive mono-enhance.js leggendoli dal punto unico
+   window.MONO_TELEFONO; qui c'e' solo come si vedono.
+   ⚠️ Stesse misure dei tasti social: tocco da 44px minimo, che sul
+   telefono e' la soglia sotto la quale il dito prende quello sbagliato
+   (imparato il 28/7 con le icone a 22px).
+   ============================================================ */
+.mono-recapito {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  margin: 14px 0 0;
+}
+.mono-recapito__numero {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+.mono-whatsapp {
+  align-items: center;
+  border: 1px solid rgba(38, 35, 33, 0.22);
+  border-radius: 999px;
+  display: inline-flex;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  min-height: 46px;
+  padding: 0 16px 0 13px;
+  text-decoration: none;
+  transition: border-color 180ms ease, background 180ms ease;
+}
+.mono-whatsapp:hover,
+.mono-whatsapp:focus-visible { background: rgba(37, 211, 102, 0.12); border-color: #25D366; }
+/* ⚠️ Il verde e' quello di WhatsApp: e' il segno che lo fa riconoscere
+   a colpo d'occhio. Sta solo dentro questo bollino, non entra nel
+   sistema di colori del sito. */
+.mono-whatsapp__segno { fill: #25D366; height: 20px; width: 20px; }

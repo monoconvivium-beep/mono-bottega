@@ -37,6 +37,31 @@ window.MONO_SOCIAL = {
 };
 
 /* ------------------------------------------------------------
+   ☎️ IL TELEFONO — ⭐ PUNTO UNICO (15/8/2026)
+
+   Arrivato finalmente il numero: fino a oggi la scheda su /contatti/
+   diceva "Numero in arrivo" ed era l'ultima cosa che aspettava lui.
+
+   Si scrive QUI e basta. Le pagine lo leggono da questo punto, quindi
+   se un domani cambia si cambia in una riga sola.
+
+   ⚠️ TRE FORME, e servono tutte e tre — non sono un doppione:
+     - `daLeggere`  e' come lo legge una persona (spazi, si detta a voce)
+     - `daChiamare` e' il formato internazionale che vuole il telefono
+        quando si tocca il numero, e anche Google nei dati strutturati
+     - `whatsapp`   e' lo stesso numero SENZA "+" e senza spazi: e' il
+        formato che pretende wa.me, se ci metti il + non funziona.
+
+   ⚠️ Se un domani WhatsApp non fosse piu' attivo su questo numero,
+   metti `whatsapp: ""` e il tasto sparisce da solo da tutto il sito.
+   ------------------------------------------------------------ */
+window.MONO_TELEFONO = {
+  daLeggere: "379 398 0937",
+  daChiamare: "+393793980937",
+  whatsapp: "393793980937"
+};
+
+/* ------------------------------------------------------------
    0-QUATER) L'APERTURA — ⭐ L'INTERRUTTORE (29/7)
 
    COM'ERA E PERCHE' ERA PERICOLOSO
