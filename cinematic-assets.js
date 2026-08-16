@@ -11,7 +11,20 @@
     if (config.desktopMp4) sources.push({ src: config.desktopMp4, type: "video/mp4" });
     const audioSources = [];
     if (config.master && config.masterAudio) audioSources.push({ src: config.master, type: "video/mp4" });
-    return Object.freeze({ ...config, sources: freezeList(sources), audioSources: freezeList(audioSources) });
+    /* 16/8 - LA VERSIONE PER TELEFONO (voce 18 dell'audit).
+       ⚠️ Si parte dal MASTER, non dalle versioni "web": quelle sono MUTE
+       (verificato con ffprobe) e l'audio serve. La home infatti riproduce
+       gli `audioSources`, cioe' i master - ed e' li' che stavano i 4,7 MB.
+       Il mobile e' 640x360 con l'audio dentro: 4,67 MB -> 1,00 MB.
+       Se `mobileMaster` e' null, qui non nasce niente e tutto resta com'e'. */
+    const audioSourcesMobile = [];
+    if (config.mobileMaster && config.masterAudio) audioSourcesMobile.push({ src: config.mobileMaster, type: "video/mp4" });
+    return Object.freeze({
+      ...config,
+      sources: freezeList(sources),
+      audioSources: freezeList(audioSources),
+      audioSourcesMobile: freezeList(audioSourcesMobile),
+    });
   };
 
   const badgeDefaults = Object.freeze({
@@ -38,7 +51,7 @@
     master: assetUrl("assets/cinematic/source/mono-01-fuoco-ravioli-master.mp4"),
     desktopWebm: assetUrl("assets/cinematic/web/mono-01-fuoco-ravioli-desktop.webm"),
     desktopMp4: assetUrl("assets/cinematic/web/mono-01-fuoco-ravioli-desktop.mp4"),
-    mobileMaster: null,
+    mobileMaster: assetUrl("assets/cinematic/web/mono-01-fuoco-ravioli-mobile.mp4"),
     mobileWebm: null,
     mobileMp4: null,
     posterWebp: assetUrl("assets/cinematic/web/mono-01-fuoco-ravioli-poster.webp"),
@@ -58,6 +71,7 @@
       role: "ravioli-cut",
       originalSourceName: "VIDEO AGNOLOTTI.mp4",
       master: assetUrl("assets/cinematic/source/mono-01-ravioli-cut-master.mp4"),
+      mobileMaster: assetUrl("assets/cinematic/web/mono-01-ravioli-cut-mobile.mp4"),
       audio: true,
       masterAudio: true,
       desktopWebm: assetUrl("assets/cinematic/web/mono-01-ravioli-cut-desktop.webm"),

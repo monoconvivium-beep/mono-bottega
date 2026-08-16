@@ -450,9 +450,31 @@
     const pauseButton = hero.querySelector("[data-cinema-pause]");
     if (!trackElement || !stage || !fireVideo || !pastaVideo) return;
 
-    const fireSources = asset.audioSources?.length ? asset.audioSources : asset.sources || [];
+    /* ⚠️ La media query si legge PRIMA delle sorgenti: e' lei a decidere
+       quale film si scarica, e piu' sotto serve comunque per lo stacco. */
+    const mobile = window.matchMedia("(max-width: 820px)");
+
+    /* 16/8 - SUL TELEFONO SI SCARICA LA VERSIONE LEGGERA (voce 18).
+       Fino a oggi a un telefono da 390 px si mandava un 720p: 4,67 MB per i
+       due film. Ora sotto gli 820 px ne arrivano 640x360 con l'audio, per
+       1,00 MB in tutto - 79% in meno - e alla misura in cui si vedono
+       davvero sono indistinguibili (confrontati fotogramma per fotogramma).
+       ⚠️ Si scende sempre sui MASTER, mai sulle versioni "web": quelle sono
+       MUTE e l'audio serve. Se `audioSourcesMobile` e' vuoto (film senza
+       versione telefono) si ricade da solo su quella grande: nessun film
+       resta senza sorgente. */
+    const perTelefono = (mobili, grandi) =>
+      mobile.matches && mobili?.length ? mobili : grandi;
+
+    const fireSources = perTelefono(
+      asset.audioSourcesMobile,
+      asset.audioSources?.length ? asset.audioSources : asset.sources || []
+    );
     const pastaSources = asset.companion?.master && asset.companion?.masterAudio
-      ? [{ src: asset.companion.master, type: "video/mp4" }]
+      ? perTelefono(
+          asset.companion.mobileMaster ? [{ src: asset.companion.mobileMaster, type: "video/mp4" }] : null,
+          [{ src: asset.companion.master, type: "video/mp4" }]
+        )
       : [
           { src: asset.companion?.desktopWebm, type: "video/webm" },
           { src: asset.companion?.desktopMp4, type: "video/mp4" }
@@ -460,7 +482,6 @@
     const fireHasAudio = Boolean(asset.audio && asset.masterAudio && asset.audioSources?.length);
     const pastaHasAudio = Boolean(asset.companion?.audio && asset.companion?.masterAudio && asset.companion?.master);
     const motionLimited = runtime.reducedMotion || runtime.saveData || !runtime.flags.cinematicAutoplay;
-    const mobile = window.matchMedia("(max-width: 820px)");
     const chrome = ensureFilmChrome(hero, asset);
     let active = false;
     let started = false;
