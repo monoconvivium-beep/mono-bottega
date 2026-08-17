@@ -306,7 +306,17 @@
     const playOnce = (asset.playbackMode || asset.playback) === "once";
     const motionLimited = runtime.reducedMotion || runtime.saveData || !runtime.flags.cinematicAutoplay;
     const threshold = Math.min(0.9, Math.max(0.05, Number(asset.visibilityThreshold) || 0.35));
-    const playbackSources = asset.audioSources?.length ? asset.audioSources : asset.sources || [];
+    /* 17/8 - ANCHE QUI SI SCENDE DI MISURA SUL TELEFONO.
+       La home lo faceva gia' (piu' sotto, in mountHome); le pagine interne
+       no, e mandavano il 720p pieno anche a un telefono da 390 px:
+       gastronomia 1,68 MB, chi siamo 1,38 MB, eventi 1,44 MB. Con la copia
+       640x360 diventano 0,74 / 0,60 / 0,62 MB, audio compreso.
+       ⚠️ Se `audioSourcesMobile` e' vuoto si ricade da solo sulla versione
+       grande: nessun film resta senza sorgente. */
+    const suTelefono = window.matchMedia("(max-width: 820px)").matches;
+    const sorgentiGrandi = asset.audioSources?.length ? asset.audioSources : asset.sources || [];
+    const playbackSources =
+      suTelefono && asset.audioSourcesMobile?.length ? asset.audioSourcesMobile : sorgentiGrandi;
     const hasAudio = Boolean(asset.audio && asset.masterAudio && asset.audioSources?.length);
     let hasFinished = readSeen(asset);
     let isVisible = false;
@@ -470,10 +480,15 @@
       asset.audioSourcesMobile,
       asset.audioSources?.length ? asset.audioSources : asset.sources || []
     );
-    const pastaSources = asset.companion?.master && asset.companion?.masterAudio
+    /* Il compagno (gli agnolotti) non passa da `createAsset`, e' un oggetto
+       innestato: le sue sorgenti si costruiscono qui a mano. Vale la stessa
+       regola del film grande - prima la copia compressa `webAudio`, il
+       master solo se quella non c'e'. */
+    const pastaGrande = asset.companion?.webAudio || asset.companion?.master;
+    const pastaSources = pastaGrande && asset.companion?.masterAudio
       ? perTelefono(
           asset.companion.mobileMaster ? [{ src: asset.companion.mobileMaster, type: "video/mp4" }] : null,
-          [{ src: asset.companion.master, type: "video/mp4" }]
+          [{ src: pastaGrande, type: "video/mp4" }]
         )
       : [
           { src: asset.companion?.desktopWebm, type: "video/webm" },

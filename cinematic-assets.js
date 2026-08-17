@@ -9,14 +9,31 @@
     const sources = [];
     if (config.desktopWebm) sources.push({ src: config.desktopWebm, type: "video/webm" });
     if (config.desktopMp4) sources.push({ src: config.desktopMp4, type: "video/mp4" });
+    /* ============================================================
+       16/8 - I FILM ALLEGGERITI (voce 18 dell'audit)
+
+       ⚠️ SI PARTE SEMPRE DAL MASTER, mai dalle versioni "desktop.webm/mp4":
+       quelle sono MUTE (verificato con ffprobe: zero tracce audio) e
+       l'audio serve. Ed e' anche il motivo per cui il sito riproduceva i
+       master: gli `audioSources` sono gli unici con il sonoro. Comprimere
+       i webm non avrebbe tolto un byte a nessuno.
+
+       ⚠️ I MASTER NON SI TOCCANO: restano in `source/` come archivio, e da
+       li' si rigenera tutto. Qui si preferisce `webAudio` (la copia
+       compressa) e si ricade sul master solo se non esiste.
+
+       Ricetta usata, se serve rifarle:
+         desktop  -c:v libx264 -crf 26 -preset veryslow -tune film -c:a aac -b:a 96k
+         telefono -vf scale=640:360:flags=lanczos -crf 26 -r 24 -c:a aac -b:a 80k
+         (sempre -movflags +faststart: fa partire il video prima di averlo tutto)
+
+       Risultato sui cinque film: 12,19 MB -> 6,80 MB su computer (-44%) e
+       -> 2,97 MB su telefono (-76%). Qualita' verificata GUARDANDO i
+       fotogrammi affiancati, non col numero.
+       ============================================================ */
     const audioSources = [];
-    if (config.master && config.masterAudio) audioSources.push({ src: config.master, type: "video/mp4" });
-    /* 16/8 - LA VERSIONE PER TELEFONO (voce 18 dell'audit).
-       ⚠️ Si parte dal MASTER, non dalle versioni "web": quelle sono MUTE
-       (verificato con ffprobe) e l'audio serve. La home infatti riproduce
-       gli `audioSources`, cioe' i master - ed e' li' che stavano i 4,7 MB.
-       Il mobile e' 640x360 con l'audio dentro: 4,67 MB -> 1,00 MB.
-       Se `mobileMaster` e' null, qui non nasce niente e tutto resta com'e'. */
+    const grande = config.webAudio || config.master;
+    if (grande && config.masterAudio) audioSources.push({ src: grande, type: "video/mp4" });
     const audioSourcesMobile = [];
     if (config.mobileMaster && config.masterAudio) audioSourcesMobile.push({ src: config.mobileMaster, type: "video/mp4" });
     return Object.freeze({
@@ -49,6 +66,7 @@
     secondaryUses: freezeList(["home-manifesto", "poster", "short-transition"]),
     originalSourceName: "VIDEO PENTOLA.mp4",
     master: assetUrl("assets/cinematic/source/mono-01-fuoco-ravioli-master.mp4"),
+    webAudio: assetUrl("assets/cinematic/web/mono-01-fuoco-ravioli-desktop-audio.mp4"),
     desktopWebm: assetUrl("assets/cinematic/web/mono-01-fuoco-ravioli-desktop.webm"),
     desktopMp4: assetUrl("assets/cinematic/web/mono-01-fuoco-ravioli-desktop.mp4"),
     mobileMaster: assetUrl("assets/cinematic/web/mono-01-fuoco-ravioli-mobile.mp4"),
@@ -71,6 +89,7 @@
       role: "ravioli-cut",
       originalSourceName: "VIDEO AGNOLOTTI.mp4",
       master: assetUrl("assets/cinematic/source/mono-01-ravioli-cut-master.mp4"),
+      webAudio: assetUrl("assets/cinematic/web/mono-01-ravioli-cut-desktop-audio.mp4"),
       mobileMaster: assetUrl("assets/cinematic/web/mono-01-ravioli-cut-mobile.mp4"),
       audio: true,
       masterAudio: true,
@@ -115,9 +134,10 @@
     secondaryUses: freezeList(["poster", "short-transition", "o-mask"]),
     originalSourceName: "VIDEO CUCINA MAGICA.mp4",
     master: assetUrl("assets/cinematic/source/mono-02-cucina-magica-master.mp4"),
+    webAudio: assetUrl("assets/cinematic/web/mono-02-cucina-magica-desktop-audio.mp4"),
     desktopWebm: assetUrl("assets/cinematic/web/mono-02-cucina-magica-desktop.webm"),
     desktopMp4: assetUrl("assets/cinematic/web/mono-02-cucina-magica-desktop.mp4"),
-    mobileMaster: null,
+    mobileMaster: assetUrl("assets/cinematic/web/mono-02-cucina-magica-mobile.mp4"),
     mobileWebm: null,
     mobileMp4: null,
     posterWebp: assetUrl("assets/cinematic/web/mono-02-cucina-magica-poster.webp"),
@@ -173,13 +193,15 @@
     secondaryUses: freezeList(["poster", "still", "short-extract", "convivium-mask"]),
     originalSourceName: "VIDEO MICHELIN.mp4",
     // ⚠️ Il player NON usa desktopMp4 quando c'e' l'audio: createAsset costruisce
-    // audioSources da `master` (se masterAudio) e mono-cinematic.js gli da'
-    // la precedenza. Quindi `master` DEVE puntare al video che si vuole vedere:
-    // se resta indietro, si vede il film vecchio col poster nuovo.
+    // audioSources da `webAudio` (o da `master` se webAudio manca) e
+    // mono-cinematic.js gli da' la precedenza. Quindi e' `webAudio` che DEVE
+    // puntare al video che si vuole vedere: se resta indietro, si vede il
+    // film vecchio col poster nuovo.
     master: assetUrl("assets/cinematic/source/mono-04-chi-siamo-master.mp4"),
+    webAudio: assetUrl("assets/cinematic/web/mono-04-chi-siamo-desktop-audio.mp4"),
     desktopWebm: null,
     desktopMp4: assetUrl("assets/cinematic/web/mono-04-chi-siamo-desktop.mp4"),
-    mobileMaster: null,
+    mobileMaster: assetUrl("assets/cinematic/web/mono-04-chi-siamo-mobile.mp4"),
     mobileWebm: null,
     mobileMp4: null,
     posterWebp: assetUrl("assets/cinematic/web/mono-04-chi-siamo-poster.webp"),
@@ -227,14 +249,16 @@
     secondaryUses: freezeList(["home-closing", "poster", "short-transition"]),
     originalSourceName: "Cinematic_food_film_sho.mp4",
     // ⚠️ Come per mono-hands-team: con masterAudio:true il player usa SOLO
-    // `master`. Aggiornare desktopMp4 da solo non cambierebbe nulla.
+    // la coppia webAudio/master. Aggiornare desktopMp4 da solo non
+    // cambierebbe nulla.
     master: assetUrl("assets/cinematic/source/mono-05-tavola-eventi-master.mp4"),
+    webAudio: assetUrl("assets/cinematic/web/mono-05-tavola-eventi-desktop-audio.mp4"),
     desktopWebm: null,
-    // Volutamente null: con masterAudio:true il player legge SOLO `master`,
-    // quindi una copia web sarebbe 2,7 MB identici e mai scaricati da
+    // Volutamente null: con masterAudio:true il player legge SOLO webAudio,
+    // quindi una copia web muta sarebbe 2,7 MB identici e mai scaricati da
     // nessuno. Se un giorno si spegne l'audio, va creata davvero.
     desktopMp4: null,
-    mobileMaster: null,
+    mobileMaster: assetUrl("assets/cinematic/web/mono-05-tavola-eventi-mobile.mp4"),
     mobileWebm: null,
     mobileMp4: null,
     posterWebp: assetUrl("assets/cinematic/web/mono-05-tavola-eventi-poster.webp"),
