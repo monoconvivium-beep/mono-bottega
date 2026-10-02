@@ -435,6 +435,43 @@ h3 {
   margin-bottom: 10px;
 }
 
+/* IL RIQUADRO DELL'APERTURA — base, per la carta CHIARA (2/10/2026).
+   Oggi tutte le pagine sono vestite di scuro e vince `mono-dark-home.css`;
+   questo e' quello che si vede se un domani la carta torna cashmere. */
+.mono-apertura {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin: 14px 0 6px;
+  padding: 11px 18px;
+  border: 1px solid rgba(203, 167, 90, 0.55);
+  border-left: 5px solid var(--mono-gold);
+  border-radius: 10px;
+  background: rgba(203, 167, 90, 0.12);
+  flex-wrap: wrap;
+}
+
+.mono-apertura__etichetta {
+  color: var(--mono-olive);
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.mono-apertura__mese {
+  color: var(--mono-anthracite);
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(24px, 3.4vw, 30px);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.mono-apertura.is-aperto .mono-apertura__etichetta {
+  display: none;
+}
+
 .opening-signup small {
   color: rgba(38, 35, 33, 0.72);
   display: block;

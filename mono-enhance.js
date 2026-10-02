@@ -275,7 +275,8 @@
     initFormEventi();
     initQrSblocco();
     initBadgeProdotti();
-    initContoApertura();
+    initAperturaBanner();
+    initMeseApertura();
     initSocial();
     initTelefono();
     initWhatsAppChiusura();
@@ -372,6 +373,31 @@
     return ul;
   }
 
+  /* «Seguici. A ottobre si comincia.» — il mese viene dal punto unico, e il
+     giorno che la serranda si alza la frase cambia da sola. */
+  function fraseSocial() {
+    var cfg = window.MONO_APERTURA || {};
+    if (cfg.APERTA === true) return "Seguici. Siamo aperti.";
+    var mese = String(cfg.MESE || "").trim();
+    if (!mese) return "Seguici.";
+    return "Seguici. " + mese.charAt(0).toUpperCase() + mese.slice(1) + " si comincia.";
+  }
+
+  /* LE FRASI CHE DICONO IL MESE DENTRO LE PAGINE (2/10/2026).
+     Sono tre: la riga sotto il film in home, la risposta "Quando apre MONO?" e
+     la riga della pagina Dove siamo. Il mese lo mettono da qui, cosi' si cambia
+     in un posto solo. ⚠️ La QUARTA — i dati strutturati che legge Google, in
+     cima a index.html — resta scritta a mano di proposito: Google legge il
+     sorgente e non aspetta il programma. Se cambia il mese, va cambiata anche
+     li': e' l'unica. */
+  function initMeseApertura() {
+    var cfg = window.MONO_APERTURA || {};
+    var mese = String(cfg.MESE || "").trim();
+    if (!mese || cfg.APERTA === true) return;
+    var punti = document.querySelectorAll("[data-mese-apertura]");
+    for (var i = 0; i < punti.length; i++) punti[i].textContent = mese;
+  }
+
   function initSocial() {
     var voci = socialAttivi();
     if (!voci.length) return;   // nessun indirizzo compilato: non si disegna niente
@@ -383,7 +409,12 @@
       blocco.className = "mono-social";
       var frase = document.createElement("p");
       frase.className = "mono-social__frase";
-      frase.textContent = "Seguici. A settembre si comincia.";
+      /* ⚠️ Il mese NON si scrive qui (2/10/2026): arriva da mono-config.js, lo
+         stesso posto del riquadro dell'apertura. Prima diceva "A settembre si
+         comincia." su tutte e dodici le pagine, mentre il riquadro diceva
+         ottobre: due scritte della stessa cosa che si contraddicono sono
+         peggio di una sola sbagliata, perche' chi legge non sa a quale credere. */
+      frase.textContent = fraseSocial();
       blocco.appendChild(frase);
       blocco.appendChild(listaSocial(voci, "footer"));
       footer.appendChild(blocco);
@@ -657,64 +688,44 @@
     if (tendina) riga.insertAdjacentElement("afterend", tendina);
   }
 
-  /* Conto alla rovescia per l'apertura (18/7). Sta accanto alla raccolta
-     email: "mancano N giorni" da' un motivo per lasciare l'indirizzo ADESSO
-     invece di rimandare. Resta nascosto finche' il JS non ha un numero vero,
-     cosi' non si vede mai un trattino al posto della cifra.
+  /* IL RIQUADRO DELL'APERTURA — "Apertura prevista a ottobre" (2/10/2026).
 
-     ⚠️⚠️ RIFATTO IL 29/7 — LA BOMBA A OROLOGERIA.
-     Prima qui c'era scritto `new Date(2026, 8, 1)` e il resto veniva da se':
-     passato il 1 settembre il sito scriveva DA SOLO "La bottega e' aperta.",
-     aperta o no. Se l'apertura slittava di una settimana, il sito mentiva a
-     chiunque passasse e nessuno se ne accorgeva.
+     Sta dentro la carta che raccoglie le email, dove prima c'era il conto alla
+     rovescia: dare un MESE e' il motivo per lasciare l'indirizzo adesso invece
+     di rimandare a mai.
 
-     Adesso comandano due manopole in mono-config.js (window.MONO_APERTURA):
-       APERTA        -> la dichiarazione la fa LUI, a mano. Finche' e' false
-                        il sito non dira' MAI di essere aperto.
-       DATA_PREVISTA -> serve SOLO al conto alla rovescia.
+     ⚠️ PERCHE' NON C'E' PIU' IL CONTO ALLA ROVESCIA (sua scelta): voleva un
+     giorno preciso, e un giorno preciso che poi slitta e' una promessa rotta
+     davanti a tutti. Il mese dice abbastanza e non inchioda nessuno.
 
-     ⚠️ IL PUNTO IMPORTANTE E' COSA SUCCEDE QUANDO LA DATA PASSA e nessuno
-     ha alzato l'interruttore: il blocco resta NASCOSTO. Il sito tace,
-     non mente. Non toccare questo comportamento: e' il motivo del lavoro. */
-  function initContoApertura() {
-    var blocco = document.querySelector("[data-conto-apertura]");
+     ⚠️⚠️ QUELLO CHE NON SI TOCCA, ed e' il motivo per cui questo codice esiste:
+     il sito NON decide da solo di essere aperto. Prima qui c'era una data
+     scritta nel programma e, passata quella, il sito annunciava da se' "La
+     bottega e' aperta" — aperta o no. L'interruttore lo alza LUI
+     (window.MONO_APERTURA.APERTA in mono-config.js). Se il mese e' vuoto il
+     blocco resta NASCOSTO: il sito tace, non mente. */
+  function initAperturaBanner() {
+    var blocco = document.querySelector("[data-apertura]");
     if (!blocco) return;
-    var numero = blocco.querySelector("[data-conto-giorni]");
-    var testo = blocco.querySelector(".mono-conto__testo");
-    if (!numero) return;
+    var mese = blocco.querySelector("[data-apertura-mese]");
+    if (!mese) return;
 
     var cfg = window.MONO_APERTURA || {};
 
-    /* 1) L'interruttore vince su tutto: se e' alzato, la bottega e' aperta
-          e la data non conta piu' niente. */
+    /* 1) L'interruttore vince su tutto: alzato, la bottega e' aperta e il mese
+          previsto non interessa piu' a nessuno. */
     if (cfg.APERTA === true) {
-      numero.textContent = "";
-      if (testo) testo.textContent = "La bottega è aperta.";
+      mese.textContent = "La bottega è aperta.";
       blocco.classList.add("is-aperto");
       blocco.hidden = false;
       return;
     }
 
-    /* 2) Niente data (o data scritta male) => niente conto alla rovescia,
-          e il blocco resta nascosto. Meglio muto che sbagliato. */
-    var pezzi = String(cfg.DATA_PREVISTA || "").match(/^(\d{4})-(\d{2})-(\d{2})$/);
-    if (!pezzi) return;
+    /* 2) Niente mese scritto => silenzio. Meglio muto che sbagliato. */
+    var scritto = String(cfg.MESE || "").trim();
+    if (!scritto) return;
 
-    /* Costruita pezzo per pezzo e NON con new Date("2026-09-15"): quella
-       forma Safari la legge come UTC e sul fuso italiano puo' spostare il
-       conto di un giorno. Il mese e' 0-based, da qui il -1. */
-    var apertura = new Date(+pezzi[1], +pezzi[2] - 1, +pezzi[3]);
-    if (isNaN(apertura)) return;
-
-    var oggi = new Date();
-    oggi.setHours(0, 0, 0, 0);
-    var giorni = Math.ceil((apertura - oggi) / 86400000);
-
-    /* 3) Data passata ma interruttore ancora abbassato: SILENZIO. */
-    if (giorni <= 0) return;
-
-    numero.textContent = giorni;
-    if (testo) testo.textContent = giorni === 1 ? "giorno all'apertura" : "giorni all'apertura";
+    mese.textContent = scritto;
     blocco.hidden = false;
   }
 

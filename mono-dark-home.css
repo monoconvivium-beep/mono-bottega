@@ -865,48 +865,59 @@ body.mono-dark-home .site-header .nav a:focus-visible {
 }
 
 /* ============================================================
-   CONTO ALLA ROVESCIA apertura (18/7)
-   Accanto alla raccolta email: "mancano N giorni" da' un motivo per
-   lasciare l'indirizzo adesso invece di rimandare a mai.
+   IL RIQUADRO DELL'APERTURA (2/10/2026) — «Apertura prevista a ottobre»
+   Prende il posto del conto alla rovescia dentro la carta che raccoglie
+   le email. Sta su fondo TERRACOTTA (#b45733 → #9d4c2c), quindi:
+   · il filo e il bordo sono ORO — l'accento del buio, la terracotta
+     sulla terracotta non si vedrebbe;
+   · la scritta del mese e' crema PIENA, non velata: e' la riga che da'
+     il motivo di lasciare l'email, e il velo l'aveva gia' portata sotto
+     soglia una volta (29/7, misurato).
    ============================================================ */
-body.mono-dark-home .mono-conto {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  margin: 14px 0 4px;
+body.mono-dark-home .mono-apertura {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin: 14px 0 6px;
+  padding: 11px 18px;
+  border: 1px solid rgba(242, 223, 160, 0.55);
+  border-left: 5px solid #f2dfa0;
+  border-radius: 10px;
+  /* ⚠️ 0.28 e non 0.18: misurato sul colore vero della carta, col velo leggero
+     l'etichetta d'oro faceva 4,53 contro il minimo di 4,5 — passava per tre
+     centesimi, cioe' non passava davvero. Cosi' sta a 5,08 nel punto peggiore
+     del gradiente, e la carta resta terracotta. */
+  background: rgba(38, 35, 33, 0.28);
   flex-wrap: wrap;
 }
-/* specificita' alzata: `.opening-signup span` (piu' sopra) vincerebbe
-   e tingerebbe il numero di burro invece che d'oro */
-body.mono-dark-home .opening-signup .mono-conto .mono-conto__numero,
-body.mono-dark-home .mono-conto__numero {
+/* specificita' alzata: `.opening-signup span` (piu' sopra) vincerebbe e
+   tingerebbe l'etichetta di burro invece che d'oro */
+body.mono-dark-home .opening-signup .mono-apertura .mono-apertura__etichetta,
+body.mono-dark-home .mono-apertura__etichetta {
+  color: #f2dfa0;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  line-height: 1.35;
+  text-transform: uppercase;
+  margin: 0;
+}
+body.mono-dark-home .opening-signup .mono-apertura .mono-apertura__mese,
+body.mono-dark-home .mono-apertura__mese {
+  color: #fff9ee;
   font-family: "Fraunces", Georgia, "Times New Roman", serif;
-  font-size: clamp(38px, 6vw, 58px);
+  font-size: clamp(24px, 3.4vw, 30px);
   font-weight: 700;
   line-height: 1;
-  color: #f2dfa0;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   margin: 0;
 }
-body.mono-dark-home .opening-signup .mono-conto .mono-conto__testo,
-body.mono-dark-home .mono-conto__testo {
-  color: #fff9ee;
-  margin: 0;
+/* Serranda alzata: una riga sola, e l'etichetta «apertura prevista» non
+   avrebbe piu' senso. */
+body.mono-dark-home .mono-apertura.is-aperto .mono-apertura__etichetta {
+  display: none;
 }
-body.mono-dark-home .mono-conto__testo {
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #fff9ee;
-}
-body.mono-dark-home .mono-conto.is-aperto .mono-conto__testo {
-  font-size: clamp(20px, 3vw, 28px);
-  text-transform: none;
-  letter-spacing: 0;
-  font-family: "Fraunces", Georgia, serif;
-  font-weight: 700;
-}
+
 
 /* ============================================================
    La scheda DA COMPILARE non si muove mai (18/7)

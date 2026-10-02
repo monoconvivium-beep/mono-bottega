@@ -80,17 +80,26 @@ window.MONO_TELEFONO = {
       se la data qui sotto e' passata da tre mesi.
       Il giorno che alzi la serranda: metti true, salva, pubblica.
 
-   2) DATA_PREVISTA — serve solo al conto alla rovescia ("mancano N
-      giorni"), che e' il motivo per lasciare l'email ADESSO invece di
-      rimandare. Formato ANNO-MESE-GIORNO.
-      Se la data passa e APERTA e' ancora false, il conto alla rovescia
-      semplicemente SPARISCE: il sito tace, non mente. E' il modo giusto
-      di sbagliare.
-      Lasciala vuota ("") se non vuoi nessun conto alla rovescia.
+   2) MESE — il mese in cui si apre, scritto come lo diresti a voce.
+      Sostituisce il conto alla rovescia (2/10/2026, scelta sua): il
+      conto alla rovescia voleva un GIORNO preciso, e un giorno preciso
+      che poi slitta e' una promessa che si rompe davanti a tutti. Il
+      mese basta a far lasciare l'email adesso invece che mai, e non
+      obbliga nessuno a inchiodarsi a una data.
+
+      Si scrive COME VA LETTO, perche' finisce a schermo tale e quale:
+        "a ottobre"   ->  Apertura prevista  a ottobre
+        "a novembre"  ->  Apertura prevista  a novembre
+      Lascialo vuoto ("") e il riquadro SPARISCE da tutte le pagine: il
+      sito tace, non mente. E' il modo giusto di sbagliare.
+
+   ⚠️ IL MESE SI SCRIVE QUI E BASTA. E' l'unico punto del sito: cambi
+      questa riga e cambia su tutte e dodici le pagine insieme. Nessuna
+      data scritta a mano dentro le pagine — e' la trappola del 29/7.
    ------------------------------------------------------------ */
 window.MONO_APERTURA = {
   APERTA: false,
-  DATA_PREVISTA: "2026-09-15"
+  MESE: "a ottobre"
 };
 
 /* ------------------------------------------------------------
