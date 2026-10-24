@@ -783,22 +783,13 @@
 
     if (giorno) giorno.textContent = a.giorno.charAt(0).toUpperCase() + a.giorno.slice(1);
 
-    /* Il mese in oro, il resto in crema: e' il provino che ha scelto lui.
-       Si costruisce a pezzi invece che con innerHTML - il contenuto e'
-       nostro, ma una data che arriva da un file di configurazione non
-       merita di finire dentro l'HTML senza passare da textContent. */
-    data.textContent = "";
-    var pz = [
-      { testo: a.data.getDate() + " " },
-      { testo: MESI[a.data.getMonth()], oro: true },
-      { testo: " " + a.data.getFullYear() }
-    ];
-    pz.forEach(function (x) {
-      var s = document.createElement("span");
-      if (x.oro) s.className = "mono-cartello__mese";
-      s.textContent = x.testo;
-      data.appendChild(s);
-    });
+    /* 24/10, sua correzione: la data e' TUTTA dorata, non solo il mese.
+       Quindi niente piu' pezzi separati - il colore lo fa il CSS su tutta
+       la riga e qui basta il testo. (Prima si costruivano tre <span> solo
+       per tingere "novembre": con tutto dello stesso colore non servono
+       piu'.) `textContent` e non `innerHTML`: la data arriva da un file di
+       configurazione e non deve poter portare HTML dentro la pagina. */
+    data.textContent = a.lungo;
 
     /* Il conto alla rovescia si SPEGNE quando non ha piu' niente di vero da
        dire: a giorni negativi direbbe "fra -3 giorni", e la data resta li'

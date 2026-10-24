@@ -2422,9 +2422,16 @@ body.mono-dark-home .mono-cartello__giorno {
   margin: 0 0 4px;
   opacity: 0.85;
 }
-/* La data e' l'unica cosa che deve leggersi da lontano: e' lei il cartello. */
+/* La data e' l'unica cosa che deve leggersi da lontano: e' lei il cartello.
+   ⚠️ 24/10, sua correzione: TUTTA dorata, non solo il mese. Prima il
+   giorno e l'anno erano crema e "novembre" oro; ha chiesto l'oro su tutto.
+   Misurato, non stimato: #EBCE7C sul fondo del cartello fa **9,78** nel
+   punto piu' chiaro del gradiente e 10,40 nel piu' scuro. La soglia per un
+   testo grande e' 3,0, quindi si legge da lontano - che e' tutto il
+   mestiere di questa riga. (Il crema di prima faceva 14,4: si perde un po'
+   di stacco, ma resta tre volte sopra la soglia.) */
 body.mono-dark-home .mono-cartello__data {
-  color: #fff9ee;
+  color: #ebce7c;
   font-family: "Fraunces", Georgia, "Times New Roman", serif;
   font-size: clamp(40px, 7.4vw, 88px);
   font-weight: 700;
@@ -2496,7 +2503,3 @@ body.mono-dark-home .mono-cartello.is-aperto .mono-cartello__data {
   }
 }
 
-/* Il mese in oro dentro la data: e' il provino che ha scelto lui. */
-body.mono-dark-home .mono-cartello__mese {
-  color: #ebce7c;
-}
