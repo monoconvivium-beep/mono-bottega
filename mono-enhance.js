@@ -276,6 +276,7 @@
     initQrSblocco();
     initBadgeProdotti();
     initAperturaBanner();
+    initCartelloApertura();
     initMeseApertura();
     initSocial();
     initTelefono();
@@ -392,7 +393,9 @@
      li': e' l'unica. */
   function initMeseApertura() {
     var cfg = window.MONO_APERTURA || {};
-    var mese = String(cfg.MESE || "").trim();
+    /* Dal 24/10 il mese si RICAVA dalla data (leggiApertura): finche' c'e'
+       una data vera, `MESE` scritto a mano non viene guardato. */
+    var mese = leggiApertura().mese;
     if (!mese || cfg.APERTA === true) return;
     var punti = document.querySelectorAll("[data-mese-apertura]");
     for (var i = 0; i < punti.length; i++) punti[i].textContent = mese;
@@ -704,6 +707,114 @@
      bottega e' aperta" — aperta o no. L'interruttore lo alza LUI
      (window.MONO_APERTURA.APERTA in mono-config.js). Se il mese e' vuoto il
      blocco resta NASCOSTO: il sito tace, non mente. */
+  /* ============================================================
+     DA UNA DATA SOLA ESCE TUTTO — le parole dell'apertura (24/10/2026)
+
+     In mono-config.js c'e' `DATA: "2026-11-14"` e basta quella. Qui
+     dentro diventa "Sabato", "14 novembre 2026", "Fra 21 giorni" e il
+     mese "a novembre" che finisce nelle frasi delle altre pagine.
+
+     ⚠️ PERCHE' SI RICAVA INVECE DI SCRIVERLO: il mese stava scritto a
+     mano in `MESE`. Con una data vera accanto diventavano due verita'
+     sulla stessa cosa, e prima o poi una slitta e l'altra no - e' lo
+     stesso inciampo del 29/7, quando la data viveva dentro il codice.
+     ============================================================ */
+  var MESI = ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno",
+              "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"];
+  var GIORNI = ["domenica", "lunedì", "martedì", "mercoledì",
+                "giovedì", "venerdì", "sabato"];
+
+  /* Mezzanotte: si confrontano GIORNI, non istanti. Senza azzerare l'ora,
+     alle 23 del 13 novembre mancherebbe "0 giorni" e alle 9 del 14 ne
+     mancherebbe ancora "1". */
+  function aMezzanotte(d) {
+    return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  }
+
+  function leggiApertura() {
+    var cfg = window.MONO_APERTURA || {};
+    var scritta = String(cfg.DATA || "").trim();
+    var pezzi = scritta.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (!pezzi) return { data: null, mese: String(cfg.MESE || "").trim() };
+
+    var d = new Date(Number(pezzi[1]), Number(pezzi[2]) - 1, Number(pezzi[3]));
+    /* Data impossibile scritta per sbaglio (31 febbraio): meglio il mese a
+       mano che una bugia precisa. */
+    if (d.getMonth() !== Number(pezzi[2]) - 1) {
+      return { data: null, mese: String(cfg.MESE || "").trim() };
+    }
+    return {
+      data: d,
+      giorno: GIORNI[d.getDay()],
+      lungo: d.getDate() + " " + MESI[d.getMonth()] + " " + d.getFullYear(),
+      mese: "a " + MESI[d.getMonth()],
+      mancano: Math.round((aMezzanotte(d) - aMezzanotte(new Date())) / 86400000)
+    };
+  }
+
+  /* IL CARTELLO GRANDE DELLA HOME (sua scelta fra tre provini, 24/10).
+     Le stesse tre regole dell'interruttore, che non cambiano mai:
+       1) APERTA vince su tutto;
+       2) niente data e niente mese => resta chiuso, il sito tace;
+       3) la data passata NON apre da sola la bottega. */
+  function initCartelloApertura() {
+    var c = document.querySelector("[data-cartello-apertura]");
+    if (!c) return;
+
+    var cfg = window.MONO_APERTURA || {};
+    var a = leggiApertura();
+    var occhio = c.querySelector("[data-cartello-occhio]");
+    var giorno = c.querySelector("[data-cartello-giorno]");
+    var data = c.querySelector("[data-cartello-data]");
+    var conto = c.querySelector("[data-cartello-conto]");
+    if (!data) return;
+
+    if (cfg.APERTA === true) {
+      if (occhio) occhio.textContent = "Siamo aperti";
+      if (giorno) giorno.hidden = true;
+      data.textContent = "La bottega è aperta.";
+      if (conto) conto.hidden = true;
+      c.classList.add("is-aperto");
+      c.hidden = false;
+      return;
+    }
+
+    if (!a.data) return;   /* senza una data vera il cartello non ha senso */
+
+    if (giorno) giorno.textContent = a.giorno.charAt(0).toUpperCase() + a.giorno.slice(1);
+
+    /* Il mese in oro, il resto in crema: e' il provino che ha scelto lui.
+       Si costruisce a pezzi invece che con innerHTML - il contenuto e'
+       nostro, ma una data che arriva da un file di configurazione non
+       merita di finire dentro l'HTML senza passare da textContent. */
+    data.textContent = "";
+    var pz = [
+      { testo: a.data.getDate() + " " },
+      { testo: MESI[a.data.getMonth()], oro: true },
+      { testo: " " + a.data.getFullYear() }
+    ];
+    pz.forEach(function (x) {
+      var s = document.createElement("span");
+      if (x.oro) s.className = "mono-cartello__mese";
+      s.textContent = x.testo;
+      data.appendChild(s);
+    });
+
+    /* Il conto alla rovescia si SPEGNE quando non ha piu' niente di vero da
+       dire: a giorni negativi direbbe "fra -3 giorni", e la data resta li'
+       finche' l'interruttore non lo alza lui. */
+    if (conto) {
+      var testo = "";
+      if (a.mancano > 1) testo = "Fra " + a.mancano + " giorni";
+      else if (a.mancano === 1) testo = "Domani";
+      else if (a.mancano === 0) testo = "È oggi";
+      conto.textContent = testo;
+      conto.hidden = !testo;
+    }
+
+    c.hidden = false;
+  }
+
   function initAperturaBanner() {
     var blocco = document.querySelector("[data-apertura]");
     if (!blocco) return;
@@ -721,8 +832,9 @@
       return;
     }
 
-    /* 2) Niente mese scritto => silenzio. Meglio muto che sbagliato. */
-    var scritto = String(cfg.MESE || "").trim();
+    /* 2) Niente mese => silenzio. Meglio muto che sbagliato.
+          Dal 24/10 arriva dalla data; `MESE` resta solo come riserva. */
+    var scritto = leggiApertura().mese;
     if (!scritto) return;
 
     mese.textContent = scritto;

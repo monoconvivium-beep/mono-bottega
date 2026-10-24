@@ -99,7 +99,19 @@ window.MONO_TELEFONO = {
    ------------------------------------------------------------ */
 window.MONO_APERTURA = {
   APERTA: false,
-  MESE: "a ottobre"
+
+  /* ⭐ LA DATA. Da qui esce TUTTO: il cartellone grande della home, il
+     conto alla rovescia, e anche il mese scritto nelle frasi delle altre
+     pagine (vedi MESE qui sotto). Si scrive anno-mese-giorno.
+     Vuota ("") e il sito torna a dire solo il mese; vuoti tutti e due,
+     tace del tutto. */
+  DATA: "2026-11-14",
+
+  /* Il mese a parole. ⚠️ SI RICAVA DA SOLO DALLA DATA: finche' DATA e'
+     piena, quello che scrivi qui NON viene guardato — e' giusto cosi',
+     due posti che dicono la stessa cosa finiscono sempre per litigare.
+     Serve solo se un domani togli la data e vuoi tornare al mese secco. */
+  MESE: "a novembre"
 };
 
 /* ------------------------------------------------------------
