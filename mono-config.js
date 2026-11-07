@@ -142,6 +142,103 @@ window.MONO_APERTURA = {
    programma: vanno cambiati A MANO, in formato 24 ore. E' la stessa
    eccezione del mese dell'apertura — se cambi gli orari qui, aprili.
    ------------------------------------------------------------ */
+/* ============================================================
+   ⭐ I TESTI CHE SI STACCANO DA SOLI (7/11/2026, sua richiesta:
+      «da mezzanotte del 13 si staccano tutti, perché il 14 si apre»)
+   ------------------------------------------------------------
+   Tutto il sito e' scritto da mesi al futuro: «stiamo per aprire»,
+   «ti avvisiamo il giorno dell'apertura», «non siamo ancora aperti».
+   Il 14 mattina diventano bugie tutte insieme, su dodici pagine.
+   Da qui in poi non serve ricordarselo: ogni frase ha la sua versione
+   per ciascuno dei TRE MOMENTI, e la pagina sceglie da sola guardando
+   il giorno di ROMA (non quello di chi guarda).
+
+     prima -> fino a venerdi' 13 compreso
+     oggi  -> il giorno dell'apertura (DATA), cioe' sabato 14
+     dopo  -> da domenica 15 in poi
+
+   Manca "oggi"? si usa "dopo". ⚠️ L'interruttore APERTA vince su tutto
+   e porta subito a "dopo", per il caso in cui si apra prima.
+
+   ⚠️ NESSUNA DATA E NESSUN ORARIO SCRITTO A MANO QUI DENTRO. Si usano
+   i segnaposto, che si riempiono da DATA, INAUGURAZIONE e MONO_ORARI:
+     {quando}      sabato 14 novembre 2026
+     {dalle} {alle} {insegna}   16:00 / 21:00 / 18:08
+     {primigiorni} Sabato 14 novembre 16:00–21:00. Domenica 15 ...
+     {orari}       Lunedi' 17:30–21:30. Martedi'–sabato ...
+   Se l'apertura slitta si sposta DATA e TUTTE queste frasi la seguono.
+
+   ⚠️ Quello che resta scritto dentro le pagine e' la versione "prima":
+   e' la riserva per chi ha il programma spento. Dal 15, con JavaScript
+   spento, vedrebbe ancora le frasi vecchie — e' lo stesso patto degli
+   orari, e vale per una minoranza piccolissima.
+   ============================================================ */
+window.MONO_TESTI = {
+  /* LA CARTA CHE RACCOGLIE LE EMAIL — dodici pagine, piu' quella
+     piccola dentro il film in home. */
+  "invito.occhiello": {
+    prima: "STIAMO PER APRIRE",
+    oggi:  "APRIAMO OGGI",
+    dopo:  "SIAMO APERTI"
+  },
+  "invito.titolo": {
+    prima: "Sii tra i primi a entrare in bottega.",
+    oggi:  "Ci vediamo oggi, dalle {dalle}.",
+    dopo:  "Resta in contatto con la bottega."
+  },
+  "invito.testo": {
+    prima: "Lascia la tua email: ti avvisiamo il giorno dell’apertura e per le prime novità del banco. Niente spam, solo quando serve.",
+    dopo:  "Lascia la tua email: ti scriviamo per i piatti del giorno, le novità del banco e le serate. Niente spam, solo quando serve."
+  },
+  "invito.tasto": {
+    prima: "Avvisami all’apertura",
+    dopo:  "Tienimi aggiornato"
+  },
+  /* La spunta del consenso. ⚠️ Cambia solo la CODA della frase: il
+     pezzo con il link all'informativa resta dov'e'. Dopo l'apertura
+     sparisce «l'avviso di apertura», che non esiste piu'. */
+  "consenso.coda": {
+    prima: "acconsento a ricevere l’avviso di apertura e le novità del banco.",
+    dopo:  "acconsento a ricevere le novità del banco."
+  },
+
+  /* LA RIGA SOTTO AL FILM, in home. */
+  "home.riga": {
+    prima: "Apriamo {quando} · Via Barletta 72D, Santa Rita, Torino.",
+    oggi:  "Apriamo oggi, dalle {dalle} · Via Barletta 72D, Santa Rita, Torino.",
+    dopo:  "Via Barletta 72D, Santa Rita, Torino."
+  },
+
+  /* LE DOMANDE RAPIDE, in home. */
+  "faq.domanda": {
+    prima: "Quando aprite?",
+    oggi:  "A che ora aprite oggi?",
+    dopo:  "Quando siete aperti?"
+  },
+  "faq.risposta": {
+    prima: "Apriamo {quando}, in Via Barletta 72D a Santa Rita. {primigiorni}",
+    oggi:  "Apriamo oggi, dalle {dalle} alle {alle}, in Via Barletta 72D a Santa Rita. Alle {insegna} accendiamo l’insegna.",
+    dopo:  "Siamo in Via Barletta 72D, a Santa Rita. {orari}"
+  },
+
+  /* LA FRASE ACCANTO AI SOCIAL, in fondo a ogni pagina. ⚠️ Fino al
+     7/11 la costruiva il programma dal MESE, e diceva «Seguici. A
+     novembre si comincia.» su dodici pagine: era l'ultimo posto dove
+     sopravviveva il mese vago. */
+  "social.frase": {
+    prima: "Seguici. Si comincia {quando}.",
+    oggi:  "Seguici. Oggi si comincia.",
+    dopo:  "Seguici. Siamo aperti."
+  },
+
+  /* LA RIGA DEL CANTIERE, su Dove siamo. */
+  "dove.apertura": {
+    prima: "Non siamo ancora aperti: apriamo {quando}. Se passi adesso trovi il cantiere — ma puoi lasciarci l’email qui sotto e ti avvisiamo il giorno giusto.",
+    oggi:  "Apriamo oggi: ti aspettiamo dalle {dalle} alle {alle}. Alle {insegna} accendiamo l’insegna.",
+    dopo:  "La bottega è aperta: passa quando vuoi, gli orari sono qui sotto."
+  }
+};
+
 window.MONO_ORARI = {
   /* Il titolino sopra l'elenco. Finche' la bottega non ha aperto dice
      che sono previsti; dal giorno che alzi APERTA diventa il secondo. */

@@ -277,7 +277,7 @@
     initBadgeProdotti();
     initCartelloApertura();
     initOrari();
-    initQuandoApriamo();
+    initTesti();
     initSocial();
     initTelefono();
     initWhatsAppChiusura();
@@ -377,11 +377,7 @@
   /* «Seguici. A ottobre si comincia.» — il mese viene dal punto unico, e il
      giorno che la serranda si alza la frase cambia da sola. */
   function fraseSocial() {
-    var cfg = window.MONO_APERTURA || {};
-    if (cfg.APERTA === true) return "Seguici. Siamo aperti.";
-    var mese = String(cfg.MESE || "").trim();
-    if (!mese) return "Seguici.";
-    return "Seguici. " + mese.charAt(0).toUpperCase() + mese.slice(1) + " si comincia.";
+    return testoDelMomento("social.frase") || "Seguici.";
   }
 
   /* LE FRASI CHE DICONO IL MESE DENTRO LE PAGINE (2/10/2026).
@@ -391,24 +387,6 @@
      cima a index.html — resta scritta a mano di proposito: Google legge il
      sorgente e non aspetta il programma. Se cambia il mese, va cambiata anche
      li': e' l'unica. */
-  /* ⚠️ 7/11/2026 — SI DICE IL GIORNO, NON PIU' IL MESE.
-     Fino a ieri queste frasi dicevano "apertura prevista a novembre": una
-     prudenza che aveva senso quando la data poteva slittare. Adesso la data
-     c'e' ed e' fra una settimana, quindi "prevista" e' piu' vago della
-     verita'. Scrivono "sabato 14 novembre", ricavato dalla DATA: nessun
-     giorno scritto a mano da nessuna parte.
-     Il riquadro "APERTURA PREVISTA · a novembre" dentro la carta delle email
-     e' stato tolto del tutto (sua richiesta): non c'e' piu' niente da
-     prevedere. */
-  function initQuandoApriamo() {
-    var cfg = window.MONO_APERTURA || {};
-    var a = leggiApertura();
-    if (!a.data || cfg.APERTA === true) return;
-    var quando = a.giorno + " " + a.data.getDate() + " " + MESI[a.data.getMonth()];
-    var punti = document.querySelectorAll("[data-quando-apriamo]");
-    for (var i = 0; i < punti.length; i++) punti[i].textContent = quando;
-  }
-
   function initSocial() {
     var voci = socialAttivi();
     if (!voci.length) return;   // nessun indirizzo compilato: non si disegna niente
@@ -759,16 +737,82 @@
      orari di tutti i giorni. I primi spariscono da soli quando sono
      passati, e con loro la riga "Dal 16 novembre": il 16 resta il solo
      elenco invernale senza che nessuno tocchi niente. */
+  /* IN CHE MOMENTO SIAMO? Una sola risposta per tutto il sito.
+       "prima" -> fino al giorno prima dell'apertura
+       "oggi"  -> il giorno dell'apertura (DATA)
+       "dopo"  -> dal giorno dopo in poi
+     ⚠️ Il confronto e' sul giorno di Roma e l'interruttore APERTA vince
+     su tutto: alzato, si va dritti a "dopo". */
+  function momentoApertura() {
+    var cfg = window.MONO_APERTURA || {};
+    if (cfg.APERTA === true) return "dopo";
+    var d = String(cfg.DATA || "");
+    if (!d) return "prima";
+    var oggi = oggiARoma();
+    if (oggi < d) return "prima";
+    if (oggi === d) return "oggi";
+    return "dopo";
+  }
+
+  /* I SEGNAPOSTO delle frasi di MONO_TESTI. Nascono tutti da DATA,
+     INAUGURAZIONE e MONO_ORARI: cosi' una data o un orario esistono in
+     UN posto solo, e le frasi li seguono invece di ripeterli. */
+  function segnaposti() {
+    var a = leggiApertura();
+    var i = (window.MONO_APERTURA || {}).INAUGURAZIONE || {};
+    var o = window.MONO_ORARI || {};
+    var pezzi = function (lista) {
+      return (Array.isArray(lista) ? lista : [])
+        .filter(function (r) { return r && r.giorni && r.fasce; })
+        .map(function (r) { return r.giorni + " " + r.fasce + "."; })
+        .join(" ");
+    };
+    return {
+      "{quando}": a.data ? (a.giorno + " " + a.lungo) : "",
+      "{dalle}": i.dalle || "",
+      "{alle}": i.alle || "",
+      "{insegna}": i.insegna || "",
+      "{primigiorni}": pezzi(o.speciali),
+      "{orari}": pezzi(o.righe)
+    };
+  }
+
+  /* LE FRASI CHE SI STACCANO DA SOLE. Ogni punto del sito che parla
+     dell'apertura porta `data-testo="chiave"`; la frase giusta per il
+     momento di oggi esce da MONO_TESTI in mono-config.js.
+     ⚠️ Si scrive solo TESTO (textContent): niente HTML dalla
+     configurazione, cosi' una frase non puo' rompere la pagina. */
+  /* LA FRASE GIUSTA PER OGGI, da una chiave di MONO_TESTI. Un posto solo:
+     lo usano sia i punti marcati con `data-testo` sia la riga dei social
+     in fondo alla pagina, che non esiste nel sorgente ma la disegna il
+     programma. "oggi" che manca ricade su "dopo", poi su "prima". */
+  function testoDelMomento(chiave) {
+    var voce = (window.MONO_TESTI || {})[chiave];
+    if (!voce) return "";
+    var m = momentoApertura();
+    var t = voce[m];
+    if (typeof t !== "string" && m === "oggi") t = voce.dopo;
+    if (typeof t !== "string") t = voce.prima;
+    if (typeof t !== "string") return "";
+    var sost = segnaposti();
+    for (var k in sost) { if (sost.hasOwnProperty(k)) t = t.split(k).join(sost[k]); }
+    return t.replace(/\s+/g, " ").trim();
+  }
+
+  function initTesti() {
+    document.querySelectorAll("[data-testo]").forEach(function (el) {
+      var t = testoDelMomento(el.getAttribute("data-testo"));
+      if (t) el.textContent = t;
+    });
+  }
+
   /* APERTA? La stessa risposta per il cartellone e per le schede degli
      orari, se no il sito si contraddice da solo: il cartellone che dice
      "Siamo aperti." sopra una scheda intitolata "Orari dall'apertura".
        1) l'interruttore APERTA vince su tutto;
        2) altrimenti: il giorno dopo DATA (scelta sua del 7/11). */
-  function bottegaAperta(oggi) {
-    var cfg = window.MONO_APERTURA || {};
-    if (cfg.APERTA === true) return true;
-    var d = String(cfg.DATA || "");
-    return !!d && String(oggi || oggiARoma()) > d;
+  function bottegaAperta() {
+    return momentoApertura() === "dopo";
   }
 
   function initOrari() {
@@ -781,7 +825,7 @@
       return r && r.giorni && r.fasce && r.data && String(r.data) >= oggi;
     });
 
-    var titolo = bottegaAperta(oggi) ? (cfg.titoloDopo || "") : (cfg.titoloPrima || "");
+    var titolo = bottegaAperta() ? (cfg.titoloDopo || "") : (cfg.titoloPrima || "");
 
     /* "Dal 16 novembre" non si scrive a mano: e' il giorno dopo l'ultima
        data speciale, qualunque essa sia. Se le date cambiano, cambia da se'. */
@@ -924,7 +968,7 @@
        mono-config.js. Se l'apertura slitta si sposta quella riga e lo
        scatto la segue, invece di annunciare una bottega aperta che non
        ha ancora alzato la serranda. */
-    var aperti = bottegaAperta(oggiRoma);
+    var aperti = bottegaAperta();
 
     if (aperti) {
       titolo.textContent = "Siamo aperti.";

@@ -427,6 +427,23 @@ h3 {
   margin-bottom: 8px;
 }
 
+/* ⚠️ 7/11 — LA CODA DELLA SPUNTA DEL CONSENSO.
+   Sta dentro un <span> perche' deve cambiare da sola il giorno
+   dell'apertura («l'avviso di apertura» sparisce quando l'apertura e'
+   avvenuta). Ma `.opening-signup span` qui sopra e' un selettore di
+   DISCENDENZA: faceva diventare BLOCCO anche quel pezzo, e la frase del
+   consenso si spezzava in due righe sotto la casella. Qui torna in riga
+   e riprende l'aspetto del testo che la circonda. */
+.signup-consenso [data-testo] {
+  color: inherit;
+  display: inline;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  margin: 0;
+  text-transform: none;
+}
+
 .opening-signup strong {
   display: block;
   font-family: "Fraunces", Georgia, serif;
