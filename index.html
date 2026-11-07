@@ -42,13 +42,13 @@
          di piu' rubava la corsia a quella giusta. 36 kB invece di 92. -->
     <link rel="preload" as="image" href="assets/cinematic/web/mono-01-fuoco-ravioli-poster.webp" fetchpriority="high" type="image/webp">
     <script>document.documentElement.classList.add("has-js");</script>
-    <link rel="stylesheet" href="mono-fonts.css?v=20261114-apertura-v93">
-    <link rel="stylesheet" href="mono-colors.css?v=20261114-apertura-v93">
-    <link rel="stylesheet" href="styles.css?v=20261114-apertura-v93">
-<link rel="stylesheet" href="experience.css?v=20261114-apertura-v93">
-<link rel="stylesheet" href="mono-engineering.css?v=20261114-apertura-v93">
-    <link rel="stylesheet" href="mono-enhance.css?v=20261114-apertura-v93">
-    <link rel="stylesheet" href="mono-dark-home.css?v=20261114-apertura-v93">
+    <link rel="stylesheet" href="mono-fonts.css?v=20261114-apertura-v94">
+    <link rel="stylesheet" href="mono-colors.css?v=20261114-apertura-v94">
+    <link rel="stylesheet" href="styles.css?v=20261114-apertura-v94">
+<link rel="stylesheet" href="experience.css?v=20261114-apertura-v94">
+<link rel="stylesheet" href="mono-engineering.css?v=20261114-apertura-v94">
+    <link rel="stylesheet" href="mono-enhance.css?v=20261114-apertura-v94">
+    <link rel="stylesheet" href="mono-dark-home.css?v=20261114-apertura-v94">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -162,7 +162,7 @@
             "name": "Quando apre MONO?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "L'apertura è prevista per sabato 14 novembre 2026 in Via Barletta 72D, Santa Rita. Lascia la tua email qui sul sito per essere avvisato il giorno dell'apertura."
+              "text": "MONO apre sabato 14 novembre 2026 in Via Barletta 72D, Santa Rita, Torino. Il giorno dell'inaugurazione siamo aperti dalle 16:00 alle 21:00; domenica 15 novembre dalle 11:00 alle 14:00. Dal 16 novembre gli orari invernali: lunedì 17:30–21:30, da martedì a sabato 11:00–14:00 e 17:30–21:30, domenica 11:00–14:00."
             }
           },
           {
@@ -208,8 +208,8 @@
         ]
       }
     </script>
-      <script defer src="mono-enhance.js?v=20261114-apertura-v93"></script>
-      <script src="mono-config.js?v=20261114-apertura-v93"></script>
+      <script defer src="mono-enhance.js?v=20261114-apertura-v94"></script>
+      <script src="mono-config.js?v=20261114-apertura-v94"></script>
 </head>
   <body class="mono-world home-page mono-dark-home" data-mono-world="home">
     <a class="skip-link" href="#main">Vai al contenuto</a>
@@ -290,7 +290,7 @@
                   <a class="button primary" data-track="hero_products" href="gastronomia/">Scopri i prodotti</a>
                   <a class="button ghost" data-track="hero_location" href="#dove-siamo">Vieni a trovarci</a>
                 </div>
-                <p class="cinema-note">Apertura prevista: <span data-mese-apertura>a novembre</span> 2026 · Via Barletta 72D, Santa Rita, Torino.</p>
+                <p class="cinema-note">Apriamo <span data-quando-apriamo>sabato 14 novembre</span> 2026 · Via Barletta 72D, Santa Rita, Torino.</p>
                 <form class="cinema-signup" data-newsletter-form>
                   <strong>Sii tra i primi a entrare in bottega.</strong>
                   <small>Lascia la tua email: ti avvisiamo il giorno dell’apertura e per le prime novità del banco. Niente spam, solo quando serve.</small>
@@ -513,7 +513,7 @@
             <h3>Orari dall’apertura.</h3>
             <!-- 7/11 - Riempito da window.MONO_ORARI: nessun orario scritto a mano.
                  Il testo qui sotto e' la riserva per chi ha il programma spento. -->
-            <p data-mono-orari="riga">Lunedì 17:30–21:30.<br>Martedì–sabato 11:00–14:00 e 17:30–21:30.<br>Domenica 11:00–14:00.</p>
+            <p data-mono-orari="riga">Sabato 14 novembre 16:00–21:00.<br>Domenica 15 novembre 11:00–14:00.<br>Dal 16 novembre:<br>Lun 17:30–21:30.<br>Mar–Sab 11:00–14:00 e 17:30–21:30.<br>Dom 11:00–14:00.</p>
             <a data-track="local_view_location" href="dove-siamo/">Dettagli e mappa</a>
           </article>
           <article class="local-info-card">
@@ -532,7 +532,7 @@
           <article class="page-card" data-reveal>
             <span>APERTURA</span>
             <h3>Quando aprite?</h3>
-            <p>L’apertura è prevista <span data-mese-apertura>a novembre</span> 2026 in Via Barletta 72D, Santa Rita. Lascia la tua email qui sul sito per essere avvisato il giorno dell’apertura.</p>
+            <p>Apriamo <span data-quando-apriamo>sabato 14 novembre</span> 2026 in Via Barletta 72D, Santa Rita. Lascia la tua email qui sul sito per essere avvisato il giorno dell’apertura.</p>
           </article>
           <article class="page-card" data-reveal>
             <span>Cos’è</span>
@@ -578,10 +578,6 @@
           <div>
             <span>STIAMO PER APRIRE</span>
             <strong>Sii tra i primi a entrare in bottega.</strong>
-            <p class="mono-apertura" data-apertura hidden>
-              <span class="mono-apertura__etichetta">Apertura<br>prevista</span>
-              <span class="mono-apertura__mese" data-apertura-mese></span>
-            </p>
             <small>Lascia la tua email: ti avvisiamo il giorno dell’apertura e per le prime novità del banco. Niente spam, solo quando serve.</small>
           </div>
           <label class="signup-consenso">
@@ -617,12 +613,12 @@
     </footer>
 
     <script>window.MONO_EXPERIENCE_OVERRIDES = { flags: { oPortal: false } };try{if(sessionStorage.getItem("monoCurtain")){sessionStorage.removeItem("monoCurtain");document.documentElement.classList.add("mono-curtain-cover");setTimeout(function(){document.documentElement.classList.remove("mono-curtain-cover");},1800);}}catch(e){}</script>
-    <script src="mono-experience-config.js?v=20261114-apertura-v93"></script>
-<script src="cinematic-assets.js?v=20261114-apertura-v93"></script>
-<script src="mono-cinematic.js?v=20261114-apertura-v93"></script>
-    <script src="mono-navigation.js?v=20261114-apertura-v93"></script>
-    <script src="mono-signature.js?v=20261114-apertura-v93"></script>
-    <script src="app.js?v=20261114-apertura-v93"></script>
-<script src="experience.js?v=20261114-apertura-v93"></script>
+    <script src="mono-experience-config.js?v=20261114-apertura-v94"></script>
+<script src="cinematic-assets.js?v=20261114-apertura-v94"></script>
+<script src="mono-cinematic.js?v=20261114-apertura-v94"></script>
+    <script src="mono-navigation.js?v=20261114-apertura-v94"></script>
+    <script src="mono-signature.js?v=20261114-apertura-v94"></script>
+    <script src="app.js?v=20261114-apertura-v94"></script>
+<script src="experience.js?v=20261114-apertura-v94"></script>
   </body>
 </html>

@@ -1668,6 +1668,12 @@ body.qr-dialog-open {
   color: var(--mono-anthracite);
   margin-bottom: 14px;
 }
+/* 7/11 - Il secondo titoletto ("Dal 16 novembre") arriva dopo le righe
+   dell'inaugurazione: senza aria sopra i due gruppi si incollano e
+   sembrano un elenco solo. */
+.contacts-page .contacts-hours .contacts-hours__poi {
+  margin-top: 18px;
+}
 
 .contacts-page .contacts-closing {
   background:

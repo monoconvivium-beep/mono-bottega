@@ -275,10 +275,9 @@
     initFormEventi();
     initQrSblocco();
     initBadgeProdotti();
-    initAperturaBanner();
     initCartelloApertura();
     initOrari();
-    initMeseApertura();
+    initQuandoApriamo();
     initSocial();
     initTelefono();
     initWhatsAppChiusura();
@@ -392,14 +391,22 @@
      cima a index.html — resta scritta a mano di proposito: Google legge il
      sorgente e non aspetta il programma. Se cambia il mese, va cambiata anche
      li': e' l'unica. */
-  function initMeseApertura() {
+  /* ⚠️ 7/11/2026 — SI DICE IL GIORNO, NON PIU' IL MESE.
+     Fino a ieri queste frasi dicevano "apertura prevista a novembre": una
+     prudenza che aveva senso quando la data poteva slittare. Adesso la data
+     c'e' ed e' fra una settimana, quindi "prevista" e' piu' vago della
+     verita'. Scrivono "sabato 14 novembre", ricavato dalla DATA: nessun
+     giorno scritto a mano da nessuna parte.
+     Il riquadro "APERTURA PREVISTA · a novembre" dentro la carta delle email
+     e' stato tolto del tutto (sua richiesta): non c'e' piu' niente da
+     prevedere. */
+  function initQuandoApriamo() {
     var cfg = window.MONO_APERTURA || {};
-    /* Dal 24/10 il mese si RICAVA dalla data (leggiApertura): finche' c'e'
-       una data vera, `MESE` scritto a mano non viene guardato. */
-    var mese = leggiApertura().mese;
-    if (!mese || cfg.APERTA === true) return;
-    var punti = document.querySelectorAll("[data-mese-apertura]");
-    for (var i = 0; i < punti.length; i++) punti[i].textContent = mese;
+    var a = leggiApertura();
+    if (!a.data || cfg.APERTA === true) return;
+    var quando = a.giorno + " " + a.data.getDate() + " " + MESI[a.data.getMonth()];
+    var punti = document.querySelectorAll("[data-quando-apriamo]");
+    for (var i = 0; i < punti.length; i++) punti[i].textContent = quando;
   }
 
   function initSocial() {
@@ -729,36 +736,116 @@
      ⚠️ Niente orari scritti qui dentro. Se MONO_ORARI non c'e' o non ha
      righe, non si tocca NIENTE: resta quello che c'e' nel sorgente, che
      e' anche quello che vede chi ha il programma spento. */
+  /* ⚠️ Il giorno di ROMA, non quello del visitatore: chi guarda da Londra o
+     da New York ha un'altra data in tasca, e il sito cambierebbe a ore
+     diverse per persone diverse. `en-CA` da' la forma anno-mese-giorno,
+     che si confronta come testo senza inventare fusi orari. */
+  function oggiARoma() {
+    try {
+      return new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Europe/Rome", year: "numeric", month: "2-digit", day: "2-digit"
+      }).format(new Date());
+    } catch (e) {
+      var n = new Date();
+      return n.getFullYear() + "-" +
+        String(n.getMonth() + 1).padStart(2, "0") + "-" +
+        String(n.getDate()).padStart(2, "0");
+    }
+  }
+
+  /* GLI ORARI — tre posti, una fonte sola (window.MONO_ORARI).
+     Dal 7/11 l'elenco ha due piani: i giorni dell'inaugurazione (sabato 14
+     e domenica 15, che NON seguono gli orari invernali) e, sotto, gli
+     orari di tutti i giorni. I primi spariscono da soli quando sono
+     passati, e con loro la riga "Dal 16 novembre": il 16 resta il solo
+     elenco invernale senza che nessuno tocchi niente. */
+  /* APERTA? La stessa risposta per il cartellone e per le schede degli
+     orari, se no il sito si contraddice da solo: il cartellone che dice
+     "Siamo aperti." sopra una scheda intitolata "Orari dall'apertura".
+       1) l'interruttore APERTA vince su tutto;
+       2) altrimenti: il giorno dopo DATA (scelta sua del 7/11). */
+  function bottegaAperta(oggi) {
+    var cfg = window.MONO_APERTURA || {};
+    if (cfg.APERTA === true) return true;
+    var d = String(cfg.DATA || "");
+    return !!d && String(oggi || oggiARoma()) > d;
+  }
+
   function initOrari() {
     var cfg = window.MONO_ORARI || {};
     var righe = Array.isArray(cfg.righe) ? cfg.righe.filter(function (r) { return r && r.giorni && r.fasce; }) : [];
     if (!righe.length) return;
 
-    var aperta = (window.MONO_APERTURA || {}).APERTA === true;
-    var titolo = aperta ? (cfg.titoloDopo || "") : (cfg.titoloPrima || "");
+    var oggi = oggiARoma();
+    var speciali = (Array.isArray(cfg.speciali) ? cfg.speciali : []).filter(function (r) {
+      return r && r.giorni && r.fasce && r.data && String(r.data) >= oggi;
+    });
+
+    var titolo = bottegaAperta(oggi) ? (cfg.titoloDopo || "") : (cfg.titoloPrima || "");
+
+    /* "Dal 16 novembre" non si scrive a mano: e' il giorno dopo l'ultima
+       data speciale, qualunque essa sia. Se le date cambiano, cambia da se'. */
+    var dal = "";
+    if (speciali.length) {
+      var ultima = (Array.isArray(cfg.speciali) ? cfg.speciali : [])
+        .map(function (r) { return r && r.data ? String(r.data) : ""; })
+        .filter(Boolean).sort().pop();
+      var pz = ultima ? ultima.match(/^(\d{4})-(\d{2})-(\d{2})$/) : null;
+      if (pz) {
+        var d = new Date(Number(pz[1]), Number(pz[2]) - 1, Number(pz[3]) + 1);
+        dal = "Dal " + d.getDate() + " " + MESI[d.getMonth()];
+      }
+    }
 
     document.querySelectorAll("[data-mono-orari]").forEach(function (posto) {
       var forma = posto.getAttribute("data-mono-orari");
       posto.textContent = "";
 
+      /* LA RIGA STRETTA (scheda "Orari" in home): niente titoli, solo righe. */
       if (forma === "riga") {
-        righe.forEach(function (r, i) {
+        var pezzi = [];
+        speciali.forEach(function (r) {
+          pezzi.push((r.giorni || "") + " " + r.fasce + ".");
+        });
+        if (dal) pezzi.push(dal + ":");
+        righe.forEach(function (r) {
+          pezzi.push((speciali.length ? (r.breve || r.giorni) : r.giorni) + " " + r.fasce + ".");
+        });
+        pezzi.forEach(function (t, i) {
           if (i) posto.appendChild(document.createElement("br"));
-          posto.appendChild(document.createTextNode(r.giorni + " " + r.fasce + "."));
+          posto.appendChild(document.createTextNode(t));
         });
         return;
       }
 
-      if (titolo) {
+      /* L'ELENCO (schede "Quando passare" di Contatti e Dove siamo). */
+      function intestazione(testo, primo) {
+        if (!testo) return;
         var forte = document.createElement("strong");
-        forte.textContent = titolo;
+        forte.textContent = testo;
+        if (!primo) forte.className = "contacts-hours__poi";
         posto.appendChild(forte);
       }
-      righe.forEach(function (r) {
-        var s = document.createElement("span");
-        s.textContent = r.giorni + ": " + r.fasce + ".";
-        posto.appendChild(s);
-      });
+      function voce(r, lungo) {
+        var sp = document.createElement("span");
+        sp.textContent = (lungo || r.giorni) + ": " + r.fasce + ".";
+        posto.appendChild(sp);
+      }
+
+      if (speciali.length) {
+        /* Il 15 resta un giorno solo: "I primi due giorni" diventerebbe una
+           bugia aritmetica. Se quell'unico giorno e' oggi, la parola giusta
+           e' "Oggi" - ed e' anche la piu' utile per chi legge. */
+        var cap = (speciali.length === 1 && String(speciali[0].data) === oggi)
+          ? "Oggi"
+          : (cfg.titoloSpeciali || "I primi giorni");
+        intestazione(cap, true);
+        speciali.forEach(function (r) { voce(r); });
+        intestazione(dal, false);
+      } else {
+        intestazione(titolo, true);
+      }
+      righe.forEach(function (r) { voce(r); });
     });
   }
 
@@ -826,22 +913,7 @@
     /* Senza una data vera non si dice niente: il cartellone resta chiuso. */
     if (!a.data && cfg.APERTA !== true) return;
 
-    /* ⚠️ Il confronto si fa sul giorno di ROMA, non su quello del
-       visitatore: chi guarda da Londra o da New York ha un'altra data in
-       tasca, e il cartellone cambierebbe a ore diverse per persone
-       diverse. `en-CA` da' la forma anno-mese-giorno, che si confronta
-       come testo senza inventare fusi orari. */
-    var oggiRoma;
-    try {
-      oggiRoma = new Intl.DateTimeFormat("en-CA", {
-        timeZone: "Europe/Rome", year: "numeric", month: "2-digit", day: "2-digit"
-      }).format(new Date());
-    } catch (e) {
-      var n = new Date();
-      oggiRoma = n.getFullYear() + "-" +
-        String(n.getMonth() + 1).padStart(2, "0") + "-" +
-        String(n.getDate()).padStart(2, "0");
-    }
+    var oggiRoma = oggiARoma();
 
     /* LO SCATTO: dal giorno DOPO l'inaugurazione il cartellone si cambia
        da solo. L'interruttore APERTA resta e vince su tutto, per il caso
@@ -852,8 +924,7 @@
        mono-config.js. Se l'apertura slitta si sposta quella riga e lo
        scatto la segue, invece di annunciare una bottega aperta che non
        ha ancora alzato la serranda. */
-    var passata = String(cfg.DATA || "") && oggiRoma > String(cfg.DATA);
-    var aperti = cfg.APERTA === true || passata;
+    var aperti = bottegaAperta(oggiRoma);
 
     if (aperti) {
       titolo.textContent = "Siamo aperti.";
@@ -888,32 +959,6 @@
       chiusura.hidden = false;
     }
     c.hidden = false;
-  }
-
-  function initAperturaBanner() {
-    var blocco = document.querySelector("[data-apertura]");
-    if (!blocco) return;
-    var mese = blocco.querySelector("[data-apertura-mese]");
-    if (!mese) return;
-
-    var cfg = window.MONO_APERTURA || {};
-
-    /* 1) L'interruttore vince su tutto: alzato, la bottega e' aperta e il mese
-          previsto non interessa piu' a nessuno. */
-    if (cfg.APERTA === true) {
-      mese.textContent = "La bottega è aperta.";
-      blocco.classList.add("is-aperto");
-      blocco.hidden = false;
-      return;
-    }
-
-    /* 2) Niente mese => silenzio. Meglio muto che sbagliato.
-          Dal 24/10 arriva dalla data; `MESE` resta solo come riserva. */
-    var scritto = leggiApertura().mese;
-    if (!scritto) return;
-
-    mese.textContent = scritto;
-    blocco.hidden = false;
   }
 
   /* Video PRODOTTI (gastronomia): l'asset mono-kitchen-magic ha badge:false,

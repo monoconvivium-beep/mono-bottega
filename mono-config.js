@@ -80,22 +80,17 @@ window.MONO_TELEFONO = {
       se la data qui sotto e' passata da tre mesi.
       Il giorno che alzi la serranda: metti true, salva, pubblica.
 
-   2) MESE — il mese in cui si apre, scritto come lo diresti a voce.
-      Sostituisce il conto alla rovescia (2/10/2026, scelta sua): il
-      conto alla rovescia voleva un GIORNO preciso, e un giorno preciso
-      che poi slitta e' una promessa che si rompe davanti a tutti. Il
-      mese basta a far lasciare l'email adesso invece che mai, e non
-      obbliga nessuno a inchiodarsi a una data.
+   2) MESE — RESTA SOLO COME RISERVA. ⚠️ 7/11/2026: il riquadro
+      "APERTURA PREVISTA · a novembre" dentro la carta delle email e'
+      stato TOLTO da tutte e dodici le pagine (sua richiesta). Con la
+      data a una settimana, "prevista a novembre" era piu' vago della
+      verita'. Le tre frasi dentro le pagine adesso dicono il giorno
+      ("apriamo sabato 14 novembre"), ricavato da DATA.
+      MESE torna utile solo se un domani si toglie DATA e si vuole
+      tornare al mese secco: finche' DATA e' piena non viene guardato.
 
-      Si scrive COME VA LETTO, perche' finisce a schermo tale e quale:
-        "a ottobre"   ->  Apertura prevista  a ottobre
-        "a novembre"  ->  Apertura prevista  a novembre
-      Lascialo vuoto ("") e il riquadro SPARISCE da tutte le pagine: il
-      sito tace, non mente. E' il modo giusto di sbagliare.
-
-   ⚠️ IL MESE SI SCRIVE QUI E BASTA. E' l'unico punto del sito: cambi
-      questa riga e cambia su tutte e dodici le pagine insieme. Nessuna
-      data scritta a mano dentro le pagine — e' la trappola del 29/7.
+   ⚠️ NIENTE DATE SCRITTE A MANO DENTRO LE PAGINE: escono tutte da qui.
+      E' la trappola del 29/7.
    ------------------------------------------------------------ */
 window.MONO_APERTURA = {
   APERTA: false,
@@ -152,6 +147,23 @@ window.MONO_ORARI = {
      che sono previsti; dal giorno che alzi APERTA diventa il secondo. */
   titoloPrima: "Orari dall’apertura",
   titoloDopo: "Quando siamo aperti",
+
+  /* ⭐ I GIORNI DELL'INAUGURAZIONE (7/11/2026).
+     Sabato 14 e domenica 15 NON seguono gli orari invernali: sabato si
+     apre alle 16:00 perche' e' la festa, domenica solo a pranzo. Scritti
+     qui perche' il sito non puo' mostrare l'orario invernale del sabato
+     a chi passa il 14 e trovarsi la gente davanti alla porta chiusa.
+     ⚠️ SPARISCONO DA SOLI: ogni riga ha la sua `data`, e quando il giorno
+     e' passato (a Roma) non viene piu' mostrata. Il 16 novembre restano
+     solo gli orari invernali, senza che nessuno debba ricordarsi di
+     tornare qui a cancellare niente.
+     La riga "Dal 16 novembre" NON e' scritta a mano: e' il giorno dopo
+     l'ultima data qui sotto. */
+  speciali: [
+    { data: "2026-11-14", giorni: "Sabato 14 novembre", breve: "Sab 14", fasce: "16:00–21:00" },
+    { data: "2026-11-15", giorni: "Domenica 15 novembre", breve: "Dom 15", fasce: "11:00–14:00" }
+  ],
+  titoloSpeciali: "I primi due giorni",
 
   /* `breve` serve SOLO alla riga stretta del cartellone in home, dove
      tre giorni per esteso non ci starebbero. Gli orari veri (`fasce`)
