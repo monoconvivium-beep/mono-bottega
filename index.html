@@ -42,13 +42,13 @@
          di piu' rubava la corsia a quella giusta. 36 kB invece di 92. -->
     <link rel="preload" as="image" href="assets/cinematic/web/mono-01-fuoco-ravioli-poster.webp" fetchpriority="high" type="image/webp">
     <script>document.documentElement.classList.add("has-js");</script>
-    <link rel="stylesheet" href="mono-fonts.css?v=20261114-apertura-v92">
-    <link rel="stylesheet" href="mono-colors.css?v=20261114-apertura-v92">
-    <link rel="stylesheet" href="styles.css?v=20261114-apertura-v92">
-<link rel="stylesheet" href="experience.css?v=20261114-apertura-v92">
-<link rel="stylesheet" href="mono-engineering.css?v=20261114-apertura-v92">
-    <link rel="stylesheet" href="mono-enhance.css?v=20261114-apertura-v92">
-    <link rel="stylesheet" href="mono-dark-home.css?v=20261114-apertura-v92">
+    <link rel="stylesheet" href="mono-fonts.css?v=20261114-apertura-v93">
+    <link rel="stylesheet" href="mono-colors.css?v=20261114-apertura-v93">
+    <link rel="stylesheet" href="styles.css?v=20261114-apertura-v93">
+<link rel="stylesheet" href="experience.css?v=20261114-apertura-v93">
+<link rel="stylesheet" href="mono-engineering.css?v=20261114-apertura-v93">
+    <link rel="stylesheet" href="mono-enhance.css?v=20261114-apertura-v93">
+    <link rel="stylesheet" href="mono-dark-home.css?v=20261114-apertura-v93">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -115,6 +115,19 @@
         },
         "telephone": "+39 379 398 0937",
         "email": "monobottega@gmail.com",
+        "openingHoursSpecification": [
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": "Monday", "opens": "17:30", "closes": "21:30", "validFrom": "2026-11-14" },
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], "opens": "11:00", "closes": "14:00", "validFrom": "2026-11-14" },
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], "opens": "17:30", "closes": "21:30", "validFrom": "2026-11-14" },
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "11:00", "closes": "14:00", "validFrom": "2026-11-14" }
+        ],
+        "specialOpeningHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "opens": "16:00",
+          "closes": "21:00",
+          "validFrom": "2026-11-14",
+          "validThrough": "2026-11-14"
+        },
         "hasMap": "https://www.google.com/maps/place/Mono+Bottega+Gastronomica/@45.0479235,7.6432628,17z/data=!4m6!3m5!1s0x47886d97e18937fd:0x1f3f57a595a94021!8m2!3d45.0479235!4d7.6432628!16s%2Fg%2F11ntg6mdfk",
         "sameAs": [
           "https://www.instagram.com/mono.bottega/",
@@ -195,8 +208,8 @@
         ]
       }
     </script>
-      <script defer src="mono-enhance.js?v=20261114-apertura-v92"></script>
-      <script src="mono-config.js?v=20261114-apertura-v92"></script>
+      <script defer src="mono-enhance.js?v=20261114-apertura-v93"></script>
+      <script src="mono-config.js?v=20261114-apertura-v93"></script>
 </head>
   <body class="mono-world home-page mono-dark-home" data-mono-world="home">
     <a class="skip-link" href="#main">Vai al contenuto</a>
@@ -230,14 +243,12 @@
            Nasce `hidden`: lo accende initCartelloApertura() solo se in
            mono-config.js c'e' una data. Senza data resta chiuso - il sito
            tace, non inventa. -->
-      <section class="mono-cartello" data-cartello-apertura hidden aria-labelledby="cartelloData">
-        <p class="mono-cartello__occhio" data-cartello-occhio>La bottega apre</p>
-        <p class="mono-cartello__giorno" data-cartello-giorno></p>
-        <p class="mono-cartello__data" id="cartelloData" data-cartello-data></p>
+      <section class="mono-cartello" data-cartello-apertura hidden aria-labelledby="cartelloTitolo">
+        <p class="mono-cartello__data mono-cartello__titolo" id="cartelloTitolo" data-cartello-titolo></p>
         <div class="mono-cartello__riga" aria-hidden="true"></div>
-        <p class="mono-cartello__dove">Via Barletta 72D &middot; Santa Rita, Torino</p>
-        <p class="mono-cartello__conto" data-cartello-conto hidden></p>
-        <a class="mono-cartello__tasto" href="#apertura" data-track="cartello_apertura_email">Avvisami all&rsquo;apertura</a>
+        <p class="mono-cartello__dove" data-cartello-testo></p>
+        <p class="mono-cartello__conto" data-cartello-chiusura hidden></p>
+        <a class="mono-cartello__tasto" href="dove-siamo/" data-track="cartello_come_arrivare">Come arrivare</a>
       </section>
       <section class="cinema-hero" id="home" data-cinema-hero data-stage="1" aria-labelledby="heroTitle">
         <div class="cinema-track" data-cinema-track>
@@ -499,8 +510,10 @@
           </article>
           <article class="local-info-card">
             <span>Orari</span>
-            <h3>Orari previsti (dall’apertura).</h3>
-            <p>Martedì-sabato 10:30-14:30 e 18:00-22:30.<br>Domenica 9:00-14:00. Lunedì chiuso.</p>
+            <h3>Orari dall’apertura.</h3>
+            <!-- 7/11 - Riempito da window.MONO_ORARI: nessun orario scritto a mano.
+                 Il testo qui sotto e' la riserva per chi ha il programma spento. -->
+            <p data-mono-orari="riga">Lunedì 17:30–21:30.<br>Martedì–sabato 11:00–14:00 e 17:30–21:30.<br>Domenica 11:00–14:00.</p>
             <a data-track="local_view_location" href="dove-siamo/">Dettagli e mappa</a>
           </article>
           <article class="local-info-card">
@@ -604,12 +617,12 @@
     </footer>
 
     <script>window.MONO_EXPERIENCE_OVERRIDES = { flags: { oPortal: false } };try{if(sessionStorage.getItem("monoCurtain")){sessionStorage.removeItem("monoCurtain");document.documentElement.classList.add("mono-curtain-cover");setTimeout(function(){document.documentElement.classList.remove("mono-curtain-cover");},1800);}}catch(e){}</script>
-    <script src="mono-experience-config.js?v=20261114-apertura-v92"></script>
-<script src="cinematic-assets.js?v=20261114-apertura-v92"></script>
-<script src="mono-cinematic.js?v=20261114-apertura-v92"></script>
-    <script src="mono-navigation.js?v=20261114-apertura-v92"></script>
-    <script src="mono-signature.js?v=20261114-apertura-v92"></script>
-    <script src="app.js?v=20261114-apertura-v92"></script>
-<script src="experience.js?v=20261114-apertura-v92"></script>
+    <script src="mono-experience-config.js?v=20261114-apertura-v93"></script>
+<script src="cinematic-assets.js?v=20261114-apertura-v93"></script>
+<script src="mono-cinematic.js?v=20261114-apertura-v93"></script>
+    <script src="mono-navigation.js?v=20261114-apertura-v93"></script>
+    <script src="mono-signature.js?v=20261114-apertura-v93"></script>
+    <script src="app.js?v=20261114-apertura-v93"></script>
+<script src="experience.js?v=20261114-apertura-v93"></script>
   </body>
 </html>

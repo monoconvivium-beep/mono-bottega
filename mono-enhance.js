@@ -277,6 +277,7 @@
     initBadgeProdotti();
     initAperturaBanner();
     initCartelloApertura();
+    initOrari();
     initMeseApertura();
     initSocial();
     initTelefono();
@@ -708,6 +709,60 @@
      (window.MONO_APERTURA.APERTA in mono-config.js). Se il mese e' vuoto il
      blocco resta NASCOSTO: il sito tace, non mente. */
   /* ============================================================
+     GLI ORARI, DA UN POSTO SOLO (7/11/2026)
+
+     La stessa frase stava scritta a mano in tre pagine. Adesso arriva da
+     `window.MONO_ORARI` (mono-config.js) e queste righe la mettono dove
+     serve. Cambiare un orario = cambiare una riga sola.
+
+     DUE FORME, perche' le tre schede non si somigliano:
+       data-mono-orari="elenco" -> titoletto + una riga per fascia
+                                   (Contatti e Dove siamo)
+       data-mono-orari="riga"   -> un paragrafo solo, con gli a capo
+                                   (la scheda in home)
+     La forma la decide il contrassegno, non il codice: cosi' ogni pagina
+     resta esattamente com'era a vedersi.
+
+     ⚠️ Si scrive con textContent, mai innerHTML: sono testi che arrivano
+     da un file di configurazione e non devono poter portare HTML dentro
+     la pagina.
+     ⚠️ Niente orari scritti qui dentro. Se MONO_ORARI non c'e' o non ha
+     righe, non si tocca NIENTE: resta quello che c'e' nel sorgente, che
+     e' anche quello che vede chi ha il programma spento. */
+  function initOrari() {
+    var cfg = window.MONO_ORARI || {};
+    var righe = Array.isArray(cfg.righe) ? cfg.righe.filter(function (r) { return r && r.giorni && r.fasce; }) : [];
+    if (!righe.length) return;
+
+    var aperta = (window.MONO_APERTURA || {}).APERTA === true;
+    var titolo = aperta ? (cfg.titoloDopo || "") : (cfg.titoloPrima || "");
+
+    document.querySelectorAll("[data-mono-orari]").forEach(function (posto) {
+      var forma = posto.getAttribute("data-mono-orari");
+      posto.textContent = "";
+
+      if (forma === "riga") {
+        righe.forEach(function (r, i) {
+          if (i) posto.appendChild(document.createElement("br"));
+          posto.appendChild(document.createTextNode(r.giorni + " " + r.fasce + "."));
+        });
+        return;
+      }
+
+      if (titolo) {
+        var forte = document.createElement("strong");
+        forte.textContent = titolo;
+        posto.appendChild(forte);
+      }
+      righe.forEach(function (r) {
+        var s = document.createElement("span");
+        s.textContent = r.giorni + ": " + r.fasce + ".";
+        posto.appendChild(s);
+      });
+    });
+  }
+
+  /* ============================================================
      DA UNA DATA SOLA ESCE TUTTO — le parole dell'apertura (24/10/2026)
 
      In mono-config.js c'e' `DATA: "2026-11-14"` e basta quella. Qui
@@ -763,46 +818,75 @@
 
     var cfg = window.MONO_APERTURA || {};
     var a = leggiApertura();
-    var occhio = c.querySelector("[data-cartello-occhio]");
-    var giorno = c.querySelector("[data-cartello-giorno]");
-    var data = c.querySelector("[data-cartello-data]");
-    var conto = c.querySelector("[data-cartello-conto]");
-    if (!data) return;
+    var titolo = c.querySelector("[data-cartello-titolo]");
+    var testo = c.querySelector("[data-cartello-testo]");
+    var chiusura = c.querySelector("[data-cartello-chiusura]");
+    if (!titolo || !testo) return;
 
-    if (cfg.APERTA === true) {
-      if (occhio) occhio.textContent = "Siamo aperti";
-      if (giorno) giorno.hidden = true;
-      data.textContent = "La bottega è aperta.";
-      if (conto) conto.hidden = true;
+    /* Senza una data vera non si dice niente: il cartellone resta chiuso. */
+    if (!a.data && cfg.APERTA !== true) return;
+
+    /* ⚠️ Il confronto si fa sul giorno di ROMA, non su quello del
+       visitatore: chi guarda da Londra o da New York ha un'altra data in
+       tasca, e il cartellone cambierebbe a ore diverse per persone
+       diverse. `en-CA` da' la forma anno-mese-giorno, che si confronta
+       come testo senza inventare fusi orari. */
+    var oggiRoma;
+    try {
+      oggiRoma = new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Europe/Rome", year: "numeric", month: "2-digit", day: "2-digit"
+      }).format(new Date());
+    } catch (e) {
+      var n = new Date();
+      oggiRoma = n.getFullYear() + "-" +
+        String(n.getMonth() + 1).padStart(2, "0") + "-" +
+        String(n.getDate()).padStart(2, "0");
+    }
+
+    /* LO SCATTO: dal giorno DOPO l'inaugurazione il cartellone si cambia
+       da solo. L'interruttore APERTA resta e vince su tutto, per il caso
+       in cui si apra prima.
+       ⚠️⚠️ E' l'unico punto del sito in cui il calendario decide qualcosa
+       di importante, ed e' una scelta sua del 7/11. La rete di sicurezza
+       e' che la soglia NON e' una data scritta qui: e' `DATA` in
+       mono-config.js. Se l'apertura slitta si sposta quella riga e lo
+       scatto la segue, invece di annunciare una bottega aperta che non
+       ha ancora alzato la serranda. */
+    var passata = String(cfg.DATA || "") && oggiRoma > String(cfg.DATA);
+    var aperti = cfg.APERTA === true || passata;
+
+    if (aperti) {
+      titolo.textContent = "Siamo aperti.";
+      var o = window.MONO_ORARI || {};
+      var fasce = (Array.isArray(o.righe) ? o.righe : [])
+        .filter(function (r) { return r && r.fasce; })
+        .map(function (r) { return (r.breve || r.giorni || "") + " " + r.fasce; });
+      /* Gli orari arrivano dal punto unico: qui non se ne scrive nessuno. */
+      testo.textContent = fasce.join(" · ");
+      testo.hidden = !fasce.length;
+      if (chiusura) chiusura.hidden = true;
       c.classList.add("is-aperto");
       c.hidden = false;
       return;
     }
 
-    if (!a.data) return;   /* senza una data vera il cartello non ha senso */
+    /* Fino a tutto il giorno dell'inaugurazione: l'invito. */
+    var g = a.giorno ? a.giorno.charAt(0).toUpperCase() + a.giorno.slice(1) : "";
+    var quando = a.data ? (g + " " + a.data.getDate() + " " + MESI[a.data.getMonth()]) : "";
+    titolo.textContent = quando ? quando + " apriamo." : "Apriamo.";
 
-    if (giorno) giorno.textContent = a.giorno.charAt(0).toUpperCase() + a.giorno.slice(1);
+    var i = cfg.INAUGURAZIONE || {};
+    var frase = "";
+    if (i.dalle && i.alle) frase += "Ti aspettiamo dalle " + i.dalle + " alle " + i.alle + " in Via Barletta 72D, Santa Rita.";
+    else frase += "Ti aspettiamo in Via Barletta 72D, Santa Rita.";
+    if (i.insegna) frase += " Alle " + i.insegna + " accendiamo l’insegna.";
+    testo.textContent = frase;
+    testo.hidden = false;
 
-    /* 24/10, sua correzione: la data e' TUTTA dorata, non solo il mese.
-       Quindi niente piu' pezzi separati - il colore lo fa il CSS su tutta
-       la riga e qui basta il testo. (Prima si costruivano tre <span> solo
-       per tingere "novembre": con tutto dello stesso colore non servono
-       piu'.) `textContent` e non `innerHTML`: la data arriva da un file di
-       configurazione e non deve poter portare HTML dentro la pagina. */
-    data.textContent = a.lungo;
-
-    /* Il conto alla rovescia si SPEGNE quando non ha piu' niente di vero da
-       dire: a giorni negativi direbbe "fra -3 giorni", e la data resta li'
-       finche' l'interruttore non lo alza lui. */
-    if (conto) {
-      var testo = "";
-      if (a.mancano > 1) testo = "Fra " + a.mancano + " giorni";
-      else if (a.mancano === 1) testo = "Domani";
-      else if (a.mancano === 0) testo = "È oggi";
-      conto.textContent = testo;
-      conto.hidden = !testo;
+    if (chiusura) {
+      chiusura.textContent = "Semplice. Buono. MONO.";
+      chiusura.hidden = false;
     }
-
     c.hidden = false;
   }
 

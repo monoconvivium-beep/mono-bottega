@@ -111,7 +111,57 @@ window.MONO_APERTURA = {
      piena, quello che scrivi qui NON viene guardato — e' giusto cosi',
      due posti che dicono la stessa cosa finiscono sempre per litigare.
      Serve solo se un domani togli la data e vuoi tornare al mese secco. */
-  MESE: "a novembre"
+  MESE: "a novembre",
+
+  /* IL SOLO GIORNO DELL'INAUGURAZIONE (7/11/2026).
+     Sabato 14 la bottega fa un orario suo, diverso da tutti gli altri
+     giorni. Da queste tre righe esce la frase del cartellone in home E
+     l'orario speciale nei dati strutturati di Google: si scrive una
+     volta sola, in formato 24 ore.
+     ⚠️ Non si cancella a mano: dal giorno DOPO la DATA qui sopra il
+     cartellone cambia da solo e dice che siamo aperti. */
+  INAUGURAZIONE: {
+    dalle: "16:00",
+    alle: "21:00",
+    insegna: "18:08"
+  }
+};
+
+/* ------------------------------------------------------------
+   0-TER) GLI ORARI — ⭐ PUNTO UNICO (7/11/2026)
+
+   COM'ERA: la stessa frase scritta a mano in TRE pagine (home,
+   Contatti, Dove siamo). Cambiare un orario voleva dire ricordarsi di
+   tre posti, e dimenticarne uno significa dire una bugia a chi legge
+   proprio la pagina che hai saltato.
+
+   ADESSO: si scrive QUI e basta. Le tre pagine si riempiono da sole.
+
+   COME SI SCRIVE: una riga per fascia di giorni, nell'ordine in cui la
+   diresti a voce. `giorni` e `fasce` sono testo libero: finiscono a
+   schermo tali e quali, quindi scrivili GIA' come vanno letti.
+
+   ⚠️⚠️ C'E' UN QUARTO POSTO CHE NON SI RIEMPIE DA SOLO: i dati
+   strutturati (`openingHoursSpecification`) in cima a `index.html`.
+   Quelli li legge GOOGLE, che guarda il sorgente e non aspetta il
+   programma: vanno cambiati A MANO, in formato 24 ore. E' la stessa
+   eccezione del mese dell'apertura — se cambi gli orari qui, aprili.
+   ------------------------------------------------------------ */
+window.MONO_ORARI = {
+  /* Il titolino sopra l'elenco. Finche' la bottega non ha aperto dice
+     che sono previsti; dal giorno che alzi APERTA diventa il secondo. */
+  titoloPrima: "Orari dall’apertura",
+  titoloDopo: "Quando siamo aperti",
+
+  /* `breve` serve SOLO alla riga stretta del cartellone in home, dove
+     tre giorni per esteso non ci starebbero. Gli orari veri (`fasce`)
+     sono scritti una volta sola: la forma corta accorcia i GIORNI, mai
+     le ore. */
+  righe: [
+    { giorni: "Lunedì", breve: "Lun", fasce: "17:30–21:30" },
+    { giorni: "Martedì–sabato", breve: "Mar–Sab", fasce: "11:00–14:00 e 17:30–21:30" },
+    { giorni: "Domenica", breve: "Dom", fasce: "11:00–14:00" }
+  ]
 };
 
 /* ------------------------------------------------------------
