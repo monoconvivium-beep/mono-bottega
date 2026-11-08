@@ -110,15 +110,14 @@ window.MONO_APERTURA = {
 
   /* IL SOLO GIORNO DELL'INAUGURAZIONE (7/11/2026).
      Sabato 14 la bottega fa un orario suo, diverso da tutti gli altri
-     giorni. Da queste tre righe esce la frase del cartellone in home E
+     giorni. Da queste due righe esce la frase del cartellone in home E
      l'orario speciale nei dati strutturati di Google: si scrive una
      volta sola, in formato 24 ore.
      ⚠️ Non si cancella a mano: dal giorno DOPO la DATA qui sopra il
      cartellone cambia da solo e dice che siamo aperti. */
   INAUGURAZIONE: {
     dalle: "16:00",
-    alle: "21:00",
-    insegna: "18:08"
+    alle: "21:00"
   }
 };
 
@@ -163,7 +162,7 @@ window.MONO_APERTURA = {
    ⚠️ NESSUNA DATA E NESSUN ORARIO SCRITTO A MANO QUI DENTRO. Si usano
    i segnaposto, che si riempiono da DATA, INAUGURAZIONE e MONO_ORARI:
      {quando}      sabato 14 novembre 2026
-     {dalle} {alle} {insegna}   16:00 / 21:00 / 18:08
+     {dalle} {alle}   16:00 / 21:00
      {primigiorni} Sabato 14 novembre 16:00–21:00. Domenica 15 ...
      {orari}       Lunedi' 17:30–21:30. Martedi'–sabato ...
    Se l'apertura slitta si sposta DATA e TUTTE queste frasi la seguono.
@@ -217,7 +216,7 @@ window.MONO_TESTI = {
   },
   "faq.risposta": {
     prima: "Apriamo {quando}, in Via Barletta 72D a Santa Rita. {primigiorni}",
-    oggi:  "Apriamo oggi, dalle {dalle} alle {alle}, in Via Barletta 72D a Santa Rita. Alle {insegna} accendiamo l’insegna.",
+    oggi:  "Apriamo oggi, dalle {dalle} alle {alle}, in Via Barletta 72D a Santa Rita.",
     dopo:  "Siamo in Via Barletta 72D, a Santa Rita. {orari}"
   },
 
@@ -234,7 +233,7 @@ window.MONO_TESTI = {
   /* LA RIGA DEL CANTIERE, su Dove siamo. */
   "dove.apertura": {
     prima: "Non siamo ancora aperti: apriamo {quando}. Se passi adesso trovi il cantiere — ma puoi lasciarci l’email qui sotto e ti avvisiamo il giorno giusto.",
-    oggi:  "Apriamo oggi: ti aspettiamo dalle {dalle} alle {alle}. Alle {insegna} accendiamo l’insegna.",
+    oggi:  "Apriamo oggi: ti aspettiamo dalle {dalle} alle {alle}, in Via Barletta 72D a Santa Rita.",
     dopo:  "La bottega è aperta: passa quando vuoi, gli orari sono qui sotto."
   }
 };

@@ -771,7 +771,6 @@
       "{quando}": a.data ? (a.giorno + " " + a.lungo) : "",
       "{dalle}": i.dalle || "",
       "{alle}": i.alle || "",
-      "{insegna}": i.insegna || "",
       "{primigiorni}": pezzi(o.speciali),
       "{orari}": pezzi(o.righe)
     };
@@ -994,7 +993,6 @@
     var frase = "";
     if (i.dalle && i.alle) frase += "Ti aspettiamo dalle " + i.dalle + " alle " + i.alle + " in Via Barletta 72D, Santa Rita.";
     else frase += "Ti aspettiamo in Via Barletta 72D, Santa Rita.";
-    if (i.insegna) frase += " Alle " + i.insegna + " accendiamo l’insegna.";
     testo.textContent = frase;
     testo.hidden = false;
 
