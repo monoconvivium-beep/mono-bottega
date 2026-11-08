@@ -211,6 +211,24 @@ img {
   transform: scaleX(1);
 }
 
+/* ⚠️ 8/11/2026 — IL TASTO NON SI CHIAMA PIU' "MENU" (sua segnalazione).
+   Su un sito di gastronomia «Menu» vuol dire quello che c'e' da mangiare,
+   e da quando esiste «La carta» la parola tirava dalla parte sbagliata.
+   Adesso dice «Pagine» e porta le tre righe davanti: chi non legge la
+   parola riconosce comunque il segno.
+   ⚠️ Le righe prendono `currentColor`, cosi' seguono SEMPRE il colore del
+   testo del tasto. Il 30/7 la scritta era quasi invisibile per un colore
+   scritto a mano (1.97 di contrasto): un segno con un colore suo
+   rifarebbe lo stesso errore in un posto nuovo. */
+.mobile-menu-toggle {
+  align-items: center;
+  gap: 8px;
+}
+.mobile-menu-toggle__segno {
+  fill: currentColor;
+  flex: none;
+}
+
 .mobile-menu-toggle {
   background: rgba(255, 249, 238, 0.42);
   border: 1px solid rgba(38, 35, 33, 0.16);
