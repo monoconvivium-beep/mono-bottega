@@ -984,10 +984,19 @@
       return;
     }
 
-    /* Fino a tutto il giorno dell'inaugurazione: l'invito. */
+    /* Fino a tutto il giorno dell'inaugurazione: l'invito.
+
+       ⚠️ IL GIORNO STESSO il cartello dice "Apriamo oggi.". Tutto il
+       resto della pagina (occhiello, riga sotto al marchio, FAQ, frase
+       in fondo) passa a "oggi" da solo grazie a MONO_TESTI; il cartello
+       sta SOPRA al film ed e' la prima cosa che si legge, e se resta
+       fermo sulla data sembra che si apra un altro giorno. Trovato col
+       collaudo delle date il 9/11, non da una segnalazione. */
+    var eOggi = momentoApertura() === "oggi";
     var g = a.giorno ? a.giorno.charAt(0).toUpperCase() + a.giorno.slice(1) : "";
     var quando = a.data ? (g + " " + a.data.getDate() + " " + MESI[a.data.getMonth()]) : "";
-    titolo.textContent = quando ? quando + " apriamo." : "Apriamo.";
+    titolo.textContent = eOggi ? "Apriamo oggi."
+      : (quando ? quando + " apriamo." : "Apriamo.");
 
     var i = cfg.INAUGURAZIONE || {};
     var frase = "";
